@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>قائمة مطعم فاخرة</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900;1000&family=Tajawal:wght@400;700;800;900&display=swap');
+:root{
+  --paper:#fbf4e8;
+  --ink:#20150f;
+  --soft:#efe1cf;
+  --muted:#7b6656;
+  --accent:#b35b2c;
+  --accent2:#e7a55b;
+  --white:#fffaf2;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  direction:rtl;
+  text-align:right;
+  font-family:'Tajawal','Cairo',Arial,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+button,input{font-family:inherit}
+img{width:100%;display:block}
+
+.page{
+  max-width:1240px;
+  margin:auto;
+  padding:18px;
+}
+.header{
+  min-height:94vh;
+  border-radius:38px;
+  background:
+    linear-gradient(rgba(32,21,15,.42),rgba(32,21,15,.62)),
+    url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=80");
+  background-size:cover;
+  background-position:center;
+  color:white;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  position:relative;
+}
+.header:after{
+  content:"";
+  position:absolute;
+  inset:auto -80px -120px auto;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  background:rgba(231,165,91,.28);
+  filter:blur(20px);
+}
+.nav{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  position:relative;
+  z-index:2;
+}
+.logo{
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:0;
+}
+.nav a{
+  color:white;
+  text-decoration:none;
+  padding:11px 16px;
+  border:1px solid rgba(255,255,255,.32);
+  border-radius:999px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(10px);
+}
+.hero-copy{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  padding-bottom:34px;
+}
+.kicker{
+  display:inline-flex;
+  padding:10px 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(12px);
+  margin-bottom:18px;
+}
+h1{
+  font-size:clamp(54px,13vw,136px);
+  line-height:.82;
+  letter-spacing:-2px;
+}
+.hero-copy p{
+  margin-top:22px;
+  max-width:520px;
+  font-size:19px;
+  line-height:1.55;
+  color:#ffeeda;
+}
+.menu-shell{
+  margin-top:22px;
+  display:grid;
+  grid-template-columns:290px 1fr;
+  gap:20px;
+}
+.sidebar{
+  position:sticky;
+  top:14px;
+  height:max-content;
+  border-radius:34px;
+  background:var(--white);
+  padding:16px;
+  border:1px solid rgba(32,21,15,.08);
+  box-shadow:0 24px 60px rgba(82,48,23,.08);
+}
+.sidebar h2{
+  font-size:35px;
+  line-height:.9;
+  margin:8px 6px 18px;
+}
+.cat-btn{
+  width:100%;
+  border:0;
+  margin-bottom:10px;
+  text-align:right;
+  padding:16px;
+  border-radius:22px;
+  color:var(--ink);
+  background:#f3e6d4;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:900;
+  font-size:17px;
+  cursor:pointer;
+  transition:.3s ease;
+}
+.cat-btn.active{
+  background:var(--ink);
+  color:white;
+  transform:translateX(-8px);
+}
+.content{
+  min-width:0;
+}
+.feature{
+  min-height:430px;
+  border-radius:40px;
+  background:var(--white);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  overflow:hidden;
+  border:1px solid rgba(32,21,15,.08);
+  box-shadow:0 24px 70px rgba(82,48,23,.1);
+}
+.feature-media{
+  min-height:430px;
+  overflow:hidden;
+  clip-path:ellipse(90% 82% at 34% 50%);
+  background:var(--soft);
+}
+.feature-media img{
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.04);
+  animation:softZoom 7s ease-in-out infinite alternate;
+}
+.feature-text{
+  padding:42px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.feature-label{
+  color:var(--accent);
+  font-weight:900;
+  margin-bottom:12px;
+}
+.feature-text h2{
+  font-size:clamp(42px,6vw,72px);
+  line-height:.88;
+  letter-spacing:-1px;
+}
+.feature-text p{
+  margin:18px 0;
+  color:var(--muted);
+  line-height:1.6;
+  font-size:17px;
+}
+.feature-price{
+  font-size:42px;
+  font-weight:900;
+  color:var(--accent);
+}
+.order{
+  width:max-content;
+  margin-top:22px;
+  border:0;
+  background:var(--ink);
+  color:white;
+  padding:16px 24px;
+  border-radius:999px;
+  font-weight:900;
+  cursor:pointer;
+}
+.products{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+.card{
+  border:0;
+  background:var(--white);
+  border-radius:30px;
+  overflow:hidden;
+  text-align:right;
+  color:var(--ink);
+  cursor:pointer;
+  box-shadow:0 20px 50px rgba(82,48,23,.08);
+  transition:.35s cubic-bezier(.2,.9,.2,1);
+  border:1px solid rgba(32,21,15,.08);
+}
+.card:hover{
+  transform:translateY(-8px) rotate(-1deg);
+}
+.card.active{
+  outline:3px solid var(--accent2);
+}
+.card-img{
+  height:170px;
+  overflow:hidden;
+  border-radius:30px 30px 44px 0;
+}
+.card-img img{
+  height:100%;
+  object-fit:cover;
+  transition:.4s ease;
+}
+.card:hover img{transform:scale(1.08)}
+.card-body{
+  padding:16px;
+}
+.card-body h3{
+  font-size:22px;
+  line-height:1;
+}
+.card-body p{
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.35;
+  margin:9px 0 13px;
+  min-height:38px;
+}
+.card-price{
+  font-size:24px;
+  font-weight:900;
+  color:var(--accent);
+}
+.mobile-tabs{
+  display:none;
+}
+.fade-in{
+  animation:fadeIn .5s ease both;
+}
+.float-word{
+  position:fixed;
+  right:-40px;
+  top:42%;
+  transform:rotate(90deg);
+  font-size:13px;
+  letter-spacing:2px;
+  color:rgba(32,21,15,.24);
+  font-weight:900;
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:22px;
+  z-index:80;
+  transform:translate(-50%,120px);
+  background:var(--ink);
+  color:white;
+  padding:15px 20px;
+  border-radius:999px;
+  font-weight:900;
+  transition:.35s ease;
+}
+.toast.show{transform:translate(-50%,0)}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(22px) scale(.98)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes softZoom{
+  from{transform:scale(1.04) translateX(0)}
+  to{transform:scale(1.12) translateX(-12px)}
+}
+@media(max-width:900px){
+  .page{padding:10px}
+  .header{min-height:76vh;border-radius:30px}
+  h1{letter-spacing:-3px}
+  .menu-shell{display:block}
+  .sidebar{display:none}
+  .mobile-tabs{
+    display:flex;
+    gap:10px;
+    overflow:auto;
+    padding:14px 4px;
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:linear-gradient(to bottom,var(--paper) 75%,transparent);
+  }
+  .mobile-tabs .cat-btn{
+    width:auto;
+    flex:0 0 auto;
+    margin:0;
+    padding:13px 16px;
+    border-radius:999px;
+    font-size:15px;
+  }
+  .mobile-tabs .cat-btn.active{transform:translateY(-2px)}
+  .feature{
+    grid-template-columns:1fr;
+    border-radius:34px;
+  }
+  .feature-media{
+    min-height:310px;
+    clip-path:none;
+    border-radius:34px 34px 55px 0;
+  }
+  .feature-text{padding:24px}
+  .products{grid-template-columns:1fr 1fr;gap:12px}
+  .card{border-radius:24px}
+  .card-img{
+    height:135px;
+    border-radius:24px 24px 34px 0;
+  }
+  .card-body{padding:13px}
+  .card-body h3{font-size:18px}
+  .card-body p{font-size:12px}
+  .float-word{display:none}
+}
+@media(max-width:430px){
+  .header{min-height:70vh;padding:16px}
+  .nav a{padding:10px 12px;font-size:13px}
+  .hero-copy{padding-bottom:20px}
+  .hero-copy p{font-size:16px}
+  .feature-media{min-height:260px}
+  .feature-price{font-size:34px}
+  .products{grid-template-columns:1fr}
+  .card{
+    display:grid;
+    grid-template-columns:125px 1fr;
+  }
+  .card-img{
+    height:100%;
+    min-height:145px;
+    border-radius:24px 40px 40px 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="header">
+    <nav class="nav">
+      <div class="logo">قائمة المطعم</div>
+      <a href="https://wa.me/905555555555">احجز / اطلب</a>
+    </nav>
+
+    <div class="hero-copy">
+      <div class="kicker">قائمة مطعم رقمية فاخرة</div>
+      <h1>تذوق قائمتنا</h1>
+      <p>صفحة قائمة طعام عصرية بتصميم فاخر، صور متحركة بسلاسة، بطاقات أنيقة، وتجربة ممتازة على الجوال.</p>
+    </div>
+  </header>
+
+  <div class="mobile-tabs" id="mobileTabs"></div>
+
+  <section class="menu-shell">
+    <aside class="sidebar">
+      <h2>قائمة<br>الطعام</h2>
+      <div id="desktopCats"></div>
+    </aside>
+
+    <main class="content">
+      <section class="feature fade-in" id="feature">
+        <div class="feature-media">
+          <img id="featureImg" src="" alt="">
+        </div>
+        <div class="feature-text">
+          <div class="feature-label" id="featureCat"></div>
+          <h2 id="featureName"></h2>
+          <p id="featureDesc"></p>
+          <div class="feature-price" id="featurePrice"></div>
+          <button class="order" id="orderBtn">اطلب هذا الطبق</button>
+        </div>
+      </section>
+
+      <section class="products" id="products"></section>
+    </main>
+  </section>
+</div>
+
+<div class="float-word">تصفح القائمة</div>
+<div class="toast" id="toast">تم اختيار المنتج</div>
+
+<script>
+const fallbackSvg = encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 900 650">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbf4e8"/>
+      <stop offset="1" stop-color="#e7a55b"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="650" rx="44" fill="url(#g)"/>
+  <circle cx="725" cy="120" r="110" fill="#b35b2c" opacity=".18"/>
+  <circle cx="170" cy="520" r="150" fill="#20150f" opacity=".10"/>
+  <text x="50%" y="47%" text-anchor="middle" font-size="54" font-family="Arial" font-weight="800" fill="#20150f">صورة الطبق</text>
+  <text x="50%" y="57%" text-anchor="middle" font-size="25" font-family="Arial" fill="#7b6656">Menu Image</text>
+</svg>`);
+const fallbackImage = `data:image/svg+xml;charset=UTF-8,${fallbackSvg}`;
+
+function img(url){
+  return url + "?auto=format&fit=crop&w=1000&q=85";
+}
+
+const images = {
+  classicBurger: img("https://images.unsplash.com/photo-1568901346375-23c9450c58cd"),
+  cheeseburger: img("https://images.unsplash.com/photo-1550547660-d9450f859349"),
+  doubleCheese: img("https://images.unsplash.com/photo-1572802419224-296b0aeee0d9"),
+  bbqBurger: img("https://images.unsplash.com/photo-1550317138-10000687a72b"),
+  chickenBurger: img("https://images.unsplash.com/photo-1606755962773-d324e0a13086"),
+  mushroomBurger: img("https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5"),
+
+  margherita: img("https://images.unsplash.com/photo-1604382354936-07c5d9983bd3"),
+  pepperoni: img("https://images.unsplash.com/photo-1628840042765-356cda07504e"),
+  fourCheese: img("https://images.unsplash.com/photo-1513104890138-7c749659a591"),
+  bbqChickenPizza: img("https://images.unsplash.com/photo-1594007654729-407eedc4be65"),
+  meatPizza: img("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38"),
+  veggiePizza: img("https://images.unsplash.com/photo-1574071318508-1cdbab80d002"),
+
+  ribeye: img("https://images.unsplash.com/photo-1544025162-d76694265947"),
+  tbone: img("https://images.unsplash.com/photo-1558030006-450675393462"),
+  lambChops: img("https://images.unsplash.com/photo-1600891964092-4316c288032e"),
+  mixedGrill: img("https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba"),
+  kebab: img("https://images.unsplash.com/photo-1529563021893-cc83c992d75d"),
+  kofta: img("https://images.unsplash.com/photo-1603360946369-dc9bb6258143"),
+
+  grilledChicken: img("https://images.unsplash.com/photo-1532550907401-a500c9a57435"),
+  crispyChicken: img("https://images.unsplash.com/photo-1562967914-608f82629710"),
+  wings: img("https://images.unsplash.com/photo-1608039829572-78524f79c4c7"),
+  schnitzel: img("https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8"),
+  chickenWrap: img("https://images.unsplash.com/photo-1529006557810-274b9b2fc783"),
+  chickenSkewers: img("https://images.unsplash.com/photo-1529193591184-b1d58069ecdd"),
+
+  fries: img("https://images.unsplash.com/photo-1576107232684-1279f390859f"),
+  curlyFries: img("https://images.unsplash.com/photo-1630384060421-cb20d0e0649d"),
+  wedges: img("https://images.unsplash.com/photo-1623238913973-21e45cced554"),
+  garlicBread: img("https://images.unsplash.com/photo-1619531040576-f9416740661f"),
+  rice: img("https://images.unsplash.com/photo-1512058564366-18510be2db19"),
+  coleslaw: img("https://images.unsplash.com/photo-1547496502-affa22d38842"),
+
+  cola: img("https://images.unsplash.com/photo-1629203851122-3726ecdf080e"),
+  sprite: img("https://images.unsplash.com/photo-1581636625402-29b2a704ef13"),
+  fanta: img("https://images.unsplash.com/photo-1613478223719-2ab802602423"),
+  icedTea: img("https://images.unsplash.com/photo-1556679343-c7306c1976bc"),
+  orangeJuice: img("https://images.unsplash.com/photo-1600271886742-f049cd451bba"),
+  water: img("https://images.unsplash.com/photo-1559839734-2b71ea197ec2"),
+
+  cheesecake: img("https://images.unsplash.com/photo-1533134242443-d4fd215305ad"),
+  chocolateCake: img("https://images.unsplash.com/photo-1578985545062-69928b1d9587"),
+  brownie: img("https://images.unsplash.com/photo-1606313564200-e75d5e30476c"),
+  tiramisu: img("https://images.unsplash.com/photo-1571877227200-a0d98ea607e9"),
+  icecream: img("https://images.unsplash.com/photo-1563805042-7684c019e1cb"),
+  kunafa: img("https://images.unsplash.com/photo-1571115177098-24ec42ed204d")
+};
+
+const menu = {
+  البرغر:[
+    ["برغر كلاسيك","₺220","لحم بقري، خس، طماطم، وصوص خاص.",images.classicBurger],
+    ["تشيز برغر","₺250","لحم بقري، شيدر، مخلل، وصوص كريمي.",images.cheeseburger],
+    ["دبل تشيز","₺320","لحم مزدوج، شيدر مزدوج، وبصل مكرمل.",images.doubleCheese],
+    ["برغر باربكيو","₺290","لحم بقري، صوص باربكيو، وبصل مقرمش.",images.bbqBurger],
+    ["برغر دجاج","₺260","دجاج مقرمش، خس، ومايونيز بالثوم.",images.chickenBurger],
+    ["برغر الفطر","₺280","لحم بقري، كريمة الفطر، وجبنة شيدر.",images.mushroomBurger]
+  ],
+  البيتزا:[
+    ["مارغريتا","₺260","موزاريلا، صوص طماطم، وريحان طازج.",images.margherita],
+    ["بيبروني","₺320","بيبروني، موزاريلا، وصوص طماطم غني.",images.pepperoni],
+    ["أربع أجبان","₺340","خلطة أربع أجبان مع أطراف ذهبية.",images.fourCheese],
+    ["بيتزا دجاج باربكيو","₺350","دجاج، صوص باربكيو، وموزاريلا.",images.bbqChickenPizza],
+    ["بيتزا عشاق اللحم","₺390","لحم بقري، سجق، بيبروني، وموزاريلا.",images.meatPizza],
+    ["بيتزا نباتية","₺290","فطر، فلفل، زيتون، وذرة.",images.veggiePizza]
+  ],
+  المشاوي:[
+    ["ستيك ريب آي","₺780","ريب آي مشوي مع الزبدة والأعشاب.",images.ribeye],
+    ["ستيك تي بون","₺890","ستيك تي بون كبير مع خضار مشوية.",images.tbone],
+    ["ريش غنم","₺720","ريش غنم تقدم مع الأرز والفلفل.",images.lambChops],
+    ["مشاوي مشكلة","₺850","كباب، لحم غنم، دجاج، وكفتة.",images.mixedGrill],
+    ["كباب لحم","₺450","كباب لحم مشوي مع خبز لافاش وسلطة.",images.kebab],
+    ["كفتة","₺380","كفتة تركية مع بطاطس وسلطة.",images.kofta]
+  ],
+  الدجاج:[
+    ["دجاج مشوي","₺320","صدر دجاج مشوي مع الأرز والسلطة.",images.grilledChicken],
+    ["دجاج مقرمش","₺340","شرائح دجاج مقرمشة، بطاطس، وصوص خاص.",images.crispyChicken],
+    ["أجنحة دجاج","₺310","أجنحة حارة مع بطاطس وصوص رانش.",images.wings],
+    ["شنسل دجاج","₺350","شنسل مع بطاطس وليمون.",images.schnitzel],
+    ["راب دجاج","₺280","دجاج، خبز تورتيلا، صوص، وخس.",images.chickenWrap],
+    ["شيش دجاج","₺360","أسياخ دجاج مع الأرز والسلطة.",images.chickenSkewers]
+  ],
+  المقبلات:[
+    ["بطاطس مقلية","₺120","بطاطس ذهبية مقرمشة.",images.fries],
+    ["بطاطس كيرلي","₺140","بطاطس كيرلي متبلة.",images.curlyFries],
+    ["بطاطس ودجز","₺150","بطاطس ودجز حارة.",images.wedges],
+    ["خبز بالثوم","₺130","خبز محمص بزبدة الثوم.",images.garlicBread],
+    ["أرز","₺90","أرز طري بالزبدة.",images.rice],
+    ["سلطة كول سلو","₺80","ملفوف، جزر، وصوص كريمي.",images.coleslaw]
+  ],
+  المشروبات:[
+    ["كوكاكولا","₺70","مشروب بارد 330 مل.",images.cola],
+    ["سبرايت","₺70","مشروب بارد 330 مل.",images.sprite],
+    ["فانتا","₺70","مشروب بارد 330 مل.",images.fanta],
+    ["آيس تي","₺80","آيس تي خوخ أو ليمون.",images.icedTea],
+    ["عصير برتقال","₺120","عصير برتقال طازج.",images.orangeJuice],
+    ["مياه معدنية","₺40","مياه معدنية باردة.",images.water]
+  ],
+  الحلويات:[
+    ["تشيز كيك","₺180","قطعة تشيز كيك مع صوص الفواكه.",images.cheesecake],
+    ["كيك شوكولاتة","₺170","قطعة كيك شوكولاتة غنية.",images.chocolateCake],
+    ["براوني","₺160","براوني دافئ مع صوص الشوكولاتة.",images.brownie],
+    ["تيراميسو","₺190","حلوى كلاسيكية بكريمة القهوة.",images.tiramisu],
+    ["آيس كريم","₺130","فانيلا، شوكولاتة، أو فراولة.",images.icecream],
+    ["كنافة","₺220","كنافة ساخنة بالفستق.",images.kunafa]
+  ]
+};
+
+let activeCat = "البرغر";
+let activeIndex = 0;
+
+const desktopCats = document.getElementById("desktopCats");
+const mobileTabs = document.getElementById("mobileTabs");
+const products = document.getElementById("products");
+
+function makeCatButtons(target){
+  Object.keys(menu).forEach(cat=>{
+    const btn = document.createElement("button");
+    btn.className = "cat-btn" + (cat === activeCat ? " active" : "");
+    btn.innerHTML = `<span>${cat}</span><strong>${menu[cat].length}</strong>`;
+    btn.onclick = () => {
+      activeCat = cat;
+      activeIndex = 0;
+      updateCats();
+      renderAll();
+    };
+    target.appendChild(btn);
+  });
+}
+
+function updateCats(){
+  document.querySelectorAll(".cat-btn").forEach(btn=>{
+    const text = btn.querySelector("span").textContent;
+    btn.classList.toggle("active", text === activeCat);
+  });
+}
+
+function renderFeature(){
+  const item = menu[activeCat][activeIndex];
+  const feature = document.getElementById("feature");
+  feature.classList.remove("fade-in");
+  void feature.offsetWidth;
+  feature.classList.add("fade-in");
+
+  const featureImg = document.getElementById("featureImg");
+  featureImg.onerror = () => { featureImg.onerror = null; featureImg.src = fallbackImage; };
+  featureImg.src = item[3];
+  document.getElementById("featureCat").textContent = "اختيار من " + activeCat;
+  document.getElementById("featureName").textContent = item[0];
+  document.getElementById("featureDesc").textContent = item[2];
+  document.getElementById("featurePrice").textContent = item[1];
+
+  document.getElementById("orderBtn").onclick = () => {
+    window.location.href = `https://wa.me/905555555555?text=${encodeURIComponent("مرحبا، أريد طلب: " + item[0] + " - " + item[1])}`;
+  };
+}
+
+function renderProducts(){
+  products.innerHTML = "";
+  menu[activeCat].forEach((item,i)=>{
+    const card = document.createElement("button");
+    card.className = "card fade-in" + (i === activeIndex ? " active" : "");
+    card.style.animationDelay = `${i*55}ms`;
+    card.innerHTML = `
+      <div class="card-img"><img src="${item[3]}" alt="${item[0]}" loading="lazy" onerror="this.onerror=null;this.src=fallbackImage;"></div>
+      <div class="card-body">
+        <h3>${item[0]}</h3>
+        <p>${item[2]}</p>
+        <div class="card-price">${item[1]}</div>
+      </div>
+    `;
+    card.onclick = () => {
+      activeIndex = i;
+      renderFeature();
+      renderProducts();
+      showToast("تم اختيار " + item[0]);
+      if(window.innerWidth < 700){
+        document.getElementById("feature").scrollIntoView({behavior:"smooth", block:"start"});
+      }
+    };
+    products.appendChild(card);
+  });
+}
+
+function renderAll(){
+  renderFeature();
+  renderProducts();
+}
+
+function showToast(text){
+  const toast = document.getElementById("toast");
+  toast.textContent = text;
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),1200);
+}
+
+makeCatButtons(desktopCats);
+makeCatButtons(mobileTabs);
+renderAll();
+</script>
+
+</body>
+</html>

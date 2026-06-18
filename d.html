@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Premium 3D Restaurant Menu</title>
+
+<style>
+:root{
+  --bg:#fff8ef;
+  --dark:#17100b;
+  --muted:#7c6657;
+  --orange:#ff6b00;
+  --orange2:#ff9f1c;
+  --cream:#fff3df;
+  --line:rgba(0,0,0,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:radial-gradient(circle at 10% 0%,#ffe0af 0,#fff8ef 34%,#fff 82%);
+  color:var(--dark);
+  overflow-x:hidden;
+}
+a{text-decoration:none;color:inherit}
+button,input{font-family:inherit}
+.nav{
+  position:sticky;
+  top:0;
+  z-index:99;
+  padding:12px 14px;
+  background:rgba(255,248,239,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.logo{font-size:20px;font-weight:1000;white-space:nowrap}
+.logo span{color:var(--orange)}
+.nav-links{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  flex:0 0 auto;
+  background:#fff;
+  border:1px solid var(--line);
+  padding:10px 14px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:900;
+  box-shadow:0 8px 22px rgba(0,0,0,.04);
+}
+.hero{
+  min-height:86vh;
+  padding:48px 18px 30px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+}
+.badge{
+  display:inline-flex;
+  padding:9px 18px;
+  border-radius:999px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--orange),var(--orange2));
+  font-weight:1000;
+  margin-bottom:18px;
+  box-shadow:0 18px 40px rgba(255,107,0,.28);
+}
+h1{
+  max-width:920px;
+  margin:auto;
+  font-size:clamp(42px,11vw,96px);
+  line-height:.9;
+  letter-spacing:-4px;
+}
+.hero p{
+  max-width:620px;
+  margin:18px auto 28px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.6;
+}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{
+  border:0;
+  cursor:pointer;
+  border-radius:999px;
+  padding:15px 22px;
+  font-weight:1000;
+  color:white;
+  background:var(--dark);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:48px;
+}
+.btn.orange{background:linear-gradient(135deg,var(--orange),var(--orange2))}
+.section{padding:58px 18px}
+.wrap{max-width:1180px;margin:auto}
+.section-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:22px;
+}
+.section-title{
+  font-size:clamp(34px,8vw,62px);
+  letter-spacing:-2px;
+  line-height:.95;
+}
+.section-title span{color:var(--orange)}
+.section-sub{color:var(--muted);max-width:430px;line-height:1.55}
+.menu-block{
+  display:grid;
+  grid-template-columns:430px 1fr;
+  gap:24px;
+  align-items:center;
+  background:rgba(255,255,255,.62);
+  border:1px solid var(--line);
+  border-radius:36px;
+  padding:22px;
+  box-shadow:0 30px 80px rgba(90,45,0,.08);
+  overflow:hidden;
+}
+.stage{
+  min-height:470px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  perspective:1100px;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 50% 28%,rgba(255,107,0,.34),transparent 30%),
+    linear-gradient(145deg,#fff,#ffe6c8);
+  position:relative;
+  overflow:hidden;
+}
+.stage:after{
+  content:"";
+  position:absolute;
+  inset:auto -40px -90px -40px;
+  height:170px;
+  background:radial-gradient(ellipse,rgba(0,0,0,.16),transparent 65%);
+  filter:blur(10px);
+}
+.featured{
+  width:min(330px,86vw);
+  min-height:405px;
+  position:relative;
+  transform-style:preserve-3d;
+  animation:float 4.4s ease-in-out infinite;
+  will-change:transform;
+  z-index:2;
+}
+.photo-frame{
+  width:100%;
+  height:255px;
+  border-radius:34px;
+  overflow:hidden;
+  background:#fff;
+  border:8px solid rgba(255,255,255,.82);
+  box-shadow:0 30px 50px rgba(0,0,0,.18);
+  transform:translateZ(75px) rotate(-1deg);
+}
+.photo-frame img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transform:scale(1.04);
+  transition:transform .45s ease, opacity .25s ease;
+}
+.featured:hover .photo-frame img{transform:scale(1.08)}
+.feature-info{
+  position:absolute;
+  left:8px;
+  right:8px;
+  bottom:0;
+  padding:20px;
+  border-radius:30px;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:0 22px 40px rgba(0,0,0,.1);
+  transform:translateZ(45px);
+}
+.feature-info h3{font-size:28px;line-height:1.05;letter-spacing:-.7px}
+.feature-info p{color:var(--muted);margin:8px 0;line-height:1.45;font-size:14px}
+.feature-price{font-size:28px;font-weight:1000;color:var(--orange)}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.product-btn{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:22px;
+  padding:14px;
+  text-align:left;
+  cursor:pointer;
+  transition:transform .22s ease, background .22s ease, color .22s ease, box-shadow .22s ease;
+  box-shadow:0 14px 30px rgba(0,0,0,.04);
+  min-height:76px;
+}
+.product-btn:hover,.product-btn.active{
+  background:var(--dark);
+  color:#fff;
+  transform:translateY(-3px) scale(1.01);
+  box-shadow:0 18px 38px rgba(0,0,0,.14);
+}
+.product-btn strong{display:block;font-size:16px;margin-bottom:6px;line-height:1.15}
+.product-btn span{font-size:18px;font-weight:1000;color:var(--orange)}
+.product-btn.active span,.product-btn:hover span{color:#ffb45c}
+.order-row{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
+.whatsapp{
+  position:fixed;
+  right:14px;
+  bottom:14px;
+  z-index:100;
+  background:#24d366;
+  color:white;
+  padding:14px 17px;
+  border-radius:999px;
+  font-weight:1000;
+  box-shadow:0 18px 40px rgba(36,211,102,.35);
+}
+.pop{animation:pop .44s cubic-bezier(.2,.9,.2,1)}
+@keyframes float{
+  0%,100%{transform:rotateY(-10deg) rotateX(5deg) translateY(0)}
+  50%{transform:rotateY(10deg) rotateX(-4deg) translateY(-14px)}
+}
+@keyframes pop{
+  from{opacity:.7;transform:scale(.92) rotateY(28deg)}
+  to{opacity:1;transform:scale(1)}
+}
+@media(max-width:900px){
+  .section-head{display:block}
+  .section-sub{margin-top:10px}
+  .menu-block{grid-template-columns:1fr}
+  .stage{min-height:430px}
+}
+@media(max-width:560px){
+  body{background:linear-gradient(180deg,#fff4e4,#fff)}
+  .nav{padding:10px 12px}
+  .nav-inner{align-items:flex-start;flex-direction:column;gap:10px}
+  .nav-links{width:100%;padding-bottom:3px}
+  .nav-links a{font-size:12px;padding:9px 12px}
+  .hero{min-height:76vh;padding:38px 14px 20px}
+  h1{letter-spacing:-2px;font-size:clamp(40px,13vw,58px)}
+  .hero p{font-size:15.5px;line-height:1.55;margin-top:14px}
+  .hero-actions .btn{width:100%;max-width:330px}
+  .section{padding:40px 12px}
+  .section-title{letter-spacing:-1.5px}
+  .menu-block{padding:12px;border-radius:28px;gap:14px}
+  .stage{min-height:375px;border-radius:22px}
+  .featured{width:min(286px,88vw);min-height:345px;animation:mobileFloat 4.2s ease-in-out infinite}
+  .photo-frame{height:205px;border-radius:28px;border-width:6px;box-shadow:0 20px 36px rgba(0,0,0,.18)}
+  .feature-info{left:4px;right:4px;padding:15px;border-radius:24px}
+  .feature-info h3{font-size:22px}
+  .feature-info p{font-size:13px;margin:6px 0}
+  .feature-price{font-size:23px}
+  .products{grid-template-columns:1fr 1fr;gap:9px}
+  .product-btn{border-radius:18px;padding:12px;min-height:72px}
+  .product-btn strong{font-size:13.5px}
+  .product-btn span{font-size:15.5px}
+  .order-row .btn{flex:1 1 100%}
+  .whatsapp{right:12px;bottom:12px;padding:13px 15px;font-size:13px}
+}
+@media(max-width:370px){
+  .products{grid-template-columns:1fr}
+  .stage{min-height:365px}
+  .featured{width:265px}
+}
+@keyframes mobileFloat{
+  0%,100%{transform:rotateY(-6deg) rotateX(3deg) translateY(0)}
+  50%{transform:rotateY(6deg) rotateX(-2deg) translateY(-10px)}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body id="top">
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo">Taste<span>3D</span> Menu</div>
+    <div class="nav-links">
+      <a href="#burgers">Burgers</a>
+      <a href="#pizza">Pizza</a>
+      <a href="#meat">Meat</a>
+      <a href="#chicken">Chicken</a>
+      <a href="#sides">Sides</a>
+      <a href="#drinks">Drinks</a>
+      <a href="#desserts">Desserts</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <div class="badge">Premium Mobile Restaurant Menu</div>
+    <h1>Animated 3D food menu for your restaurant</h1>
+    <p>Tap any product. The selected meal becomes big, clean, animated and shown with price plus ingredients.</p>
+    <div class="hero-actions">
+      <a class="btn orange" href="#burgers">View Menu</a>
+      <a class="btn" href="https://wa.me/905555555555">Order on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<main id="menu"></main>
+<a class="whatsapp" href="https://wa.me/905555555555">WhatsApp Order</a>
+
+<script>
+const fallbackSvg = (name) => {
+  const safe = String(name || "Food").replace(/[&<>"']/g, "");
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620">
+      <defs>
+        <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stop-color="#ff9f1c"/>
+          <stop offset="100%" stop-color="#ff6b00"/>
+        </linearGradient>
+      </defs>
+      <rect width="900" height="620" rx="46" fill="#fff3df"/>
+      <circle cx="725" cy="115" r="130" fill="url(#g)" opacity=".22"/>
+      <circle cx="145" cy="500" r="170" fill="url(#g)" opacity=".18"/>
+      <text x="50%" y="46%" text-anchor="middle" font-family="Arial, sans-serif" font-size="52" font-weight="900" fill="#17100b">Taste3D</text>
+      <text x="50%" y="57%" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#7c6657">${safe}</text>
+    </svg>
+  `);
+};
+
+const productImages = {
+  "Classic Burger":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85",
+  "Cheese Burger":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=85",
+  "Double Cheese Burger":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=85",
+  "BBQ Burger":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=85",
+  "Crispy Chicken Burger":"https://images.unsplash.com/photo-1606755962773-d324e7a7a7e9?auto=format&fit=crop&w=900&q=85",
+  "Mushroom Burger":"https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=900&q=85",
+
+  "Margherita":"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=85",
+  "Pepperoni":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=85",
+  "Four Cheese":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=85",
+  "BBQ Chicken":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85",
+  "Meat Lovers":"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=85",
+  "Vegetarian":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85",
+
+  "Ribeye Steak":"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85",
+  "T-Bone Steak":"https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=85",
+  "Lamb Chops":"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=85",
+  "Mixed Grill":"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=85",
+  "Beef Kebab":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=85",
+  "Meatballs":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=85",
+
+  "Grilled Chicken":"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=85",
+  "Crispy Chicken":"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=85",
+  "Chicken Wings":"https://images.unsplash.com/photo-1608039755401-742074f0548d?auto=format&fit=crop&w=900&q=85",
+  "Chicken Schnitzel":"https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=900&q=85",
+  "Chicken Wrap":"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=85",
+  "Chicken Kebab":"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=85",
+
+  "French Fries":"https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=900&q=85",
+  "Curly Fries":"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=900&q=85",
+  "Potato Wedges":"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=900&q=85",
+  "Garlic Bread":"https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=85",
+  "Rice":"https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=85",
+  "Coleslaw":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=85",
+
+  "Coca-Cola":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=85",
+  "Sprite":"https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=900&q=85",
+  "Fanta":"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=85",
+  "Ice Tea":"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=900&q=85",
+  "Fresh Orange Juice":"https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=900&q=85",
+  "Mineral Water":"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=900&q=85",
+
+  "Cheesecake":"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=85",
+  "Chocolate Cake":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85",
+  "Brownie":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
+  "Tiramisu":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85",
+  "Ice Cream":"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=85",
+  "Kunafa":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85"
+};
+
+function getProductImage(productName){
+  return productImages[productName] || fallbackSvg(productName);
+}
+
+const categories = [
+  {id:"burgers", title:"Burgers", icon:"🍔", sub:"Classic, cheese and special burgers with premium 3D product switching.", products:[
+    ["Classic Burger","₺220","Beef patty, lettuce, tomato, special sauce"],
+    ["Cheese Burger","₺250","Beef patty, cheddar, pickles, burger sauce"],
+    ["Double Cheese Burger","₺320","Double beef, double cheddar, caramelized onion"],
+    ["BBQ Burger","₺290","Beef patty, BBQ sauce, crispy onion"],
+    ["Crispy Chicken Burger","₺260","Crispy chicken, mayo, lettuce"],
+    ["Mushroom Burger","₺280","Beef patty, mushroom sauce, cheddar"]]},
+  {id:"pizza", title:"Pizza", icon:"🍕", sub:"Hot stone-style pizzas with animated featured product cards.", products:[
+    ["Margherita","₺260","Mozzarella, tomato sauce, basil"],
+    ["Pepperoni","₺320","Pepperoni, mozzarella, tomato sauce"],
+    ["Four Cheese","₺340","Mozzarella, parmesan, cheddar, blue cheese"],
+    ["BBQ Chicken","₺350","Chicken, BBQ sauce, mozzarella"],
+    ["Meat Lovers","₺390","Beef, sausage, pepperoni, mozzarella"],
+    ["Vegetarian","₺290","Mushroom, pepper, olive, corn"]]},
+  {id:"meat", title:"Meat & Grill", icon:"🥩", sub:"Premium grilled meat section for steak, kebab and mixed plates.", products:[
+    ["Ribeye Steak","₺780","Grilled ribeye, butter, herbs"],
+    ["T-Bone Steak","₺890","Large T-bone steak, grilled vegetables"],
+    ["Lamb Chops","₺720","Lamb chops, rice, grilled pepper"],
+    ["Mixed Grill","₺850","Kebab, lamb, chicken, meatballs"],
+    ["Beef Kebab","₺450","Grilled beef kebab, lavash, salad"],
+    ["Meatballs","₺380","Turkish köfte, fries, salad"]]},
+  {id:"chicken", title:"Chicken", icon:"🍗", sub:"Chicken meals for grilled, crispy, wings and wraps.", products:[
+    ["Grilled Chicken","₺320","Grilled chicken breast, rice, salad"],
+    ["Crispy Chicken","₺340","Crispy strips, fries, sauce"],
+    ["Chicken Wings","₺310","Spicy wings, fries, ranch sauce"],
+    ["Chicken Schnitzel","₺350","Schnitzel, fries, lemon"],
+    ["Chicken Wrap","₺280","Chicken, tortilla, sauce, lettuce"],
+    ["Chicken Kebab","₺360","Chicken skewers, rice, salad"]]},
+  {id:"sides", title:"Sides", icon:"🍟", sub:"Small plates and side products to complete every order.", products:[
+    ["French Fries","₺120","Golden crispy fries"],
+    ["Curly Fries","₺140","Seasoned curly fries"],
+    ["Potato Wedges","₺150","Spicy potato wedges"],
+    ["Garlic Bread","₺130","Toasted bread, garlic butter"],
+    ["Rice","₺90","Butter rice"],
+    ["Coleslaw","₺80","Cabbage, carrot, creamy sauce"]]},
+  {id:"drinks", title:"Drinks", icon:"🥤", sub:"Cold drinks, juices and water shown in the same animated style.", products:[
+    ["Coca-Cola","₺70","Cold 330ml drink"],
+    ["Sprite","₺70","Cold 330ml drink"],
+    ["Fanta","₺70","Cold 330ml drink"],
+    ["Ice Tea","₺80","Peach or lemon ice tea"],
+    ["Fresh Orange Juice","₺120","Fresh squeezed orange juice"],
+    ["Mineral Water","₺40","Cold mineral water"]]},
+  {id:"desserts", title:"Desserts", icon:"🍰", sub:"Sweet dessert section with cakes, brownie, tiramisu and kunafa.", products:[
+    ["Cheesecake","₺180","Slice cheesecake with fruit sauce"],
+    ["Chocolate Cake","₺170","Rich chocolate cake"],
+    ["Brownie","₺160","Warm brownie, chocolate sauce"],
+    ["Tiramisu","₺190","Coffee cream dessert"],
+    ["Ice Cream","₺130","Vanilla, chocolate or strawberry"],
+    ["Kunafa","₺220","Hot kunafa with pistachio"]]}
+];
+
+const menu = document.getElementById("menu");
+
+categories.forEach(cat => {
+  const firstProduct = cat.products[0];
+  const section = document.createElement("section");
+  section.className = "section";
+  section.id = cat.id;
+  section.innerHTML = `
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="section-title">${cat.icon} ${cat.title}<br><span>Menu</span></h2>
+        <p class="section-sub">${cat.sub}</p>
+      </div>
+      <div class="menu-block" data-category="${cat.id}">
+        <div class="stage">
+          <div class="featured">
+            <div class="photo-frame">
+              <img class="featured-img" src="${getProductImage(firstProduct[0])}" alt="${firstProduct[0]}" loading="lazy" onerror="this.onerror=null;this.src=fallbackSvg(this.alt);">
+            </div>
+            <div class="feature-info">
+              <h3 class="featured-name">${firstProduct[0]}</h3>
+              <p class="featured-desc">${firstProduct[2]}</p>
+              <div class="feature-price">${firstProduct[1]}</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="products">
+            ${cat.products.map((p,i)=>`
+              <button class="product-btn ${i===0?'active':''}" data-index="${i}">
+                <strong>${p[0]}</strong>
+                <span>${p[1]}</span>
+              </button>
+            `).join("")}
+          </div>
+          <div class="order-row">
+            <a class="btn orange" href="https://wa.me/905555555555?text=Hello, I want to order from ${cat.title} menu">Order ${cat.title}</a>
+            <a class="btn" href="#top">Back to Top</a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  menu.appendChild(section);
+});
+
+document.querySelectorAll(".menu-block").forEach(block => {
+  const catId = block.dataset.category;
+  const cat = categories.find(c => c.id === catId);
+  const img = block.querySelector(".featured-img");
+  const name = block.querySelector(".featured-name");
+  const desc = block.querySelector(".featured-desc");
+  const price = block.querySelector(".feature-price");
+  const featured = block.querySelector(".featured");
+  const buttons = block.querySelectorAll(".product-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const index = Number(btn.dataset.index);
+      const product = cat.products[index];
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      featured.classList.remove("pop");
+      void featured.offsetWidth;
+      featured.classList.add("pop");
+      img.style.opacity = "0";
+      setTimeout(() => {
+        img.src = getProductImage(product[0]);
+        img.alt = product[0];
+        img.onerror = function(){
+          this.onerror = null;
+          this.src = fallbackSvg(product[0]);
+        };
+        img.style.opacity = "1";
+      }, 120);
+      name.textContent = product[0];
+      desc.textContent = product[2];
+      price.textContent = product[1];
+    });
+  });
+
+  block.addEventListener("mousemove", e => {
+    if(window.innerWidth < 900) return;
+    const rect = block.getBoundingClientRect();
+    const x = (e.clientX - rect.left - rect.width/2) / 45;
+    const y = (e.clientY - rect.top - rect.height/2) / 45;
+    featured.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+  });
+
+  block.addEventListener("mouseleave", () => {
+    featured.style.transform = "";
+  });
+});
+</script>
+</body>
+</html>

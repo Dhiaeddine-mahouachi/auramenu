@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Restaurant Menu App</title>
+
+<style>
+:root{
+  --bg:#0f0d0a;
+  --panel:#191510;
+  --panel2:#241d15;
+  --text:#fff7ed;
+  --muted:#b9a997;
+  --gold:#ffb545;
+  --red:#ff4d2e;
+  --green:#35d07f;
+  --radius:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% -10%,rgba(255,181,69,.28),transparent 35%),
+    radial-gradient(circle at 100% 20%,rgba(255,77,46,.18),transparent 32%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+img{display:block;width:100%}
+.app{
+  max-width:560px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:96px;
+}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:16px;
+  background:linear-gradient(to bottom,rgba(15,13,10,.96),rgba(15,13,10,.75),transparent);
+  backdrop-filter:blur(16px);
+}
+.brand-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:16px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:1000;
+  letter-spacing:-.5px;
+}
+.logo-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:linear-gradient(145deg,var(--gold),var(--red));
+  box-shadow:0 14px 38px rgba(255,115,40,.35);
+}
+.cart{
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.08);
+  color:white;
+  border-radius:999px;
+  padding:12px 15px;
+  font-weight:900;
+}
+.search{
+  width:100%;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.08);
+  color:white;
+  padding:16px 18px;
+  border-radius:22px;
+  outline:none;
+  font-size:16px;
+}
+.search::placeholder{color:#8d8174}
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:14px 16px 4px;
+  scrollbar-width:none;
+}
+.categories::-webkit-scrollbar{display:none}
+.cat{
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.07);
+  color:var(--text);
+  padding:12px 15px;
+  border-radius:999px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s ease;
+}
+.cat.active{
+  color:#1b1008;
+  background:linear-gradient(135deg,var(--gold),#ffe0a2);
+  transform:translateY(-2px);
+}
+.hero{
+  padding:16px;
+}
+.hero-card{
+  min-height:270px;
+  border-radius:36px;
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,rgba(255,181,69,.25),rgba(255,77,46,.12)),
+    var(--panel);
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+.hero-card:before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  right:-90px;
+  top:-60px;
+  border-radius:50%;
+  background:rgba(255,181,69,.23);
+  filter:blur(2px);
+}
+.hero-card h1{
+  position:relative;
+  z-index:2;
+  max-width:310px;
+  font-size:44px;
+  line-height:.92;
+  letter-spacing:-2px;
+}
+.hero-card p{
+  position:relative;
+  z-index:2;
+  max-width:270px;
+  margin-top:12px;
+  color:var(--muted);
+  line-height:1.5;
+}
+.hero-floating{
+  position:absolute;
+  right:-28px;
+  bottom:-34px;
+  width:250px;
+  height:190px;
+  border-radius:36px;
+  overflow:hidden;
+  transform:rotate(-10deg);
+  box-shadow:0 28px 45px rgba(0,0,0,.35);
+  animation:heroFloat 4.5s ease-in-out infinite;
+}
+.hero-floating img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.section-head{
+  padding:18px 16px 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+}
+.section-head h2{
+  font-size:28px;
+  letter-spacing:-1px;
+}
+.section-head span{color:var(--muted);font-size:14px;font-weight:800}
+.grid{
+  padding:8px 16px 22px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+.food-card{
+  position:relative;
+  min-height:156px;
+  border-radius:30px;
+  background:linear-gradient(145deg,var(--panel),var(--panel2));
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:132px 1fr;
+  gap:14px;
+  align-items:center;
+  padding:12px;
+  cursor:pointer;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 20px 50px rgba(0,0,0,.18);
+}
+.food-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(255,181,69,.34);
+}
+.food-img{
+  width:132px;
+  height:132px;
+  border-radius:24px;
+  overflow:hidden;
+  transform:rotate(-3deg);
+  transition:.35s ease;
+}
+.food-card:hover .food-img{transform:rotate(0) scale(1.04)}
+.food-img img{
+  height:100%;
+  object-fit:cover;
+}
+.food-info h3{
+  font-size:20px;
+  letter-spacing:-.4px;
+  margin-bottom:7px;
+}
+.food-info p{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.35;
+  margin-bottom:13px;
+}
+.price-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.price{
+  color:var(--gold);
+  font-size:22px;
+  font-weight:1000;
+}
+.plus{
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--gold),var(--red));
+  color:white;
+  font-size:24px;
+  font-weight:900;
+}
+.sheet{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  z-index:200;
+  width:min(560px,100%);
+  transform:translate(-50%,110%);
+  background:#fff7ed;
+  color:#1a120c;
+  border-radius:34px 34px 0 0;
+  box-shadow:0 -30px 90px rgba(0,0,0,.5);
+  transition:.42s cubic-bezier(.2,.9,.2,1);
+  overflow:hidden;
+}
+.sheet.show{transform:translate(-50%,0)}
+.sheet-img{
+  height:300px;
+  overflow:hidden;
+  border-radius:34px 34px 0 0;
+}
+.sheet-img img{
+  height:100%;
+  object-fit:cover;
+  animation:zoomIn .5s ease both;
+}
+.close{
+  position:absolute;
+  right:16px;
+  top:16px;
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+  color:white;
+  font-size:24px;
+}
+.sheet h2{
+  font-size:32px;
+  letter-spacing:-1px;
+}
+.sheet p{
+  color:#6b5848;
+  margin:10px 0 16px;
+  line-height:1.5;
+}
+.sheet-price{
+  font-size:32px;
+  color:#ff5a21;
+  font-weight:1000;
+}
+.order-btn{
+  width:100%;
+  margin-top:18px;
+  border:0;
+  padding:17px;
+  border-radius:20px;
+  background:#15100c;
+  color:white;
+  font-size:17px;
+  font-weight:1000;
+}
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  z-index:90;
+  width:min(520px,calc(100% - 28px));
+  display:flex;
+  justify-content:space-around;
+  background:rgba(25,21,16,.9);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(18px);
+  border-radius:26px;
+  padding:10px;
+  box-shadow:0 22px 60px rgba(0,0,0,.34);
+}
+.bottom-nav a{
+  text-decoration:none;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+}
+.bottom-nav b{
+  display:block;
+  font-size:19px;
+  margin-bottom:2px;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(24px) scale(.98);
+  animation:reveal .55s ease forwards;
+}
+@keyframes reveal{
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes heroFloat{
+  0%,100%{transform:rotate(-10deg) translateY(0)}
+  50%{transform:rotate(-4deg) translateY(-14px)}
+}
+@keyframes zoomIn{
+  from{transform:scale(1.08)}
+  to{transform:scale(1)}
+}
+@media(min-width:760px){
+  .app{max-width:1180px}
+  .topbar{border-radius:0 0 30px 30px}
+  .hero-card{min-height:380px}
+  .hero-card h1{font-size:76px;max-width:590px}
+  .hero-card p{font-size:18px;max-width:440px}
+  .hero-floating{width:410px;height:310px;right:28px;bottom:-30px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:390px){
+  .food-card{grid-template-columns:112px 1fr}
+  .food-img{width:112px;height:112px;border-radius:21px}
+  .food-info h3{font-size:18px}
+  .food-info p{font-size:12px}
+  .sheet-img{height:250px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand-row">
+      <div class="logo"><div class="logo-icon">🍽️</div> Nova Menu</div>
+      <button class="cart">🛒 0</button>
+    </div>
+    <input class="search" id="search" placeholder="Search burger, pizza, steak..." />
+  </header>
+
+  <nav class="categories" id="categories"></nav>
+
+  <section class="hero">
+    <div class="hero-card">
+      <h1>Fresh food, fast order.</h1>
+      <p>A completely new animated restaurant menu design made for mobile-first ordering.</p>
+      <div class="hero-floating">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80" alt="Food">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2 id="currentTitle">Burgers</h2>
+      <span>Tap product</span>
+    </div>
+    <div class="grid" id="products"></div>
+  </section>
+</div>
+
+<div class="sheet" id="sheet">
+  <button class="close" onclick="closeSheet()">×</button>
+  <div class="sheet-img"><img id="sheetImg" src="" alt=""></div>
+  <div class="sheet-content">
+    <h2 id="sheetName"></h2>
+    <p id="sheetDesc"></p>
+    <div class="sheet-price" id="sheetPrice"></div>
+    <button class="order-btn" id="orderBtn">Order on WhatsApp</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="#"><b>🏠</b>Home</a>
+  <a href="#products"><b>🍔</b>Menu</a>
+  <a href="https://wa.me/905555555555"><b>💬</b>Order</a>
+</nav>
+
+<script>
+const data = {
+  Burgers:[
+    ["Classic Burger","₺220","Beef patty, lettuce, tomato, special sauce","https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80"],
+    ["Cheese Burger","₺250","Beef patty, cheddar cheese, pickles, burger sauce","https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"],
+    ["Double Cheese","₺320","Double beef, double cheddar, onion, special sauce","https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=900&q=80"],
+    ["BBQ Burger","₺290","Beef patty, BBQ sauce, crispy onion","https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80"],
+    ["Crispy Chicken Burger","₺260","Crispy chicken, mayo, lettuce","https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80"],
+    ["Mushroom Burger","₺280","Beef patty, mushroom sauce, cheddar","https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=900&q=80"]
+  ],
+  Pizza:[
+    ["Margherita","₺260","Mozzarella, tomato sauce, basil","https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80"],
+    ["Pepperoni","₺320","Pepperoni, mozzarella, tomato sauce","https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80"],
+    ["Four Cheese","₺340","Mozzarella, parmesan, cheddar, blue cheese","https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80"],
+    ["BBQ Chicken","₺350","Chicken, BBQ sauce, mozzarella","https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"],
+    ["Meat Lovers","₺390","Beef, sausage, pepperoni, mozzarella","https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80"],
+    ["Vegetarian","₺290","Mushroom, pepper, olive, corn","https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=900&q=80"]
+  ],
+  Meat:[
+    ["Ribeye Steak","₺780","Grilled ribeye, butter, herbs","https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80"],
+    ["T-Bone Steak","₺890","Large T-bone steak, grilled vegetables","https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80"],
+    ["Lamb Chops","₺720","Lamb chops, rice, grilled pepper","https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"],
+    ["Mixed Grill","₺850","Kebab, lamb, chicken, meatballs","https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80"],
+    ["Beef Kebab","₺450","Grilled beef kebab, lavash, salad","https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=80"],
+    ["Meatballs","₺380","Turkish köfte, fries, salad","https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=80"]
+  ],
+  Chicken:[
+    ["Grilled Chicken","₺320","Grilled chicken breast, rice, salad","https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80"],
+    ["Crispy Chicken","₺340","Crispy strips, fries, sauce","https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=900&q=80"],
+    ["Chicken Wings","₺310","Spicy wings, fries, ranch sauce","https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=900&q=80"],
+    ["Chicken Schnitzel","₺350","Schnitzel, fries, lemon","https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=900&q=80"],
+    ["Chicken Wrap","₺280","Chicken, tortilla, sauce, lettuce","https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80"],
+    ["Chicken Kebab","₺360","Chicken skewers, rice, salad","https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80"]
+  ],
+  Sides:[
+    ["French Fries","₺120","Golden crispy fries","https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80"],
+    ["Curly Fries","₺140","Seasoned curly fries","https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=900&q=80"],
+    ["Potato Wedges","₺150","Spicy potato wedges","https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=900&q=80"],
+    ["Garlic Bread","₺130","Toasted bread, garlic butter","https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=80"],
+    ["Rice","₺90","Butter rice","https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80"],
+    ["Coleslaw","₺80","Cabbage, carrot, creamy sauce","https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80"]
+  ],
+  Drinks:[
+    ["Coca-Cola","₺70","Cold 330ml drink","https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80"],
+    ["Sprite","₺70","Cold 330ml drink","https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80"],
+    ["Fanta","₺70","Cold 330ml drink","https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=900&q=80"],
+    ["Ice Tea","₺80","Peach or lemon ice tea","https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80"],
+    ["Fresh Orange Juice","₺120","Fresh squeezed orange juice","https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=900&q=80"],
+    ["Mineral Water","₺40","Cold mineral water","https://images.unsplash.com/photo-1616118132534-381148898bb4?auto=format&fit=crop&w=900&q=80"]
+  ],
+  Desserts:[
+    ["Cheesecake","₺180","Slice cheesecake with fruit sauce","https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=80"],
+    ["Chocolate Cake","₺170","Rich chocolate cake","https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80"],
+    ["Brownie","₺160","Warm brownie, chocolate sauce","https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"],
+    ["Tiramisu","₺190","Coffee cream dessert","https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80"],
+    ["Ice Cream","₺130","Vanilla, chocolate or strawberry","https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=80"],
+    ["Kunafa","₺220","Hot kunafa with pistachio","https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=900&q=80"]
+  ]
+};
+
+let activeCategory = "Burgers";
+let cartCount = 0;
+
+const categoriesEl = document.getElementById("categories");
+const productsEl = document.getElementById("products");
+const titleEl = document.getElementById("currentTitle");
+const searchEl = document.getElementById("search");
+
+Object.keys(data).forEach((cat,i)=>{
+  const btn = document.createElement("button");
+  btn.className = "cat" + (i===0 ? " active" : "");
+  btn.textContent = cat;
+
+  btn.onclick = () => {
+    activeCategory = cat;
+    document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    searchEl.value = "";
+    renderProducts(data[cat], activeCategory);
+  };
+
+  categoriesEl.appendChild(btn);
+});
+
+function renderProducts(list, title = activeCategory){
+  titleEl.textContent = title;
+  productsEl.innerHTML = "";
+
+  list.forEach((p,i)=>{
+    const card = document.createElement("article");
+    card.className = "food-card reveal";
+    card.style.animationDelay = `${i*65}ms`;
+
+    card.innerHTML = `
+      <div class="food-img">
+        <img src="${p[3]}" alt="${p[0]}" loading="lazy">
+      </div>
+
+      <div class="food-info">
+        <h3>${p[0]}</h3>
+        <p>${p[2]}</p>
+
+        <div class="price-row">
+          <div class="price">${p[1]}</div>
+          <button class="plus" aria-label="Add">+</button>
+        </div>
+      </div>
+    `;
+
+    card.onclick = () => openSheet(p);
+    productsEl.appendChild(card);
+  });
+}
+
+function openSheet(p){
+  document.getElementById("sheetImg").src = p[3];
+  document.getElementById("sheetImg").alt = p[0];
+  document.getElementById("sheetName").textContent = p[0];
+  document.getElementById("sheetDesc").textContent = p[2];
+  document.getElementById("sheetPrice").textContent = p[1];
+
+  document.getElementById("orderBtn").onclick = () => {
+    cartCount++;
+    document.querySelector(".cart").textContent = `🛒 ${cartCount}`;
+    window.location.href = `https://wa.me/905555555555?text=Hello, I want to order ${encodeURIComponent(p[0] + " " + p[1])}`;
+  };
+
+  document.getElementById("sheet").classList.add("show");
+}
+
+function closeSheet(){
+  document.getElementById("sheet").classList.remove("show");
+}
+
+searchEl.addEventListener("input",()=>{
+  const q = searchEl.value.toLowerCase().trim();
+  const all = Object.values(data).flat();
+
+  const filtered = q
+    ? all.filter(p =>
+        p[0].toLowerCase().includes(q) ||
+        p[2].toLowerCase().includes(q)
+      )
+    : data[activeCategory];
+
+  renderProducts(filtered, q ? "Search Results" : activeCategory);
+});
+
+renderProducts(data[activeCategory], activeCategory);
+</script>
+
+</body>
+</html>

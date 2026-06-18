@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>قائمة المطعم</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900;1000&family=Tajawal:wght@400;700;800;900&display=swap');
+:root{
+  --bg:#f4f7fb;
+  --ink:#101828;
+  --muted:#667085;
+  --glass:rgba(255,255,255,.72);
+  --line:rgba(16,24,40,.09);
+  --blue:#315efb;
+  --pink:#ff4fa3;
+  --lime:#9cff4f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  direction:rtl;
+  text-align:right;
+  font-family:'Tajawal','Cairo',Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(49,94,251,.22),transparent 32%),
+    radial-gradient(circle at 90% 10%,rgba(255,79,163,.18),transparent 30%),
+    linear-gradient(180deg,#ffffff,var(--bg));
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+img{width:100%;display:block}
+.app{
+  max-width:1180px;
+  margin:auto;
+  padding:18px;
+}
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  padding:12px 0 20px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:1000;
+  font-size:22px;
+}
+.logo-dot{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--blue),var(--pink));
+  color:white;
+  box-shadow:0 18px 40px rgba(49,94,251,.25);
+}
+.order-link{
+  color:white;
+  background:#101828;
+  text-decoration:none;
+  padding:13px 18px;
+  border-radius:999px;
+  font-weight:900;
+}
+.hero{
+  min-height:calc(100vh - 94px);
+  display:grid;
+  grid-template-columns:1fr 1.05fr;
+  gap:20px;
+  align-items:center;
+}
+.left h1{
+  font-size:clamp(48px,8vw,100px);
+  letter-spacing:-2px;
+  line-height:.86;
+}
+.left p{
+  margin:20px 0 26px;
+  max-width:480px;
+  color:var(--muted);
+  line-height:1.7;
+  font-size:18px;
+}
+.chips{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.chip{
+  border:1px solid var(--line);
+  background:var(--glass);
+  backdrop-filter:blur(16px);
+  border-radius:999px;
+  padding:11px 15px;
+  font-weight:900;
+}
+.orbit{
+  position:relative;
+  min-height:620px;
+  border-radius:44px;
+  background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,255,255,.38));
+  border:1px solid var(--line);
+  overflow:hidden;
+  box-shadow:0 34px 100px rgba(16,24,40,.08);
+}
+.orbit:before{
+  content:"";
+  position:absolute;
+  inset:70px;
+  border:2px dashed rgba(49,94,251,.17);
+  border-radius:50%;
+  animation:spin 24s linear infinite;
+}
+.orbit:after{
+  content:"";
+  position:absolute;
+  inset:135px;
+  border:1px solid rgba(255,79,163,.16);
+  border-radius:50%;
+  animation:spinReverse 18s linear infinite;
+}
+.planet{
+  position:absolute;
+  width:122px;
+  height:122px;
+  border-radius:32px;
+  overflow:hidden;
+  border:5px solid white;
+  box-shadow:0 20px 50px rgba(16,24,40,.18);
+  cursor:pointer;
+  z-index:3;
+  transition:.35s ease;
+}
+.planet img{
+  height:100%;
+  object-fit:cover;
+}
+.planet:hover,.planet.active{
+  transform:scale(1.12) rotate(3deg);
+}
+.p1{left:50%;top:18px;transform:translateX(-50%)}
+.p2{right:36px;top:150px}
+.p3{right:70px;bottom:96px}
+.p4{left:50%;bottom:20px;transform:translateX(-50%)}
+.p5{left:70px;bottom:96px}
+.p6{left:36px;top:150px}
+.spotlight{
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:4;
+  width:300px;
+  min-height:385px;
+  transform:translate(-50%,-50%);
+  border-radius:38px;
+  padding:14px;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 35px 100px rgba(16,24,40,.18);
+}
+.spot-img{
+  height:210px;
+  border-radius:30px;
+  overflow:hidden;
+  background:#ddd;
+}
+.spot-img img{
+  height:100%;
+  object-fit:cover;
+}
+.spot-body{padding:17px 10px 8px}
+.label{
+  font-size:13px;
+  font-weight:1000;
+  color:var(--blue);
+  text-transform:none;
+  letter-spacing:1px;
+}
+.spot-body h2{
+  font-size:32px;
+  letter-spacing:-1.3px;
+  margin:6px 0;
+}
+.spot-body p{
+  color:var(--muted);
+  line-height:1.45;
+  font-size:14px;
+}
+.spot-bottom{
+  margin-top:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.price{
+  font-size:28px;
+  font-weight:1000;
+}
+.add{
+  border:0;
+  color:white;
+  background:linear-gradient(135deg,var(--blue),var(--pink));
+  padding:13px 16px;
+  border-radius:18px;
+  font-weight:1000;
+}
+.menu-list{
+  padding:34px 0;
+}
+.list-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:16px;
+  margin-bottom:14px;
+}
+.list-head h2{
+  font-size:44px;
+  letter-spacing:-2px;
+}
+.select{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:16px;
+  padding:13px 15px;
+  font-weight:900;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.item{
+  border:1px solid var(--line);
+  background:white;
+  border-radius:28px;
+  padding:12px;
+  box-shadow:0 16px 40px rgba(16,24,40,.05);
+  transition:.28s ease;
+  cursor:pointer;
+}
+.item:hover{
+  transform:translateY(-6px);
+}
+.item-img{
+  height:150px;
+  border-radius:22px;
+  overflow:hidden;
+}
+.item-img img{
+  height:100%;
+  object-fit:cover;
+}
+.item h3{
+  margin:13px 4px 6px;
+  font-size:20px;
+  letter-spacing:-.5px;
+}
+.item p{
+  margin:0 4px;
+  min-height:40px;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.35;
+}
+.item .price{
+  margin:10px 4px 4px;
+  font-size:24px;
+}
+.drawer{
+  position:fixed;
+  left:50%;
+  bottom:16px;
+  z-index:20;
+  width:min(680px,calc(100% - 28px));
+  transform:translate(-50%,130%);
+  display:grid;
+  grid-template-columns:86px 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:10px;
+  border-radius:28px;
+  background:rgba(16,24,40,.9);
+  backdrop-filter:blur(18px);
+  color:white;
+  transition:.38s cubic-bezier(.2,.9,.2,1);
+  box-shadow:0 24px 80px rgba(16,24,40,.28);
+}
+.drawer.show{transform:translate(-50%,0)}
+.drawer-img{
+  width:86px;
+  height:76px;
+  border-radius:22px;
+  overflow:hidden;
+}
+.drawer-img img{height:100%;object-fit:cover}
+.drawer h3{font-size:18px}
+.drawer p{color:#d0d5dd;font-size:13px;margin-top:3px}
+.drawer a{
+  background:white;
+  color:#101828;
+  text-decoration:none;
+  padding:13px 16px;
+  border-radius:18px;
+  font-weight:1000;
+}
+.pulse{animation:pulse .45s ease both}
+@keyframes pulse{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.8) rotate(-6deg)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinReverse{to{transform:rotate(-360deg)}}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .orbit{min-height:560px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .left h1{letter-spacing:-3px}
+}
+@media(max-width:560px){
+  .app{padding:14px}
+  .header{position:sticky;top:0;z-index:10;background:rgba(244,247,251,.7);backdrop-filter:blur(15px)}
+  .logo{font-size:18px}
+  .order-link{padding:11px 13px;font-size:13px}
+  .hero{min-height:auto;padding-top:16px}
+  .left h1{font-size:54px;letter-spacing:-2.5px}
+  .left p{font-size:16px;margin:16px 0}
+  .orbit{
+    min-height:520px;
+    border-radius:34px;
+  }
+  .orbit:before{inset:62px}
+  .orbit:after{inset:126px}
+  .planet{
+    width:82px;
+    height:82px;
+    border-radius:24px;
+    border-width:4px;
+  }
+  .p1{top:18px}
+  .p2{right:14px;top:128px}
+  .p3{right:24px;bottom:102px}
+  .p4{bottom:18px}
+  .p5{left:24px;bottom:102px}
+  .p6{left:14px;top:128px}
+  .spotlight{
+    width:245px;
+    min-height:335px;
+    border-radius:32px;
+  }
+  .spot-img{height:165px;border-radius:25px}
+  .spot-body h2{font-size:25px}
+  .grid{grid-template-columns:1fr}
+  .list-head h2{font-size:34px}
+  .drawer{
+    grid-template-columns:64px 1fr;
+  }
+  .drawer a{
+    grid-column:1/-1;
+    text-align:center;
+  }
+  .drawer-img{width:64px;height:60px;border-radius:18px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+  <header class="header">
+    <div class="logo"><div class="logo-dot">◉</div> مطعم المدار</div>
+    <a class="order-link" href="https://wa.me/905555555555">واتساب</a>
+  </header>
+
+  <section class="hero">
+    <div class="left">
+      <h1>اكتشف وجبتك المفضلة.</h1>
+      <p>اضغط على أي قسم من الأقسام لتظهر المنتجات مع تأثيرات متحركة وتجربة طلب سريعة.</p>
+      <div class="chips">
+        <span class="chip">متوافق مع الجوال</span>
+        <span class="chip">قائمة متحركة</span>
+        <span class="chip">طلب عبر واتساب</span>
+      </div>
+    </div>
+
+    <div class="orbit" id="orbit">
+      <div class="spotlight" id="spotlight">
+        <div class="spot-img"><img id="spotImg" src="" alt=""></div>
+        <div class="spot-body">
+          <div class="label" id="spotCat"></div>
+          <h2 id="spotName"></h2>
+          <p id="spotDesc"></p>
+          <div class="spot-bottom">
+            <div class="price" id="spotPrice"></div>
+            <button class="add" id="spotAdd">اختر</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="menu-list">
+    <div class="list-head">
+      <h2 id="listTitle">القائمة</h2>
+      <select class="select" id="select"></select>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="drawer-img"><img id="drawerImg" src="" alt=""></div>
+  <div>
+    <h3 id="drawerName"></h3>
+    <p id="drawerPrice"></p>
+  </div>
+  <a id="drawerOrder" href="#">اطلب الآن</a>
+</div>
+
+<script>
+const images = {
+  البرغر:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+  البيتزا:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
+  المشاوي:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
+  الدجاج:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
+  المقبلات:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
+  المشروبات:"https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80"
+};
+
+const productImages = {
+  "برغر كلاسيك":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+  "تشيز برغر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
+  "دبل تشيز":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80",
+  "برغر باربكيو":"https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+  "برغر الفطر":"https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?auto=format&fit=crop&w=900&q=80",
+  "برغر دجاج":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80",
+
+  "مارغريتا":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",
+  "بيبروني":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80",
+  "أربع أجبان":"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80",
+  "بيتزا دجاج باربكيو":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80",
+  "بيتزا عشاق اللحم":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",
+  "بيتزا نباتية":"https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=900&q=80",
+
+  "ستيك ريب آي":"https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80",
+  "ستيك تي بون":"https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80",
+  "ريش غنم":"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80",
+  "مشاوي مشكلة":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80",
+  "كباب لحم":"https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80",
+  "كفتة":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=80",
+
+  "دجاج مشوي":"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
+  "دجاج مقرمش":"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
+  "أجنحة دجاج":"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=900&q=80",
+  "شنسل دجاج":"https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?auto=format&fit=crop&w=900&q=80",
+  "راب دجاج":"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80",
+  "شيش دجاج":"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=80",
+
+  "بطاطس مقلية":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
+  "بطاطس كيرلي":"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=900&q=80",
+  "بطاطس ودجز":"https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=900&q=80",
+  "خبز بالثوم":"https://images.unsplash.com/photo-1619535860434-cf9b16a8e2af?auto=format&fit=crop&w=900&q=80",
+  "أرز":"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80",
+  "سلطة كول سلو":"https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80",
+
+  "كوكاكولا":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80",
+  "سبرايت":"https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=900&q=80",
+  "فانتا":"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80",
+  "آيس تي":"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=900&q=80",
+  "عصير برتقال":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=80",
+  "مياه معدنية":"https://images.unsplash.com/photo-1559839914-17aae19cec71?auto=format&fit=crop&w=900&q=80"
+};
+
+function getProductImage(item){
+  return productImages[item[0]] || images[activeCat];
+}
+
+const menu = {
+  البرغر:[
+    ["برغر كلاسيك","₺220","لحم بقري، خس، طماطم، صوص خاص"],
+    ["تشيز برغر","₺250","جبنة شيدر، مخلل، لحم بقري، صوص خاص"],
+    ["دبل تشيز","₺320","لحم مزدوج، شيدر مزدوج، بصل"],
+    ["برغر باربكيو","₺290","صوص باربكيو، بصل مقرمش، لحم بقري"],
+    ["برغر الفطر","₺280","صوص فطر، جبنة شيدر، لحم بقري"],
+    ["برغر دجاج","₺260","دجاج مقرمش، مايونيز، خس"]
+  ],
+  البيتزا:[
+    ["مارغريتا","₺260","موزاريلا، طماطم، ريحان"],
+    ["بيبروني","₺320","بيبروني، موزاريلا، صوص طماطم"],
+    ["أربع أجبان","₺340","خلطة من أربع أنواع جبن"],
+    ["بيتزا دجاج باربكيو","₺350","دجاج، صوص باربكيو، موزاريلا"],
+    ["بيتزا عشاق اللحم","₺390","لحم بقري، سجق، بيبروني"],
+    ["بيتزا نباتية","₺290","فطر، فلفل، زيتون، ذرة"]
+  ],
+  المشاوي:[
+    ["ستيك ريب آي","₺780","ريب آي مشوي، زبدة، أعشاب"],
+    ["ستيك تي بون","₺890","تي بون ستيك مع خضار مشوية"],
+    ["ريش غنم","₺720","ريش غنم، أرز، فلفل"],
+    ["مشاوي مشكلة","₺850","كباب، لحم غنم، دجاج، كفتة"],
+    ["كباب لحم","₺450","خبز لافاش، سلطة، لحم مشوي"],
+    ["كفتة","₺380","كفتة، بطاطس، سلطة"]
+  ],
+  الدجاج:[
+    ["دجاج مشوي","₺320","صدر دجاج، أرز، سلطة"],
+    ["دجاج مقرمش","₺340","قطع دجاج مقرمشة، بطاطس، صوص"],
+    ["أجنحة دجاج","₺310","أجنحة حارة، صوص رانش، بطاطس"],
+    ["شنسل دجاج","₺350","شنسل مقرمش، ليمون، بطاطس"],
+    ["راب دجاج","₺280","تورتيلا، دجاج، خس، صوص"],
+    ["شيش دجاج","₺360","أسياخ دجاج، أرز، سلطة"]
+  ],
+  المقبلات:[
+    ["بطاطس مقلية","₺120","بطاطس ذهبية مقرمشة"],
+    ["بطاطس كيرلي","₺140","بطاطس كيرلي متبلة"],
+    ["بطاطس ودجز","₺150","ودجز حارة ومقرمشة"],
+    ["خبز بالثوم","₺130","خبز محمص بزبدة الثوم"],
+    ["أرز","₺90","أرز بالزبدة"],
+    ["سلطة كول سلو","₺80","سلطة ملفوف كريمية"]
+  ],
+  المشروبات:[
+    ["كوكاكولا","₺70","مشروب بارد 330 مل"],
+    ["سبرايت","₺70","مشروب بارد 330 مل"],
+    ["فانتا","₺70","مشروب بارد 330 مل"],
+    ["آيس تي","₺80","خوخ أو ليمون"],
+    ["عصير برتقال","₺120","عصير برتقال طازج"],
+    ["مياه معدنية","₺40","مياه معدنية باردة"]
+  ]
+};
+
+let activeCat = "البرغر";
+let activeItem = menu[activeCat][0];
+
+const orbit = document.getElementById("orbit");
+const grid = document.getElementById("grid");
+const select = document.getElementById("select");
+
+Object.keys(menu).forEach((cat,i)=>{
+  const p = document.createElement("button");
+  p.className = "planet p" + (i+1) + (cat===activeCat ? " active" : "");
+  p.innerHTML = `<img src="${images[cat]}" alt="${cat}">`;
+  p.onclick = () => setCategory(cat);
+  orbit.appendChild(p);
+
+  const opt = document.createElement("option");
+  opt.value = cat;
+  opt.textContent = cat;
+  select.appendChild(opt);
+});
+
+select.onchange = () => setCategory(select.value);
+
+function setCategory(cat){
+  activeCat = cat;
+  activeItem = menu[cat][0];
+  select.value = cat;
+  document.querySelectorAll(".planet").forEach((p,i)=>{
+    p.classList.toggle("active", Object.keys(menu)[i] === cat);
+  });
+  renderSpotlight();
+  renderGrid();
+}
+
+function renderSpotlight(){
+  const spot = document.getElementById("spotlight");
+  spot.classList.remove("pulse");
+  void spot.offsetWidth;
+  spot.classList.add("pulse");
+
+  document.getElementById("spotImg").src = getProductImage(activeItem);
+  document.getElementById("spotCat").textContent = activeCat;
+  document.getElementById("spotName").textContent = activeItem[0];
+  document.getElementById("spotDesc").textContent = activeItem[2];
+  document.getElementById("spotPrice").textContent = activeItem[1];
+  document.getElementById("spotAdd").onclick = () => openDrawer(activeItem);
+}
+
+function renderGrid(){
+  document.getElementById("listTitle").textContent = "قائمة " + activeCat;
+  grid.innerHTML = "";
+  menu[activeCat].forEach(item=>{
+    const card = document.createElement("article");
+    card.className = "item";
+    card.innerHTML = `
+      <div class="item-img"><img src="${getProductImage(item)}" alt="${item[0]}"></div>
+      <h3>${item[0]}</h3>
+      <p>${item[2]}</p>
+      <div class="price">${item[1]}</div>
+    `;
+    card.onclick = () => {
+      activeItem = item;
+      renderSpotlight();
+      openDrawer(item);
+      window.scrollTo({top:0,behavior:"smooth"});
+    };
+    grid.appendChild(card);
+  });
+}
+
+function openDrawer(item){
+  document.getElementById("drawerImg").src = getProductImage(item);
+  document.getElementById("drawerName").textContent = item[0];
+  document.getElementById("drawerPrice").textContent = item[1] + " • جاهز للطلب";
+  document.getElementById("drawerOrder").href =
+    "https://wa.me/905555555555?text=" + encodeURIComponent("مرحبا، أريد طلب: " + item[0] + " - " + item[1]);
+  document.getElementById("drawer").classList.add("show");
+}
+
+setCategory(activeCat);
+</script>
+</body>
+</html>

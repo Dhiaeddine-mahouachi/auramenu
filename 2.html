@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>تطبيق قائمة المطعم</title>
+
+<style>
+:root{
+  --bg:#0f0d0a;
+  --panel:#191510;
+  --panel2:#241d15;
+  --text:#fff7ed;
+  --muted:#b9a997;
+  --gold:#ffb545;
+  --red:#ff4d2e;
+  --green:#35d07f;
+  --radius:28px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Tahoma","Arial",sans-serif;
+  direction:rtl;
+  text-align:right;
+  background:
+    radial-gradient(circle at 20% -10%,rgba(255,181,69,.28),transparent 35%),
+    radial-gradient(circle at 100% 20%,rgba(255,77,46,.18),transparent 32%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+img{display:block;width:100%}
+.app{
+  max-width:560px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:96px;
+}
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  padding:16px;
+  background:linear-gradient(to bottom,rgba(15,13,10,.96),rgba(15,13,10,.75),transparent);
+  backdrop-filter:blur(16px);
+}
+.brand-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:16px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:1000;
+  letter-spacing:0;
+}
+.logo-icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:linear-gradient(145deg,var(--gold),var(--red));
+  box-shadow:0 14px 38px rgba(255,115,40,.35);
+}
+.cart{
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.08);
+  color:white;
+  border-radius:999px;
+  padding:12px 15px;
+  font-weight:900;
+}
+.search{
+  width:100%;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.08);
+  color:white;
+  padding:16px 18px;
+  border-radius:22px;
+  outline:none;
+  font-size:16px;
+  text-align:right;
+}
+.search::placeholder{color:#8d8174}
+.categories{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:14px 16px 4px;
+  scrollbar-width:none;
+}
+.categories::-webkit-scrollbar{display:none}
+.cat{
+  flex:0 0 auto;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.07);
+  color:var(--text);
+  padding:12px 15px;
+  border-radius:999px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.25s ease;
+}
+.cat.active{
+  color:#1b1008;
+  background:linear-gradient(135deg,var(--gold),#ffe0a2);
+  transform:translateY(-2px);
+}
+.hero{padding:16px}
+.hero-card{
+  min-height:270px;
+  border-radius:36px;
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,rgba(255,181,69,.25),rgba(255,77,46,.12)),
+    var(--panel);
+  box-shadow:0 30px 80px rgba(0,0,0,.35);
+}
+.hero-card:before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  left:-90px;
+  top:-60px;
+  border-radius:50%;
+  background:rgba(255,181,69,.23);
+  filter:blur(2px);
+}
+.hero-card h1{
+  position:relative;
+  z-index:2;
+  max-width:310px;
+  font-size:42px;
+  line-height:1.05;
+  letter-spacing:-1px;
+}
+.hero-card p{
+  position:relative;
+  z-index:2;
+  max-width:270px;
+  margin-top:12px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.hero-floating{
+  position:absolute;
+  left:-28px;
+  bottom:-34px;
+  width:250px;
+  height:190px;
+  border-radius:36px;
+  overflow:hidden;
+  transform:rotate(10deg);
+  box-shadow:0 28px 45px rgba(0,0,0,.35);
+  animation:heroFloat 4.5s ease-in-out infinite;
+}
+.hero-floating img{width:100%;height:100%;object-fit:cover}
+.section-head{
+  padding:18px 16px 8px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+}
+.section-head h2{font-size:28px;letter-spacing:0}
+.section-head span{color:var(--muted);font-size:14px;font-weight:800}
+.grid{
+  padding:8px 16px 22px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+.food-card{
+  position:relative;
+  min-height:156px;
+  border-radius:30px;
+  background:linear-gradient(145deg,var(--panel),var(--panel2));
+  border:1px solid rgba(255,255,255,.08);
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:132px 1fr;
+  gap:14px;
+  align-items:center;
+  padding:12px;
+  cursor:pointer;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 20px 50px rgba(0,0,0,.18);
+}
+.food-card:hover{transform:translateY(-5px);border-color:rgba(255,181,69,.34)}
+.food-img{
+  width:132px;
+  height:132px;
+  border-radius:24px;
+  overflow:hidden;
+  transform:rotate(3deg);
+  transition:.35s ease;
+}
+.food-card:hover .food-img{transform:rotate(0) scale(1.04)}
+.food-img img{height:100%;object-fit:cover}
+.food-info h3{font-size:20px;letter-spacing:0;margin-bottom:7px}
+.food-info p{color:var(--muted);font-size:13px;line-height:1.55;margin-bottom:13px}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.price{color:var(--gold);font-size:22px;font-weight:1000}
+.plus{
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:15px;
+  background:linear-gradient(135deg,var(--gold),var(--red));
+  color:white;
+  font-size:24px;
+  font-weight:900;
+}
+.sheet{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  z-index:200;
+  width:min(560px,100%);
+  transform:translate(-50%,110%);
+  background:#fff7ed;
+  color:#1a120c;
+  border-radius:34px 34px 0 0;
+  box-shadow:0 -30px 90px rgba(0,0,0,.5);
+  transition:.42s cubic-bezier(.2,.9,.2,1);
+  overflow:hidden;
+}
+.sheet.show{transform:translate(-50%,0)}
+.sheet-img{height:300px;overflow:hidden;border-radius:34px 34px 0 0}
+.sheet-img img{height:100%;object-fit:cover;animation:zoomIn .5s ease both}
+.close{
+  position:absolute;
+  left:16px;
+  top:16px;
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:50%;
+  background:rgba(0,0,0,.55);
+  color:white;
+  font-size:24px;
+}
+.sheet-content{padding:22px}
+.sheet h2{font-size:32px;letter-spacing:0}
+.sheet p{color:#6b5848;margin:10px 0 16px;line-height:1.7}
+.sheet-price{font-size:32px;color:#ff5a21;font-weight:1000}
+.order-btn{
+  width:100%;
+  margin-top:18px;
+  border:0;
+  padding:17px;
+  border-radius:20px;
+  background:#15100c;
+  color:white;
+  font-size:17px;
+  font-weight:1000;
+}
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  z-index:90;
+  width:min(520px,calc(100% - 28px));
+  display:flex;
+  justify-content:space-around;
+  background:rgba(25,21,16,.9);
+  border:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(18px);
+  border-radius:26px;
+  padding:10px;
+  box-shadow:0 22px 60px rgba(0,0,0,.34);
+}
+.bottom-nav a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:900;text-align:center}
+.bottom-nav b{display:block;font-size:19px;margin-bottom:2px}
+.reveal{opacity:0;transform:translateY(24px) scale(.98);animation:reveal .55s ease forwards}
+@keyframes reveal{to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes heroFloat{0%,100%{transform:rotate(10deg) translateY(0)}50%{transform:rotate(4deg) translateY(-14px)}}
+@keyframes zoomIn{from{transform:scale(1.08)}to{transform:scale(1)}}
+@media(min-width:760px){
+  .app{max-width:1180px}
+  .topbar{border-radius:0 0 30px 30px}
+  .hero-card{min-height:380px}
+  .hero-card h1{font-size:72px;max-width:590px}
+  .hero-card p{font-size:18px;max-width:440px}
+  .hero-floating{width:410px;height:310px;left:28px;bottom:-30px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:390px){
+  .food-card{grid-template-columns:112px 1fr}
+  .food-img{width:112px;height:112px;border-radius:21px}
+  .food-info h3{font-size:18px}
+  .food-info p{font-size:12px}
+  .sheet-img{height:250px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand-row">
+      <div class="logo"><div class="logo-icon">🍽️</div> قائمة المطعم</div>
+      <button class="cart">🛒 0</button>
+    </div>
+    <input class="search" id="search" placeholder="ابحث عن برجر، بيتزا، ستيك..." />
+  </header>
+
+  <nav class="categories" id="categories"></nav>
+
+  <section class="hero">
+    <div class="hero-card">
+      <h1>طعام طازج وطلب سريع.</h1>
+      <p>تصميم حديث ومتحرك لقائمة مطعم، مناسب للهواتف وسهل لطلب الوجبات بسرعة.</p>
+      <div class="hero-floating">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80" alt="برجر كلاسيك">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2 id="currentTitle">برجر</h2>
+      <span>اضغط على المنتج</span>
+    </div>
+    <div class="grid" id="products"></div>
+  </section>
+</div>
+
+<div class="sheet" id="sheet">
+  <button class="close" onclick="closeSheet()">×</button>
+  <div class="sheet-img"><img id="sheetImg" src="" alt=""></div>
+  <div class="sheet-content">
+    <h2 id="sheetName"></h2>
+    <p id="sheetDesc"></p>
+    <div class="sheet-price" id="sheetPrice"></div>
+    <button class="order-btn" id="orderBtn">اطلب عبر واتساب</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="#"><b>🏠</b>الرئيسية</a>
+  <a href="#products"><b>🍔</b>القائمة</a>
+  <a href="https://wa.me/905555555555"><b>💬</b>اطلب الآن</a>
+</nav>
+
+<script>
+const img = {
+  burger:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+  pizza:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
+  meat:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
+  chicken:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
+  fries:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
+  drink:"https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80",
+  dessert:"https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=900&q=80"
+};
+
+const specificProductImages = {
+  "برجر كلاسيك":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+  "تشيز برجر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
+  "دبل تشيز برجر":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80",
+  "برجر باربكيو":"https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
+  "برجر دجاج مقرمش":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80",
+  "برجر الفطر":"https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?auto=format&fit=crop&w=900&q=80",
+  "بيتزا مارغريتا":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",
+  "بيتزا ببروني":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80",
+  "بيتزا أربع أجبان":"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80",
+  "بيتزا دجاج باربكيو":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80",
+  "بيتزا عشاق اللحوم":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",
+  "بيتزا خضار":"https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=900&q=80",
+  "ستيك ريب آي":"https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80",
+  "ستيك تي بون":"https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80",
+  "ريش غنم":"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80",
+  "مشاوي مشكلة":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80",
+  "كباب لحم":"https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80",
+  "كفتة تركية":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=80",
+  "دجاج مشوي":"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
+  "دجاج مقرمش":"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
+  "أجنحة دجاج":"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=900&q=80",
+  "شنيتزل دجاج":"https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?auto=format&fit=crop&w=900&q=80",
+  "راب دجاج":"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80",
+  "شيش دجاج":"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=80",
+  "بطاطس مقلية":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
+  "بطاطس حلزونية":"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=900&q=80",
+  "بطاطس ودجز":"https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=900&q=80",
+  "خبز بالثوم":"https://images.unsplash.com/photo-1619535860434-cf9b16a8e2af?auto=format&fit=crop&w=900&q=80",
+  "أرز":"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80",
+  "سلطة كولسلو":"https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80",
+  "كوكاكولا":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80",
+  "سبرايت":"https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=900&q=80",
+  "فانتا":"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80",
+  "آيس تي":"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=900&q=80",
+  "عصير برتقال طازج":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=80",
+  "مياه معدنية":"https://images.unsplash.com/photo-1559839914-17aae19cec71?auto=format&fit=crop&w=900&q=80",
+  "تشيز كيك":"https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=80",
+  "كيك الشوكولاتة":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",
+  "براوني":"https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=900&q=80",
+  "تيراميسو":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80",
+  "آيس كريم":"https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=900&q=80",
+  "كنافة":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80"
+};
+
+function productImage(product){
+  return specificProductImages[product[0]] || product[3];
+}
+
+const data = {
+  "برجر":[
+    ["برجر كلاسيك","₺220","قطعة لحم بقري، خس، طماطم، وصلصة خاصة",img.burger],
+    ["تشيز برجر","₺250","قطعة لحم بقري، جبنة شيدر، مخلل، وصلصة برجر",img.burger],
+    ["دبل تشيز برجر","₺320","قطعتان من اللحم، جبنة شيدر مضاعفة، بصل، وصلصة خاصة",img.burger],
+    ["برجر باربكيو","₺290","قطعة لحم بقري، صلصة باربكيو، وبصل مقرمش",img.burger],
+    ["برجر دجاج مقرمش","₺260","دجاج مقرمش، مايونيز، وخس طازج",img.chicken],
+    ["برجر الفطر","₺280","قطعة لحم بقري، صلصة فطر، وجبنة شيدر",img.burger]
+  ],
+  "بيتزا":[
+    ["بيتزا مارغريتا","₺260","موزاريلا، صلصة طماطم، وريحان",img.pizza],
+    ["بيتزا ببروني","₺320","ببروني، موزاريلا، وصلصة طماطم",img.pizza],
+    ["بيتزا أربع أجبان","₺340","موزاريلا، بارميزان، شيدر، وجبنة زرقاء",img.pizza],
+    ["بيتزا دجاج باربكيو","₺350","دجاج، صلصة باربكيو، وموزاريلا",img.pizza],
+    ["بيتزا عشاق اللحوم","₺390","لحم بقري، سجق، ببروني، وموزاريلا",img.pizza],
+    ["بيتزا خضار","₺290","فطر، فلفل، زيتون، وذرة",img.pizza]
+  ],
+  "لحوم":[
+    ["ستيك ريب آي","₺780","ستيك مشوي مع زبدة وأعشاب",img.meat],
+    ["ستيك تي بون","₺890","ستيك كبير مع خضار مشوية",img.meat],
+    ["ريش غنم","₺720","ريش غنم مع أرز وفلفل مشوي",img.meat],
+    ["مشاوي مشكلة","₺850","كباب، لحم غنم، دجاج، وكفتة",img.meat],
+    ["كباب لحم","₺450","كباب لحم مشوي مع خبز وسلطة",img.meat],
+    ["كفتة تركية","₺380","كفتة تركية مع بطاطس وسلطة",img.meat]
+  ],
+  "دجاج":[
+    ["دجاج مشوي","₺320","صدر دجاج مشوي مع أرز وسلطة",img.chicken],
+    ["دجاج مقرمش","₺340","قطع دجاج مقرمشة مع بطاطس وصلصة",img.chicken],
+    ["أجنحة دجاج","₺310","أجنحة حارة مع بطاطس وصلصة رانش",img.chicken],
+    ["شنيتزل دجاج","₺350","شنيتزل مع بطاطس وليمون",img.chicken],
+    ["راب دجاج","₺280","دجاج، خبز تورتيلا، صلصة، وخس",img.chicken],
+    ["شيش دجاج","₺360","أسياخ دجاج مع أرز وسلطة",img.chicken]
+  ],
+  "مقبلات":[
+    ["بطاطس مقلية","₺120","بطاطس ذهبية مقرمشة",img.fries],
+    ["بطاطس حلزونية","₺140","بطاطس حلزونية متبلة",img.fries],
+    ["بطاطس ودجز","₺150","قطع بطاطس حارة ومقرمشة",img.fries],
+    ["خبز بالثوم","₺130","خبز محمص مع زبدة الثوم",img.fries],
+    ["أرز","₺90","أرز بالزبدة",img.fries],
+    ["سلطة كولسلو","₺80","ملفوف، جزر، وصلصة كريمية",img.fries]
+  ],
+  "مشروبات":[
+    ["كوكاكولا","₺70","مشروب بارد 330 مل",img.drink],
+    ["سبرايت","₺70","مشروب بارد 330 مل",img.drink],
+    ["فانتا","₺70","مشروب بارد 330 مل",img.drink],
+    ["آيس تي","₺80","شاي مثلج بنكهة الخوخ أو الليمون",img.drink],
+    ["عصير برتقال طازج","₺120","عصير برتقال معصور طازج",img.drink],
+    ["مياه معدنية","₺40","مياه معدنية باردة",img.drink]
+  ],
+  "حلويات":[
+    ["تشيز كيك","₺180","قطعة تشيز كيك مع صلصة فواكه",img.dessert],
+    ["كيك الشوكولاتة","₺170","كيك شوكولاتة غني",img.dessert],
+    ["براوني","₺160","براوني دافئ مع صلصة شوكولاتة",img.dessert],
+    ["تيراميسو","₺190","حلوى كريمية بنكهة القهوة",img.dessert],
+    ["آيس كريم","₺130","فانيليا، شوكولاتة، أو فراولة",img.dessert],
+    ["كنافة","₺220","كنافة ساخنة مع فستق",img.dessert]
+  ]
+};
+
+let activeCategory = "برجر";
+let cartCount = 0;
+
+const categoriesEl = document.getElementById("categories");
+const productsEl = document.getElementById("products");
+const titleEl = document.getElementById("currentTitle");
+const searchEl = document.getElementById("search");
+
+Object.keys(data).forEach((cat,i)=>{
+  const btn = document.createElement("button");
+  btn.className = "cat" + (i===0 ? " active" : "");
+  btn.textContent = cat;
+  btn.onclick = () => {
+    activeCategory = cat;
+    document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    searchEl.value = "";
+    renderProducts(data[cat]);
+  };
+  categoriesEl.appendChild(btn);
+});
+
+function renderProducts(list){
+  titleEl.textContent = activeCategory;
+  productsEl.innerHTML = "";
+  list.forEach((p,i)=>{
+    const card = document.createElement("article");
+    card.className = "food-card reveal";
+    card.style.animationDelay = `${i*65}ms`;
+    card.innerHTML = `
+      <div class="food-img"><img src="${productImage(p)}" alt="${p[0]}"></div>
+      <div class="food-info">
+        <h3>${p[0]}</h3>
+        <p>${p[2]}</p>
+        <div class="price-row">
+          <div class="price">${p[1]}</div>
+          <button class="plus" aria-label="إضافة">+</button>
+        </div>
+      </div>
+    `;
+    card.onclick = () => openSheet(p);
+    productsEl.appendChild(card);
+  });
+}
+
+function openSheet(p){
+  document.getElementById("sheetImg").src = productImage(p);
+  document.getElementById("sheetName").textContent = p[0];
+  document.getElementById("sheetDesc").textContent = p[2];
+  document.getElementById("sheetPrice").textContent = p[1];
+  document.getElementById("orderBtn").onclick = () => {
+    cartCount++;
+    document.querySelector(".cart").textContent = `🛒 ${cartCount}`;
+    window.location.href = `https://wa.me/905555555555?text=${encodeURIComponent("مرحباً، أريد طلب " + p[0] + " " + p[1])}`;
+  };
+  document.getElementById("sheet").classList.add("show");
+}
+
+function closeSheet(){
+  document.getElementById("sheet").classList.remove("show");
+}
+
+searchEl.addEventListener("input",()=>{
+  const q = searchEl.value.toLowerCase().trim();
+  const all = Object.values(data).flat();
+  const filtered = q ? all.filter(p => p[0].toLowerCase().includes(q) || p[2].toLowerCase().includes(q)) : data[activeCategory];
+  titleEl.textContent = q ? "نتائج البحث" : activeCategory;
+  productsEl.innerHTML = "";
+  filtered.forEach((p,i)=>{
+    const card = document.createElement("article");
+    card.className = "food-card reveal";
+    card.style.animationDelay = `${i*65}ms`;
+    card.innerHTML = `
+      <div class="food-img"><img src="${productImage(p)}" alt="${p[0]}"></div>
+      <div class="food-info">
+        <h3>${p[0]}</h3>
+        <p>${p[2]}</p>
+        <div class="price-row">
+          <div class="price">${p[1]}</div>
+          <button class="plus" aria-label="إضافة">+</button>
+        </div>
+      </div>
+    `;
+    card.onclick = () => openSheet(p);
+    productsEl.appendChild(card);
+  });
+});
+
+renderProducts(data[activeCategory]);
+</script>
+
+</body>
+</html>
