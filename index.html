@@ -1,531 +1,96 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang="tr" dir="ltr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bilingual Menu Designs</title>
-
-<style>
-:root{
-  --bg:#0f0d0a;
-  --panel:#191510;
-  --panel2:#241d15;
-  --text:#fff7ed;
-  --muted:#b9a997;
-  --gold:#ffb545;
-  --red:#ff4d2e;
-  --green:#35d07f;
-  --blue:#56a8ff;
-  --purple:#b882ff;
-  --radius:28px;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  min-height:100vh;
-  font-family:Inter,Arial,sans-serif;
-  background:
-    radial-gradient(circle at 20% -10%,rgba(255,181,69,.26),transparent 35%),
-    radial-gradient(circle at 100% 20%,rgba(255,77,46,.18),transparent 32%),
-    var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-}
-
-body[dir="rtl"]{
-  font-family:Tahoma,Arial,sans-serif;
-  text-align:right;
-}
-
-button{
-  font-family:inherit;
-}
-
-.screen{
-  min-height:100vh;
-  width:100%;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:22px;
-}
-
-.screen.active{
-  display:flex;
-}
-
-.card{
-  width:min(460px,100%);
-  background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.035));
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:34px;
-  padding:28px;
-  box-shadow:0 28px 90px rgba(0,0,0,.36);
-  backdrop-filter:blur(18px);
-}
-
-.logo-big{
-  width:74px;
-  height:74px;
-  display:grid;
-  place-items:center;
-  border-radius:24px;
-  font-size:36px;
-  margin:0 auto 18px;
-  background:linear-gradient(145deg,var(--gold),var(--red));
-  box-shadow:0 18px 45px rgba(255,115,40,.36);
-}
-
-.center{
-  text-align:center;
-}
-
-h1{
-  font-size:38px;
-  line-height:1.02;
-  letter-spacing:-1.4px;
-  margin-bottom:10px;
-}
-
-body[dir="rtl"] h1,
-body[dir="rtl"] .hero-title,
-body[dir="rtl"] .design-card h2{
-  letter-spacing:0;
-}
-
-p{
-  color:var(--muted);
-  line-height:1.55;
-}
-
-.lang-buttons{
-  display:grid;
-  gap:14px;
-  margin-top:26px;
-}
-
-.big-btn{
-  border:0;
-  border-radius:22px;
-  padding:18px 20px;
-  font-size:18px;
-  font-weight:1000;
-  color:#1b1008;
-  background:linear-gradient(135deg,var(--gold),#ffe0a2);
-  cursor:pointer;
-  transition:.25s ease;
-}
-
-.big-btn.secondary{
-  background:#fff7ed;
-  color:#17100b;
-}
-
-.big-btn:hover{
-  transform:translateY(-3px);
-}
-
-.loader{
-  width:74px;
-  height:74px;
-  border-radius:50%;
-  border:6px solid rgba(255,255,255,.13);
-  border-top-color:var(--gold);
-  animation:spin 1s linear infinite;
-  margin:0 auto 20px;
-}
-
-@keyframes spin{
-  to{transform:rotate(360deg)}
-}
-
-#designScreen{
-  align-items:flex-start;
-  padding-top:26px;
-  padding-bottom:34px;
-}
-
-.container{
-  width:min(1120px,100%);
-  margin:auto;
-}
-
-.topline{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  margin-bottom:24px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:1000;
-  font-size:19px;
-}
-
-.brand-icon{
-  width:44px;
-  height:44px;
-  border-radius:16px;
-  background:linear-gradient(145deg,var(--gold),var(--red));
-  display:grid;
-  place-items:center;
-}
-
-.switch-btn{
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.08);
-  color:var(--text);
-  padding:12px 16px;
-  border-radius:999px;
-  font-weight:900;
-  cursor:pointer;
-  transition:.25s ease;
-}
-
-.switch-btn:hover{
-  background:rgba(255,255,255,.14);
-}
-
-.hero-title{
-  font-size:clamp(36px,8vw,82px);
-  line-height:.93;
-  letter-spacing:-3px;
-  max-width:820px;
-  margin-bottom:14px;
-}
-
-.hero-sub{
-  max-width:620px;
-  font-size:17px;
-  margin-bottom:24px;
-}
-
-.design-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px;
-  margin-top:24px;
-}
-
-.design-card{
-  min-height:250px;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:30px;
-  padding:20px;
-  background:linear-gradient(145deg,var(--panel),var(--panel2));
-  position:relative;
-  overflow:hidden;
-  cursor:pointer;
-  transition:.32s cubic-bezier(.2,.8,.2,1);
-}
-
-.design-card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(255,181,69,.45);
-}
-
-.design-card:before{
-  content:"";
-  position:absolute;
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  right:-55px;
-  top:-45px;
-  background:var(--glow);
-  filter:blur(3px);
-  opacity:.28;
-}
-
-body[dir="rtl"] .design-card:before{
-  right:auto;
-  left:-55px;
-}
-
-.number{
-  font-size:64px;
-  font-weight:1000;
-  color:rgba(255,255,255,.12);
-  line-height:1;
-  margin-bottom:28px;
-}
-
-.design-card h2{
-  font-size:24px;
-  letter-spacing:-.8px;
-  margin-bottom:8px;
-  position:relative;
-  z-index:2;
-}
-
-.design-card p{
-  font-size:14px;
-  position:relative;
-  z-index:2;
-}
-
-.tag{
-  position:absolute;
-  bottom:18px;
-  left:18px;
-  background:rgba(255,255,255,.09);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:999px;
-  padding:9px 12px;
-  font-size:12px;
-  font-weight:900;
-  color:var(--text);
-}
-
-body[dir="rtl"] .tag{
-  left:auto;
-  right:18px;
-}
-
-@media(max-width:850px){
-  .design-grid{
-    grid-template-columns:1fr 1fr;
-  }
-}
-
-@media(max-width:560px){
-  .topline{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .design-grid{
-    grid-template-columns:1fr;
-  }
-
-  .design-card{
-    min-height:210px;
-  }
-
-  .hero-title{
-    letter-spacing:-1.8px;
-  }
-
-  .screen{
-    padding:16px;
-  }
-
-  .card{
-    padding:22px;
-    border-radius:28px;
-  }
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="AuraMenu ile restoran veya kafeniz için mobil dijital menü tasarlayın, önizleyin ve onaya gönderin.">
+  <meta name="theme-color" content="#fffaf3">
+  <meta property="og:title" content="AuraMenu — Menünü tasarla">
+  <meta property="og:description" content="Tasarımını seç, ürünlerini ekle ve ödeme onayından sonra özel menü adresini yayınla.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://auramenu.space/">
+  <link rel="canonical" href="https://auramenu.space/">
+  <title>AuraMenu — Menünü tasarla</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-
-<section id="langScreen" class="screen active">
-  <div class="card center">
-    <div class="logo-big">🍽️</div>
-    <h1>Choose your language</h1>
-    <p>اختر اللغة التي تريد رؤية تصاميم القائمة بها</p>
-
-    <div class="lang-buttons">
-      <button class="big-btn" onclick="chooseLanguage('ar')">🇸🇦 العربية</button>
-      <button class="big-btn secondary" onclick="chooseLanguage('en')">🇬🇧 English</button>
+<body data-page="home">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="AuraMenu"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a>
+    <button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Menüyü aç" aria-expanded="false"><span></span><span></span></button>
+    <nav class="main-nav" id="mainNav">
+      <a href="#templates" data-i18n="navTemplates">Tasarımlar</a>
+      <a href="#how" data-i18n="navHow">Nasıl çalışır?</a>
+      <a href="status.html" data-lang-href="status.html" data-i18n="navStatus">Başvuru durumu</a>
+    </nav>
+    <div class="header-actions">
+      <div class="language-switch" aria-label="Form language"><button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">AR</button></div>
+      <a class="button button-dark header-cta" href="builder.html" data-builder-link><span data-i18n="create">Menünü oluştur</span><b>↗</b></a>
     </div>
-  </div>
-</section>
+  </header>
 
-<section id="loadingScreen" class="screen">
-  <div class="card center">
-    <div class="loader"></div>
-    <h1 id="loadingTitle">Loading...</h1>
-    <p id="loadingText">Preparing your restaurant menus</p>
-  </div>
-</section>
-
-<section id="designScreen" class="screen">
-  <div class="container">
-    <div class="topline">
-      <div class="brand">
-        <div class="brand-icon">🍽️</div>
-        <span id="brandText">Menu Designs</span>
+  <main>
+    <section class="hero shell">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><i></i><span data-i18n="eyebrow">AuraDigital tarafından dijital menü stüdyosu</span></div>
+        <h1><span data-i18n="heroA">Menünüzü siz hazırlayın.</span><em data-i18n="heroB">Biz yayına alalım.</em></h1>
+        <p data-i18n="heroText">Tasarımı seçin, ürünleri ve fiyatları ekleyin, sonucu anında görün. Talebiniz AuraDigital panelinde kırmızı görünür; ödeme kontrolü ve onayınızdan sonra yeşile döner.</p>
+        <div class="hero-actions"><a class="button button-orange" href="builder.html" data-builder-link><span data-i18n="start">Hemen tasarla</span><b>↗</b></a><a class="text-link" href="#templates"><span data-i18n="seeTemplates">Tasarımları gör</span> ↓</a></div>
+        <div class="hero-stats"><div><strong>4</strong><span data-i18n="designs">hazır tasarım</span></div><div><strong>3</strong><span data-i18n="languages">dil seçeneği</span></div><div><strong>&lt;10 dk</strong><span data-i18n="setup">kurulum süresi</span></div></div>
       </div>
+      <div class="hero-visual reveal" aria-label="AuraMenu workflow">
+        <div class="status-chip red"><i></i><span data-i18n="pending">Onay bekliyor</span></div>
+        <div class="status-chip green"><i></i><span data-i18n="live">Yayında</span></div>
+        <div class="phone">
+          <div class="phone-top"><span></span><small>AURAMENU LIVE</small><b>•••</b></div>
+          <div class="phone-cover"><img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=900&q=82" alt="Restaurant"><div><small>İSTANBUL · KARAKÖY</small><h2>Pera<br>Kitchen</h2><p>Günün taze tatları</p></div></div>
+          <div class="phone-categories"><b>Popüler</b><span>Ana yemek</span><span>İçecek</span></div>
+          <article class="phone-product"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=420&q=80" alt="Izgara tabak"><div><small>ŞEFİN SEÇİMİ</small><strong>Izgara Dana</strong><p>Köz sebze, özel sos</p></div><b>₺460</b></article>
+          <article class="phone-product compact"><span>🥗</span><div><strong>Mevsim Salata</strong><p>Nar ekşisi, ceviz</p></div><b>₺180</b></article>
+        </div>
+        <div class="url-chip"><span>auramenu.space/</span><b>pera-kitchen</b><i>✓</i></div>
+      </div>
+    </section>
 
-      <button class="switch-btn" onclick="resetLanguage()" id="changeLangBtn">
-        Change Language
-      </button>
-    </div>
+    <section class="templates shell" id="templates">
+      <div class="section-heading reveal"><div><span data-i18n="templateKicker">Daha okunaklı. Daha hızlı. Daha iştah açıcı.</span><h2 data-i18n="templateTitle">İşletmenize uyan menüyü seçin</h2></div><p data-i18n="templateText">Her tasarım mobil ekran, hızlı kategori geçişi ve kolay fiyat okuma için düzenlendi.</p></div>
+      <div class="template-grid">
+        <article class="template-card reveal" data-template-card="modern">
+          <a class="template-media" data-preview-link="modern" href="c.html"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=82" alt="Nova Mobile menu"><span>01</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>MOBILE · FAST ORDER</small><strong>Nova Mobile</strong></div></a>
+          <footer><div><h3>Nova Mobile</h3><p data-i18n="modernTone">Mobil, hızlı ve koyu arayüz</p></div><a href="builder.html?template=modern" data-customize="modern" aria-label="Customize Nova">↗</a></footer>
+        </article>
+        <article class="template-card reveal" data-template-card="orbit">
+          <a class="template-media" data-preview-link="orbit" href="b.html"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=82" alt="Food Orbit menu"><span>02</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>BURGER · INTERACTIVE</small><strong>Food Orbit</strong></div></a>
+          <footer><div><h3>Food Orbit</h3><p data-i18n="orbitTone">Renkli, hareketli ve interaktif</p></div><a href="builder.html?template=orbit" data-customize="orbit" aria-label="Customize Food Orbit">↗</a></footer>
+        </article>
+        <article class="template-card reveal" data-template-card="maison">
+          <a class="template-media" data-preview-link="maison" href="a.html"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=82" alt="Maison menu"><span>03</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>EDITORIAL · FINE DINING</small><strong>Maison</strong></div></a>
+          <footer><div><h3>Maison</h3><p data-i18n="maisonTone">Sıcak, zarif ve editorial</p></div><a href="builder.html?template=maison" data-customize="maison" aria-label="Customize Maison">↗</a></footer>
+        </article>
+        <article class="template-card reveal" data-template-card="taste3d">
+          <a class="template-media" data-preview-link="taste3d" href="d.html"><img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=82" alt="Taste 3D menu"><span>04</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>3D · PREMIUM · GRILL</small><strong>Taste 3D</strong></div></a>
+          <footer><div><h3>Taste 3D</h3><p data-i18n="tasteTone">Cesur, premium ve ürün odaklı</p></div><a href="builder.html?template=taste3d" data-customize="taste3d" aria-label="Customize Taste 3D">↗</a></footer>
+        </article>
+      </div>
+    </section>
 
-    <h1 class="hero-title" id="designTitle">
-      Choose one of 4 restaurant menu designs
-    </h1>
+    <section class="process shell" id="how">
+      <div class="section-heading reveal"><div><span>AURAMENU FLOW</span><h2 data-i18n="flowTitle">Fikirden yayına dört net adım</h2></div></div>
+      <div class="process-grid">
+        <article class="reveal"><b>01</b><i>◫</i><h3 data-i18n="step1">Tasarımı seçin</h3><p data-i18n="step1Text">İşletmenizin tarzına en yakın gerçek menü görünümünü açın.</p></article>
+        <article class="reveal"><b>02</b><i>✎</i><h3 data-i18n="step2">Detayları ekleyin</h3><p data-i18n="step2Text">Ürün, açıklama, fiyat, iletişim ve özel adresinizi doldurun.</p></article>
+        <article class="reveal"><b>03</b><i>●</i><h3 data-i18n="step3">Kırmızı talep oluşur</h3><p data-i18n="step3Text">Başvurunuz AuraDigital panelinde ödeme ve izin bekler.</p></article>
+        <article class="reveal"><b>04</b><i>✓</i><h3 data-i18n="step4">Yeşile döner ve açılır</h3><p data-i18n="step4Text">Ödeme onaylanınca özel AuraMenu adresiniz yayınlanır.</p></article>
+      </div>
+    </section>
 
-    <p class="hero-sub" id="designSub">
-      Select a design number to explore a unique restaurant menu experience.
-    </p>
+    <section class="final-cta shell reveal"><div><span>AURA<i>•</i>MENU</span><h2 data-i18n="finalTitle">İlk dijital menünüzü bugün hazırlayın.</h2><p data-i18n="finalText">Tasarlamak ve önizlemek ücretsizdir. Yayın yalnızca ödeme kontrolü ve AuraDigital onayından sonra açılır.</p></div><a class="button button-light" href="builder.html" data-builder-link><span data-i18n="start">Hemen tasarla</span><b>↗</b></a></section>
+  </main>
 
-    <div class="design-grid" id="designGrid"></div>
-  </div>
-</section>
-
-<script>
-let currentLang = 'en';
-
-const pageLinks = {
-  en: ['a.html', 'b.html', 'c.html', 'd.html'],
-  ar: ['1.html', '2.html', '3.html', '4.html']
-};
-
-const text = {
-  en:{
-    loadingTitle:'Loading...',
-    loadingText:'Preparing your restaurant menus',
-
-    brand:'Menu Designs',
-    change:'Change Language',
-
-    title:'Choose one of 4 restaurant menu designs',
-    sub:'Select a design number to explore a unique restaurant menu experience.',
-
-    open:'Open Design',
-
-    designs:[
-      {
-        name:'3D Orbit Menu',
-        desc:'Interactive orbit-style menu with rotating food categories, spotlight products and WhatsApp ordering.'
-      },
-      {
-        name:'Luxury Editorial Menu',
-        desc:'Elegant restaurant menu with premium cards, large food showcases and luxury styling.'
-      },
-      {
-        name:'Premium 3D Showcase',
-        desc:'Animated 3D food presentation with floating product cards and immersive product switching.'
-      },
-      {
-        name:'Modern Mobile Menu',
-        desc:'Mobile-first menu design optimized for restaurants, cafés and delivery businesses.'
-      }
-    ]
-  },
-
-  ar:{
-    loadingTitle:'جاري التحميل...',
-    loadingText:'يتم تجهيز قوائم المطاعم',
-
-    brand:'تصاميم القوائم',
-    change:'تغيير اللغة',
-
-    title:'اختر واحداً من 4 تصاميم لقوائم المطاعم',
-    sub:'اختر رقم التصميم لاستعراض تجربة مختلفة وفريدة لقائمة المطعم.',
-
-    open:'فتح التصميم',
-
-    designs:[
-      {
-        name:'قائمة المدار ثلاثية الأبعاد',
-        desc:'قائمة تفاعلية تعتمد على دوران الأقسام مع عرض مميز للمنتجات وإمكانية الطلب عبر واتساب.'
-      },
-      {
-        name:'القائمة الفاخرة الكلاسيكية',
-        desc:'تصميم أنيق وفخم مع بطاقات احترافية وعرض كبير للأطباق بأسلوب راقٍ.'
-      },
-      {
-        name:'عرض المنتجات ثلاثي الأبعاد',
-        desc:'تصميم متحرك يعرض الوجبات بأسلوب ثلاثي الأبعاد مع تأثيرات احترافية وتبديل سلس للمنتجات.'
-      },
-      {
-        name:'القائمة الحديثة للجوال',
-        desc:'تصميم سريع ومتجاوب مخصص للهواتف والمطاعم والمقاهي وخدمات التوصيل.'
-      }
-    ]
-  }
-};
-
-const styles = [
-  {glow:'rgba(255,181,69,.8)'},
-  {glow:'rgba(255,247,237,.75)'},
-  {glow:'rgba(86,168,255,.85)'},
-  {glow:'rgba(53,208,127,.85)'}
-];
-
-function chooseLanguage(lang){
-  currentLang = lang;
-  localStorage.setItem('selectedMenuLang', lang);
-
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-
-  document.getElementById('langScreen').classList.remove('active');
-  document.getElementById('loadingScreen').classList.add('active');
-
-  document.getElementById('loadingTitle').textContent = text[lang].loadingTitle;
-  document.getElementById('loadingText').textContent = text[lang].loadingText;
-
-  setTimeout(()=>{
-    document.getElementById('loadingScreen').classList.remove('active');
-    document.getElementById('designScreen').classList.add('active');
-    renderDesigns();
-  },900);
-}
-
-function renderDesigns(){
-  const t = text[currentLang];
-
-  document.getElementById('brandText').textContent = t.brand;
-  document.getElementById('changeLangBtn').textContent = t.change;
-  document.getElementById('designTitle').textContent = t.title;
-  document.getElementById('designSub').textContent = t.sub;
-
-  const grid = document.getElementById('designGrid');
-  grid.innerHTML = '';
-
-  t.designs.forEach((d,i)=>{
-    const card = document.createElement('article');
-    card.className = 'design-card';
-    card.style.setProperty('--glow', styles[i].glow);
-    card.onclick = ()=>openMenu(i);
-
-    card.innerHTML = `
-      <div class="number">${i+1}</div>
-      <h2>${d.name}</h2>
-      <p>${d.desc}</p>
-      <div class="tag">${t.open}</div>
-    `;
-
-    grid.appendChild(card);
-  });
-}
-
-function openMenu(index){
-  const pages = pageLinks[currentLang] || pageLinks.en;
-  window.location.href = pages[index];
-}
-
-function resetLanguage(){
-  localStorage.removeItem('selectedMenuLang');
-
-  document.getElementById('designScreen').classList.remove('active');
-  document.getElementById('loadingScreen').classList.remove('active');
-  document.getElementById('langScreen').classList.add('active');
-
-  document.body.removeAttribute('dir');
-  document.documentElement.lang = 'en';
-  document.documentElement.dir = 'ltr';
-}
-</script>
-
+  <footer class="site-footer shell"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><p>© 2026 AuraDigital · İstanbul</p><a href="https://auradigital.ink" target="_blank" rel="noopener noreferrer">auradigital.ink ↗</a></footer>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

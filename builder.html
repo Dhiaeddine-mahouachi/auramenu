@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#fffaf3">
+  <title>AuraMenu — Menü oluştur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
+</head>
+<body data-page="builder">
+  <header class="simple-header"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><div class="right"><div class="language-switch"><button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">AR</button></div><a class="back-link" id="backLink" href="index.html#templates" data-i18n="back">← Tasarımlara dön</a></div></header>
+  <main class="builder-layout">
+    <form class="panel form-panel" id="menuForm" novalidate>
+      <div class="form-head"><small>AURAMENU BUILDER</small><h1 data-i18n="title">Menünüzü oluşturun</h1><p data-i18n="intro">İşletme ve menü bilgilerinizi ekleyin. Sağdaki önizleme siz yazarken güncellenir.</p></div>
+      <section class="form-section"><h2 data-i18n="business">1. İşletme görünümü</h2><div class="form-grid">
+        <label class="field"><span data-i18n="businessName">İşletme adı *</span><input id="businessName" maxlength="100" required value="Pera Kitchen"></label>
+        <label class="field"><span data-i18n="tagline">Kısa slogan</span><input id="tagline" maxlength="140" value="Günün taze tatları"></label>
+        <label class="field full"><span data-i18n="description">İşletme açıklaması</span><textarea id="description" maxlength="600" placeholder="Mekanınızı kısaca anlatın"></textarea></label>
+        <label class="field full"><span data-i18n="address">Adres</span><input id="address" maxlength="220" value="Karaköy, İstanbul"></label>
+        <label class="field"><span data-i18n="businessPhone">Müşterilerin göreceği telefon</span><input id="businessPhone" maxlength="40" placeholder="+90 5xx xxx xx xx"></label>
+        <label class="field"><span>WhatsApp</span><input id="whatsapp" maxlength="40" placeholder="+90 5xx xxx xx xx"></label>
+        <label class="field"><span data-i18n="hours">Çalışma saatleri</span><input id="openingHours" maxlength="100" value="09:00 – 23:00"></label>
+        <label class="field"><span data-i18n="template">Tasarım</span><select id="templateId"><option value="modern">Nova Mobile</option><option value="orbit">Food Orbit</option><option value="maison">Maison</option><option value="taste3d">Taste 3D</option></select></label>
+        <label class="field"><span data-i18n="menuLanguage">Müşteri menüsünün dili</span><select id="menuLanguage"><option value="tr">Türkçe</option><option value="en">English</option><option value="ar">العربية</option></select></label>
+        <label class="field"><span data-i18n="currency">Para birimi</span><select id="currency"><option value="TRY">TRY — ₺</option><option value="EUR">EUR — €</option><option value="USD">USD — $</option><option value="TND">TND — د.ت</option></select></label>
+      </div></section>
+      <section class="form-section"><h2 data-i18n="content">2. Kategoriler ve ürünler</h2><div class="category-list" id="categoryList"></div><button class="add-button" id="addCategory" type="button" data-i18n="addCategory">+ Kategori ekle</button></section>
+      <section class="form-section"><h2 data-i18n="publishing">3. Özel adres, iletişim ve ödeme</h2><div class="form-grid">
+        <label class="field full"><span data-i18n="url">Özel menü adresiniz *</span><div class="slug-field"><span>auramenu.space/</span><input id="slug" required maxlength="48" value="pera-kitchen" inputmode="url"></div></label>
+        <label class="field"><span data-i18n="contactName">Yetkili kişi *</span><input id="contactName" required maxlength="100" autocomplete="name"></label>
+        <label class="field"><span data-i18n="contactPhone">Yetkili telefonu *</span><input id="contactPhone" required maxlength="40" autocomplete="tel"></label>
+        <label class="field"><span data-i18n="email">E-posta</span><input id="email" type="email" maxlength="160" autocomplete="email"></label>
+        <label class="field"><span data-i18n="city">Şehir</span><input id="city" maxlength="100" value="İstanbul"></label>
+        <label class="field full"><span data-i18n="paymentRef">Ödeme notu / referansı</span><input id="paymentReference" maxlength="200" placeholder="Havale yapan kişi veya işlem açıklaması"></label>
+        <label class="field full"><span data-i18n="notes">AuraDigital için notunuz</span><textarea id="notes" maxlength="1000"></textarea></label>
+      </div></section>
+      <div class="form-message" id="formMessage" role="alert"></div>
+      <div class="submit-row"><small data-i18n="consent">Gönderdiğiniz bilgiler AuraDigital panelinde kırmızı bir talep oluşturur. Menü, ödeme kontrolü ve sizin izniniz olmadan yayınlanmaz.</small><button class="button button-orange" id="submitButton" type="submit"><span data-i18n="submit">Talebi gönder</span><b>↗</b></button></div>
+    </form>
+    <aside class="panel preview-panel"><div class="preview-label"><span data-i18n="livePreview">CANLI ÖNİZLEME</span><b id="previewTemplate">Nova Mobile</b></div><div class="builder-preview"><div class="builder-cover"><div><small id="previewAddress">KARAKÖY, İSTANBUL</small><h2 id="previewName">Pera Kitchen</h2><p id="previewTagline">Günün taze tatları</p></div></div><div class="builder-meta"><span id="previewHours">09:00 – 23:00</span><span id="previewUrl">auramenu.space/pera-kitchen</span></div><div class="builder-cats" id="previewCategories"></div><div class="builder-items" id="previewItems"></div></div></aside>
+  </main>
+  <script src="config.js"></script><script src="builder.js"></script>
+</body>
+</html>
