@@ -18,7 +18,6 @@
       content: "2. Kategoriler ve ürünler",
       addCategory: "+ Kategori ekle",
       publishing: "3. Yayın, iletişim ve ödeme",
-      buildChoice: "Menüyü kim hazırlayacak?", selfBuild: "Kendim hazırlayacağım", selfBuildHelp: "Studio burada açılır; ürünleri, fiyatları ve fotoğrafları siz düzenlersiniz.", managedBuild: "AuraDigital hazırlasın", managedBuildHelp: "Bilgileri aldıktan sonra ekibimiz kurar",
       url: "Menü bağlantınız *",
       contactName: "Yetkili kişi *",
       contactPhone: "Yetkili telefonu *",
@@ -75,7 +74,6 @@
       content: "2. Categories and products",
       addCategory: "+ Add category",
       publishing: "3. Custom URL, contact and payment",
-      buildChoice: "Who will build the menu?", selfBuild: "I will customize it myself", selfBuildHelp: "The studio opens here so you can edit products, prices and photos.", managedBuild: "AuraDigital will build it", managedBuildHelp: "Our team builds it from your information",
       url: "Your menu link *",
       contactName: "Contact person *",
       contactPhone: "Contact phone *",
@@ -132,7 +130,6 @@
       content: "2. الأقسام والمنتجات",
       addCategory: "+ إضافة قسم",
       publishing: "3. الرابط الخاص والتواصل والدفع",
-      buildChoice: "من سيجهز القائمة؟", selfBuild: "سأخصصها بنفسي", selfBuildHelp: "يفتح الاستوديو هنا لتعديل المنتجات والأسعار والصور بنفسك.", managedBuild: "تجهزها AuraDigital", managedBuildHelp: "فريقنا يجهزها من معلوماتك",
       url: "رابط قائمتك الخاص *",
       contactName: "الشخص المسؤول *",
       contactPhone: "هاتف المسؤول *",
@@ -657,11 +654,6 @@
       });
     } catch {}
   }
-  function selectedValue(name){return document.querySelector(`[name="${name}"]:checked`)?.value||""}
-  function updateBuildChoices(){
-    const managed=selectedValue("serviceMode")==="managed";
-    $("contentSection").hidden=managed;
-  }
   function showMessage(message, type = "error") {
     $("formMessage").textContent = message;
     $("formMessage").className = `form-message show ${type}`;
@@ -736,11 +728,9 @@
         items: category.items.filter((item) => item.name.trim()),
       }))
       .filter((category) => category.name.trim());
-    const serviceMode=selectedValue("serviceMode")==="managed"?"managed":"self";
     if (
-      serviceMode==="self" &&
-      (!cleanCategories.length ||
-      !cleanCategories.some((category) => category.items.length))
+      !cleanCategories.length ||
+      !cleanCategories.some((category) => category.items.length)
     ) {
       showMessage(i18n[lang].menuRequired);
       return;
@@ -763,9 +753,9 @@
       email: $("email").value.trim(),
       city: $("city").value.trim(),
       paymentReference: $("paymentReference").value.trim(),
-      serviceMode,
+      serviceMode: "self",
       notes: $("notes").value.trim(),
-      categories: (serviceMode==="managed"?[]:cleanCategories).map((category) => ({
+      categories: cleanCategories.map((category) => ({
         name: category.name.trim(),
         emoji: category.emoji.trim(),
         items: category.items.map((item) => ({
@@ -803,11 +793,6 @@
     }
   });
   restoreDraft();
-  const requestedMode=params.get("mode")==="managed"?"managed":"self";
-  const modeInput=document.querySelector(`[name="serviceMode"][value="${requestedMode}"]`);
-  if(modeInput)modeInput.checked=true;
-  document.querySelectorAll('[name="serviceMode"]').forEach(input=>input.addEventListener("change",()=>{updateBuildChoices();saveDraft()}));
-  updateBuildChoices();
   const requested = params.get("template");
   if (templateNames[requested]) $("templateId").value = requested;
   $("menuLanguage").value = lang;
