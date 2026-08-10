@@ -6,7 +6,8 @@ AuraMenu is a multilingual digital-menu storefront and customer menu builder. Tu
 
 - `index.html` — landing page and design gallery
 - `style.css` / `script.js` — landing page layout and language controls
-- `builder.html` / `builder.js` — customer details, pricing and menu editor
+- `builder.html` / `builder.js` — customer details, pricing, menu editor and product-photo processing
+- `photo-upload.css` — product-photo picker, thumbnail and live-preview styles
 - `status.html` / `status.js` — pending/approved request status
 - `menu.html` / `menu.js` / `menu.css` — published menu renderer
 - `config.js` — AuraDigital API and public URL configuration
@@ -32,3 +33,7 @@ Then open `http://localhost:4173`. Local submissions are accepted by the configu
 4. The request turns green and the custom URL becomes public, for example `https://auramenu.space/coffee1`.
 
 The public menu endpoint never exposes the customer's private contact details, payment reference or internal owner note.
+
+## Product photos
+
+Customers can select JPG, PNG or WebP product photos directly from a phone or computer. The builder resizes each photo before submission, shows it in the live preview and supports up to 12 uploaded photos per request. A normal HTTPS image URL remains available as an alternative. Uploaded photo data is not saved to the browser draft; the customer should submit the request before leaving the page.
