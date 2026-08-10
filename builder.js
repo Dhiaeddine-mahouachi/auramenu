@@ -729,7 +729,7 @@
       "slug",
       "contactName",
       "contactPhone",
-    ].every((id) => $(id).value.trim());
+    ].every((id) => $(id).value.trim()) && (selectedValue("domainMode") !== "custom" || $("customDomain").value.trim());
     if (!required) {
       showMessage(i18n[lang].required);
       return;
