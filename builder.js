@@ -17,9 +17,9 @@
       currency: "Para birimi",
       content: "2. Kategoriler ve ürünler",
       addCategory: "+ Kategori ekle",
-      publishing: "3. Özel adres, iletişim ve ödeme",
-      domainChoice: "Menü adresi", auraDomain: "AuraMenu adresi", ownDomain: "Kendi domainim", ownDomainHelp: "Sahip olduğunuz domain bağlanır", buildChoice: "Menüyü kim hazırlayacak?", selfBuild: "Kendim hazırlayacağım", selfBuildHelp: "Ürünleri ve fiyatları burada girin", managedBuild: "AuraDigital hazırlasın", managedBuildHelp: "Bilgileri aldıktan sonra ekibimiz kurar", customDomain: "Sahip olduğunuz domain",
-      url: "Özel menü adresiniz *",
+      publishing: "3. Yayın, iletişim ve ödeme",
+      buildChoice: "Menüyü kim hazırlayacak?", selfBuild: "Kendim hazırlayacağım", selfBuildHelp: "Studio burada açılır; ürünleri, fiyatları ve fotoğrafları siz düzenlersiniz.", managedBuild: "AuraDigital hazırlasın", managedBuildHelp: "Bilgileri aldıktan sonra ekibimiz kurar",
+      url: "Menü bağlantınız *",
       contactName: "Yetkili kişi *",
       contactPhone: "Yetkili telefonu *",
       email: "E-posta",
@@ -75,8 +75,8 @@
       content: "2. Categories and products",
       addCategory: "+ Add category",
       publishing: "3. Custom URL, contact and payment",
-      domainChoice: "Menu address", auraDomain: "AuraMenu address", ownDomain: "My own domain", ownDomainHelp: "Connect a domain you already own", buildChoice: "Who will build the menu?", selfBuild: "I will customize it", selfBuildHelp: "Add products and prices here", managedBuild: "AuraDigital will build it", managedBuildHelp: "Our team builds it from your information", customDomain: "Domain you own",
-      url: "Your custom menu address *",
+      buildChoice: "Who will build the menu?", selfBuild: "I will customize it myself", selfBuildHelp: "The studio opens here so you can edit products, prices and photos.", managedBuild: "AuraDigital will build it", managedBuildHelp: "Our team builds it from your information",
+      url: "Your menu link *",
       contactName: "Contact person *",
       contactPhone: "Contact phone *",
       email: "Email",
@@ -132,7 +132,7 @@
       content: "2. الأقسام والمنتجات",
       addCategory: "+ إضافة قسم",
       publishing: "3. الرابط الخاص والتواصل والدفع",
-      domainChoice: "عنوان القائمة", auraDomain: "عنوان AuraMenu", ownDomain: "النطاق الخاص بي", ownDomainHelp: "ربط نطاق تملكه مسبقاً", buildChoice: "من سيجهز القائمة؟", selfBuild: "سأخصصها بنفسي", selfBuildHelp: "أضف المنتجات والأسعار هنا", managedBuild: "تجهزها AuraDigital", managedBuildHelp: "فريقنا يجهزها من معلوماتك", customDomain: "النطاق الذي تملكه",
+      buildChoice: "من سيجهز القائمة؟", selfBuild: "سأخصصها بنفسي", selfBuildHelp: "يفتح الاستوديو هنا لتعديل المنتجات والأسعار والصور بنفسك.", managedBuild: "تجهزها AuraDigital", managedBuildHelp: "فريقنا يجهزها من معلوماتك",
       url: "رابط قائمتك الخاص *",
       contactName: "الشخص المسؤول *",
       contactPhone: "هاتف المسؤول *",
@@ -642,7 +642,6 @@
       "email",
       "city",
       "paymentReference",
-      "customDomain",
       "notes",
     ].forEach((id) => {
       if ($(id)) draft.fields[id] = $(id).value;
@@ -661,10 +660,7 @@
   function selectedValue(name){return document.querySelector(`[name="${name}"]:checked`)?.value||""}
   function updateBuildChoices(){
     const managed=selectedValue("serviceMode")==="managed";
-    const custom=selectedValue("domainMode")==="custom";
     $("contentSection").hidden=managed;
-    $("customDomainField").hidden=!custom;
-    $("customDomain").required=custom;
   }
   function showMessage(message, type = "error") {
     $("formMessage").textContent = message;
@@ -729,7 +725,7 @@
       "slug",
       "contactName",
       "contactPhone",
-    ].every((id) => $(id).value.trim()) && (selectedValue("domainMode") !== "custom" || $("customDomain").value.trim());
+    ].every((id) => $(id).value.trim());
     if (!required) {
       showMessage(i18n[lang].required);
       return;
@@ -741,7 +737,6 @@
       }))
       .filter((category) => category.name.trim());
     const serviceMode=selectedValue("serviceMode")==="managed"?"managed":"self";
-    const domainMode=selectedValue("domainMode")==="custom"?"custom":"auramenu";
     if (
       serviceMode==="self" &&
       (!cleanCategories.length ||
@@ -768,9 +763,7 @@
       email: $("email").value.trim(),
       city: $("city").value.trim(),
       paymentReference: $("paymentReference").value.trim(),
-      domainMode,
       serviceMode,
-      customDomain: domainMode==="custom"?$("customDomain").value.trim():"",
       notes: $("notes").value.trim(),
       categories: (serviceMode==="managed"?[]:cleanCategories).map((category) => ({
         name: category.name.trim(),
@@ -811,11 +804,9 @@
   });
   restoreDraft();
   const requestedMode=params.get("mode")==="managed"?"managed":"self";
-  const requestedDomain=params.get("domain")==="custom"?"custom":"auramenu";
   const modeInput=document.querySelector(`[name="serviceMode"][value="${requestedMode}"]`);
-  const domainInput=document.querySelector(`[name="domainMode"][value="${requestedDomain}"]`);
-  if(modeInput)modeInput.checked=true;if(domainInput)domainInput.checked=true;
-  document.querySelectorAll('[name="serviceMode"],[name="domainMode"]').forEach(input=>input.addEventListener("change",()=>{updateBuildChoices();saveDraft()}));
+  if(modeInput)modeInput.checked=true;
+  document.querySelectorAll('[name="serviceMode"]').forEach(input=>input.addEventListener("change",()=>{updateBuildChoices();saveDraft()}));
   updateBuildChoices();
   const requested = params.get("template");
   if (templateNames[requested]) $("templateId").value = requested;
