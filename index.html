@@ -59,19 +59,19 @@
       <div class="template-grid">
         <article class="template-card reveal" data-template-card="modern">
           <a class="template-media" data-preview-link="modern" href="c.html"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=82" alt="Nova Mobile menu"><span>01</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>MOBILE · FAST ORDER</small><strong>Nova Mobile</strong></div></a>
-          <footer><div><h3>Nova Mobile</h3><p data-i18n="modernTone">Mobil, hızlı ve koyu arayüz</p></div><a class="template-customize-button" href="builder.html?template=modern" data-customize="modern" aria-label="Customize Nova"><span data-i18n="customizeOwn">Kendin özelleştir</span><b>↗</b></a></footer>
+          <footer><div><h3>Nova Mobile</h3><p data-i18n="modernTone">Mobil, hızlı ve koyu arayüz</p></div><button class="template-customize-button" type="button" data-design-choice="modern" aria-label="Choose Nova"><span data-i18n="chooseDesign">Bu tasarımı seç</span><b>↗</b></button></footer>
         </article>
         <article class="template-card reveal" data-template-card="orbit">
           <a class="template-media" data-preview-link="orbit" href="b.html"><img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=82" alt="Food Orbit menu"><span>02</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>BURGER · INTERACTIVE</small><strong>Food Orbit</strong></div></a>
-          <footer><div><h3>Food Orbit</h3><p data-i18n="orbitTone">Renkli, hareketli ve interaktif</p></div><a class="template-customize-button" href="builder.html?template=orbit" data-customize="orbit" aria-label="Customize Food Orbit"><span data-i18n="customizeOwn">Kendin özelleştir</span><b>↗</b></a></footer>
+          <footer><div><h3>Food Orbit</h3><p data-i18n="orbitTone">Renkli, hareketli ve interaktif</p></div><button class="template-customize-button" type="button" data-design-choice="orbit" aria-label="Choose Food Orbit"><span data-i18n="chooseDesign">Bu tasarımı seç</span><b>↗</b></button></footer>
         </article>
         <article class="template-card reveal" data-template-card="maison">
           <a class="template-media" data-preview-link="maison" href="a.html"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&q=82" alt="Maison menu"><span>03</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>EDITORIAL · FINE DINING</small><strong>Maison</strong></div></a>
-          <footer><div><h3>Maison</h3><p data-i18n="maisonTone">Sıcak, zarif ve editorial</p></div><a class="template-customize-button" href="builder.html?template=maison" data-customize="maison" aria-label="Customize Maison"><span data-i18n="customizeOwn">Kendin özelleştir</span><b>↗</b></a></footer>
+          <footer><div><h3>Maison</h3><p data-i18n="maisonTone">Sıcak, zarif ve editorial</p></div><button class="template-customize-button" type="button" data-design-choice="maison" aria-label="Choose Maison"><span data-i18n="chooseDesign">Bu tasarımı seç</span><b>↗</b></button></footer>
         </article>
         <article class="template-card reveal" data-template-card="taste3d">
           <a class="template-media" data-preview-link="taste3d" href="d.html"><img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=82" alt="Taste 3D menu"><span>04</span><b data-i18n="preview">Gerçek menüyü gör ↗</b><div><small>3D · PREMIUM · GRILL</small><strong>Taste 3D</strong></div></a>
-          <footer><div><h3>Taste 3D</h3><p data-i18n="tasteTone">Cesur, premium ve ürün odaklı</p></div><a class="template-customize-button" href="builder.html?template=taste3d" data-customize="taste3d" aria-label="Customize Taste 3D"><span data-i18n="customizeOwn">Kendin özelleştir</span><b>↗</b></a></footer>
+          <footer><div><h3>Taste 3D</h3><p data-i18n="tasteTone">Cesur, premium ve ürün odaklı</p></div><button class="template-customize-button" type="button" data-design-choice="taste3d" aria-label="Choose Taste 3D"><span data-i18n="chooseDesign">Bu tasarımı seç</span><b>↗</b></button></footer>
         </article>
       </div>
     </section>
@@ -88,6 +88,25 @@
 
     <section class="final-cta shell reveal"><div><span>AURA<i>•</i>MENU</span><h2 data-i18n="finalTitle">İlk dijital menünüzü bugün hazırlayın.</h2><p data-i18n="finalText">Tasarlamak ve önizlemek ücretsizdir. Yayın yalnızca ödeme kontrolü ve AuraDigital onayından sonra açılır.</p></div><a class="button button-light" href="builder.html" data-builder-link><span data-i18n="start">Hemen tasarla</span><b>↗</b></a></section>
   </main>
+  <div class="design-choice-modal" id="designChoiceModal" hidden>
+    <div class="design-choice-backdrop" data-choice-close></div>
+    <section class="design-choice-dialog" role="dialog" aria-modal="true" aria-labelledby="designChoiceTitle">
+      <button class="design-choice-close" type="button" data-choice-close aria-label="Close">×</button>
+      <small data-i18n="choiceKicker">SONRAKİ ADIM</small>
+      <h2 id="designChoiceTitle" data-i18n="choiceTitle">Menüyü kim hazırlasın?</h2>
+      <p data-i18n="choiceText">Seçtiğiniz tasarımı koruyarak kendiniz düzenleyebilir veya bilgileri AuraDigital'e göndererek bizim hazırlamamızı isteyebilirsiniz.</p>
+      <div class="selected-design-chip"><span data-i18n="selectedDesign">Seçilen tasarım</span><b id="selectedDesignName">Nova Mobile</b></div>
+      <div class="design-choice-actions">
+        <a class="design-choice-option self" id="selfBuildChoice" href="builder.html">
+          <i>✎</i><span><strong data-i18n="buildSelf">AuraMenu'de kendim yapacağım</strong><small data-i18n="buildSelfText">Ürünleri, fiyatları, fotoğrafları ve renkleri siz düzenleyin.</small></span><b>↗</b>
+        </a>
+        <a class="design-choice-option assisted" id="auraBuildChoice" href="https://auradigital.ink/contact.html">
+          <i>A•</i><span><strong data-i18n="buildForMe">AuraDigital benim için yapsın</strong><small data-i18n="buildForMeText">Seçtiğiniz tasarım ve talep bilgileri AuraDigital'e gönderilir.</small></span><b>↗</b>
+        </a>
+      </div>
+    </section>
+  </div>
+
 
   <footer class="site-footer shell"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><p>© 2026 AuraDigital · İstanbul</p><a href="https://auradigital.ink" target="_blank" rel="noopener noreferrer">auradigital.ink ↗</a></footer>
   <script src="config.js"></script>
