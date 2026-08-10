@@ -1,0 +1,133 @@
+.item-photo {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #e4e1d8;
+  border-radius: 11px;
+  background: #faf8f3;
+}
+
+.photo-thumb {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px dashed #ccc8bd;
+  border-radius: 10px;
+  color: #aaa79d;
+  background: #f0ede6;
+  font-size: 20px;
+}
+
+.photo-thumb.has-photo {
+  border-style: solid;
+}
+
+.photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-copy {
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.photo-copy strong {
+  font-size: 10px;
+}
+
+.photo-copy small {
+  color: var(--muted);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.photo-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.photo-button,
+.photo-remove {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 9px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 8px;
+  font-weight: 850;
+}
+
+.photo-button {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background: var(--ink);
+}
+
+.photo-button:focus-within {
+  box-shadow: 0 0 0 3px rgba(238, 98, 48, 0.18);
+}
+
+.photo-button input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.photo-remove {
+  color: #a4473e;
+  background: #fff0ed;
+}
+
+.builder-item.has-image {
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+}
+
+.builder-item.has-image > img {
+  width: 58px;
+  height: 58px;
+  grid-row: 1 / 3;
+  border-radius: 9px;
+  object-fit: cover;
+}
+
+.builder-item.has-image > p {
+  grid-column: 2 / -1;
+}
+
+@media (max-width: 580px) {
+  .item-photo {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .photo-thumb {
+    width: 52px;
+    height: 52px;
+  }
+
+  .photo-actions {
+    grid-column: 1 / -1;
+    justify-content: stretch;
+  }
+
+  .photo-button,
+  .photo-remove {
+    flex: 1;
+  }
+}
