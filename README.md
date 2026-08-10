@@ -13,6 +13,7 @@ AuraMenu is a multilingual digital-menu storefront and customer menu builder. Tu
 - `config.js` — AuraDigital API and public URL configuration
 - `a.html`–`d.html`, `1.html`–`4.html` — real English and Arabic design previews
 - `preview.css` / `preview.js` — controls shared by all design previews
+- `template-frame.css` — exact-design iframe used by the builder and published menus
 - `404.html` — clean custom-menu URL fallback for GitHub Pages
 
 ## Run locally
@@ -37,3 +38,14 @@ The public menu endpoint never exposes the customer's private contact details, p
 ## Product photos
 
 Customers can select JPG, PNG or WebP product photos directly from a phone or computer. The builder resizes each photo before submission, shows it in the live preview and supports up to 12 uploaded photos per request. A normal HTTPS image URL remains available as an alternative. Uploaded photo data is not saved to the browser draft; the customer should submit the request before leaving the page.
+
+## Exact template mapping
+
+The design selected by the customer is the same page used in the live builder draft and at the approved public URL:
+
+- Nova Mobile → `c.html`
+- Food Orbit → `b.html`
+- Maison → `a.html`
+- Taste 3D → `d.html`
+
+`preview.js` fills that real design with the customer's business details, categories, products, prices and photos. This avoids a generic preview that looks different after publishing.

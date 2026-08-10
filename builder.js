@@ -173,16 +173,23 @@
     maison: "Maison",
     taste3d: "Taste 3D",
   };
-  const symbols = { TRY: "₺", EUR: "€", USD: "$", TND: "د.ت" };
+  const templateFiles = {
+    modern: "c.html",
+    orbit: "b.html",
+    maison: "a.html",
+    taste3d: "d.html",
+  };
   const PHOTO_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
   const MAX_SOURCE_PHOTO_BYTES = 12 * 1024 * 1024;
   const MAX_PHOTO_BYTES = 280 * 1024;
   const MAX_PHOTOS = 12;
   const params = new URLSearchParams(location.search);
+  const previewTargetOrigin = location.origin === "null" ? "*" : location.origin;
   let lang = ["tr", "en", "ar"].includes(params.get("lang"))
     ? params.get("lang")
     : localStorage.getItem("auraMenuUiLanguage") || "tr";
   let categories = [];
+  let previewTimer;
   const $ = (id) => document.getElementById(id);
   const uid = () => crypto.randomUUID();
   function defaults(code) {
@@ -563,27 +570,49 @@
     });
   }
   function updatePreview() {
-    const category = categories[0];
-    const symbol = symbols[$("currency").value] || $("currency").value;
-    $("previewName").textContent = $("businessName").value || "Aura Restaurant";
-    $("previewTagline").textContent = $("tagline").value;
-    $("previewAddress").textContent = $("address").value.toUpperCase();
-    $("previewHours").textContent = $("openingHours").value;
-    $("previewUrl").textContent = `auramenu.space/${$("slug").value || "menu"}`;
-    $("previewTemplate").textContent = templateNames[$("templateId").value];
-    $("previewCategories").innerHTML = categories
-      .map(
-        (item) =>
-          `<span>${esc(item.emoji)} ${esc(item.name || i18n[lang].category)}</span>`,
-      )
-      .join("");
-    $("previewItems").innerHTML = (category?.items || [])
-      .slice(0, 4)
-      .map((item) => {
-        const source = imageSource(item);
-        return `<article class="builder-item ${source ? "has-image" : ""}">${source ? `<img src="${esc(source)}" alt="">` : ""}<strong>${esc(item.name || i18n[lang].product)}</strong><b>${esc(item.price || "0")} ${esc(symbol)}</b><p>${esc(item.description)}</p></article>`;
-      })
-      .join("");
+    const templateId = $("templateId").value;
+    const frame = $("templatePreview");
+    $("previewTemplate").textContent = templateNames[templateId];
+    if (frame.dataset.template !== templateId) {
+      frame.dataset.template = templateId;
+      frame.src = `${templateFiles[templateId]}?embedded=1`;
+    }
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(sendTemplatePreview, 45);
+  }
+  function previewMenuData() {
+    return {
+      templateId: $("templateId").value,
+      menuLanguage: $("menuLanguage").value,
+      businessName: $("businessName").value.trim() || "Aura Restaurant",
+      tagline: $("tagline").value.trim(),
+      description: $("description").value.trim(),
+      address: $("address").value.trim(),
+      businessPhone: $("businessPhone").value.trim(),
+      whatsapp: $("whatsapp").value.trim(),
+      openingHours: $("openingHours").value.trim(),
+      currency: $("currency").value,
+      categories: categories.map((category) => ({
+        name: category.name.trim() || i18n[lang].category,
+        emoji: category.emoji.trim() || "🍽️",
+        items: category.items
+          .filter((item) => item.name.trim())
+          .map((item) => ({
+            name: item.name.trim(),
+            description: item.description.trim(),
+            price: item.price.trim(),
+            imageUrl: imageSource(item),
+            featured: Boolean(item.featured),
+          })),
+      })),
+    };
+  }
+  function sendTemplatePreview() {
+    const frame = $("templatePreview");
+    frame.contentWindow?.postMessage(
+      { type: "auramenu:render", menu: previewMenuData(), draft: true },
+      previewTargetOrigin,
+    );
   }
   function saveDraft() {
     const draft = {
@@ -630,6 +659,12 @@
     $("formMessage").className = `form-message show ${type}`;
     $("formMessage").scrollIntoView({ behavior: "smooth", block: "center" });
   }
+  window.addEventListener("message", (event) => {
+    if (location.origin !== "null" && event.origin !== location.origin) return;
+    if (event.source !== $("templatePreview").contentWindow) return;
+    if (event.data?.type === "auramenu:template-ready") sendTemplatePreview();
+  });
+  $("templatePreview").addEventListener("load", sendTemplatePreview);
   document
     .querySelectorAll("[data-lang]")
     .forEach((button) =>
@@ -645,8 +680,12 @@
   [
     "businessName",
     "tagline",
+    "description",
     "address",
+    "businessPhone",
+    "whatsapp",
     "openingHours",
+    "menuLanguage",
     "currency",
     "templateId",
     "slug",
