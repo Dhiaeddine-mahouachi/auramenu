@@ -22,8 +22,19 @@
         <label class="field"><span data-i18n="menuLanguage">Müşteri menüsünün dili</span><select id="menuLanguage"><option value="tr">Türkçe</option><option value="en">English</option><option value="ar">العربية</option></select></label>
         <label class="field"><span data-i18n="currency">Para birimi</span><select id="currency"><option value="TRY">TRY — ₺</option><option value="EUR">EUR — €</option><option value="USD">USD — $</option><option value="TND">TND — د.ت</option></select></label>
       </div></section>
-      <section class="form-section"><h2 data-i18n="content">2. Kategoriler ve ürünler</h2><div class="category-list" id="categoryList"></div><button class="add-button" id="addCategory" type="button" data-i18n="addCategory">+ Kategori ekle</button></section>
+      <section class="form-section" id="contentSection"><h2 data-i18n="content">2. Kategoriler ve ürünler</h2><div class="category-list" id="categoryList"></div><button class="add-button" id="addCategory" type="button" data-i18n="addCategory">+ Kategori ekle</button></section>
       <section class="form-section"><h2 data-i18n="publishing">3. Özel adres, iletişim ve ödeme</h2><div class="form-grid">
+        <div class="builder-choice-grid full">
+          <fieldset><legend data-i18n="domainChoice">Menü adresi</legend>
+            <label><input type="radio" name="domainMode" value="auramenu" checked><span><b data-i18n="auraDomain">AuraMenu adresi</b><small>auramenu.space/isletmeniz</small></span></label>
+            <label><input type="radio" name="domainMode" value="custom"><span><b data-i18n="ownDomain">Kendi domainim</b><small data-i18n="ownDomainHelp">Sahip olduğunuz domain bağlanır</small></span></label>
+          </fieldset>
+          <fieldset><legend data-i18n="buildChoice">Menüyü kim hazırlayacak?</legend>
+            <label><input type="radio" name="serviceMode" value="self" checked><span><b data-i18n="selfBuild">Kendim hazırlayacağım</b><small data-i18n="selfBuildHelp">Ürünleri ve fiyatları burada girin</small></span></label>
+            <label><input type="radio" name="serviceMode" value="managed"><span><b data-i18n="managedBuild">AuraDigital hazırlasın</b><small data-i18n="managedBuildHelp">Bilgileri aldıktan sonra ekibimiz kurar</small></span></label>
+          </fieldset>
+        </div>
+        <label class="field full" id="customDomainField" hidden><span data-i18n="customDomain">Sahip olduğunuz domain</span><input id="customDomain" maxlength="180" placeholder="menu.isletmeniz.com"></label>
         <label class="field full"><span data-i18n="url">Özel menü adresiniz *</span><div class="slug-field"><span>auramenu.space/</span><input id="slug" required maxlength="48" value="pera-kitchen" inputmode="url"></div></label>
         <label class="field"><span data-i18n="contactName">Yetkili kişi *</span><input id="contactName" required maxlength="100" autocomplete="name"></label>
         <label class="field"><span data-i18n="contactPhone">Yetkili telefonu *</span><input id="contactPhone" required maxlength="40" autocomplete="tel"></label>
