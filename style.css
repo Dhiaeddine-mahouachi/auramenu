@@ -36,3 +36,29 @@ body{background:radial-gradient(circle at 85% 4%,rgba(216,255,69,.16),transparen
 .builder-choice-grid .self-choice:has(input:checked){background:#0c1e18;color:#fff}.builder-choice-grid .self-choice:has(input:checked) small{color:#d8e8df}
 .preview-panel{background:#0c1e18}.preview-label{color:#fff}.preview-label span{color:#d8ff45}.bank-payment{border-color:rgba(22,122,90,.25);background:#eef6e9}.bank-payment-head b{color:#167a5a}
 @media(max-width:760px){.template-card footer{align-items:flex-start;flex-direction:column}.template-customize-button{width:100%}.hero-actions{align-items:flex-start;flex-direction:column}.self-build-cta{width:100%}}
+
+
+/* Design owner choice */
+.template-customize-button{border:0;cursor:pointer;font-family:inherit}
+body.modal-open{overflow:hidden}
+.design-choice-modal[hidden]{display:none!important}
+.design-choice-modal{position:fixed;z-index:1000;inset:0;display:grid;place-items:center;padding:20px}
+.design-choice-backdrop{position:absolute;inset:0;background:rgba(4,17,13,.74);backdrop-filter:blur(12px);opacity:0;transition:opacity .18s ease}
+.design-choice-dialog{position:relative;z-index:1;width:min(760px,100%);max-height:calc(100vh - 40px);overflow:auto;padding:clamp(26px,5vw,48px);border:1px solid rgba(216,255,69,.3);border-radius:30px;background:#f8f5ea;box-shadow:0 35px 110px rgba(0,0,0,.35);opacity:0;transform:translateY(18px) scale(.98);transition:opacity .18s ease,transform .18s ease}
+.design-choice-modal.open .design-choice-backdrop{opacity:1}
+.design-choice-modal.open .design-choice-dialog{opacity:1;transform:none}
+.design-choice-close{position:absolute;top:18px;right:18px;width:42px;height:42px;border:1px solid #d5ddd4;border-radius:50%;display:grid;place-items:center;background:#fffdf7;color:#0c1e18;cursor:pointer;font-size:25px;line-height:1}
+.design-choice-dialog>small{color:#167a5a;font-size:9px;font-weight:950;letter-spacing:.14em}
+.design-choice-dialog h2{max-width:610px;margin:10px 0 12px;font-family:Manrope,sans-serif;font-size:clamp(34px,6vw,56px);line-height:1;letter-spacing:-.06em}
+.design-choice-dialog>p{max-width:650px;margin:0;color:#66736d;font-size:12px;line-height:1.65}
+.selected-design-chip{width:max-content;max-width:100%;margin:22px 0;padding:9px 13px;border:1px solid #d5ddd4;border-radius:999px;display:flex;align-items:center;gap:8px;background:#fffdf7;font-size:10px}
+.selected-design-chip span{color:#78837d}.selected-design-chip b{color:#167a5a}
+.design-choice-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.design-choice-option{min-height:160px;padding:20px;border:1px solid #d5ddd4;border-radius:21px;display:grid;grid-template-columns:48px 1fr auto;gap:13px;align-items:start;background:#fffdf7;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.design-choice-option:hover{transform:translateY(-3px);border-color:#167a5a;box-shadow:0 18px 40px rgba(12,30,24,.12)}
+.design-choice-option>i{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:#e6ede5;color:#167a5a;font-style:normal;font-weight:950}
+.design-choice-option>span{display:grid;gap:8px;padding-top:4px}.design-choice-option strong{font-size:15px;line-height:1.25}.design-choice-option small{color:#66736d;font-size:10px;line-height:1.5}
+.design-choice-option>b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#0c1e18;color:#fff}
+.design-choice-option.self{background:#0c1e18;color:#fff;border-color:#0c1e18}.design-choice-option.self>i{background:#d8ff45;color:#0c1e18}.design-choice-option.self small{color:#b8c9c0}.design-choice-option.self>b{background:#d8ff45;color:#0c1e18}
+html[dir="rtl"] .design-choice-close{right:auto;left:18px}
+@media(max-width:680px){.design-choice-modal{padding:12px;align-items:end}.design-choice-dialog{max-height:90vh;padding:28px 18px 20px;border-radius:26px 26px 18px 18px}.design-choice-dialog h2{padding-inline-end:34px;font-size:38px}.design-choice-actions{grid-template-columns:1fr}.design-choice-option{min-height:130px;padding:16px}.selected-design-chip{margin:18px 0}}
