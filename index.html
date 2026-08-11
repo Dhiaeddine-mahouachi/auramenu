@@ -37,7 +37,7 @@
         <div class="eyebrow"><i></i><span data-i18n="eyebrow">AuraDigital tarafından dijital menü stüdyosu</span></div>
         <h1><span data-i18n="heroA">Menünüzü siz hazırlayın.</span><em data-i18n="heroB">Biz yayına alalım.</em></h1>
         <p data-i18n="heroText">Tasarımı seçin, ürünleri ve fiyatları ekleyin, sonucu anında görün. Talebiniz AuraDigital panelinde kırmızı görünür; ödeme kontrolü ve onayınızdan sonra yeşile döner.</p>
-        <div class="hero-actions"><a class="button button-orange self-build-cta" href="builder.html" data-builder-link><span data-i18n="start">Kendi menünü oluştur</span><b>↗</b></a><a class="text-link" href="#templates"><span data-i18n="seeTemplates">Tasarımları gör</span> ↓</a></div><p class="self-build-hint" data-i18n="studioHint">Tasarım stüdyosu açılır: ürünleri, fiyatları, fotoğrafları ve renkleri kendiniz düzenlersiniz.</p>
+        <div class="hero-actions"><a class="button button-orange self-build-cta" href="builder.html" data-builder-link><span><span data-i18n="start">Kendi menünü oluştur</span><small data-self-build-price>1.599 TL</small></span><b>↗</b></a><a class="text-link" href="#templates"><span data-i18n="seeTemplates">Tasarımları gör</span> ↓</a></div><p class="self-build-hint" data-i18n="studioHint">Tasarım stüdyosu açılır: ürünleri, fiyatları, fotoğrafları ve renkleri kendiniz düzenlersiniz.</p>
         <div class="hero-stats"><div><strong>4</strong><span data-i18n="designs">hazır tasarım</span></div><div><strong>3</strong><span data-i18n="languages">dil seçeneği</span></div><div><strong>&lt;10 dk</strong><span data-i18n="setup">kurulum süresi</span></div></div>
       </div>
       <div class="hero-visual reveal" aria-label="AuraMenu workflow">
@@ -86,7 +86,7 @@
       </div>
     </section>
 
-    <section class="final-cta shell reveal"><div><span>AURA<i>•</i>MENU</span><h2 data-i18n="finalTitle">İlk dijital menünüzü bugün hazırlayın.</h2><p data-i18n="finalText">Tasarlamak ve önizlemek ücretsizdir. Yayın yalnızca ödeme kontrolü ve AuraDigital onayından sonra açılır.</p></div><a class="button button-light" href="builder.html" data-builder-link><span data-i18n="start">Hemen tasarla</span><b>↗</b></a></section>
+    <section class="final-cta shell reveal"><div><span>AURA<i>•</i>MENU</span><h2 data-i18n="finalTitle">İlk dijital menünüzü bugün hazırlayın.</h2><p data-i18n="finalText">Tasarlamak ve önizlemek ücretsizdir. Yayın yalnızca ödeme kontrolü ve AuraDigital onayından sonra açılır.</p></div><a class="button button-light final-price-button" href="builder.html" data-builder-link><span><span data-i18n="start">Hemen tasarla</span><small data-self-build-price>1.599 TL</small></span><b>↗</b></a></section>
   </main>
   <div class="design-choice-modal" id="designChoiceModal" hidden>
     <div class="design-choice-backdrop" data-choice-close></div>
@@ -98,7 +98,7 @@
       <div class="selected-design-chip"><span data-i18n="selectedDesign">Seçilen tasarım</span><b id="selectedDesignName">Nova Mobile</b></div>
       <div class="design-choice-actions">
         <a class="design-choice-option self" id="selfBuildChoice" href="builder.html">
-          <i>✎</i><span><strong data-i18n="buildSelf">AuraMenu'de kendim yapacağım</strong><small data-i18n="buildSelfText">Ürünleri, fiyatları, fotoğrafları ve renkleri siz düzenleyin.</small></span><b>↗</b>
+          <i>✎</i><span><strong data-i18n="buildSelf">AuraMenu'de kendim yapacağım</strong><small data-i18n="buildSelfText">Ürünleri, fiyatları, fotoğrafları ve renkleri siz düzenleyin.</small><em class="design-choice-price" data-self-build-price>1.599 TL</em></span><b>↗</b>
         </a>
         <a class="design-choice-option assisted" id="auraBuildChoice" href="https://auradigital.ink/contact.html">
           <i>A•</i><span><strong data-i18n="buildForMe">AuraDigital benim için yapsın</strong><small data-i18n="buildForMeText">Seçtiğiniz tasarım ve talep bilgileri AuraDigital'e gönderilir.</small></span><b>↗</b>
@@ -110,6 +110,7 @@
 
   <footer class="site-footer shell"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><p>© 2026 AuraDigital · İstanbul</p><a href="https://auradigital.ink" target="_blank" rel="noopener noreferrer">auradigital.ink ↗</a></footer>
   <script src="config.js"></script>
+  <script src="pricing.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -5,6 +5,9 @@
       title: "Menünüzü oluşturun",
       intro:
         "İşletme ve menü bilgilerinizi ekleyin. Sağdaki önizleme siz yazarken güncellenir.",
+      selfPriceLabel: "Kendin oluştur paketi",
+      selfPriceNote:
+        "Tasarım ve önizleme ücretsizdir; yayın ücreti tek seferliktir.",
       business: "1. İşletme görünümü",
       businessName: "İşletme adı *",
       tagline: "Kısa slogan",
@@ -61,6 +64,9 @@
       title: "Build your menu",
       intro:
         "Add your business and menu details. The preview updates while you type.",
+      selfPriceLabel: "Self-build package",
+      selfPriceNote:
+        "Design and preview are free; the publishing fee is paid once.",
       business: "1. Business appearance",
       businessName: "Business name *",
       tagline: "Short tagline",
@@ -117,6 +123,8 @@
       back: "العودة إلى التصاميم →",
       title: "أنشئ قائمتك",
       intro: "أضف بيانات النشاط والقائمة. تتحدث المعاينة أثناء الكتابة.",
+      selfPriceLabel: "باقة أنشئها بنفسك",
+      selfPriceNote: "التصميم والمعاينة مجاناً؛ رسوم النشر تُدفع مرة واحدة.",
       business: "1. مظهر النشاط",
       businessName: "اسم النشاط *",
       tagline: "عبارة قصيرة",
@@ -444,6 +452,7 @@
         button.classList.toggle("active", button.dataset.lang === code),
       );
     $("backLink").href = `index.html?lang=${code}#templates`;
+    window.AuraMenuPricing?.apply();
     renderEditors();
   }
   function renderEditors() {

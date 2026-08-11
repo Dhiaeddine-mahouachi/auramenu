@@ -2,6 +2,10 @@
 
 AuraMenu is a multilingual digital-menu storefront and customer menu builder. Turkish is the default interface; English and Arabic are also available.
 
+The self-build publishing package is **1,599 TL**. `config.js` contains the safe client fallback and `pricing.js` synchronizes it with AuraDigital's public pricing API when available.
+
+The Pages workflow publishes only the public site files; repository metadata, workflow files, and this README are excluded from the deployment artifact.
+
 ## Important files
 
 - `index.html` — landing page and design gallery
