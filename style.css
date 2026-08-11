@@ -75,11 +75,15 @@ html[dir="rtl"] .design-choice-close{right:auto;left:18px}
   .language-switch button{width:44px;height:44px}
   .brand,.simple-header .brand{min-height:44px}
   .mobile-toggle,.icon-button,.add-button,.photo-button,.photo-remove{min-width:44px;min-height:44px}
+  .field input,.field select,.slug-field{min-height:44px}
+  .photo-button,.photo-remove{height:44px}
   .template-customize-button,.button,.back-link{min-height:48px}
   .builder-price{align-items:flex-start;flex-direction:column;gap:8px}
   .builder-price p{max-width:none}
-  .item-editor{grid-template-columns:minmax(0,1fr) minmax(72px,90px) 44px}
-  .item-editor input:nth-child(3),.item-editor textarea,.item-featured,.item-photo{grid-column:1/-1}
+  .item-editor{grid-template-columns:minmax(0,1fr) 44px}
+  .item-editor>input[data-item-field="name"]{grid-column:1;grid-row:1}
+  .item-editor>.icon-button[data-remove-item]{grid-column:2;grid-row:1}
+  .item-editor>input[data-item-field="price"],.item-editor>input[data-item-field="imageUrl"],.item-editor>textarea,.item-featured,.item-photo{grid-column:1/-1}
   .item-photo{grid-template-columns:52px minmax(0,1fr)}
   .photo-thumb{width:52px;height:52px}
   .photo-actions{grid-column:1/-1}
