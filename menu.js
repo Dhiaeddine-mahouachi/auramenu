@@ -93,10 +93,13 @@
       return;
     }
     try {
-      const response = await fetch(
-        `${config.apiBase}/sites/${encodeURIComponent(id)}`,
-        { headers: { Accept: "application/json" } },
-      );
+      const endpoint = new URL(`${config.apiBase}/sites/${encodeURIComponent(id)}`);
+      endpoint.searchParams.set("_", String(Date.now()));
+      const response = await fetch(endpoint, {
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+        credentials: "omit",
+      });
       const data = await response.json().catch(() => ({}));
       if (!response.ok || !data.menu) {
         locked(data.error);
