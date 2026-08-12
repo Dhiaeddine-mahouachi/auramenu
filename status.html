@@ -3,10 +3,13 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0c1e18"><title>AuraMenu — Başvuru durumu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
+  <style>.dashboard-shortcut{position:fixed;right:18px;bottom:18px;z-index:10;background:#7ec151;color:#09200f;text-decoration:none;padding:12px 16px;border-radius:12px;font-weight:800;box-shadow:0 12px 30px #0004}</style>
 </head>
 <body>
   <header class="simple-header"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><div class="right"><div class="language-switch"><button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">AR</button></div><a class="back-link" id="homeLink" href="index.html">← Ana sayfa</a></div></header>
   <main class="status-layout"><section class="panel status-card" id="statusCard"><div class="loading-ring"></div><h1>Yükleniyor…</h1></section></main>
+  <a class="dashboard-shortcut" id="dashboardShortcut" href="dashboard.html">Menü panelim ↗</a>
+  <script>const q=new URLSearchParams(location.search);const rid=q.get('id')||localStorage.getItem('auraMenuLastRequest')||'';if(rid)document.getElementById('dashboardShortcut').href='dashboard.html?id='+encodeURIComponent(rid);</script>
   <script src="config.js"></script><script src="pricing.js"></script><script src="status.js"></script>
 </body>
 </html>
