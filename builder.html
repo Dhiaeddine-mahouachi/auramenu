@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#0c1e18">
   <title>AuraMenu — Menü oluştur</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="photo-upload.css"><link rel="stylesheet" href="template-frame.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="photo-upload.css"><link rel="stylesheet" href="template-frame.css"><link rel="stylesheet" href="qr-builder.css">
 </head>
 <body data-page="builder">
   <header class="simple-header"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><div class="right"><div class="language-switch"><button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">AR</button></div><a class="back-link" id="backLink" href="index.html#templates" data-i18n="back">← Tasarımlara dön</a></div></header>
@@ -32,11 +32,24 @@
         <label class="field full"><span data-i18n="paymentRef">Ödeme notu / referansı</span><input id="paymentReference" maxlength="200" placeholder="Havale yapan kişi veya işlem açıklaması"></label>
         <label class="field full"><span data-i18n="notes">AuraDigital için notunuz</span><textarea id="notes" maxlength="1000"></textarea></label>
       </div></section>
+      <section class="form-section" id="qrBuilder"><h2 data-qr="title">QR Kodunuzu oluşturun</h2><p class="qr-help" data-qr="intro">QR kodunuz menü bağlantınıza otomatik bağlanır. Renkleri, çerçeveyi ve logoyu özelleştirip PNG olarak indirebilirsiniz.</p><div class="qr-builder">
+        <div class="qr-controls">
+          <div class="qr-color-grid">
+            <label class="field"><span data-qr="dark">QR rengi</span><div class="qr-color-field"><input id="qrDark" type="color" value="#111111"><code>#111111</code></div></label>
+            <label class="field"><span data-qr="light">Arka plan</span><div class="qr-color-field"><input id="qrLight" type="color" value="#ffffff"><code>#ffffff</code></div></label>
+          </div>
+          <label class="field"><span data-qr="frame">Çerçeve</span><select id="qrFrame"><option value="card">Aura Card</option><option value="minimal">Minimal</option><option value="dark">Dark</option></select></label>
+          <label class="field"><span data-qr="label">QR üzerindeki yazı</span><input id="qrLabel" maxlength="40" value="Menüyü Görüntüle"></label>
+          <label class="field"><span data-qr="logo">Logo (isteğe bağlı)</span><div class="qr-file"><input id="qrLogo" type="file" accept="image/png,image/jpeg,image/webp"><button class="add-button" id="qrRemoveLogo" type="button" data-qr="remove">Logoyu kaldır</button></div></label>
+          <p class="qr-help" data-qr="helper">Menü içerikleri daha sonra değişse bile aynı bağlantıyı kullandığınız sürece QR kodunu yeniden basmanız gerekmez.</p>
+        </div>
+        <div class="qr-preview-card" id="qrPreviewCard" data-frame="card"><h3 id="qrPreviewTitle">Menüyü Görüntüle</h3><p id="qrUrl">https://auramenu.space/pera-kitchen</p><div class="qr-code-stage" id="qrCode"></div><img class="qr-logo-preview" id="qrLogoPreview" alt=""><div class="qr-actions"><button class="button button-orange qr-download" id="qrDownload" type="button"><span data-qr="download">PNG indir</span><b>↓</b></button></div></div>
+      </div></section>
       <div class="form-message" id="formMessage" role="alert"></div>
       <div class="submit-row"><small data-i18n="consent">Gönderdiğiniz bilgiler AuraDigital panelinde kırmızı bir talep oluşturur. Menü, ödeme kontrolü ve sizin izniniz olmadan yayınlanmaz.</small><button class="button button-orange" id="submitButton" type="submit"><span data-i18n="submit">Talebi gönder</span><b>↗</b></button></div>
     </form>
     <aside class="panel preview-panel"><div class="preview-label"><span data-i18n="livePreview">CANLI ÖNİZLEME</span><b id="previewTemplate">Nova Mobile</b></div><div class="template-preview-shell"><iframe id="templatePreview" class="template-preview-frame" title="Live menu design preview"></iframe></div></aside>
   </main>
-  <script src="config.js"></script><script src="pricing.js"></script><script src="builder.js"></script>
+  <script src="config.js"></script><script src="pricing.js"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="builder.js"></script><script src="qr-builder.js"></script>
 </body>
 </html>
