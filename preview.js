@@ -1,6 +1,16 @@
 (() => {
   "use strict";
 
+  // Keep AuraDigital branding visible in the browser tab for every menu preview.
+  if (!document.querySelector('link[data-auradigital-favicon]')) {
+    const icon = document.createElement("link");
+    icon.rel = "icon";
+    icon.type = "image/svg+xml";
+    icon.href = "https://auradigital.ink/auradigital-mark.svg";
+    icon.setAttribute("data-auradigital-favicon", "");
+    document.head.appendChild(icon);
+  }
+
   // Load the original shared menu renderer first.
   const core = document.createElement("script");
   core.src = "preview-core.js";
