@@ -18,7 +18,7 @@ window.AURA_MENU_CONFIG = Object.freeze({
       const icon = document.createElement("link");
       icon.rel = "icon";
       icon.type = "image/svg+xml";
-      icon.href = "https://auradigital.ink/auradigital-mark.svg";
+      icon.href = "auradigital-mark.svg";
       icon.setAttribute("data-auradigital-favicon", "");
       document.head.appendChild(icon);
     }
