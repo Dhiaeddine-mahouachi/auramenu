@@ -78,6 +78,22 @@
   font: 700 13px/1.5 Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
+/* AuraMenu is a display menu, not an ordering interface. Remove all
+   WhatsApp/order CTAs from demo, draft and generated customer menus. */
+a[href*="wa.me"],
+[data-main-order],
+.order-link,
+.drawer > a,
+a.cart,
+.order,
+.order-btn,
+.whatsapp,
+.hero-actions a:last-child,
+.order-row .orange,
+.bottom-nav a:last-child {
+  display: none !important;
+}
+
 @media (max-width: 600px) {
   .aura-preview-bar { top: 8px; width: calc(100% - 16px); gap: 6px; padding: 7px; }
   .aura-preview-bar__label { display: none; }
