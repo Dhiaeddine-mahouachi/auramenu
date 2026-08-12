@@ -40,6 +40,7 @@ window.AURA_MENU_CONFIG = Object.freeze({
       }
       link.href = href;
       link.textContent = copy.nav;
+      link.classList.add("manage-menu-nav");
     }
 
     const heroActions = document.querySelector(".hero-actions");
@@ -47,12 +48,12 @@ window.AURA_MENU_CONFIG = Object.freeze({
       let link = heroActions.querySelector("[data-menu-dashboard-hero]");
       if (!link) {
         link = document.createElement("a");
-        link.className = "text-link";
         link.setAttribute("data-menu-dashboard-hero", "");
         heroActions.appendChild(link);
       }
       link.href = href;
       link.textContent = copy.hero;
+      link.className = "manage-menu-hero";
     }
 
     const statusShortcut = document.getElementById("dashboardShortcut");
