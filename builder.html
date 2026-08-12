@@ -4,12 +4,32 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#0c1e18">
   <title>AuraMenu — Menü oluştur</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="photo-upload.css"><link rel="stylesheet" href="template-frame.css"><link rel="stylesheet" href="qr-builder.css">
+  <style>
+    .hosting-policy{margin-top:14px;padding:14px 16px;border:1px solid rgba(126,193,81,.35);border-radius:16px;background:rgba(126,193,81,.10);box-shadow:0 10px 30px rgba(12,30,24,.06)}
+    .hosting-policy__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:7px}
+    .hosting-policy__top strong{font-size:14px;font-weight:800}
+    .hosting-policy__price{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-size:13px;font-weight:800}
+    .hosting-policy__price b{padding:5px 9px;border-radius:999px;background:#7EC151;color:#10210d;font-size:12px}
+    .hosting-policy__copy{display:none;margin:0;font-size:13px;line-height:1.55;color:inherit;opacity:.84}
+    html[lang="tr"] .hosting-policy__copy[lang="tr"],html[lang="en"] .hosting-policy__copy[lang="en"],html[lang="ar"] .hosting-policy__copy[lang="ar"]{display:block}
+    .submit-hosting-note{margin:0 0 12px;padding:11px 13px;border-radius:12px;background:rgba(126,193,81,.09);font-size:12px;line-height:1.5}
+    .submit-hosting-note span{display:none}
+    html[lang="tr"] .submit-hosting-note span[lang="tr"],html[lang="en"] .submit-hosting-note span[lang="en"],html[lang="ar"] .submit-hosting-note span[lang="ar"]{display:inline}
+    @media(max-width:620px){.hosting-policy__top{align-items:flex-start;flex-direction:column}.hosting-policy__price{white-space:normal}}
+  </style>
 </head>
 <body data-page="builder">
   <header class="simple-header"><a class="brand" href="index.html"><span class="brand-mark">A<i>•</i></span><span>Aura<b>Menu</b></span></a><div class="right"><div class="language-switch"><button type="button" data-lang="tr">TR</button><button type="button" data-lang="en">EN</button><button type="button" data-lang="ar">AR</button></div><a class="back-link" id="backLink" href="index.html#templates" data-i18n="back">← Tasarımlara dön</a></div></header>
   <main class="builder-layout">
     <form class="panel form-panel" id="menuForm" novalidate>
-      <div class="form-head"><small>AURAMENU BUILDER</small><h1 data-i18n="title">Menünüzü oluşturun</h1><p data-i18n="intro">İşletme ve menü bilgilerinizi ekleyin. Sağdaki önizleme siz yazarken güncellenir.</p><div class="builder-price"><span><small data-i18n="selfPriceLabel">Kendin oluştur paketi</small><strong data-self-build-price>1.599 TL</strong></span><p data-i18n="selfPriceNote">Tasarım ve önizleme ücretsizdir; yayın ücreti tek seferliktir.</p></div></div>
+      <div class="form-head"><small>AURAMENU BUILDER</small><h1 data-i18n="title">Menünüzü oluşturun</h1><p data-i18n="intro">İşletme ve menü bilgilerinizi ekleyin. Sağdaki önizleme siz yazarken güncellenir.</p><div class="builder-price"><span><small data-i18n="selfPriceLabel">Kendin oluştur paketi</small><strong data-self-build-price>1.599 TL</strong></span><p data-i18n="selfPriceNote">Tasarım ve önizleme ücretsizdir; yayın ücreti tek seferliktir.</p></div>
+        <div class="hosting-policy" role="note" aria-label="AuraMenu hosting policy">
+          <div class="hosting-policy__top"><strong>☁ AuraMenu Hosting</strong><div class="hosting-policy__price"><b>İLK 6 AY ÜCRETSİZ</b><span>sonra 200 TL / 6 ay</span></div></div>
+          <p class="hosting-policy__copy" lang="tr"><strong>İlk 6 ay hosting ücretsizdir.</strong> Sonrasında AuraMenu üzerinde yayında kalan her menü için <strong>6 ayda bir 200 TL</strong> hosting ücreti alınır.</p>
+          <p class="hosting-policy__copy" lang="en"><strong>The first 6 months of hosting are free.</strong> After that, each menu kept live on AuraMenu is charged a <strong>200 TL hosting fee every 6 months</strong>.</p>
+          <p class="hosting-policy__copy" lang="ar"><strong>أول 6 أشهر من الاستضافة مجاناً.</strong> بعد ذلك، تُحتسب رسوم استضافة قدرها <strong>200 ليرة تركية كل 6 أشهر</strong> لكل قائمة تبقى منشورة على AuraMenu.</p>
+        </div>
+      </div>
       <section class="form-section"><h2 data-i18n="business">1. İşletme görünümü</h2><div class="form-grid">
         <label class="field"><span data-i18n="businessName">İşletme adı *</span><input id="businessName" maxlength="100" required value="Pera Kitchen"></label>
         <label class="field"><span data-i18n="tagline">Kısa slogan</span><input id="tagline" maxlength="140" value="Günün taze tatları"></label>
@@ -46,6 +66,7 @@
         <div class="qr-preview-card" id="qrPreviewCard" data-frame="card"><h3 id="qrPreviewTitle">Menüyü Görüntüle</h3><p id="qrUrl">https://auramenu.space/pera-kitchen</p><div class="qr-code-stage" id="qrCode"></div><img class="qr-logo-preview" id="qrLogoPreview" alt=""><div class="qr-actions"><button class="button button-orange qr-download" id="qrDownload" type="button"><span data-qr="download">PNG indir</span><b>↓</b></button></div></div>
       </div></section>
       <div class="form-message" id="formMessage" role="alert"></div>
+      <p class="submit-hosting-note"><span lang="tr">Başvuru göndererek ilk 6 ayın ücretsiz olduğunu ve sonrasında yayındaki her menü için 6 ayda bir 200 TL hosting ücreti uygulanacağını gördüğünüzü onaylarsınız.</span><span lang="en">By submitting, you confirm that you have seen that the first 6 months are free and that each live menu is then charged 200 TL every 6 months for hosting.</span><span lang="ar">بإرسال الطلب، فإنك تؤكد أنك اطلعت على أن أول 6 أشهر مجانية، وبعدها تُفرض رسوم استضافة 200 ليرة تركية كل 6 أشهر لكل قائمة منشورة.</span></p>
       <div class="submit-row"><small data-i18n="consent">Gönderdiğiniz bilgiler AuraDigital panelinde kırmızı bir talep oluşturur. Menü, ödeme kontrolü ve sizin izniniz olmadan yayınlanmaz.</small><button class="button button-orange" id="submitButton" type="submit"><span data-i18n="submit">Talebi gönder</span><b>↗</b></button></div>
     </form>
     <aside class="panel preview-panel"><div class="preview-label"><span data-i18n="livePreview">CANLI ÖNİZLEME</span><b id="previewTemplate">Nova Mobile</b></div><div class="template-preview-shell"><iframe id="templatePreview" class="template-preview-frame" title="Live menu design preview"></iframe></div></aside>
