@@ -28,6 +28,7 @@ body{
   color:var(--text);
   overflow-x:hidden;
 }
+body.sheet-open{overflow:hidden}
 img{display:block;width:100%}
 .app{
   max-width:560px;
@@ -109,9 +110,7 @@ img{display:block;width:100%}
   background:linear-gradient(135deg,var(--gold),#ffe0a2);
   transform:translateY(-2px);
 }
-.hero{
-  padding:16px;
-}
+.hero{padding:16px}
 .hero-card{
   min-height:270px;
   border-radius:36px;
@@ -162,21 +161,14 @@ img{display:block;width:100%}
   box-shadow:0 28px 45px rgba(0,0,0,.35);
   animation:heroFloat 4.5s ease-in-out infinite;
 }
-.hero-floating img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+.hero-floating img{width:100%;height:100%;object-fit:cover}
 .section-head{
   padding:18px 16px 8px;
   display:flex;
   justify-content:space-between;
   align-items:end;
 }
-.section-head h2{
-  font-size:28px;
-  letter-spacing:-1px;
-}
+.section-head h2{font-size:28px;letter-spacing:-1px}
 .section-head span{color:var(--muted);font-size:14px;font-weight:800}
 .grid{
   padding:8px 16px 22px;
@@ -200,10 +192,7 @@ img{display:block;width:100%}
   transition:.35s cubic-bezier(.2,.8,.2,1);
   box-shadow:0 20px 50px rgba(0,0,0,.18);
 }
-.food-card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(255,181,69,.34);
-}
+.food-card:hover{transform:translateY(-5px);border-color:rgba(255,181,69,.34)}
 .food-img{
   width:132px;
   height:132px;
@@ -213,32 +202,11 @@ img{display:block;width:100%}
   transition:.35s ease;
 }
 .food-card:hover .food-img{transform:rotate(0) scale(1.04)}
-.food-img img{
-  height:100%;
-  object-fit:cover;
-}
-.food-info h3{
-  font-size:20px;
-  letter-spacing:-.4px;
-  margin-bottom:7px;
-}
-.food-info p{
-  color:var(--muted);
-  font-size:13px;
-  line-height:1.35;
-  margin-bottom:13px;
-}
-.price-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-.price{
-  color:var(--gold);
-  font-size:22px;
-  font-weight:1000;
-}
+.food-img img{height:100%;object-fit:cover}
+.food-info h3{font-size:20px;letter-spacing:-.4px;margin-bottom:7px}
+.food-info p{color:var(--muted);font-size:13px;line-height:1.35;margin-bottom:13px}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.price{color:var(--gold);font-size:22px;font-weight:1000}
 .plus{
   width:38px;
   height:38px;
@@ -249,35 +217,41 @@ img{display:block;width:100%}
   font-size:24px;
   font-weight:900;
 }
+.sheet-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:190;
+  background:rgba(0,0,0,.58);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .28s ease;
+  backdrop-filter:blur(3px);
+}
+.sheet-backdrop.show{opacity:1;pointer-events:auto}
 .sheet{
   position:fixed;
   left:50%;
   bottom:0;
   z-index:200;
   width:min(560px,100%);
+  max-height:92dvh;
   transform:translate(-50%,110%);
   background:#fff7ed;
   color:#1a120c;
   border-radius:34px 34px 0 0;
   box-shadow:0 -30px 90px rgba(0,0,0,.5);
   transition:.42s cubic-bezier(.2,.9,.2,1);
-  overflow:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
 }
 .sheet.show{transform:translate(-50%,0)}
-.sheet-img{
-  height:300px;
-  overflow:hidden;
-  border-radius:34px 34px 0 0;
-}
-.sheet-img img{
-  height:100%;
-  object-fit:cover;
-  animation:zoomIn .5s ease both;
-}
+.sheet-img{height:300px;overflow:hidden;border-radius:34px 34px 0 0;cursor:pointer}
+.sheet-img img{height:100%;object-fit:cover;animation:zoomIn .5s ease both}
 .close{
   position:absolute;
   right:16px;
   top:16px;
+  z-index:2;
   width:42px;
   height:42px;
   border:0;
@@ -285,21 +259,12 @@ img{display:block;width:100%}
   background:rgba(0,0,0,.55);
   color:white;
   font-size:24px;
+  cursor:pointer;
 }
-.sheet h2{
-  font-size:32px;
-  letter-spacing:-1px;
-}
-.sheet p{
-  color:#6b5848;
-  margin:10px 0 16px;
-  line-height:1.5;
-}
-.sheet-price{
-  font-size:32px;
-  color:#ff5a21;
-  font-weight:1000;
-}
+.sheet-content{padding:22px 22px 28px}
+.sheet h2{font-size:32px;letter-spacing:-1px}
+.sheet p{color:#6b5848;margin:10px 0 16px;line-height:1.5}
+.sheet-price{font-size:32px;color:#ff5a21;font-weight:1000}
 .order-btn{
   width:100%;
   margin-top:18px;
@@ -327,34 +292,12 @@ img{display:block;width:100%}
   padding:10px;
   box-shadow:0 22px 60px rgba(0,0,0,.34);
 }
-.bottom-nav a{
-  text-decoration:none;
-  color:var(--muted);
-  font-size:12px;
-  font-weight:900;
-  text-align:center;
-}
-.bottom-nav b{
-  display:block;
-  font-size:19px;
-  margin-bottom:2px;
-}
-.reveal{
-  opacity:0;
-  transform:translateY(24px) scale(.98);
-  animation:reveal .55s ease forwards;
-}
-@keyframes reveal{
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
-@keyframes heroFloat{
-  0%,100%{transform:rotate(-10deg) translateY(0)}
-  50%{transform:rotate(-4deg) translateY(-14px)}
-}
-@keyframes zoomIn{
-  from{transform:scale(1.08)}
-  to{transform:scale(1)}
-}
+.bottom-nav a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:900;text-align:center}
+.bottom-nav b{display:block;font-size:19px;margin-bottom:2px}
+.reveal{opacity:0;transform:translateY(24px) scale(.98);animation:reveal .55s ease forwards}
+@keyframes reveal{to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes heroFloat{0%,100%{transform:rotate(-10deg) translateY(0)}50%{transform:rotate(-4deg) translateY(-14px)}}
+@keyframes zoomIn{from{transform:scale(1.08)}to{transform:scale(1)}}
 @media(min-width:760px){
   .app{max-width:1180px}
   .topbar{border-radius:0 0 30px 30px}
@@ -372,9 +315,8 @@ img{display:block;width:100%}
   .sheet-img{height:250px}
 }
 </style>
-  <link rel="stylesheet" href="preview.css">
+<link rel="stylesheet" href="preview.css">
 </head>
-
 <body>
 
 <div class="app">
@@ -407,9 +349,10 @@ img{display:block;width:100%}
   </section>
 </div>
 
-<div class="sheet" id="sheet">
-  <button class="close" onclick="closeSheet()">×</button>
-  <div class="sheet-img"><img id="sheetImg" src="" alt=""></div>
+<div class="sheet-backdrop" id="sheetBackdrop" aria-hidden="true"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="close" id="sheetClose" aria-label="Close product">×</button>
+  <div class="sheet-img" id="sheetImageArea" title="Tap to close"><img id="sheetImg" src="" alt=""></div>
   <div class="sheet-content">
     <h2 id="sheetName"></h2>
     <p id="sheetDesc"></p>
@@ -486,59 +429,61 @@ const data = {
 
 let activeCategory = "Burgers";
 let cartCount = 0;
+let openProductName = "";
 
 const categoriesEl = document.getElementById("categories");
 const productsEl = document.getElementById("products");
 const titleEl = document.getElementById("currentTitle");
 const searchEl = document.getElementById("search");
+const sheetEl = document.getElementById("sheet");
+const backdropEl = document.getElementById("sheetBackdrop");
+const closeEl = document.getElementById("sheetClose");
+const imageAreaEl = document.getElementById("sheetImageArea");
 
 Object.keys(data).forEach((cat,i)=>{
   const btn = document.createElement("button");
   btn.className = "cat" + (i===0 ? " active" : "");
   btn.textContent = cat;
-
   btn.onclick = () => {
+    closeSheet();
     activeCategory = cat;
     document.querySelectorAll(".cat").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
     searchEl.value = "";
     renderProducts(data[cat], activeCategory);
   };
-
   categoriesEl.appendChild(btn);
 });
 
 function renderProducts(list, title = activeCategory){
   titleEl.textContent = title;
   productsEl.innerHTML = "";
-
   list.forEach((p,i)=>{
     const card = document.createElement("article");
     card.className = "food-card reveal";
     card.style.animationDelay = `${i*65}ms`;
-
     card.innerHTML = `
       <div class="food-img">
         <img src="${p[3]}" alt="${p[0]}" loading="lazy">
       </div>
-
       <div class="food-info">
         <h3>${p[0]}</h3>
         <p>${p[2]}</p>
-
         <div class="price-row">
           <div class="price">${p[1]}</div>
-          <button class="plus" aria-label="Add">+</button>
+          <button class="plus" aria-label="Open ${p[0]}">+</button>
         </div>
-      </div>
-    `;
-
-    card.onclick = () => openSheet(p);
+      </div>`;
+    card.onclick = () => {
+      if (sheetEl.classList.contains("show") && openProductName === p[0]) closeSheet();
+      else openSheet(p);
+    };
     productsEl.appendChild(card);
   });
 }
 
 function openSheet(p){
+  openProductName = p[0];
   document.getElementById("sheetImg").src = p[3];
   document.getElementById("sheetImg").alt = p[0];
   document.getElementById("sheetName").textContent = p[0];
@@ -551,24 +496,38 @@ function openSheet(p){
     window.location.href = `https://wa.me/905555555555?text=Hello, I want to order ${encodeURIComponent(p[0] + " " + p[1])}`;
   };
 
-  document.getElementById("sheet").classList.add("show");
+  sheetEl.classList.add("show");
+  backdropEl.classList.add("show");
+  sheetEl.setAttribute("aria-hidden","false");
+  backdropEl.setAttribute("aria-hidden","false");
+  document.body.classList.add("sheet-open");
+  closeEl.focus({preventScroll:true});
 }
 
 function closeSheet(){
-  document.getElementById("sheet").classList.remove("show");
+  if (!sheetEl.classList.contains("show")) return;
+  sheetEl.classList.remove("show");
+  backdropEl.classList.remove("show");
+  sheetEl.setAttribute("aria-hidden","true");
+  backdropEl.setAttribute("aria-hidden","true");
+  document.body.classList.remove("sheet-open");
+  openProductName = "";
 }
 
+backdropEl.addEventListener("click", closeSheet);
+closeEl.addEventListener("click", closeSheet);
+imageAreaEl.addEventListener("click", closeSheet);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeSheet();
+});
+
 searchEl.addEventListener("input",()=>{
+  closeSheet();
   const q = searchEl.value.toLowerCase().trim();
   const all = Object.values(data).flat();
-
   const filtered = q
-    ? all.filter(p =>
-        p[0].toLowerCase().includes(q) ||
-        p[2].toLowerCase().includes(q)
-      )
+    ? all.filter(p => p[0].toLowerCase().includes(q) || p[2].toLowerCase().includes(q))
     : data[activeCategory];
-
   renderProducts(filtered, q ? "Search Results" : activeCategory);
 });
 
