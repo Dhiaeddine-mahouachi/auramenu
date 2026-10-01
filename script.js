@@ -23,7 +23,7 @@
     const name=designNames[lang]?.[selectedTemplate]||selectedTemplate;
     selectedDesignName.textContent=name;
     selfBuildChoice.href=`builder.html?template=${encodeURIComponent(selectedTemplate)}&lang=${lang}`;
-    auraBuildChoice.href=`https://auradigital.ink/contact.html?lang=${lang}&service=auramenu&template=${encodeURIComponent(selectedTemplate)}&design=${encodeURIComponent(name)}`;
+    auraBuildChoice.href=`https://auradigitalworks.com/contact?lang=${lang}&service=auramenu&template=${encodeURIComponent(selectedTemplate)}&design=${encodeURIComponent(name)}`;
   }
   function openDesignChoice(template){
     selectedTemplate=template;
