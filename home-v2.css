@@ -861,3 +861,80 @@ body.am-home .design-choice-option.self>b{background:var(--am-yellow)!important;
   .am-footer-links{grid-template-columns:1fr}
   .am-footer-links>div:last-child{grid-column:auto}
 }
+
+/* FULL-WIDTH OPEN SIDES 2026-10-02 */
+body.am-home{
+  --am-max:1680px;
+  --am-gutter:clamp(14px,1.2vw,24px);
+}
+.am-header{
+  width:calc(100% - 24px);
+  max-width:1680px;
+}
+.am-hero-inner{
+  width:calc(100% - 28px);
+  max-width:1680px;
+}
+.am-section{
+  width:100%;
+  max-width:none;
+  padding-left:var(--am-gutter);
+  padding-right:var(--am-gutter);
+}
+.am-stats{
+  padding-left:var(--am-gutter);
+  padding-right:var(--am-gutter);
+}
+.am-footer{
+  padding-left:var(--am-gutter);
+  padding-right:var(--am-gutter);
+}
+.am-template-grid,
+.am-process-grid,
+.am-pricing-grid{
+  width:100%;
+}
+.am-features,
+.am-nfc,
+.am-about{
+  width:100%;
+}
+.am-features{
+  grid-template-columns:minmax(0,.82fr) minmax(650px,1.18fr);
+}
+.am-nfc{
+  grid-template-columns:minmax(0,.82fr) minmax(650px,1.18fr);
+}
+.am-dashboard{
+  width:min(780px,100%);
+}
+.am-template-preview{
+  height:455px;
+}
+.am-template-dish{
+  height:210px;
+}
+.am-price-card{
+  min-height:445px;
+}
+@media(min-width:1500px){
+  .am-template-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+  .am-process-grid{gap:18px}
+  .am-pricing-grid{gap:28px}
+  .am-feature-grid{gap:18px}
+  .am-hero-inner{gap:96px}
+}
+@media(max-width:1180px){
+  body.am-home{--am-gutter:18px}
+  .am-header{width:calc(100% - 20px)}
+  .am-hero-inner{width:calc(100% - 24px)}
+  .am-features,.am-nfc{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  body.am-home{--am-gutter:12px}
+  .am-header{width:calc(100% - 16px)}
+  .am-hero-inner{width:calc(100% - 20px)}
+  .am-section{padding-left:12px;padding-right:12px}
+  .am-stats{padding-left:12px;padding-right:12px}
+  .am-footer{padding-left:14px;padding-right:14px}
+}
