@@ -1,85 +1,90 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="AuraMenu creates beautiful QR digital menus for restaurants, cafés and bars. Build, update and publish your menu in minutes.">
-  <meta name="theme-color" content="#050505">
+  <meta name="description" content="AuraMenu creates premium QR digital menus for restaurants, cafés and bars. Choose a template, customize your menu and publish your QR experience.">
+  <meta name="theme-color" content="#080909">
   <meta property="og:title" content="AuraMenu — Digital menus for real moments">
-  <meta property="og:description" content="Create a polished QR menu, update it anytime and give guests a seamless mobile dining experience.">
+  <meta property="og:description" content="Create a premium mobile-first QR menu, customize it in minutes and publish after approval.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://auramenu.space/">
   <link rel="canonical" href="https://auramenu.space/">
-  <title>AuraMenu — Digital Menus for Real Moments</title>
+  <title>AuraMenu — Digital menus for real moments</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261002-reference-dark">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=20261002-aura-sync">
+  <link rel="stylesheet" href="home-v2.css?v=20261002-yellow">
 </head>
-<body class="am-home">
-  <header class="am-header" id="top">
-    <div class="am-nav-wrap">
-      <a class="am-brand" href="#top" aria-label="AuraMenu home">
-        <img src="logo.svg" alt="" aria-hidden="true">
-        <span>AuraMenu</span>
-      </a>
-      <button class="am-menu-toggle" id="amMenuToggle" type="button" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span>
-      </button>
-      <nav class="am-nav" id="amNav">
-        <a class="active" href="#top">Home</a>
-        <a href="#features">Features</a>
-        <a href="#templates">Templates</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#about">About</a>
-      </nav>
-      <div class="am-nav-actions">
-        <a class="am-btn am-btn-outline" href="dashboard.html">Login</a>
-        <a class="am-btn am-btn-yellow" href="builder.html">Get Started</a>
-      </div>
+<body data-page="home" class="am-home">
+  <header class="am-header">
+    <a class="am-brand" href="#home" aria-label="AuraMenu home">
+      <span class="am-brand-mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt="" aria-hidden="true"></span>
+      <span>AuraMenu</span>
+    </a>
+
+    <button class="mobile-toggle am-mobile-toggle" id="mobileToggle" type="button" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+
+    <nav class="main-nav am-nav" id="mainNav" aria-label="Primary">
+      <a class="active" href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#templates">Templates</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <div class="am-header-actions">
+      <a class="am-login" href="dashboard.html">Login</a>
+      <a class="am-pill am-pill-yellow" href="builder.html?lang=en">Get Started</a>
     </div>
   </header>
 
   <main>
-    <section class="am-hero">
+    <section class="am-hero" id="home">
       <div class="am-hero-bg" aria-hidden="true"></div>
       <div class="am-hero-shade" aria-hidden="true"></div>
+
       <div class="am-hero-inner">
         <div class="am-hero-copy">
-          <p class="am-kicker">MODERN MENUS FOR MODERN BUSINESSES</p>
+          <div class="am-kicker">MODERN MENUS FOR MODERN BUSINESSES</div>
           <h1>Digital Menus<br><span>for Real Moments</span></h1>
-          <p class="am-hero-text">Create beautiful QR menus for your restaurant, café or bar. Update instantly, showcase your brand, and give your guests a seamless dining experience.</p>
+          <p>Create beautiful QR menus for your restaurant, café or bar. Update instantly, showcase your brand, and give your guests a seamless dining experience.</p>
           <div class="am-hero-actions">
-            <a class="am-btn am-btn-yellow am-btn-large" href="builder.html">Get Started Free <b>→</b></a>
-            <a class="am-btn am-btn-video am-btn-large" href="#features"><i>▶</i> Watch Demo</a>
+            <a class="am-pill am-pill-yellow am-pill-lg" href="builder.html?lang=en">Get Started Free <b>→</b></a>
+            <a class="am-pill am-pill-outline am-pill-lg" href="#features"><span class="am-play">▶</span> Watch Demo</a>
           </div>
-          <div class="am-mini-trust">
+          <div class="am-proof-row">
             <span><i>⚡</i> Set up in minutes</span>
             <span><i>▣</i> No app required</span>
-            <span><i>✦</i> Built for hospitality</span>
+            <span><i>♣</i> Built for restaurants</span>
           </div>
         </div>
 
-        <div class="am-hero-device" aria-label="AuraMenu mobile menu preview">
-          <div class="am-table-qr">
+        <div class="am-hero-product" aria-label="AuraMenu preview">
+          <div class="am-qr-stand">
             <small>OUR MENU</small>
-            <div class="am-qr"></div>
-            <img src="logo.svg" alt="" aria-hidden="true">
+            <div class="am-fake-qr"></div>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt="" aria-hidden="true">
             <span>Scan to explore<br>our menu</span>
           </div>
+
           <div class="am-phone">
-            <div class="am-phone-notch"></div>
-            <div class="am-phone-screen">
-              <div class="am-phone-bar"><span>9:41</span><b>•••</b></div>
-              <div class="am-phone-logo"><img src="logo.svg" alt=""><span>THE GOOD TABLE</span><small>MODERN ASIAN CUISINE</small></div>
-              <img class="am-phone-food" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=88" alt="Restaurant dish">
-              <div class="am-phone-list">
-                <a href="c.html">Starters <span>›</span></a>
-                <a href="c.html">Main Courses <span>›</span></a>
-                <a href="c.html">Desserts <span>›</span></a>
-                <a href="c.html">Drinks <span>›</span></a>
-              </div>
+            <div class="am-phone-bar"><span>9:41</span><b>•••</b></div>
+            <div class="am-phone-brand"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt="" aria-hidden="true"></div>
+            <div class="am-phone-title">THE GOOD TABLE<small>MODERN ASIAN CUISINE</small></div>
+            <div class="am-phone-food">
+              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=88" alt="Restaurant dish">
             </div>
+            <div class="am-phone-menu">
+              <span>Starters <b>›</b></span>
+              <span>Main Courses <b>›</b></span>
+              <span>Desserts <b>›</b></span>
+              <span>Drinks <b>›</b></span>
+            </div>
+            <div class="am-phone-home"></div>
           </div>
         </div>
       </div>
@@ -89,164 +94,199 @@
       <div class="am-section-head">
         <div>
           <h2>Stunning Menu Templates</h2>
-          <p>Choose from professionally designed templates and make them yours in minutes. No design skills needed.</p>
+          <p>Choose from professionally designed menu styles and make them yours in minutes. No design skills needed.</p>
         </div>
-        <a class="am-btn am-btn-outline am-btn-arrow" href="builder.html">View All Templates <b>→</b></a>
+        <a class="am-pill am-pill-outline" href="#template-grid">View All Templates <b>→</b></a>
       </div>
 
-      <div class="am-template-grid">
-        <a class="am-template-card dark" href="c.html">
-          <div class="am-template-logo"><img src="logo.svg" alt=""></div>
-          <h3>THE GOOD TABLE</h3><small>MODERN ASIAN CUISINE</small>
-          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=86" alt="">
-          <ul><li>Starters <b>›</b></li><li>Main Courses <b>›</b></li><li>Desserts <b>›</b></li><li>Drinks <b>›</b></li></ul>
-          <span>Modern Dark</span>
-        </a>
+      <div class="am-template-grid" id="template-grid">
+        <article class="am-template-card am-t-dark">
+          <a href="c.html?lang=en" data-preview-link="modern" class="am-template-preview">
+            <div class="am-template-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt=""></div>
+            <h3>THE GOOD TABLE</h3><small>MODERN ASIAN CUISINE</small>
+            <img class="am-template-dish" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=700&q=86" alt="">
+            <div class="am-template-lines"><span>Starters <b>›</b></span><span>Main Courses <b>›</b></span><span>Desserts <b>›</b></span><span>Drinks <b>›</b></span></div>
+          </a>
+          <footer>Modern Dark</footer>
+        </article>
 
-        <a class="am-template-card light" href="a.html">
-          <h3>Bella Cucina</h3><small>ITALIAN RESTAURANT</small>
-          <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=86" alt="">
-          <ul><li>Antipasti <b>›</b></li><li>Pasta <b>›</b></li><li>Pizza <b>›</b></li><li>Desserts <b>›</b></li></ul>
-          <span>Classic Light</span>
-        </a>
+        <article class="am-template-card am-t-light">
+          <a href="a.html?lang=en" data-preview-link="maison" class="am-template-preview">
+            <h3>Bella Cucina</h3><small>ITALIAN RESTAURANT</small>
+            <img class="am-template-dish" src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=86" alt="">
+            <div class="am-template-lines"><span>Antipasti <b>›</b></span><span>Pasta <b>›</b></span><span>Pizza <b>›</b></span><span>Desserts <b>›</b></span><span>Drinks <b>›</b></span></div>
+          </a>
+          <footer>Classic Light</footer>
+        </article>
 
-        <a class="am-template-card green" href="b.html">
-          <h3>The Garden</h3><small>PLANT-BASED KITCHEN</small>
-          <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=86" alt="">
-          <ul><li>Starters <b>›</b></li><li>Mains <b>›</b></li><li>Bowls <b>›</b></li><li>Drinks <b>›</b></li></ul>
-          <span>Organic</span>
-        </a>
+        <article class="am-template-card am-t-green">
+          <a href="b.html?lang=en" data-preview-link="orbit" class="am-template-preview">
+            <h3>The Garden</h3><small>PLANT-BASED KITCHEN</small>
+            <img class="am-template-dish" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=86" alt="">
+            <div class="am-template-lines"><span>Starters <b>›</b></span><span>Mains <b>›</b></span><span>Bowls <b>›</b></span><span>Drinks <b>›</b></span></div>
+          </a>
+          <footer>Organic</footer>
+        </article>
 
-        <a class="am-template-card cream" href="d.html">
-          <h3>SALT &amp; FIRE</h3><small>STEAKHOUSE</small>
-          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=86" alt="">
-          <ul><li>Starters <b>›</b></li><li>Steaks <b>›</b></li><li>Sides <b>›</b></li><li>Cocktails <b>›</b></li></ul>
-          <span>Elegant</span>
-        </a>
+        <article class="am-template-card am-t-elegant">
+          <a href="d.html?lang=en" data-preview-link="taste3d" class="am-template-preview">
+            <h3>SALT &amp; FIRE</h3><small>STEAKHOUSE</small>
+            <img class="am-template-dish" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=86" alt="">
+            <div class="am-template-lines"><span>Starters <b>›</b></span><span>Steaks <b>›</b></span><span>Sides <b>›</b></span><span>Cocktails <b>›</b></span></div>
+          </a>
+          <footer>Elegant</footer>
+        </article>
 
-        <a class="am-template-card dark copper" href="builder.html?template=modern">
-          <h3>NOVA</h3><small>COCKTAIL BAR</small>
-          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=86" alt="">
-          <ul><li>Signature Drinks <b>›</b></li><li>Classics <b>›</b></li><li>Beer <b>›</b></li><li>Wine <b>›</b></li></ul>
-          <span>Bold</span>
-        </a>
+        <article class="am-template-card am-t-bold">
+          <a href="c.html?lang=en" class="am-template-preview">
+            <h3>NOVA</h3><small>COCKTAIL BAR</small>
+            <img class="am-template-dish" src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=86" alt="">
+            <div class="am-template-lines"><span>Signature Drinks <b>›</b></span><span>Classics <b>›</b></span><span>Beer <b>›</b></span><span>Wine <b>›</b></span></div>
+          </a>
+          <footer>Bold</footer>
+        </article>
 
-        <a class="am-template-card blue" href="builder.html?template=maison">
-          <h3>Daily Grind</h3><small>SPECIALTY COFFEE</small>
-          <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=86" alt="">
-          <ul><li>Coffee <b>›</b></li><li>Iced Drinks <b>›</b></li><li>Pastries <b>›</b></li><li>Breakfast <b>›</b></li></ul>
-          <span>Minimal</span>
-        </a>
+        <article class="am-template-card am-t-minimal">
+          <a href="a.html?lang=en" class="am-template-preview">
+            <h3>Daily Grind</h3><small>SPECIALTY COFFEE</small>
+            <img class="am-template-dish" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=86" alt="">
+            <div class="am-template-lines"><span>Coffee <b>›</b></span><span>Iced Drinks <b>›</b></span><span>Pastries <b>›</b></span><span>Breakfast <b>›</b></span></div>
+          </a>
+          <footer>Minimal</footer>
+        </article>
       </div>
     </section>
 
-    <section class="am-section am-features" id="features">
-      <div class="am-features-copy">
+    <section class="am-features am-section" id="features">
+      <div class="am-feature-copy">
         <h2>Everything you need<br>for a better dining experience</h2>
-        <p>Powerful features designed for restaurants, cafés, bars and hospitality brands.</p>
-        <div class="am-feature-list">
-          <article><i>▦</i><h3>QR Menus</h3><p>Fast, contactless access from any phone.</p></article>
-          <article><i>✎</i><h3>Easy Updates</h3><p>Change items, prices and photos anytime.</p></article>
-          <article><i>▥</i><h3>Menu Dashboard</h3><p>Simple management from one control panel.</p></article>
-          <article><i>⚡</i><h3>Quick Activation</h3><p>Prepare your menu and send it for approval.</p></article>
-          <article><i>◉</i><h3>Dedicated Support</h3><p>AuraDigital is there when you need help.</p></article>
+        <p>Powerful features designed for restaurants, cafés, bars and more.</p>
+        <div class="am-feature-grid">
+          <article><i>⌁</i><h3>QR Menus</h3><p>Beautiful, fast and contactless menus.</p></article>
+          <article><i>✎</i><h3>Easy Updates</h3><p>Change items, prices and photos instantly.</p></article>
+          <article><i>▥</i><h3>Menu Dashboard</h3><p>Simple control from one place.</p></article>
+          <article><i>⚡</i><h3>Quick Activation</h3><p>Go live after approval with your QR code.</p></article>
+          <article><i>◉</i><h3>Dedicated Support</h3><p>Real people, ready to help.</p></article>
         </div>
       </div>
 
       <div class="am-dashboard-scene" aria-label="AuraMenu dashboard preview">
-        <div class="am-dash-window">
-          <div class="am-dash-sidebar">
-            <div class="am-dash-brand"><img src="logo.svg" alt=""><span>AuraMenu</span></div>
-            <b>Dashboard</b><a class="on">Menu Items</a><a>Categories</a><a>Design</a><a>QR Codes</a><a>Analytics</a><a>Settings</a>
-          </div>
-          <div class="am-dash-main">
-            <div class="am-dash-top"><b>Menu Items</b><button>+ Add Item</button></div>
-            <div class="am-dash-tabs"><span>All (24)</span><span>Starters (6)</span><span>Mains (8)</span><span>Desserts (4)</span><span>Drinks (6)</span></div>
-            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=160&q=80"><div><b>Truffle Pasta</b><small>Mains</small></div><strong>$18.00</strong><i></i></div>
-            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=160&q=80"><div><b>Grilled Salmon</b><small>Mains</small></div><strong>$22.00</strong><i></i></div>
-            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=160&q=80"><div><b>Chocolate Lava Cake</b><small>Desserts</small></div><strong>$9.00</strong><i></i></div>
-          </div>
+        <div class="am-dashboard">
+          <aside>
+            <div class="am-dash-brand"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt="">AuraMenu</div>
+            <span>Dashboard</span>
+            <b>Menu Items</b>
+            <span>Categories</span>
+            <span>Design</span>
+            <span>QR Codes</span>
+            <span>Analytics</span>
+          </aside>
+          <main>
+            <div class="am-dash-top"><strong>Menu Items</strong><button>+ Add Item</button></div>
+            <div class="am-dash-tabs"><b>All (24)</b><span>Starters (6)</span><span>Mains (8)</span><span>Desserts (4)</span></div>
+            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=180&q=80" alt=""><span><b>Truffle Pasta</b><small>Mains</small></span><strong>$18.00</strong><i></i></div>
+            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=180&q=80" alt=""><span><b>Grilled Salmon</b><small>Mains</small></span><strong>$22.00</strong><i></i></div>
+            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=180&q=80" alt=""><span><b>Chocolate Lava Cake</b><small>Desserts</small></span><strong>$8.00</strong><i></i></div>
+          </main>
         </div>
-        <div class="am-dashboard-phone">
-          <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=86" alt="">
-          <span>Truffle Pasta</span><b>$18.00</b>
+
+        <div class="am-feature-phone">
+          <div class="am-feature-phone-food"><img src="https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=500&q=84" alt=""></div>
+          <div class="am-feature-phone-copy"><small>PASTA</small><h4>Truffle Pasta</h4><b>$18.00</b></div>
         </div>
       </div>
     </section>
 
-    <section class="am-proof-strip" aria-label="AuraMenu highlights">
-      <div class="am-proof-lead">Built for restaurants<br>and cafés</div>
-      <div><strong>4</strong><span>Ready Designs</span></div>
-      <div><strong>3</strong><span>Languages</span></div>
-      <div><strong>QR</strong><span>No App Needed</span></div>
-      <div><strong>Fast</strong><span>Setup Workflow</span></div>
-      <div><strong>Direct</strong><span>AuraDigital Support</span></div>
+    <section class="am-stats" aria-label="AuraMenu highlights">
+      <strong>Made for modern<br>restaurants and cafés</strong>
+      <div><b>Fast</b><span>Mobile-first setup</span></div>
+      <div><b>24/7</b><span>Your menu stays online</span></div>
+      <div><b>QR</b><span>No app required</span></div>
+      <div><b>Live</b><span>Easy updates</span></div>
     </section>
 
-    <section class="am-section am-pricing" id="pricing">
+    <section class="am-pricing am-section" id="pricing">
       <div class="am-pricing-head">
-        <div><h2>Simple, Transparent Pricing</h2><p>Everything you need to get started. No hidden fees.</p></div>
-        <div class="am-price-toggle"><span class="on">Self Build</span><span>Assisted</span><b>Flexible</b></div>
+        <div><h2>Simple, Transparent Pricing</h2><p>Start with the self-build package or contact AuraDigital for managed and multi-location setups.</p></div>
       </div>
 
       <div class="am-pricing-grid">
         <article class="am-price-card">
-          <div class="am-price-icon">▣</div>
-          <h3>Starter</h3><p>Perfect for launching your first digital menu.</p>
-          <div class="am-price">₺1,599 <small>one-time</small></div>
-          <ul><li>✓ 1 digital menu</li><li>✓ Ready-made templates</li><li>✓ QR menu access</li><li>✓ Mobile-first experience</li><li>✓ AuraMenu builder</li></ul>
-          <a class="am-btn am-btn-outline am-price-btn" href="builder.html">Get Started</a>
+          <div class="am-price-icon">▱</div>
+          <h3>Starter</h3>
+          <p>Perfect for a single menu you build yourself.</p>
+          <div class="am-price"><b>1,599 TL</b><span>one-time</span></div>
+          <ul><li>1 digital menu</li><li>Premium templates</li><li>QR code</li><li>Publish after approval</li><li>Easy updates</li></ul>
+          <a class="am-price-button" href="builder.html?lang=en">Get Started</a>
         </article>
 
-        <article class="am-price-card popular">
-          <span class="am-popular-badge">Most Popular</span>
-          <div class="am-price-icon">▥</div>
-          <h3>Pro</h3><p>For restaurants that want AuraDigital involved in setup.</p>
-          <div class="am-price">Custom <small>project quote</small></div>
-          <ul><li>✓ Everything in Starter</li><li>✓ Assisted menu setup</li><li>✓ Branding guidance</li><li>✓ Content &amp; structure support</li><li>✓ Priority launch help</li></ul>
-          <a class="am-btn am-btn-yellow am-price-btn" href="https://auradigitalworks.com/contact">Talk to AuraDigital</a>
+        <article class="am-price-card featured">
+          <span class="am-popular">MOST POPULAR</span>
+          <div class="am-price-icon">▦</div>
+          <h3>Managed</h3>
+          <p>For businesses that want AuraDigital to prepare the menu.</p>
+          <div class="am-price"><b>Custom</b><span>based on scope</span></div>
+          <ul><li>Professional setup</li><li>Brand matching</li><li>Content formatting</li><li>QR delivery</li><li>Priority support</li></ul>
+          <a class="am-price-button yellow" href="https://auradigitalworks.com/contact?service=auramenu">Contact AuraDigital</a>
         </article>
 
         <article class="am-price-card">
           <div class="am-price-icon">▥</div>
-          <h3>Business</h3><p>For multi-location brands and custom hospitality needs.</p>
-          <div class="am-price">Custom <small>business plan</small></div>
-          <ul><li>✓ Multiple menu setups</li><li>✓ Multi-location structure</li><li>✓ Custom brand system</li><li>✓ Advanced implementation</li><li>✓ Dedicated support</li></ul>
-          <a class="am-btn am-btn-outline am-price-btn" href="https://auradigitalworks.com/contact">Contact Us</a>
+          <h3>Business</h3>
+          <p>For multi-location restaurants and growing brands.</p>
+          <div class="am-price"><b>Custom</b><span>business plan</span></div>
+          <ul><li>Multiple menus</li><li>Multi-location structure</li><li>Team-ready workflow</li><li>Brand system support</li><li>Dedicated assistance</li></ul>
+          <a class="am-price-button" href="https://auradigitalworks.com/contact?service=auramenu-business">Talk to Us</a>
         </article>
       </div>
     </section>
+
+    <section class="am-about am-section" id="about">
+      <div><span>AURAMENU BY AURADIGITAL</span><h2>Built to make the menu feel like part of the restaurant.</h2></div>
+      <p>AuraMenu keeps the guest experience simple: scan, browse, choose. The interface is designed around mobile readability, fast browsing and your visual identity.</p>
+      <a class="am-pill am-pill-yellow" href="builder.html?lang=en">Build your menu →</a>
+    </section>
   </main>
 
-  <footer class="am-footer" id="about">
-    <div class="am-footer-grid">
-      <div class="am-footer-brand"><a class="am-brand" href="#top"><img src="logo.svg" alt=""><span>AuraMenu</span></a><p>Digital menus for a more connected dining experience.</p></div>
-      <div><b>Product</b><a href="#features">Features</a><a href="#templates">Templates</a><a href="#pricing">Pricing</a><a href="builder.html">Create Menu</a></div>
-      <div><b>Company</b><a href="https://auradigitalworks.com">AuraDigital</a><a href="https://auradigitalworks.com/contact">Contact</a><a href="status.html">Request Status</a></div>
-      <div><b>Resources</b><a href="builder.html">Menu Builder</a><a href="dashboard.html">Dashboard</a><a href="status.html">Help &amp; Status</a></div>
-      <div class="am-footer-news"><b>Stay in the loop</b><p>Get product updates and restaurant tips.</p><div><input type="email" placeholder="Your email address" aria-label="Email address"><button type="button">Subscribe</button></div></div>
+  <div class="design-choice-modal" id="designChoiceModal" hidden>
+    <div class="design-choice-backdrop" data-choice-close></div>
+    <section class="design-choice-dialog" role="dialog" aria-modal="true" aria-labelledby="designChoiceTitle">
+      <button class="design-choice-close" type="button" data-choice-close aria-label="Close">×</button>
+      <small>NEXT STEP</small>
+      <h2 id="designChoiceTitle">Who should build your menu?</h2>
+      <p>Keep the selected design and customize it yourself, or ask AuraDigital to prepare it for you.</p>
+      <div class="selected-design-chip"><span>Selected design</span><b id="selectedDesignName">Modern Dark</b></div>
+      <div class="design-choice-actions">
+        <a class="design-choice-option self" id="selfBuildChoice" href="builder.html?lang=en">
+          <i>✎</i><span><strong>I’ll build it in AuraMenu</strong><small>Edit products, prices, photos and colors yourself.</small><em class="design-choice-price" data-self-build-price>1,599 TL</em></span><b>↗</b>
+        </a>
+        <a class="design-choice-option assisted" id="auraBuildChoice" href="https://auradigitalworks.com/contact?service=auramenu">
+          <i>A•</i><span><strong>AuraDigital builds it for me</strong><small>Send the design and request details to AuraDigital.</small></span><b>↗</b>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer class="am-footer">
+    <div class="am-footer-brand">
+      <a class="am-brand" href="#home"><span class="am-brand-mark"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt=""></span><span>AuraMenu</span></a>
+      <p>Digital menus for a more connected dining experience.</p>
     </div>
-    <div class="am-footer-bottom"><span>© 2026 AuraMenu. All rights reserved.</span><span>Powered by AuraDigital · Istanbul</span></div>
+    <div class="am-footer-links">
+      <div><b>Product</b><a href="#features">Features</a><a href="#templates">Templates</a><a href="#pricing">Pricing</a></div>
+      <div><b>Company</b><a href="#about">About</a><a href="https://auradigitalworks.com">AuraDigital</a><a href="https://auradigitalworks.com/contact">Contact</a></div>
+      <div><b>Resources</b><a href="builder.html?lang=en">Menu Builder</a><a href="status.html?lang=en">Request Status</a><a href="dashboard.html">Dashboard</a></div>
+    </div>
+    <div class="am-footer-news">
+      <b>Stay in the loop</b>
+      <p>Get product updates and restaurant tips.</p>
+      <a href="https://auradigitalworks.com/contact">Contact us →</a>
+    </div>
+    <div class="am-footer-bottom"><span>© 2026 AuraMenu. All rights reserved.</span><span>Made by AuraDigital</span></div>
   </footer>
 
-  <script>
-    const toggle = document.getElementById('amMenuToggle');
-    const nav = document.getElementById('amNav');
-    toggle?.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(open));
-    });
-    nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
-    const links = [...document.querySelectorAll('.am-nav a[href^="#"]')];
-    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-    const setActive = () => {
-      const y = window.scrollY + 140;
-      let current = '#top';
-      sections.forEach(s => { if (s.offsetTop <= y) current = '#' + s.id; });
-      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === current));
-    };
-    window.addEventListener('scroll', setActive, {passive:true});
-    setActive();
-  </script>
+  <script src="config.js?v=20260812-2215"></script>
+  <script src="pricing.js"></script>
+  <script src="script.js?v=20261002-yellow"></script>
 </body>
 </html>
