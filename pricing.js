@@ -1,6 +1,6 @@
 (() => {
   const config = window.AURA_MENU_CONFIG || {};
-  let selfBuildPriceTry = Number(config.selfBuildPrice) || 1599;
+  let selfBuildPriceTry = Number(config.selfBuildPrice) || 399;
 
   const COUNTRY_CACHE_KEY = "auramenuVisitorCountry";
   const COUNTRY_CACHE_MS = 24 * 60 * 60 * 1000;
@@ -316,7 +316,7 @@
       .then((response) => (response.ok ? response.json() : null))
       .then((data) => {
         const livePrice = Number(data?.selfBuildPrice);
-        if (Number.isFinite(livePrice) && livePrice > 0) selfBuildPriceTry = livePrice;
+        if (Array.isArray(data?.plans) && Number.isFinite(livePrice) && livePrice > 0) selfBuildPriceTry = livePrice;
       })
       .catch(() => null),
     detectVisitorCountry().then((country) => {

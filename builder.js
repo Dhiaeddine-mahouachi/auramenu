@@ -5,9 +5,9 @@
       title: "Menünüzü oluşturun",
       intro:
         "İşletme ve menü bilgilerinizi ekleyin. Sağdaki önizleme siz yazarken güncellenir.",
-      selfPriceLabel: "Kendin oluştur paketi",
+      selfPriceLabel: "AuraMenu plan",
       selfPriceNote:
-        "Tasarım ve önizleme ücretsizdir; yayın ücreti tek seferliktir.",
+        "Select a plan below. Your menu stays pending until payment and approval.",
       business: "1. İşletme görünümü",
       businessName: "İşletme adı *",
       tagline: "Kısa slogan",
@@ -64,9 +64,9 @@
       title: "Build your menu",
       intro:
         "Add your business and menu details. The preview updates while you type.",
-      selfPriceLabel: "Self-build package",
+      selfPriceLabel: "AuraMenu plan",
       selfPriceNote:
-        "Design and preview are free; the publishing fee is paid once.",
+        "Select a plan below. Your menu stays pending until payment and approval.",
       business: "1. Business appearance",
       businessName: "Business name *",
       tagline: "Short tagline",
@@ -123,8 +123,8 @@
       back: "العودة إلى التصاميم →",
       title: "أنشئ قائمتك",
       intro: "أضف بيانات النشاط والقائمة. تتحدث المعاينة أثناء الكتابة.",
-      selfPriceLabel: "باقة أنشئها بنفسك",
-      selfPriceNote: "التصميم والمعاينة مجاناً؛ رسوم النشر تُدفع مرة واحدة.",
+      selfPriceLabel: "AuraMenu plan",
+      selfPriceNote: "Select a plan below. Your menu stays pending until payment and approval.",
       business: "1. مظهر النشاط",
       businessName: "اسم النشاط *",
       tagline: "عبارة قصيرة",
@@ -648,6 +648,7 @@
       "email",
       "city",
       "paymentReference",
+      "planId",
       "notes",
     ].forEach((id) => {
       if ($(id)) draft.fields[id] = $(id).value;
@@ -763,6 +764,7 @@
       city: $("city").value.trim(),
       paymentReference: $("paymentReference").value.trim(),
       serviceMode: "self",
+      planId: $("planId").value,
       notes: $("notes").value.trim(),
       categories: cleanCategories.map((category) => ({
         name: category.name.trim(),
@@ -795,6 +797,7 @@
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error || i18n[lang].network);
       localStorage.setItem("auraMenuLastRequest", data.request.id);
+      if (data.token) localStorage.setItem("auraMenuToken:" + data.request.id, data.token);
       localStorage.removeItem("auraMenuDraft");
       location.href = `status.html?id=${encodeURIComponent(data.request.id)}&lang=${lang}`;
     } catch (error) {

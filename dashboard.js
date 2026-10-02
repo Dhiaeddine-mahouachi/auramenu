@@ -251,6 +251,19 @@
   }
 
   function renderAccess() {
+    if (menu.billing) {
+      const b=menu.billing, enabled=b.active || (menu.status==='pending'&&!b.paidUntil);
+      $('editorFields').disabled=!enabled; $('saveMenu').disabled=!enabled;
+      $('editBadge').textContent=enabled?'Editing included':'Renewal required'; $('editBadge').classList.toggle('active',enabled);
+      $('requestAccess').hidden=true; $('accessDays').hidden=true;
+      $('accessTitle').textContent=b.planName+' · '+b.amount+' TL '+(b.interval==='monthly'?'/ month':'one-time');
+      $('accessText').textContent=b.active?'Editing is included during your paid period.':enabled?'Your draft is saved. Your menu is not live until payment and approval.':'Renew your plan to restore hosting and editing.';
+      $('accessPrice').textContent=b.hostingAmount?'Hosting: 200 TL / 6 months':'Hosting included';
+      $('countdown').textContent=b.paidUntil?'Paid until: '+new Date(b.paidUntil).toLocaleDateString():'';
+      let pay=document.getElementById('menuPlanPayment');if(!pay){pay=document.createElement('a');pay.id='menuPlanPayment';pay.className='button button-orange';$('accessText').after(pay);}
+      pay.href='status.html?id='+encodeURIComponent(menu.id);pay.textContent='Payment & renewal details';
+      clearInterval(timer);timer=null;return;
+    }
     const access = menu.editAccess || {};
     const isActive = Boolean(access.active);
     const isRequested = access.requestStatus === 'requested';

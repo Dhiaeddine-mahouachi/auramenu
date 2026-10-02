@@ -2,7 +2,9 @@
 
 AuraMenu is a multilingual digital-menu storefront and customer menu builder. Turkish is the default interface; English and Arabic are also available.
 
-The self-build publishing package is **1,599 TL**. `config.js` contains the safe client fallback and `pricing.js` synchronizes it with AuraDigital's public pricing API when available.
+Plans: **Starter 399 TL/month**, **Pro 599 TL/month** (priority support), both with hosting and editing included. **One-time 2,500 TL**, including the first six months of hosting, followed by **200 TL every six months**. Payments use bank transfer and owner confirmation; no automatic card debit. Custom menu design is requested through AuraDigital contact for a separate quote.
+
+`config.js` and `menu-plans.js` render plan choices. Server pricing in AuraDigital `src/menu-billing.js` is authoritative. The billing table records each new request's plan and paid period; existing purchases retain their original contract.
 
 The Pages workflow publishes only the public site files; repository metadata, workflow files, and this README are excluded from the deployment artifact.
 
@@ -35,7 +37,8 @@ Then open `http://localhost:4173`. Local submissions are accepted by the configu
 1. A customer chooses a design and submits the builder form.
 2. The request appears red/pending in the AuraDigital admin dashboard.
 3. The owner records payment and approves the request.
-4. The request turns green and the custom URL becomes public, for example `https://auramenu.space/coffee1`.
+4. The request turns green and the custom URL becomes public while its paid period is active, for example `https://auramenu.space/coffee1`.
+5. Customers see their IBAN payment instructions, plan and paid-until date on `status.html`. The owner confirms renewal from AuraMenu Requests, extending the current period (one month or six months), or restarting from now after expiry. Expired menus and editing stay offline until renewal; repeated confirmation of the same period is rejected.
 
 The public menu endpoint never exposes the customer's private contact details, payment reference or internal owner note.
 

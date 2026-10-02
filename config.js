@@ -2,7 +2,8 @@ window.AURA_MENU_CONFIG = Object.freeze({
   apiBase: "/api/auramenu",
   publicBase: "https://auramenu.space",
   dashboardUrl: "/account",
-  selfBuildPrice: 1599,
+  selfBuildPrice: 399,
+  plans: [{id:"starter",name:"Starter",amount:399,interval:"monthly",hostingAmount:0},{id:"pro",name:"Pro",amount:599,interval:"monthly",hostingAmount:0},{id:"onetime",name:"One-time",amount:2500,interval:"one-time",hostingAmount:200}],
   currencyLabel: "TL",
 });
 
