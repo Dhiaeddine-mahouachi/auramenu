@@ -252,7 +252,7 @@
 
   function renderAccess() {
     if (menu.billing) {
-      const b=menu.billing, enabled=b.active || (menu.status==='pending'&&!b.paidUntil);
+      const b=menu.billing, enabled=Boolean(menu.editAccess?.active);
       $('editorFields').disabled=!enabled; $('saveMenu').disabled=!enabled;
       $('editBadge').textContent=enabled?'Editing included':'Renewal required'; $('editBadge').classList.toggle('active',enabled);
       $('requestAccess').hidden=true; $('accessDays').hidden=true;
