@@ -2,7 +2,7 @@
   const root = document.getElementById('qrBuilder');
   if (!root || typeof QRCode === 'undefined') return;
 
-  const $ = (id) => document.getElementById(id);
+  const $ = (id) => id.startsWith('[') ? root.querySelector(id) : document.getElementById(id);
   const copy = {
     tr: { title:'QR Kodunuzu oluşturun', intro:'QR kodunuz menü bağlantınıza otomatik bağlanır. Renkleri, çerçeveyi ve logoyu özelleştirip PNG olarak indirebilirsiniz.', dark:'QR rengi', light:'Arka plan', frame:'Çerçeve', label:'QR üzerindeki yazı', logo:'Logo (isteğe bağlı)', remove:'Logoyu kaldır', download:'PNG indir', helper:'Menü içerikleri daha sonra değişse bile aynı bağlantıyı kullandığınız sürece QR kodunu yeniden basmanız gerekmez.', preview:'Menüyü Görüntüle' },
     en: { title:'Build your QR code', intro:'Your QR code is linked automatically to your menu URL. Customize colors, frame and logo, then download it as PNG.', dark:'QR color', light:'Background', frame:'Frame', label:'Text above QR', logo:'Logo (optional)', remove:'Remove logo', download:'Download PNG', helper:'You can update menu content later without reprinting the QR as long as the menu URL stays the same.', preview:'View Menu' },
