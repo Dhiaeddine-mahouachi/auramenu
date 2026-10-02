@@ -1,7 +1,7 @@
 window.AURA_MENU_CONFIG = Object.freeze({
-  apiBase: "https://auradigital.ink/api/auramenu",
+  apiBase: "/api/auramenu",
   publicBase: "https://auramenu.space",
-  dashboardUrl: "https://auradigital.ink/admin/#auramenu",
+  dashboardUrl: "/account",
   selfBuildPrice: 1599,
   currencyLabel: "TL",
 });

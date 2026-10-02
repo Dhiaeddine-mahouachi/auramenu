@@ -5,6 +5,9 @@
   <title>AuraMenu — Menü oluştur</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css?v=20261002-aura-sync"><link rel="stylesheet" href="photo-upload.css"><link rel="stylesheet" href="template-frame.css"><link rel="stylesheet" href="qr-builder.css">
   <style>
+    [hidden]{display:none!important}
+    .account-note{padding:16px;border:1px solid rgba(207,229,56,.35);border-radius:14px;margin:12px 0}
+
     .hosting-policy{margin-top:14px;padding:14px 16px;border:1px solid rgba(207,229,56,.35);border-radius:16px;background:rgba(207,229,56,.12);box-shadow:0 10px 30px rgba(12,30,24,.06)}
     .hosting-policy__top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:7px}
     .hosting-policy__top strong{font-size:14px;font-weight:800}
@@ -52,7 +55,7 @@
         <label class="field full"><span data-i18n="paymentRef">Ödeme notu / referansı</span><input id="paymentReference" maxlength="200" placeholder="Havale yapan kişi veya işlem açıklaması"></label>
         <label class="field full"><span data-i18n="notes">AuraDigital için notunuz</span><textarea id="notes" maxlength="1000"></textarea></label>
       </div></section>
-      <section class="form-section" id="qrBuilder"><h2 data-qr="title">QR Kodunuzu oluşturun</h2><p class="qr-help" data-qr="intro">QR kodunuz menü bağlantınıza otomatik bağlanır. Renkleri, çerçeveyi ve logoyu özelleştirip PNG olarak indirebilirsiniz.</p><div class="qr-builder">
+      <section class="form-section account-note"><h2>Your account</h2><p id="menuAccountStatus" role="status">Checking your sign-in…</p><p id="menuSignedIn" hidden></p><div id="menuAccountFields" class="form-grid" hidden><p class="field full">Use the contact name and email above to create your account, or <a href="/login" target="_blank" rel="noopener">sign in in another tab</a>. Your menu stays here.</p><label class="field">Password<input id="menuPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128"><small>At least 10 characters.</small></label><label class="field">Confirm password<input id="menuConfirmPassword" type="password" autocomplete="new-password" minlength="10" maxlength="128"></label></div><div id="menuVerification" hidden><p id="menuVerificationEmail"></p><label class="field">Verification code<input id="menuVerificationCode" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}"></label><button class="add-button" id="menuVerify" type="button">Verify email</button><button class="add-button" id="menuResend" type="button">Send a new code</button></div><p><a href="/account">My menus and account →</a></p></section><section class="form-section" id="qrBuilder"><h2 data-qr="title">QR Kodunuzu oluşturun</h2><p class="qr-help" data-qr="intro">QR kodunuz menü bağlantınıza otomatik bağlanır. Renkleri, çerçeveyi ve logoyu özelleştirip PNG olarak indirebilirsiniz.</p><div class="qr-builder">
         <div class="qr-controls">
           <div class="qr-color-grid">
             <label class="field"><span data-qr="dark">QR rengi</span><div class="qr-color-field"><input id="qrDark" type="color" value="#111111"><code>#111111</code></div></label>
@@ -71,6 +74,6 @@
     </form>
     <aside class="panel preview-panel"><div class="preview-label"><span data-i18n="livePreview">CANLI ÖNİZLEME</span><b id="previewTemplate">Nova Mobile</b></div><div class="template-preview-shell"><iframe id="templatePreview" class="template-preview-frame" title="Live menu design preview"></iframe></div></aside>
   </main>
-  <script src="config.js"></script><script src="pricing.js"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="builder.js"></script><script src="qr-builder.js"></script>
+  <script src="config.js?v=20261002-accounts"></script><script src="pricing.js"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="menu-account-builder.js?v=20261002"></script><script src="builder.js?v=20261002-accounts"></script><script src="qr-builder.js"></script>
 </body>
 </html>
