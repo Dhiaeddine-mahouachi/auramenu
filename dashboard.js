@@ -205,7 +205,7 @@
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
       throw new Error('JPG, PNG veya WebP seçin.');
     }
-    if (file.size > 12 * 1024 * 1024) throw new Error('Fotoğraf 12 MB altında olmalı.');
+    if (file.size > 20 * 1024 * 1024) throw new Error('Fotoğraf 20 MB altında olmalı.');
 
     const bitmap = await createImageBitmap(file);
     const max = 900;
@@ -347,20 +347,16 @@
   }
 
   async function restore() {
-    const menuId = requestId();
-    if (!menuId) return;
-    $('claimId').value = menuId;
-    token = localStorage.getItem(storageKey(menuId)) || '';
-    if (!token) return;
-
-    try {
-      const data = await request(`/dashboard/${encodeURIComponent(menuId)}`);
-      menu = data.menu;
-      show();
-    } catch {
-      token = '';
-      localStorage.removeItem(storageKey(menuId));
-    }
+    const menuId=params.get("id");
+    if(!menuId){location.replace("/account");return;}
+    $("claim").hidden=true;
+    try{
+      const r=await fetch("/api/aurapops/account/session",{cache:"no-store"});
+      const session=await r.json();
+      if(!r.ok||!session.user?.emailVerified){location.replace("/login");return;}
+      const data=await request("/dashboard/"+encodeURIComponent(menuId));
+      menu=data.menu;show();
+    }catch(error){$("claim").hidden=false;$("claim").innerHTML='<h1>Open your menu from your account</h1><p></p><a href="/account">Back to my menus →</a>';$("claim").querySelector("p").textContent=error.message;}
   }
 
   function show() {

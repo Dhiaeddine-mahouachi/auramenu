@@ -46,7 +46,7 @@
       photoReady: "Fotoğraf hazır",
       photoProcessing: "Fotoğraf hazırlanıyor…",
       invalidPhoto: "JPG, PNG veya WebP bir fotoğraf seçin.",
-      sourceTooLarge: "Fotoğraf 12 MB'den küçük olmalıdır.",
+      sourceTooLarge: "Fotoğraf 20 MB'den küçük olmalıdır.",
       photoTooLarge:
         "Fotoğraf küçültülemedi. Lütfen daha küçük bir fotoğraf seçin.",
       photoLimit: "Bir menü talebine en fazla 12 fotoğraf ekleyebilirsiniz.",
@@ -105,7 +105,7 @@
       photoReady: "Photo ready",
       photoProcessing: "Preparing photo…",
       invalidPhoto: "Choose a JPG, PNG or WebP photo.",
-      sourceTooLarge: "The photo must be smaller than 12 MB.",
+      sourceTooLarge: "The photo must be smaller than 20 MB.",
       photoTooLarge:
         "The photo could not be resized. Please choose a smaller photo.",
       photoLimit: "You can add up to 12 photos to one menu request.",
@@ -163,7 +163,7 @@
       photoReady: "الصورة جاهزة",
       photoProcessing: "جارٍ تجهيز الصورة…",
       invalidPhoto: "اختر صورة بصيغة JPG أو PNG أو WebP.",
-      sourceTooLarge: "يجب أن يكون حجم الصورة أقل من 12 ميغابايت.",
+      sourceTooLarge: "يجب أن يكون حجم الصورة أقل من 20 ميغابايت.",
       photoTooLarge: "تعذر تصغير الصورة. اختر صورة أصغر.",
       photoLimit: "يمكنك إضافة 12 صورة كحد أقصى لكل طلب قائمة.",
       productDescription: "وصف المنتج",
@@ -188,7 +188,7 @@
     taste3d: "d.html",
   };
   const PHOTO_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
-  const MAX_SOURCE_PHOTO_BYTES = 12 * 1024 * 1024;
+  const MAX_SOURCE_PHOTO_BYTES = 20 * 1024 * 1024;
   const MAX_PHOTO_BYTES = 280 * 1024;
   const MAX_PHOTOS = 12;
   const params = new URLSearchParams(location.search);
@@ -781,6 +781,9 @@
     button.disabled = true;
     button.querySelector("span").textContent = i18n[lang].sending;
     try {
+      const account = await window.ensureAuraMenuAccount();
+      payload.email = account.email;
+      payload.contactName = account.name;
       const response = await fetch(
         `${window.AURA_MENU_CONFIG.apiBase}/requests`,
         {
