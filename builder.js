@@ -781,6 +781,7 @@
     button.disabled = true;
     button.querySelector("span").textContent = i18n[lang].sending;
     try {
+      const account=await window.ensureMenuAccount();payload.email=account.email;
       const response = await fetch(
         `${window.AURA_MENU_CONFIG.apiBase}/requests`,
         {

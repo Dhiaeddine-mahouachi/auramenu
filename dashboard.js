@@ -1,5 +1,5 @@
 (() => {
-  const api = window.AURA_MENU_CONFIG?.apiBase || 'https://auradigital.ink/api/auramenu';
+  const api = window.AURA_MENU_CONFIG?.apiBase || '/api/auramenu';
   const params = new URLSearchParams(location.search);
   const $ = id => document.getElementById(id);
 
@@ -335,8 +335,8 @@
         method: 'POST',
         body: JSON.stringify({ existingToken: existing }),
       });
-      token = data.token;
-      localStorage.setItem(storageKey(menuId), token);
+      token = '';
+      localStorage.removeItem(storageKey(menuId));
       menu = data.menu;
       params.set('id', menuId);
       history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
@@ -351,7 +351,9 @@
     if (!menuId) return;
     $('claimId').value = menuId;
     token = localStorage.getItem(storageKey(menuId)) || '';
-    if (!token) return;
+    const session=await fetch('/api/aurapops/account/session').then(r=>r.json()).catch(()=>({}));
+    if(!session.user?.emailVerified){msg($('claimMessage'),'Sign in and verify your email to open your menu.','error');return;}
+    token='';
 
     try {
       const data = await request(`/dashboard/${encodeURIComponent(menuId)}`);
