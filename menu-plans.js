@@ -6,7 +6,7 @@
  function apply(){const copy=t[document.documentElement.lang]||t.en, plan=plans.find(p=>p.id===select.value)||plans[0];
  document.getElementById('planLabel').textContent=copy.label;
  document.querySelector('[data-i18n="selfPriceLabel"]').textContent=plan.name;
- document.querySelector('[data-self-build-price]').textContent=plan.amount+' TL / '+(plan.interval==='monthly'?copy.month:copy.once);
+ document.querySelector('[data-plan-price]').textContent=plan.amount+' TL / '+(plan.interval==='monthly'?copy.month:copy.once);
  document.querySelector('[data-i18n="selfPriceNote"]').textContent=plan.interval==='monthly'?copy.monthly:copy.single;
  document.getElementById('planTerms').textContent=plan.interval==='monthly'?copy.monthly:copy.single;
  document.getElementById('planConsent').textContent=copy.pending;
