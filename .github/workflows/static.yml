@@ -40,6 +40,10 @@ jobs:
             --exclude='.git/' \
             --exclude='.github/' \
             --exclude='README.md' \
+            --exclude='docs/' \
+            --exclude='tests/' \
+            --exclude='node_modules/' \
+            --exclude='package*.json' \
             --exclude='_site/' \
             ./ _site/
       - name: Upload artifact

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
 
-const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"] });
+const browser = await chromium.launch({ headless: true, ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}), args: ["--no-sandbox"] });
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await page.addInitScript(() => {
@@ -27,6 +27,10 @@ try {
   assert.equal(await page.locator("#businessName").inputValue(), "Bella Roma");
   assert.equal(await page.locator("#slug").inputValue(), "bella-roma");
 
+  await page.locator("#voiceTarget").selectOption("category");
+  await page.locator("#voiceTranscript").fill("Pizzas");
+  await page.locator("#voiceReview").click();
+  await page.locator("#voiceApply").click();
   await page.locator("#voiceTarget").selectOption("product");
   const category = await page.locator("#voiceCategorySelect").inputValue();
   assert.ok(category, "At least one category is available");

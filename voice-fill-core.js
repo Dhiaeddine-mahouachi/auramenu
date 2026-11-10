@@ -14,6 +14,7 @@
 
   function normalizeDigits(value) {
     return value
+      .replace(/٫/g, ".").replace(/٬/g, ",")
       .replace(/[٠-٩]/g, (char) => String(char.charCodeAt(0) - 0x0660))
       .replace(/[۰-۹]/g, (char) => String(char.charCodeAt(0) - 0x06f0));
   }
