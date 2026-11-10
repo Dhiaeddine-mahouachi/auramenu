@@ -1,4 +1,4 @@
-name: Validate AuraMenu importer
+name: Validate AuraMenu import and voice entry
 on:
   pull_request:
     branches: [main]
@@ -17,5 +17,7 @@ jobs:
         run: |
           node --check builder.js
           node --check menu-import.js
-      - name: Test product-list parser
+          node --check voice-fill-core.js
+          node --check voice-fill.js
+      - name: Test product import and speech parsing
         run: node --test tests/*.test.mjs
