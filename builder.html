@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#070808">
   <title>AuraMenu — Menü oluştur</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css?v=20261002-aura-sync"><link rel="stylesheet" href="photo-upload.css"><link rel="stylesheet" href="template-frame.css"><link rel="stylesheet" href="qr-builder.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css?v=20261002-aura-sync"><link rel="stylesheet" href="photo-upload.css"><link rel="stylesheet" href="template-frame.css"><link rel="stylesheet" href="qr-builder.css"><link rel="stylesheet" href="quick-import.css">
   <style>
     [hidden]{display:none!important}
     .account-note{padding:16px;border:1px solid rgba(207,229,56,.35);border-radius:14px;margin:12px 0}
@@ -46,7 +46,20 @@
         <label class="field"><span data-i18n="menuLanguage">Müşteri menüsünün dili</span><select id="menuLanguage"><option value="tr">Türkçe</option><option value="en">English</option><option value="ar">العربية</option></select></label>
         <label class="field"><span data-i18n="currency">Para birimi</span><select id="currency"><option value="TRY">TRY — ₺</option><option value="EUR">EUR — €</option><option value="USD">USD — $</option><option value="TND">TND — د.ت</option></select></label>
       </div></section>
-      <section class="form-section" id="contentSection"><h2 data-i18n="content">2. Kategoriler ve ürünler</h2><div class="category-list" id="categoryList"></div><button class="add-button" id="addCategory" type="button" data-i18n="addCategory">+ Kategori ekle</button></section>
+      <section class="form-section" id="contentSection"><h2 data-i18n="content">2. Kategoriler ve ürünler</h2><div class="quick-import" id="quickImportBox">
+          <h3 data-import-i18n="title">Ürünleri toplu ekle</h3>
+          <p data-import-i18n="help">Kategorileri ve fiyatlı ürünleri yapıştırın. Önce önizleyin; hiçbir şey otomatik yayınlanmaz.</p>
+          <label class="field full"><span data-import-i18n="label">Ürün listeniz</span>
+            <textarea id="quickMenuText" rows="6" maxlength="15000" spellcheck="false" placeholder="[Pizzalar]&#10;Margherita | 320 | Domates, mozzarella&#10;Pepperoni | 390"></textarea>
+          </label>
+          <label class="quick-import-option"><input id="quickReplace" type="checkbox"><span data-import-i18n="replace">Mevcut ürünleri ve fotoğrafları değiştir (örnek ürünleri sil)</span></label>
+          <div class="quick-import-actions">
+            <button type="button" class="add-button" id="quickReview" data-import-i18n="review">İçe aktarmayı önizle</button>
+            <button type="button" class="add-button" id="quickApply" data-import-i18n="apply" hidden>Ürünleri menüye ekle</button>
+          </div>
+          <p id="quickImportStatus" class="quick-import-status" role="status" aria-live="polite"></p>
+          <div id="quickImportPreview" class="quick-import-preview" aria-live="polite"></div>
+        </div><div class="category-list" id="categoryList"></div><button class="add-button" id="addCategory" type="button" data-i18n="addCategory">+ Kategori ekle</button></section>
       <section class="form-section"><h2 data-i18n="publishing">3. Yayın, iletişim ve ödeme</h2><div class="form-grid">
         <label class="field full"><span data-i18n="url">Menü bağlantınız *</span><div class="slug-field"><span>auramenu.space/</span><input id="slug" required maxlength="48" value="pera-kitchen" inputmode="url"></div></label>
         <label class="field"><span data-i18n="contactName">Yetkili kişi *</span><input id="contactName" required maxlength="100" autocomplete="name"></label>
@@ -75,7 +88,7 @@
     </form>
     <aside class="panel preview-panel"><div class="preview-label"><span data-i18n="livePreview">CANLI ÖNİZLEME</span><b id="previewTemplate">Nova Mobile</b></div><div class="template-preview-shell"><iframe id="templatePreview" class="template-preview-frame" title="Live menu design preview"></iframe></div></aside>
   </main>
-  <script src="config.js?v=20261002-saas"></script><script src="pricing.js?v=20261002-saas"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="menu-account-builder.js?v=20261002"></script><script src="builder.js?v=20261002-saas"></script><script src="qr-builder.js?v=20261002-qr-init"></script>
+  <script src="config.js?v=20261002-saas"></script><script src="pricing.js?v=20261002-saas"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="menu-account-builder.js?v=20261002"></script><script src="menu-import.js?v=20261110"></script><script src="builder.js?v=20261110-import"></script><script src="qr-builder.js?v=20261002-qr-init"></script>
 <script src="menu-plans.js?v=20261002-plans2"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
