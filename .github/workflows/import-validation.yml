@@ -19,6 +19,7 @@ jobs:
           node --check menu-import.js
           node --check voice-fill-core.js
           node --check voice-fill.js
+          node --check ai-menu-draft-contract.js
       - name: Test product import and speech parsing
         run: node --test tests/*.test.mjs
       - name: Install browser test dependencies
