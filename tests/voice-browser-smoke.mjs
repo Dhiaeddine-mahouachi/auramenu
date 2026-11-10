@@ -38,8 +38,9 @@ try {
   await page.locator("#voiceApply").click();
   const after = await page.locator('[data-item-field="name"]').count();
   assert.equal(after, before + 1);
-  assert.equal(await page.locator('[data-item-field="name"]').last().inputValue(), "Margherita");
-  assert.equal(await page.locator('[data-item-field="price"]').last().inputValue(), "320");
+  const selectedCategory = page.locator(`[data-category="${category}"]`);
+  assert.equal(await selectedCategory.locator('[data-item-field="name"]').last().inputValue(), "Margherita");
+  assert.equal(await selectedCategory.locator('[data-item-field="price"]').last().inputValue(), "320");
 
   const width = await page.locator("#voiceFillSection").evaluate((el) => el.getBoundingClientRect().width);
   assert.ok(width > 0 && width <= 390, "Voice UI fits mobile viewport");
