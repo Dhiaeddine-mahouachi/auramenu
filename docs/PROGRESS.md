@@ -41,3 +41,9 @@ See DECISIONS, ROADMAP and AUDIT. Backend API/release/cost notes are in AuraDigi
 - Client adapter tests cover matching passwords, consent, unverified users, refresh after verification, same-origin credentials and missing backend.
 - Backend test checks current-email binding, unauthenticated rejection and no-store responses.
 - Request-to-account ownership binding is still a separate required server integration; signing in alone does not establish menu ownership.
+
+## GitHub verification checkpoint
+- Draft PRs: AuraMenu #9 and AuraDigital #58; source trees match the locally tested trees. No merge or production deployment.
+- AuraDigital GitHub Actions Security checks passed: dependency audit, syntax/types/builds, all tests and Worker dry-run.
+- AuraMenu GitHub Actions completed the Chromium smoke step successfully. Both scripts ran: existing dictation-to-field/product flow, new extraction-to-actual-template-preview flow, stale review rejection, conversational price edit, refresh persistence, CSV, text-safe rendering and mobile/desktop overflow assertions.
+- Local Chromium remains unavailable; actual microphone hardware, visual screenshot inspection, live account routing and signup-to-payment/publication acceptance remain separate requirements.
