@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 
-const sandbox = {};
+const sandbox = { URL }; // Node vm does not expose URL by default.
 runInNewContext(readFileSync(new URL("../menu-import.js", import.meta.url), "utf8"), sandbox);
 const parse = sandbox.AuraMenuQuickImport.parse;
 
