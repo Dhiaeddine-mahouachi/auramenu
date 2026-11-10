@@ -208,6 +208,7 @@
         field.value = result.value;
         field.dispatchEvent(new Event("input", { bubbles: true }));
         field.dispatchEvent(new Event("change", { bubbles: true }));
+        if (result.target === "businessName") field.dispatchEvent(new Event("blur"));
       } else if (result.kind === "category") {
         bridge.addCategory(result.name);
       } else {
