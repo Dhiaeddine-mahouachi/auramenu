@@ -41,7 +41,7 @@
     const speech = normalizeDigits(textValue(raw)).replace(/^(?:(?:add|create)\s+(?:(?:a|new)\s+)?(?:product|item)\s*|(?:ürün ekle)\s*|(?:أضف منتج)\s*)/iu, "").trim();
     let name, price, description = "";
     const separated = speech.includes("|") ? speech.split("|").map(textValue)
-      : speech.split(/\s*,\s*/).map(textValue);
+      : speech.split(/\s*[,،]\s+/).map(textValue);
     if (separated.length >= 2 && separated.length <= 3) {
       [name, price, description = ""] = separated;
       // A comma may be a decimal separator, not a field delimiter.
@@ -57,7 +57,7 @@
       price = match[2].trim();
     }
     requireLength(name, 100, "Product name");
-    requireLength(description, 300, "Description");
+    if (description.length > 300) throw new Error("Description must be at most 300 characters.");
     return { kind: "product", name, price: parsePrice(price), description };
   }
 
