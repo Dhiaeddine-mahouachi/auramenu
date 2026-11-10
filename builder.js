@@ -540,6 +540,40 @@
     updatePreview();
     saveDraft();
   }
+  // Only allow bounded, reviewed data to enter the existing editor.
+  // No ordering, payment or menu-publication capability is exposed.
+  window.AuraMenuVoiceBridge = Object.freeze({
+    getCategories() {
+      return categories.map((category) => ({ id: category.id, name: category.name, itemCount: category.items.length }));
+    },
+    addCategory(name) {
+      const clean = String(name || "").trim();
+      if (!clean || clean.length > 80) throw new Error("Invalid category name.");
+      const existing = categories.find((category) => category.name.trim().toLocaleLowerCase("tr") === clean.toLocaleLowerCase("tr"));
+      if (existing) return existing.id;
+      if (categories.length >= 12) throw new Error("Maximum 12 categories per menu.");
+      const id = uid();
+      categories.push({ id, name: clean, emoji: "🍽️", items: [] });
+      renderEditors();
+      return id;
+    },
+    addProduct(categoryId, incoming) {
+      const category = categories.find((entry) => entry.id === categoryId);
+      if (!category) throw new Error("Choose an existing category first.");
+      if (category.items.length >= 20) throw new Error("Maximum 20 products per category.");
+      if (!incoming || typeof incoming.name !== "string" || !incoming.name.trim() ||
+          incoming.name.length > 100 || typeof incoming.price !== "string" ||
+          !/^\d{1,7}(?:[.,]\d{1,3})?$/.test(incoming.price) ||
+          typeof incoming.description !== "string" || incoming.description.length > 300) {
+        throw new Error("Invalid product details or numeric price.");
+      }
+      category.items.push({
+        id: uid(), name: incoming.name.trim(), price: incoming.price,
+        description: incoming.description.trim(), imageUrl: "", imageData: "", featured: false
+      });
+      renderEditors();
+    }
+  });
   function bindEditorEvents() {
     document.querySelectorAll("[data-category]").forEach((editor) => {
       const category = categories.find(
