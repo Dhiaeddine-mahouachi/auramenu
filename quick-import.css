@@ -1,0 +1,14 @@
+.quick-import{margin:18px 0 20px;padding:18px;border:1px solid rgba(20,120,91,.3);background:rgba(20,120,91,.055);border-radius:16px}
+.quick-import h3{font-size:17px;margin:0 0 6px}
+.quick-import p{font-size:13px;line-height:1.5;margin:5px 0 12px}
+.quick-import textarea{min-height:125px;width:100%;font:inherit;line-height:1.5}
+.quick-import-option{display:flex;align-items:center;gap:8px;font-size:13px;margin:10px 0}
+.quick-import-option input{width:auto;height:auto}
+.quick-import-actions{display:flex;gap:10px;flex-wrap:wrap}
+.quick-import-actions button{min-height:40px}
+.quick-import-status{white-space:pre-wrap;font-size:13px}
+.quick-import-status[data-error="true"]{color:#b32820}
+.quick-import-preview{margin-top:8px;max-height:160px;overflow:auto;font-size:13px}
+.quick-import-preview div{padding:5px 0;border-bottom:1px solid rgba(100,100,100,.1)}
+.quick-import-preview strong{font-weight:700}
+@media(max-width:620px){.quick-import{padding:13px}.quick-import-actions button{width:100%}}

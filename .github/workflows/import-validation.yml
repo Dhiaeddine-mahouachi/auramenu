@@ -1,0 +1,32 @@
+name: Validate AuraMenu import and voice entry
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check JavaScript syntax
+        run: |
+          node --check builder.js
+          node --check menu-import.js
+          node --check voice-fill-core.js
+          node --check voice-fill.js
+      - name: Test product import and speech parsing
+        run: node --test tests/*.test.mjs
+      - name: Install browser test dependencies
+        run: |
+          npm install --no-save playwright@1.62.1
+          npx playwright install --with-deps chromium
+      - name: Test voice interaction in real Chromium
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/auramenu-smoke.log 2>&1 &
+          sleep 2
+          node tests/voice-browser-smoke.mjs

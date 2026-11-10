@@ -1,0 +1,12 @@
+.voice-fill{margin:16px 0 20px;padding:18px;border:1px solid rgba(22,122,90,.33);border-radius:18px;background:rgba(22,122,90,.055)}
+.voice-fill h2{font-size:19px;margin:0 0 8px}
+.voice-fill p{font-size:13px;line-height:1.55}
+.voice-fill .voice-controls{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0}
+.voice-fill button{min-height:44px}
+.voice-fill textarea{min-height:86px;width:100%;resize:vertical;line-height:1.5;font:inherit}
+.voice-fill .voice-review{white-space:pre-wrap;overflow-wrap:anywhere;background:rgba(22,122,90,.07);border-radius:12px;padding:12px;margin:10px 0;font-size:13px}
+.voice-fill .voice-status{font-size:13px}
+.voice-fill .voice-status[data-error="true"]{color:#aa2929}
+.voice-fill .voice-privacy{opacity:.8;font-size:12px}
+.voice-fill [hidden]{display:none!important}
+@media(max-width:620px){.voice-fill{padding:13px}.voice-fill .voice-controls button{flex:1 1 140px}}
