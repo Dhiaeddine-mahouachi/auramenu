@@ -81,6 +81,7 @@
   ['qrDark','qrLight','qrFrame'].forEach(id=>$(id)?.addEventListener('input',render));
   $('qrLabel')?.addEventListener('input',()=>{$('qrLabel').dataset.edited='1';render();});
   $('slug')?.addEventListener('input',render);
+  $('slug')?.addEventListener('change',render);
   $('qrLogo')?.addEventListener('change',(event)=>{
     const file=event.target.files?.[0]; if(!file) return;
     if(!['image/png','image/jpeg','image/webp'].includes(file.type) || file.size>2*1024*1024){event.target.value='';return;}

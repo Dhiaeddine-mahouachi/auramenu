@@ -629,6 +629,7 @@
         items: category.items.map(({ imageData, ...item }) => item),
       })),
       fields: {},
+      slugEdited: $("slug").dataset.edited === "1",
     };
     [
       "businessName",
@@ -663,6 +664,7 @@
     try {
       const draft = JSON.parse(localStorage.getItem("auraMenuDraft") || "null");
       if (!draft?.fields) return;
+      if (draft.slugEdited === true || (draft.slugEdited === undefined && draft.fields.slug)) $("slug").dataset.edited = "1";
       const allowed = new Set(['businessName','tagline','description','address','businessPhone','whatsapp','openingHours','templateId','menuLanguage','currency','slug','contactName','contactPhone','email','city','paymentReference','planId','notes']);
       Object.entries(draft.fields).forEach(([id, value]) => {
         if (allowed.has(id) && $(id) && typeof value === "string") $(id).value = value;
@@ -713,6 +715,7 @@
   $("businessName").addEventListener("blur", () => {
     if (!$("slug").dataset.edited) {
       $("slug").value = normalizeSlug($("businessName").value);
+      $("slug").dispatchEvent(new Event("change", { bubbles: true }));
       updatePreview();
       saveDraft();
     }
@@ -720,6 +723,7 @@
   $("slug").addEventListener("input", () => {
     $("slug").dataset.edited = "1";
     $("slug").value = normalizeSlug($("slug").value);
+    saveDraft();
   });
   document
     .querySelectorAll("input,textarea,select")

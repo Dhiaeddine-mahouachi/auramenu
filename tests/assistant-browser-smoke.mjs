@@ -32,6 +32,13 @@ try {
  await page.locator('#assistantMode').selectOption('edit');await page.locator('#assistantSource').fill('Set restaurant name to <img src=x onerror=alert(1)>');
  await page.locator('#assistantReview').click();assert.equal(await page.locator('#assistantChanges img').count(),0);
  await page.locator('#assistantApply').click();assert.equal(await page.locator('#businessName').inputValue(),'<img src=x onerror=alert(1)>');
+ await page.locator('#assistantSource').fill('Set restaurant name to Istanbul Burger');
+ await page.locator('#assistantReview').click();await page.locator('#assistantApply').click();
+ await page.waitForFunction(()=>document.querySelector('#qrUrl').textContent.endsWith('/'+document.querySelector('#slug').value));
+ assert.equal(await page.locator('#qrUrl').innerText(),'https://auramenu.space/istanbul-burger','QR tracks automatically changed slug');
+ await page.locator('#slug').fill('my-custom-menu');await page.reload();
+ await page.locator('#businessName').fill('New restaurant name');await page.locator('#businessName').press('Tab');
+ assert.equal(await page.locator('#slug').inputValue(),'my-custom-menu','Custom menu URL is retained across reload');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'No horizontal overflow on mobile');
  await page.screenshot({path:'test-output/assistant-mobile.png',fullPage:true});
  await page.setViewportSize({width:1440,height:1000});
