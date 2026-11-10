@@ -8,7 +8,7 @@
 - Removed demo business facts and products from new customer drafts. Existing saved work is retained. Draft field restoration is allowlisted and storage write failures report unsaved work.
 - Added CI smoke coverage and excluded docs/tests/dependencies from Pages output.
 - In AuraDigital: additive private menu draft migration/API with existing identity, organization permissions, verification, current membership entitlements, CSRF, write rate limits, hard request/count caps, optimistic versions and atomic audit records.
-- Business Hub private draft editor: uses saved business profile, saves/reopens/edits, content preview, archive and JSON export. This UI is implemented but browser interaction remains unverified locally.
+- Business Hub private draft editor: uses saved business profile, saves/reopens/edits, content preview, archive and JSON export. This UI is implemented and verified in isolated Chromium CI; live customer integration is pending.
 
 ## Verified results
 - AuraMenu: `node --test tests/*.test.mjs`: 18 passed, 0 failed.
@@ -46,4 +46,11 @@ See DECISIONS, ROADMAP and AUDIT. Backend API/release/cost notes are in AuraDigi
 - Draft PRs: AuraMenu #9 and AuraDigital #58; source trees match the locally tested trees. No merge or production deployment.
 - AuraDigital GitHub Actions Security checks passed: dependency audit, syntax/types/builds, all tests and Worker dry-run.
 - AuraMenu GitHub Actions completed the Chromium smoke step successfully. Both scripts ran: existing dictation-to-field/product flow, new extraction-to-actual-template-preview flow, stale review rejection, conversational price edit, refresh persistence, CSV, text-safe rendering and mobile/desktop overflow assertions.
-- Local Chromium remains unavailable; actual microphone hardware, visual screenshot inspection, live account routing and signup-to-payment/publication acceptance remain separate requirements.
+- Local Chromium remains unavailable; actual microphone hardware, physical-device QA, live account routing and signup-to-payment/publication acceptance remain separate requirements.
+
+## Final verified code checkpoint
+- AuraMenu code commit `c63f5cd0b0626ea2f5348fd94158da9752051445`: GitHub run 42919691744 passed syntax, 18 tests and both Chromium scripts. QR URL updates after automatic slug changes; custom slugs persist across reload.
+- AuraDigital code commit `01fd55cdd3eaf486a8e1a8e732f3e10c4583c8be`: GitHub run 42919457059 passed audit, type/build checks, 279 tests, Worker dry-run and the private draft UI browser script.
+- Downloaded and visually inspected mobile and desktop CI screenshots of the private editor and the AuraMenu mobile screenshot. Inspection uncovered the QR bug above, which was corrected and covered by the subsequent passing Chromium run. Screenshots use synthetic test inputs.
+- CI voice recognition uses a mock transcript; actual microphone hardware was not exercised. No full signup/payment/activation acceptance pass or production readiness certification is claimed.
+- Source saved on draft PRs https://github.com/Dhiaeddine-mahouachi/auramenu/pull/9 and https://github.com/Dhiaeddine-mahouachi/auradigital/pull/58. Worktrees clean after local commits; production remains unchanged.
