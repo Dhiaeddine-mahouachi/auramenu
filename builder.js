@@ -175,6 +175,48 @@
       network: "تعذر إرسال الطلب. تحقق من الاتصال وحاول مرة أخرى.",
     },
   };
+
+  const importCopy = {
+    tr: {
+      title: "Ürünleri toplu ekle",
+      help: "Her kategori için [Başlık], her ürün için Ad | Fiyat | Açıklama | HTTPS fotoğraf bağlantısı kullanın. Tüm bilgiler yayınlanmadan önce incelenir.",
+      label: "Ürün listeniz",
+      replace: "Mevcut ürünleri ve yüklenen fotoğrafları değiştir (örnek ürünleri sil)",
+      review: "İçe aktarmayı önizle",
+      apply: "Ürünleri menüye ekle",
+      placeholder: "[Pizzalar]\nMargherita | 320 | Domates, mozzarella\nPepperoni | 390",
+      preview: "İçe aktarılacak: {items} ürün, {categories} kategori. {mode}",
+      add: "Var olan ürünleri korur; uygun kategorilere ekler.",
+      overwrite: "DİKKAT: Eski ürünler ve yüklenen fotoğraflar silinecek.",
+      success: "Ürünler menüye eklendi. Yayın veya ödeme yapılmadı.",
+    },
+    en: {
+      title: "Import products in bulk",
+      help: "Use [Category] headings and Name | Price | Description | HTTPS photo URL for each product. Review everything before submission.",
+      label: "Your product list",
+      replace: "Replace current products and uploaded photos (remove example products)",
+      review: "Preview import",
+      apply: "Add products to menu",
+      placeholder: "[Pizzas]\nMargherita | 320 | Tomato, mozzarella\nPepperoni | 390",
+      preview: "Ready to import: {items} products in {categories} categories. {mode}",
+      add: "Existing items will be kept and the products added.",
+      overwrite: "WARNING: Existing items and uploaded photos will be removed.",
+      success: "Products added to your draft. Nothing was purchased or published.",
+    },
+    ar: {
+      title: "استيراد المنتجات دفعة واحدة",
+      help: "اكتب [اسم القسم] ثم اسم المنتج | السعر | الوصف | رابط صورة HTTPS. راجع البيانات قبل الإرسال.",
+      label: "قائمة المنتجات",
+      replace: "استبدال المنتجات والصور المرفوعة الحالية (حذف الأمثلة)",
+      review: "معاينة الاستيراد",
+      apply: "إضافة المنتجات إلى القائمة",
+      placeholder: "[بيتزا]\nمارغريتا | 320 | طماطم وجبنة\nبيبروني | 390",
+      preview: "جاهز للاستيراد: {items} منتجات في {categories} أقسام. {mode}",
+      add: "سيتم الاحتفاظ بالمنتجات الحالية وإضافة الجديدة.",
+      overwrite: "تحذير: سيتم حذف المنتجات والصور الحالية.",
+      success: "أضيفت المنتجات إلى المسودة. لم يتم الشراء أو النشر.",
+    },
+  };
   const templateNames = {
     modern: "Nova Mobile",
     orbit: "Food Orbit",
@@ -452,6 +494,11 @@
         button.classList.toggle("active", button.dataset.lang === code),
       );
     $("backLink").href = `index.html?lang=${code}#templates`;
+    document.querySelectorAll("[data-import-i18n]").forEach((element) => {
+      const text = importCopy[code][element.dataset.importI18n];
+      if (text) element.textContent = text;
+    });
+    $("quickMenuText").placeholder = importCopy[code].placeholder;
     window.AuraMenuPricing?.apply();
     renderEditors();
   }
@@ -807,6 +854,75 @@
       button.querySelector("span").textContent = i18n[lang].submit;
     }
   });
+
+  // A controlled, reversible first step toward AI-assisted menu creation.
+  // No model output, payment or publishing happens on this path.
+  let quickPending = null;
+  function quickReset() {
+    quickPending = null;
+    $("quickApply").hidden = true;
+    $("quickImportPreview").replaceChildren();
+    $("quickImportStatus").textContent = "";
+    $("quickImportStatus").dataset.error = "false";
+  }
+  function quickMerge(parsed, replace) {
+    const next = replace ? [] : categories.map((category) => ({ ...category, items: [...category.items] }));
+    for (const source of parsed.categories) {
+      const match = next.find((category) => category.name.trim().toLocaleLowerCase("tr") === source.name.trim().toLocaleLowerCase("tr"));
+      const dest = match || { id: uid(), name: source.name, emoji: source.emoji, items: [] };
+      if (!match) {
+        if (next.length >= 12) throw new Error("Menu can contain at most 12 categories. Select replacement or reduce the list.");
+        next.push(dest);
+      }
+      if (dest.items.length + source.items.length > 20) {
+        throw new Error("Category " + source.name + " would exceed the limit of 20 products.");
+      }
+      dest.items.push(...source.items.map((item) => ({ ...item, id: uid() })));
+    }
+    return next;
+  }
+  $("quickMenuText").addEventListener("input", quickReset);
+  $("quickReplace").addEventListener("change", quickReset);
+  $("quickReview").addEventListener("click", () => {
+    quickReset();
+    try {
+      const text = $("quickMenuText").value;
+      const replace = $("quickReplace").checked;
+      const result = window.AuraMenuQuickImport.parse(text);
+      const prepared = quickMerge(result, replace);
+      const copy = importCopy[lang];
+      quickPending = { text, replace, prepared };
+      const preview = $("quickImportPreview");
+      for (const category of result.categories) {
+        const element = document.createElement("div");
+        const heading = document.createElement("strong");
+        heading.textContent = category.name + ": ";
+        element.append(heading, document.createTextNode(category.items.map((item) => item.name + " — " + item.price).join(", ")));
+        preview.append(element);
+      }
+      $("quickImportStatus").textContent = copy.preview
+        .replace("{items}", String(result.itemCount))
+        .replace("{categories}", String(result.categories.length))
+        .replace("{mode}", replace ? copy.overwrite : copy.add);
+      $("quickApply").hidden = false;
+    } catch (error) {
+      $("quickImportStatus").dataset.error = "true";
+      $("quickImportStatus").textContent = error.message || "Invalid product list.";
+    }
+  });
+  $("quickApply").addEventListener("click", () => {
+    const pending = quickPending;
+    if (!pending || pending.text !== $("quickMenuText").value || pending.replace !== $("quickReplace").checked) {
+      quickReset();
+      return;
+    }
+    categories = pending.prepared;
+    renderEditors();
+    $("quickMenuText").value = "";
+    quickReset();
+    $("quickImportStatus").textContent = importCopy[lang].success;
+  });
+
   restoreDraft();
   const requested = params.get("template");
   if (templateNames[requested]) $("templateId").value = requested;
