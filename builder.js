@@ -237,111 +237,11 @@
   const previewTargetOrigin = location.origin === "null" ? "*" : location.origin;
   let lang = ["tr", "en", "ar"].includes(params.get("lang"))
     ? params.get("lang")
-    : localStorage.getItem("auraMenuUiLanguage") || "tr";
+    : localStorage.getItem("auraMenuUiLanguage") || "en";
   let categories = [];
   let previewTimer;
   const $ = (id) => document.getElementById(id);
   const uid = () => crypto.randomUUID();
-  function defaults(code) {
-    return code === "ar"
-      ? [
-          {
-            id: uid(),
-            emoji: "🔥",
-            name: "الأكثر طلباً",
-            items: [
-              {
-                id: uid(),
-                name: "برجر الشيف",
-                price: "320",
-                description: "لحم مشوي، جبن وصوص خاص",
-                imageUrl: "",
-                featured: true,
-              },
-            ],
-          },
-          {
-            id: uid(),
-            emoji: "🥗",
-            name: "المقبلات",
-            items: [
-              {
-                id: uid(),
-                name: "سلطة موسمية",
-                price: "180",
-                description: "خضار طازجة وصوص الرمان",
-                imageUrl: "",
-                featured: false,
-              },
-            ],
-          },
-        ]
-      : code === "en"
-        ? [
-            {
-              id: uid(),
-              emoji: "🔥",
-              name: "Popular",
-              items: [
-                {
-                  id: uid(),
-                  name: "Chef Burger",
-                  price: "320",
-                  description: "Grilled beef, cheese and signature sauce",
-                  imageUrl: "",
-                  featured: true,
-                },
-              ],
-            },
-            {
-              id: uid(),
-              emoji: "🥗",
-              name: "Starters",
-              items: [
-                {
-                  id: uid(),
-                  name: "Seasonal Salad",
-                  price: "180",
-                  description: "Fresh greens and pomegranate dressing",
-                  imageUrl: "",
-                  featured: false,
-                },
-              ],
-            },
-          ]
-        : [
-            {
-              id: uid(),
-              emoji: "🔥",
-              name: "Popüler",
-              items: [
-                {
-                  id: uid(),
-                  name: "Şef Burger",
-                  price: "320",
-                  description: "Izgara dana, peynir ve özel sos",
-                  imageUrl: "",
-                  featured: true,
-                },
-              ],
-            },
-            {
-              id: uid(),
-              emoji: "🥗",
-              name: "Başlangıçlar",
-              items: [
-                {
-                  id: uid(),
-                  name: "Mevsim Salata",
-                  price: "180",
-                  description: "Taze yeşillik ve nar ekşisi",
-                  imageUrl: "",
-                  featured: false,
-                },
-              ],
-            },
-          ];
-  }
   try {
     const saved = JSON.parse(localStorage.getItem("auraMenuDraft") || "null");
     categories = Array.isArray(saved?.categories)
@@ -357,9 +257,9 @@
               }))
             : [],
         }))
-      : defaults(lang);
+      : [];
   } catch {
-    categories = defaults(lang);
+    categories = [];
   }
   const esc = (value) =>
     String(value ?? "").replace(
@@ -543,6 +443,24 @@
   // Only allow bounded, reviewed data to enter the existing editor.
   // No ordering, payment or menu-publication capability is exposed.
   window.AuraMenuVoiceBridge = Object.freeze({
+    getDraft() {
+      const fields = {};
+      for (const id of ['businessName', 'tagline', 'description', 'address', 'businessPhone', 'openingHours', 'currency', 'menuLanguage']) fields[id] = $(id).value;
+      return JSON.parse(JSON.stringify({ fields, categories }));
+    },
+    applyReviewed(proposal, expected) {
+      if (JSON.stringify(window.AuraMenuVoiceBridge.getDraft()) !== expected) throw new Error("Your menu changed after review. Review again before applying.");
+      const next = window.AuraMenuAssistantCore.validate(proposal);
+      // Assign new IDs only to imported entries; preserve existing product photos.
+      categories = next.categories.map(category => ({ ...category, id: category.id || uid(), emoji: category.emoji || "🍽️", items: category.items.map(item => ({ ...item, id: item.id || uid(), imageUrl: item.imageUrl || "", imageData: item.imageData || "", featured: Boolean(item.featured) })) }));
+      for (const [id, value] of Object.entries(next.fields)) {
+        $(id).value = value;
+        $(id).dispatchEvent(new Event("input", { bubbles: true }));
+      }
+      $("businessName").dispatchEvent(new Event("blur"));
+      renderEditors();
+      document.dispatchEvent(new Event("auramenu:draft-changed"));
+    },
     getCategories() {
       return categories.map((category) => ({ id: category.id, name: category.name, itemCount: category.items.length }));
     },
@@ -711,6 +629,7 @@
         items: category.items.map(({ imageData, ...item }) => item),
       })),
       fields: {},
+      slugEdited: $("slug").dataset.edited === "1",
     };
     [
       "businessName",
@@ -734,14 +653,21 @@
     ].forEach((id) => {
       if ($(id)) draft.fields[id] = $(id).value;
     });
-    localStorage.setItem("auraMenuDraft", JSON.stringify(draft));
+    try {
+      localStorage.setItem("auraMenuDraft", JSON.stringify(draft));
+    } catch {
+      $("formMessage").textContent = "Browser storage is unavailable or full. Keep this page open; your draft has not been saved on this device.";
+      $("formMessage").className = "form-message show error";
+    }
   }
   function restoreDraft() {
     try {
       const draft = JSON.parse(localStorage.getItem("auraMenuDraft") || "null");
       if (!draft?.fields) return;
+      if (draft.slugEdited === true || (draft.slugEdited === undefined && draft.fields.slug)) $("slug").dataset.edited = "1";
+      const allowed = new Set(['businessName','tagline','description','address','businessPhone','whatsapp','openingHours','templateId','menuLanguage','currency','slug','contactName','contactPhone','email','city','paymentReference','planId','notes']);
       Object.entries(draft.fields).forEach(([id, value]) => {
-        if ($(id) && value !== undefined) $(id).value = value;
+        if (allowed.has(id) && $(id) && typeof value === "string") $(id).value = value;
       });
     } catch {}
   }
@@ -789,6 +715,7 @@
   $("businessName").addEventListener("blur", () => {
     if (!$("slug").dataset.edited) {
       $("slug").value = normalizeSlug($("businessName").value);
+      $("slug").dispatchEvent(new Event("change", { bubbles: true }));
       updatePreview();
       saveDraft();
     }
@@ -796,6 +723,7 @@
   $("slug").addEventListener("input", () => {
     $("slug").dataset.edited = "1";
     $("slug").value = normalizeSlug($("slug").value);
+    saveDraft();
   });
   document
     .querySelectorAll("input,textarea,select")
@@ -925,7 +853,7 @@
       const result = window.AuraMenuQuickImport.parse(text);
       const prepared = quickMerge(result, replace);
       const copy = importCopy[lang];
-      quickPending = { text, replace, prepared };
+      quickPending = { text, replace, prepared, base: JSON.stringify(window.AuraMenuVoiceBridge.getDraft()) };
       const preview = $("quickImportPreview");
       for (const category of result.categories) {
         const element = document.createElement("div");
@@ -946,7 +874,7 @@
   });
   $("quickApply").addEventListener("click", () => {
     const pending = quickPending;
-    if (!pending || pending.text !== $("quickMenuText").value || pending.replace !== $("quickReplace").checked) {
+    if (!pending || pending.text !== $("quickMenuText").value || pending.replace !== $("quickReplace").checked || pending.base !== JSON.stringify(window.AuraMenuVoiceBridge.getDraft())) {
       quickReset();
       return;
     }
@@ -960,7 +888,7 @@
   restoreDraft();
   const requested = params.get("template");
   if (templateNames[requested]) $("templateId").value = requested;
-  $("menuLanguage").value = lang;
+  if (!localStorage.getItem("auraMenuDraft")) $("menuLanguage").value = lang;
   applyLanguage(lang);
   updatePreview();
 })();

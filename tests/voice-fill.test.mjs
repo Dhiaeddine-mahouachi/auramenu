@@ -36,6 +36,7 @@ test("supports Turkish and Arabic price phrases and Arabic-Indic digits", () => 
   assert.equal(arabic.name, "مارغريتا");
   assert.equal(arabic.price, "320");
   assert.equal(parse("product", "فلافل، ٢٥٠").price, "250");
+  assert.equal(parse("product", "قهوة السعر ٣٫٥").price, "3.5");
 });
 
 test("rejects missing prices and oversize inputs", () => {

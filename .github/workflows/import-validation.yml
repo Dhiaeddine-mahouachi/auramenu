@@ -19,6 +19,9 @@ jobs:
           node --check menu-import.js
           node --check voice-fill-core.js
           node --check voice-fill.js
+          node --check menu-assistant-core.js
+          node --check menu-assistant.js
+          node --check menu-account-builder.js
       - name: Test product import and speech parsing
         run: node --test tests/*.test.mjs
       - name: Install browser test dependencies
@@ -30,3 +33,11 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/auramenu-smoke.log 2>&1 &
           sleep 2
           node tests/voice-browser-smoke.mjs
+          node tests/assistant-browser-smoke.mjs
+      - name: Preserve responsive preview screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auramenu-browser-screenshots
+          path: test-output/*.png
+          if-no-files-found: ignore

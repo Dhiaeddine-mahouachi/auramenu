@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><meta name="theme-color" content="#070808">
   <title>AuraMenu — Menü oluştur</title>
@@ -35,17 +35,28 @@
         </section>
       </div>
       <section class="form-section"><h2 data-i18n="business">1. İşletme görünümü</h2><div class="form-grid">
-        <label class="field"><span data-i18n="businessName">İşletme adı *</span><input id="businessName" maxlength="100" required value="Pera Kitchen"></label>
-        <label class="field"><span data-i18n="tagline">Kısa slogan</span><input id="tagline" maxlength="140" value="Günün taze tatları"></label>
+        <label class="field"><span data-i18n="businessName">İşletme adı *</span><input id="businessName" maxlength="100" required value=""></label>
+        <label class="field"><span data-i18n="tagline">Kısa slogan</span><input id="tagline" maxlength="140" value=""></label>
         <label class="field full"><span data-i18n="description">İşletme açıklaması</span><textarea id="description" maxlength="600" placeholder="Mekanınızı kısaca anlatın"></textarea></label>
-        <label class="field full"><span data-i18n="address">Adres</span><input id="address" maxlength="220" value="Karaköy, İstanbul"></label>
+        <label class="field full"><span data-i18n="address">Adres</span><input id="address" maxlength="220" value=""></label>
         <label class="field"><span data-i18n="businessPhone">Müşterilerin göreceği telefon</span><input id="businessPhone" maxlength="40" placeholder="+90 5xx xxx xx xx"></label>
         <input id="whatsapp" type="hidden" value="">
-        <label class="field"><span data-i18n="hours">Çalışma saatleri</span><input id="openingHours" maxlength="100" value="09:00 – 23:00"></label>
+        <label class="field"><span data-i18n="hours">Çalışma saatleri</span><input id="openingHours" maxlength="100" value=""></label>
         <label class="field"><span data-i18n="template">Tasarım</span><select id="templateId"><option value="modern">Nova Mobile</option><option value="orbit">Food Orbit</option><option value="maison">Maison</option><option value="taste3d">Taste 3D</option></select></label>
         <label class="field"><span data-i18n="menuLanguage">Müşteri menüsünün dili</span><select id="menuLanguage"><option value="tr">Türkçe</option><option value="en">English</option><option value="ar">العربية</option></select></label>
         <label class="field"><span data-i18n="currency">Para birimi</span><select id="currency"><option value="TRY">TRY — ₺</option><option value="EUR">EUR — €</option><option value="USD">USD — $</option><option value="TND">TND — د.ت</option></select></label>
       </div></section>
+      <section class="form-section" id="assistantSection" aria-labelledby="assistantHeading">
+        <h2 id="assistantHeading">Describe your menu</h2>
+        <p>Speak, paste business details, or import CSV. This free assistant uses supported phrases and explicit prices. Review every change before adding it to your editable draft.</p>
+        <label class="field full"><span>What would you like to do?</span><select id="assistantMode"><option value="append">Add business details and products</option><option value="replace">Replace all categories and products</option><option value="edit">Edit existing products with commands</option></select></label>
+        <label class="field full"><span>Business details, transcript or commands</span><textarea id="assistantSource" maxlength="15000" rows="6" dir="auto" placeholder="Restaurant: Istanbul Burger&#10;Currency: TRY&#10;Category: Burgers&#10;Cheeseburger | 250&#10;Category: Drinks&#10;Ayran | 60"></textarea></label>
+        <p>Also understood: “My restaurant is called Istanbul Burger. A cheeseburger costs 250 lira.” Missing details stay empty. Choose your menu currency and language below.</p>
+        <details><summary>Supported edits and CSV format</summary><p>One command per line: <code>Set price of &quot;Cheeseburger&quot; to 280</code>, <code>Rename product &quot;Ayran&quot; to &quot;Fresh Ayran&quot;</code>, <code>Remove product &quot;Ayran&quot;</code>, or <code>Set restaurant name to Istanbul Burger</code>.</p><p>CSV header: <code>category,name,price,description</code>. Quote values containing commas. Prices must be explicit numbers.</p></details>
+        <div class="voice-controls"><button id="assistantStart" type="button" class="add-button">Speak menu details</button><button id="assistantStop" type="button" class="add-button" hidden>Stop listening</button><label class="add-button">Import CSV <input id="assistantCsv" type="file" accept=".csv,text/csv" aria-label="Import menu CSV"></label><button id="assistantReview" type="button" class="add-button">Review proposed changes</button><button id="assistantApply" type="button" class="add-button" hidden>Apply reviewed changes</button></div>
+        <p id="assistantStatus" role="status" aria-live="polite"></p><ul id="assistantChanges" aria-label="Proposed changes"></ul>
+        <p class="voice-privacy">Your browser may send speech to its recognition service. AuraMenu does not save audio. Drafts save on this device; uploaded photo bytes are not retained after leaving. Nothing is purchased or published here. You can use your keyboard microphone or type if speech recognition is unavailable.</p>
+      </section>
       <section class="form-section" id="voiceFillSection">
         <div class="voice-fill" aria-labelledby="voiceFillHeading">
           <h2 id="voiceFillHeading" data-voice-i18n="title">🎙 Sesle doldur</h2>
@@ -99,11 +110,11 @@
           <div id="quickImportPreview" class="quick-import-preview" aria-live="polite"></div>
         </div><div class="category-list" id="categoryList"></div><button class="add-button" id="addCategory" type="button" data-i18n="addCategory">+ Kategori ekle</button></section>
       <section class="form-section"><h2 data-i18n="publishing">3. Yayın, iletişim ve ödeme</h2><div class="form-grid">
-        <label class="field full"><span data-i18n="url">Menü bağlantınız *</span><div class="slug-field"><span>auramenu.space/</span><input id="slug" required maxlength="48" value="pera-kitchen" inputmode="url"></div></label>
+        <label class="field full"><span data-i18n="url">Menü bağlantınız *</span><div class="slug-field"><span>auramenu.space/</span><input id="slug" required maxlength="48" value="" inputmode="url"></div></label>
         <label class="field"><span data-i18n="contactName">Yetkili kişi *</span><input id="contactName" required maxlength="100" autocomplete="name"></label>
         <label class="field"><span data-i18n="contactPhone">Yetkili telefonu *</span><input id="contactPhone" required maxlength="40" autocomplete="tel"></label>
         <label class="field"><span data-i18n="email">E-posta</span><input id="email" type="email" maxlength="160" autocomplete="email"></label>
-        <label class="field"><span data-i18n="city">Şehir</span><input id="city" maxlength="100" value="İstanbul"></label>
+        <label class="field"><span data-i18n="city">Şehir</span><input id="city" maxlength="100" value=""></label>
         <label class="field full"><span data-i18n="paymentRef">Ödeme notu / referansı</span><input id="paymentReference" maxlength="200" placeholder="Havale yapan kişi veya işlem açıklaması"></label>
         <label class="field full"><span data-i18n="notes">AuraDigital için notunuz</span><textarea id="notes" maxlength="1000"></textarea></label>
       </div></section>
@@ -126,7 +137,7 @@
     </form>
     <aside class="panel preview-panel"><div class="preview-label"><span data-i18n="livePreview">CANLI ÖNİZLEME</span><b id="previewTemplate">Nova Mobile</b></div><div class="template-preview-shell"><iframe id="templatePreview" class="template-preview-frame" title="Live menu design preview"></iframe></div></aside>
   </main>
-  <script src="config.js?v=20261002-saas"></script><script src="pricing.js?v=20261002-saas"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="menu-account-builder.js?v=20261002"></script><script src="menu-import.js?v=20261110"></script><script src="voice-fill-core.js?v=20261110"></script><script src="builder.js?v=20261110-voice"></script><script src="voice-fill.js?v=20261110"></script><script src="qr-builder.js?v=20261002-qr-init"></script>
+  <script src="config.js?v=20261002-saas"></script><script src="pricing.js?v=20261002-saas"></script><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="menu-account-builder.js?v=20261002"></script><script src="menu-import.js?v=20261110"></script><script src="voice-fill-core.js?v=20261110"></script><script src="menu-assistant-core.js?v=20261111"></script><script src="builder.js?v=20261111-assistant"></script><script src="menu-assistant.js?v=20261111"></script><script src="voice-fill.js?v=20261110"></script><script src="qr-builder.js?v=20261002-qr-init"></script>
 <script src="menu-plans.js?v=20261002-plans2"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>

@@ -56,3 +56,18 @@ The design selected by the customer is the same page used in the live builder dr
 - Taste 3D → `d.html`
 
 `preview.js` fills that real design with the customer's business details, categories, products, prices and photos. This avoids a generic preview that looks different after publishing.
+
+## Reviewed assisted onboarding (development branch)
+
+The builder now starts with empty business facts and products. The new English assistant accepts supported restaurant sentences, labeled business fields, bracket/pipe lists, and CSV with header `category,name,price,description`. It is a deterministic fallback, not a connected LLM. Existing Turkish and Arabic dictation remains available; Arabic decimal digits are normalized. Unsupported facts are listed for correction, and no ingredients or prices are guessed.
+
+Choose Add, Replace, or Edit, then Review and Apply. Exact quoted product names support price changes, renaming and removal. A changed draft invalidates prior review. Existing template previews and local persistence are reused. Product photo bytes remain temporary. No assistant operation buys, approves payment or publishes.
+
+```sh
+node --test tests/*.test.mjs
+# With Playwright and Chromium installed, serve on 4173 then run:
+node tests/voice-browser-smoke.mjs
+node tests/assistant-browser-smoke.mjs
+```
+
+`CHROMIUM_PATH` optionally chooses an installed browser executable. Browser scripts are prepared for CI; see docs/PROGRESS.md for actual local verification and remaining account/routing blockers.

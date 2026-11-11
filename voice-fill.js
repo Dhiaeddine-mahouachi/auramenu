@@ -112,7 +112,17 @@
     }
     setListening(false);
   }
+  function cancel() {
+    const old = recognizer; recognizer = null;
+    try { old?.abort?.(); } catch {}
+    setListening(false);
+  }
+  document.addEventListener("auramenu:speech-start", event => { if (event.detail !== "field") cancel(); });
+  document.addEventListener("auramenu:draft-changed", () => { invalidate(); categories(); });
+  window.addEventListener("pagehide", cancel);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) cancel(); });
   $("voiceStart").addEventListener("click", () => {
+    document.dispatchEvent(new CustomEvent("auramenu:speech-start", { detail: "field" }));
     invalidate();
     if (!recognitionClass) return status(t("noSupport"), true);
     if (window.isSecureContext === false) return status(t("insecure"), true);
@@ -125,6 +135,7 @@
       r.interimResults = false;
       r.maxAlternatives = 1;
       r.onresult = (event) => {
+        if (recognizer !== r) return;
         const result = Array.from(event.results).filter(x => x.isFinal).map(x => x[0]?.transcript || "").join(" ").trim();
         if (result) {
           $("voiceTranscript").value = result;
@@ -133,6 +144,7 @@
         } else status(t("noSpeech"), true);
       };
       r.onerror = (event) => {
+        if (recognizer !== r) return;
         const reason = event.error === "not-allowed" || event.error === "service-not-allowed" ? "denied" :
           event.error === "no-speech" ? "noSpeech" : "failure";
         status(t(reason), true);
@@ -155,7 +167,7 @@
   $("voiceStop").addEventListener("click", stop);
   $("voiceTranscript").addEventListener("input", invalidate);
   $("voiceTarget").addEventListener("change", () => {
-    stop();
+    cancel();
     invalidate();
     updateUi();
   });
@@ -183,7 +195,7 @@
         transcript: $("voiceTranscript").value,
         target: selected,
         categoryId: $("voiceCategorySelect").value,
-        parsed
+        parsed, base: JSON.stringify(bridge.getDraft())
       };
       $("voiceReviewText").textContent = review;
       $("voiceApply").hidden = false;
@@ -196,7 +208,7 @@
     if (!pending ||
         pending.transcript !== $("voiceTranscript").value ||
         pending.target !== $("voiceTarget").value ||
-        pending.categoryId !== $("voiceCategorySelect").value) {
+        pending.categoryId !== $("voiceCategorySelect").value || pending.base !== JSON.stringify(bridge.getDraft())) {
       invalidate();
       return status(t("review"), true);
     }
