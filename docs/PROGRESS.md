@@ -54,3 +54,7 @@ See DECISIONS, ROADMAP and AUDIT. Backend API/release/cost notes are in AuraDigi
 - Downloaded and visually inspected mobile and desktop CI screenshots of the private editor and the AuraMenu mobile screenshot. Inspection uncovered the QR bug above, which was corrected and covered by the subsequent passing Chromium run. Screenshots use synthetic test inputs.
 - CI voice recognition uses a mock transcript; actual microphone hardware was not exercised. No full signup/payment/activation acceptance pass or production readiness certification is claimed.
 - Source saved on draft PRs https://github.com/Dhiaeddine-mahouachi/auramenu/pull/9 and https://github.com/Dhiaeddine-mahouachi/auradigital/pull/58. Worktrees clean after local commits; production remains unchanged.
+
+### Production release
+
+Live AuraMenu uses the existing AuraPops account API. The shared account endpoint returned 404 during release checks, so this release retains the existing sign-in and verification flow.
