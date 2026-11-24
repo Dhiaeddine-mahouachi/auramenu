@@ -11,11 +11,9 @@
   <meta property="og:url" content="https://auramenu.space/">
   <link rel="canonical" href="https://auramenu.space/">
   <title>AuraMenu — Digital menus for real moments</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261002-aura-sync">
-  <link rel="stylesheet" href="home-v2.css?v=20261002-mobile-managed-2">
+  <link rel="stylesheet" href="/fonts/landing.css">
+  <link rel="stylesheet" href="style.css?v=20261124-images">
+  <link rel="stylesheet" href="home-v2.css?v=20261124-images">
 <link rel="stylesheet" href="/support-report.css?v=2">
 </head>
 <body data-page="home" class="am-home">
@@ -48,7 +46,10 @@
 
   <main>
     <section class="am-hero" id="home">
-      <div class="am-hero-bg" aria-hidden="true"></div>
+      <picture class="am-hero-bg" aria-hidden="true">
+        <source media="(max-width: 640px)" srcset="/media/template-photos/restaurant-768.webp">
+        <img src="/media/template-photos/restaurant-1536.webp" srcset="/media/template-photos/restaurant-1536.webp 1536w, /media/template-photos/restaurant-2200.webp 2200w" sizes="100vw" width="1536" height="1024" alt="" fetchpriority="high">
+      </picture>
       <div class="am-hero-shade" aria-hidden="true"></div>
 
       <div class="am-hero-inner">
@@ -80,7 +81,7 @@
             <div class="am-phone-brand"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt="" aria-hidden="true"></div>
             <div class="am-phone-title">THE GOOD TABLE<small>MODERN ASIAN CUISINE</small></div>
             <div class="am-phone-food">
-              <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=88" alt="Restaurant dish">
+              <img src="/media/template-photos/photo-1547592180-85f173990554.webp" alt="Restaurant dish" width="560" height="373" decoding="async">
             </div>
             <div class="am-phone-menu">
               <span>Starters <b>›</b></span>
@@ -99,7 +100,7 @@
       <div style="max-width:1100px;margin:0 auto">
         <div style="margin-bottom:25px"><span style="color:#e1e100;font-size:12px;font-weight:700;letter-spacing:.14em">DISCOVER AURAMENU</span><h2 id="amVideoTitle" style="font-size:clamp(30px,4vw,54px);line-height:1.12;margin:12px 0;color:#fff">The menu experience, reimagined.</h2><p style="color:#c5ccc3;margin:0">See what your guests experience in just 10 seconds.</p></div>
         <div style="aspect-ratio:910/512;overflow:hidden;border-radius:22px;border:1px solid rgba(225,225,0,.25);background:#030703;box-shadow:0 18px 60px rgba(0,0,0,.35)">
-          <video controls playsinline preload="metadata" aria-label="AuraMenu product introduction" style="width:100%;height:100%;display:block;object-fit:cover"><source src="/media/auramenu-commercial.mp4" type="video/mp4">Your browser does not support video playback.</video>
+          <video controls playsinline preload="none" poster="/media/auramenu-video-poster.webp" aria-label="AuraMenu product introduction" style="width:100%;height:100%;display:block;object-fit:cover"><source src="/media/auramenu-commercial.mp4" type="video/mp4">Your browser does not support video playback.</video>
         </div>
         <a class="am-pill am-pill-yellow" href="builder.html?lang=en" style="margin-top:26px;display:inline-flex">Create your menu →</a>
       </div>
@@ -128,7 +129,7 @@
           <a href="c.html?lang=en" data-preview-link="modern" class="am-template-preview">
             <div class="am-template-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAAB6CAYAAADUHz1yAAADHElEQVR42u3dTW6DQAyA0TBikfufll27qLqoKrWQgLE9752Avw8PaUMeDwAAAAAAYBKLQ3CP5/P54SicZ9u2RXAIToA/DKeGrje0jDc1E86EM/VMOOg59QSH8AQHPZf1gsO0CwxPcBA47QQHgdEJDgKjExwERic4CIxOcBAYneAgMDrBQWB0goPA6AQHgdEJDgKjExwEEhwETjnBQWB0ggNLSug55bxEiNbPTFc7+mIiwSHAwOgsKSln27alypuWTThMvBunnAlHi4lXZVsFh+gEB7Wi27usTX1X8P79ay6sCsf1nX28a//2bPMisHmCq3h8K+1rieBEFnMRVj7OnaIbd4YmNje12W7KQ2hYCTQMTmimwwz78d92DqFhyjWZcEKDoODEhin32yo0KDrhxAZ/dzDEZjllP4pNOLG5WB2DG5aU4IZxcXCmm4vWdu+3im2+6Lp/PadlcGIz7QhaUooNbnqGAy4MznQDEw5KOPShienWg08pTTjENsXNfZ39AAgt/zafMe2y7L8JB4HL4V0TrvLPA9HjrV1dzvlaZUNFRgejQmhim3e6nbEfmY7ByLyxQsOEExsm/MvX7RAbJJlw/vYGzZeUppvjedZ+ZBwYq0uy3vOCm1LO2Pacl1QTruqFlP33E6oH6iVClAitw0Xb7ccnBVdoyXLGxVspvEqx7d3WtfLBFdt7xzrjfrxzHVQ4Lz40mVinZ6Mq/xFlSTnZdHNOTDgoG9rRVYLgTDfnIdBwEKkUWqbr5JVnYBPO3Z+g2FJNOJhBquDcnek83Uw4CIwtZXCmHNMuKX0NBM7tIeWS0pSjY2ypn+EqffUFsZUPzrSjW2y7gsvwHPc97cRH5dgej4L/aSI6qsZWMjioGNqhZzh/HkBsgcGB2IKDM+XoGlrkte0ZDhMt0KiwkdAhtpcm3LZti4/mEZklJaRfla2v7oQph8ACJ5zoENhxb2+s6Fxk7DecfCgUnOggODjRQXBwooPg4EQHwcGJDoKD+45OeBAUnGkHNwRn2kFwcMKDLylegec0WKYLTnyCo3dwIhQcAAAAAABX+gRGA8kCNpcPYgAAAABJRU5ErkJggg==" alt=""></div>
             <h3>THE GOOD TABLE</h3><small>MODERN ASIAN CUISINE</small>
-            <img class="am-template-dish" src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=700&q=86" alt="">
+            <img class="am-template-dish" src="/media/template-photos/photo-1563379926898-05f4575a45d8.webp" alt="" width="560" height="373" decoding="async" loading="lazy">
             <div class="am-template-lines"><span>Starters <b>›</b></span><span>Main Courses <b>›</b></span><span>Desserts <b>›</b></span><span>Drinks <b>›</b></span></div>
           </a>
           <footer>Modern Dark</footer>
@@ -137,7 +138,7 @@
         <article class="am-template-card am-t-light">
           <a href="a.html?lang=en" data-preview-link="maison" class="am-template-preview">
             <h3>Bella Cucina</h3><small>ITALIAN RESTAURANT</small>
-            <img class="am-template-dish" src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=86" alt="">
+            <img class="am-template-dish" src="/media/template-photos/photo-1551183053-bf91a1d81141.webp" alt="" width="560" height="349" decoding="async" loading="lazy">
             <div class="am-template-lines"><span>Antipasti <b>›</b></span><span>Pasta <b>›</b></span><span>Pizza <b>›</b></span><span>Desserts <b>›</b></span><span>Drinks <b>›</b></span></div>
           </a>
           <footer>Classic Light</footer>
@@ -146,7 +147,7 @@
         <article class="am-template-card am-t-green">
           <a href="b.html?lang=en" data-preview-link="orbit" class="am-template-preview">
             <h3>The Garden</h3><small>PLANT-BASED KITCHEN</small>
-            <img class="am-template-dish" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=86" alt="">
+            <img class="am-template-dish" src="/media/template-photos/photo-1512621776951-a57141f2eefd.webp" alt="" width="560" height="373" decoding="async" loading="lazy">
             <div class="am-template-lines"><span>Starters <b>›</b></span><span>Mains <b>›</b></span><span>Bowls <b>›</b></span><span>Drinks <b>›</b></span></div>
           </a>
           <footer>Organic</footer>
@@ -155,7 +156,7 @@
         <article class="am-template-card am-t-elegant">
           <a href="d.html?lang=en" data-preview-link="taste3d" class="am-template-preview">
             <h3>SALT &amp; FIRE</h3><small>STEAKHOUSE</small>
-            <img class="am-template-dish" src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=86" alt="">
+            <img class="am-template-dish" src="/media/template-photos/photo-1544025162-d76694265947.webp" alt="" width="560" height="374" decoding="async" loading="lazy">
             <div class="am-template-lines"><span>Starters <b>›</b></span><span>Steaks <b>›</b></span><span>Sides <b>›</b></span><span>Cocktails <b>›</b></span></div>
           </a>
           <footer>Elegant</footer>
@@ -164,7 +165,7 @@
         <article class="am-template-card am-t-bold">
           <a href="c.html?lang=en" class="am-template-preview">
             <h3>NOVA</h3><small>COCKTAIL BAR</small>
-            <img class="am-template-dish" src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=86" alt="">
+            <img class="am-template-dish" src="/media/template-photos/photo-1513558161293-cdaf765ed2fd.webp" alt="" width="560" height="840" decoding="async" loading="lazy">
             <div class="am-template-lines"><span>Signature Drinks <b>›</b></span><span>Classics <b>›</b></span><span>Beer <b>›</b></span><span>Wine <b>›</b></span></div>
           </a>
           <footer>Bold</footer>
@@ -173,7 +174,7 @@
         <article class="am-template-card am-t-minimal">
           <a href="a.html?lang=en" class="am-template-preview">
             <h3>Daily Grind</h3><small>SPECIALTY COFFEE</small>
-            <img class="am-template-dish" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=700&q=86" alt="">
+            <img class="am-template-dish" src="/media/template-photos/photo-1509042239860-f550ce710b93.webp" alt="" width="560" height="840" decoding="async" loading="lazy">
             <div class="am-template-lines"><span>Coffee <b>›</b></span><span>Iced Drinks <b>›</b></span><span>Pastries <b>›</b></span><span>Breakfast <b>›</b></span></div>
           </a>
           <footer>Minimal</footer>
@@ -226,14 +227,14 @@
           <main>
             <div class="am-dash-top"><strong>Menu Items</strong><button>+ Add Item</button></div>
             <div class="am-dash-tabs"><b>All (24)</b><span>Starters (6)</span><span>Mains (8)</span><span>Desserts (4)</span></div>
-            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=180&q=80" alt=""><span><b>Truffle Pasta</b><small>Mains</small></span><strong>$18.00</strong><i></i></div>
-            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=180&q=80" alt=""><span><b>Grilled Salmon</b><small>Mains</small></span><strong>$22.00</strong><i></i></div>
-            <div class="am-dash-row"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=180&q=80" alt=""><span><b>Chocolate Lava Cake</b><small>Desserts</small></span><strong>$8.00</strong><i></i></div>
+            <div class="am-dash-row"><img src="/media/template-photos/truffle-pasta-thumb.webp" alt="" width="112" height="75" decoding="async" loading="lazy"><span><b>Truffle Pasta</b><small>Mains</small></span><strong>$18.00</strong><i></i></div>
+            <div class="am-dash-row"><img src="/media/template-photos/grilled-salmon-thumb.webp" alt="" width="112" height="168" decoding="async" loading="lazy"><span><b>Grilled Salmon</b><small>Mains</small></span><strong>$22.00</strong><i></i></div>
+            <div class="am-dash-row"><img src="/media/template-photos/lava-cake-thumb.webp" alt="" width="112" height="140" decoding="async" loading="lazy"><span><b>Chocolate Lava Cake</b><small>Desserts</small></span><strong>$8.00</strong><i></i></div>
           </main>
         </div>
 
         <div class="am-feature-phone">
-          <div class="am-feature-phone-food"><img src="https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?auto=format&fit=crop&w=500&q=84" alt=""></div>
+          <div class="am-feature-phone-food"><img src="/media/template-photos/photo-1551892374-ecf8754cf8b0.webp" alt="" width="560" height="700" decoding="async" loading="lazy"></div>
           <div class="am-feature-phone-copy"><small>PASTA</small><h4>Truffle Pasta</h4><b>$18.00</b></div>
         </div>
       </div>

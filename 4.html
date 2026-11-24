@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>قائمة مطعم ثلاثية الأبعاد فاخرة</title>
 
+<link rel="stylesheet" href="/fonts/arabic.css">
+<script>
+  const isEmbeddedPreview = new URLSearchParams(location.search).get("embedded") === "1";
+  if (isEmbeddedPreview) document.documentElement.classList.add("aura-embedded-template");
+</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900;1000&family=Tajawal:wght@400;700;800;900&display=swap');
 
 :root{
   --bg:#fff8ef;
@@ -489,6 +493,8 @@ h1{
 }
 </style>
   <link rel="stylesheet" href="preview.css">
+<script src="preview.js?v=20261124-images" defer></script>
+<script src="preview-core.js?v=20261124-images" defer></script>
 </head>
 
 <body id="top">
@@ -538,37 +544,37 @@ const categories = [
         name:"برغر كلاسيك",
         price:"₺220",
         desc:"لحم بقري، خس، طماطم، صوص خاص",
-        img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1550547660-d9450f859349.webp"
       },
       {
         name:"تشيز برغر",
         price:"₺250",
         desc:"لحم بقري، شيدر، مخلل، صوص برغر",
-        img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1568901346375-23c9450c58cd.webp"
       },
       {
         name:"دبل تشيز برغر",
         price:"₺320",
         desc:"لحم مزدوج، شيدر مزدوج، بصل مكرمل",
-        img:"https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1607013251379-e6eecfffe234.webp"
       },
       {
         name:"برغر باربكيو",
         price:"₺290",
         desc:"لحم بقري، صوص باربكيو، بصل مقرمش",
-        img:"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1594212699903-ec8a3eca50f5.webp"
       },
       {
         name:"برغر دجاج مقرمش",
         price:"₺260",
         desc:"دجاج مقرمش، مايونيز، خس",
-        img:"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1606755962773-d324e0a13086.webp"
       },
       {
         name:"برغر الفطر",
         price:"₺280",
         desc:"لحم بقري، صوص فطر، شيدر",
-        img:"https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1550317138-10000687a72b.webp"
       }
     ]
   },
@@ -583,37 +589,37 @@ const categories = [
         name:"مارغريتا",
         price:"₺260",
         desc:"موزاريلا، صوص طماطم، ريحان",
-        img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1574071318508-1cdbab80d002.webp"
       },
       {
         name:"بيبروني",
         price:"₺320",
         desc:"بيبروني، موزاريلا، صوص طماطم",
-        img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1628840042765-356cda07504e.webp"
       },
       {
         name:"أربع أجبان",
         price:"₺340",
         desc:"موزاريلا، بارميزان، شيدر، جبنة زرقاء",
-        img:"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1594007654729-407eedc4be65.webp"
       },
       {
         name:"بيتزا دجاج باربكيو",
         price:"₺350",
         desc:"دجاج، صوص باربكيو، موزاريلا",
-        img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1513104890138-7c749659a591.webp"
       },
       {
         name:"بيتزا عشاق اللحم",
         price:"₺390",
         desc:"لحم بقري، سجق، بيبروني، موزاريلا",
-        img:"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1593560708920-61dd98c46a4e.webp"
       },
       {
         name:"بيتزا نباتية",
         price:"₺290",
         desc:"فطر، فلفل، زيتون، ذرة",
-        img:"https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1601924582970-9238bcb495d9.webp"
       }
     ]
   },
@@ -628,37 +634,37 @@ const categories = [
         name:"ستيك ريب آي",
         price:"₺780",
         desc:"ريب آي مشوي، زبدة، أعشاب",
-        img:"https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1558030006-450675393462.webp"
       },
       {
         name:"ستيك تي بون",
         price:"₺890",
         desc:"ستيك تي بون كبير، خضار مشوية",
-        img:"https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1600891964092-4316c288032e.webp"
       },
       {
         name:"ريش غنم",
         price:"₺720",
         desc:"ريش غنم، أرز، فلفل مشوي",
-        img:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1544025162-d76694265947.webp"
       },
       {
         name:"مشاوي مشكلة",
         price:"₺850",
         desc:"كباب، لحم غنم، دجاج، كفتة",
-        img:"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1529692236671-f1f6cf9683ba.webp"
       },
       {
         name:"كباب لحم",
         price:"₺450",
         desc:"كباب لحم مشوي، لافاش، سلطة",
-        img:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1603360946369-dc9bb6258143.webp"
       },
       {
         name:"كفتة",
         price:"₺380",
         desc:"كفتة تركية، بطاطس، سلطة",
-        img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1599487488170-d11ec9c172f0.webp"
       }
     ]
   },
@@ -673,37 +679,37 @@ const categories = [
         name:"دجاج مشوي",
         price:"₺320",
         desc:"صدر دجاج مشوي، أرز، سلطة",
-        img:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1598515214211-89d3c73ae83b.webp"
       },
       {
         name:"دجاج مقرمش",
         price:"₺340",
         desc:"شرائح مقرمشة، بطاطس، صوص",
-        img:"https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1626645738196-c2a7c87a8f58.webp"
       },
       {
         name:"أجنحة دجاج",
         price:"₺310",
         desc:"أجنحة حارة، بطاطس، صوص رانش",
-        img:"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1608039829572-78524f79c4c7.webp"
       },
       {
         name:"شنسل دجاج",
         price:"₺350",
         desc:"شنسل، بطاطس، ليمون",
-        img:"https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1632778149955-e80f8ceca2e8.webp"
       },
       {
         name:"راب دجاج",
         price:"₺280",
         desc:"دجاج، تورتيلا، صوص، خس",
-        img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1626700051175-6818013e1d4f.webp"
       },
       {
         name:"شيش دجاج",
         price:"₺360",
         desc:"أسياخ دجاج، أرز، سلطة",
-        img:"https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1633321702518-7feccafb94d5.webp"
       }
     ]
   },
@@ -718,37 +724,37 @@ const categories = [
         name:"بطاطس مقلية",
         price:"₺120",
         desc:"بطاطس ذهبية مقرمشة",
-        img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1573080496219-bb080dd4f877.webp"
       },
       {
         name:"بطاطس كيرلي",
         price:"₺140",
         desc:"بطاطس كيرلي متبلة",
-        img:"https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1585109649139-366815a0d713.webp"
       },
       {
         name:"بطاطس ودجز",
         price:"₺150",
         desc:"بطاطس ودجز حارة",
-        img:"https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1598679253544-2c97992403ea.webp"
       },
       {
         name:"خبز بالثوم",
         price:"₺130",
         desc:"خبز محمص، زبدة الثوم",
-        img:"https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1573140247632-f8fd74997d5c.webp"
       },
       {
         name:"أرز",
         price:"₺90",
         desc:"أرز بالزبدة",
-        img:"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1516684732162-798a0062be99.webp"
       },
       {
         name:"سلطة كول سلو",
         price:"₺80",
         desc:"ملفوف، جزر، صوص كريمي",
-        img:"https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1505253716362-afaea1d3d1af.webp"
       }
     ]
   },
@@ -763,37 +769,37 @@ const categories = [
         name:"كوكاكولا",
         price:"₺70",
         desc:"مشروب بارد 330 مل",
-        img:"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1622483767028-3f66f32aef97.webp"
       },
       {
         name:"سبرايت",
         price:"₺70",
         desc:"مشروب بارد 330 مل",
-        img:"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1624517452488-04869289c4ca.webp"
       },
       {
         name:"فانتا",
         price:"₺70",
         desc:"مشروب بارد 330 مل",
-        img:"https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1625772299848-391b6a87d7b3.webp"
       },
       {
         name:"آيس تي",
         price:"₺80",
         desc:"آيس تي خوخ أو ليمون",
-        img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1556679343-c7306c1976bc.webp"
       },
       {
         name:"عصير برتقال طازج",
         price:"₺120",
         desc:"عصير برتقال طبيعي",
-        img:"https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1621506289937-a8e4df240d0b.webp"
       },
       {
         name:"مياه معدنية",
         price:"₺40",
         desc:"مياه معدنية باردة",
-        img:"https://images.unsplash.com/photo-1616118132534-381148898bb4?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1616118132534-381148898bb4.webp"
       }
     ]
   },
@@ -808,37 +814,37 @@ const categories = [
         name:"تشيز كيك",
         price:"₺180",
         desc:"قطعة تشيز كيك مع صوص الفواكه",
-        img:"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1533134242443-d4fd215305ad.webp"
       },
       {
         name:"كيك شوكولاتة",
         price:"₺170",
         desc:"كيك شوكولاتة غني",
-        img:"https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1606890737304-57a1ca8a5b62.webp"
       },
       {
         name:"براوني",
         price:"₺160",
         desc:"براوني دافئ، صوص شوكولاتة",
-        img:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1606313564200-e75d5e30476c.webp"
       },
       {
         name:"تيراميسو",
         price:"₺190",
         desc:"حلوى كريمية بالقهوة",
-        img:"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1571877227200-a0d98ea607e9.webp"
       },
       {
         name:"آيس كريم",
         price:"₺130",
         desc:"فانيلا، شوكولاتة أو فراولة",
-        img:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1563805042-7684c019e1cb.webp"
       },
       {
         name:"كنافة",
         price:"₺220",
         desc:"كنافة ساخنة بالفستق",
-        img:"https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=900&q=80"
+        img:"/media/template-photos/photo-1579372786545-d24232daf58c.webp"
       }
     ]
   }
@@ -846,7 +852,7 @@ const categories = [
 
 const menu = document.getElementById("menu");
 
-categories.forEach(cat => {
+if (!isEmbeddedPreview) categories.forEach(cat => {
   const section = document.createElement("section");
   section.className = "section";
   section.id = cat.id;
@@ -862,7 +868,7 @@ categories.forEach(cat => {
         <div class="stage">
           <div class="featured">
             <div class="photo-frame">
-              <img class="featured-img" src="${cat.products[0].img}" alt="${cat.products[0].name}" loading="lazy">
+              <img class="featured-img" src="${cat.products[0].img}" alt="${cat.products[0].name}" loading="lazy" decoding="async">
             </div>
 
             <div class="feature-info">
@@ -918,13 +924,8 @@ document.querySelectorAll(".menu-block").forEach(block => {
       void featured.offsetWidth;
       featured.classList.add("pop");
 
-      img.style.opacity = "0";
-
-      setTimeout(() => {
-        img.src = product.img;
-        img.alt = product.name;
-        img.style.opacity = "1";
-      }, 120);
+      img.src = product.img;
+      img.alt = product.name;
 
       name.textContent = product.name;
       desc.textContent = product.desc;
@@ -948,7 +949,6 @@ document.querySelectorAll(".menu-block").forEach(block => {
 });
 </script>
 
-<script src="preview.js"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
 </body>

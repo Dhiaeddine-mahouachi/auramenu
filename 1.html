@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>تطبيق قائمة المطعم</title>
 
+<script>
+  const isEmbeddedPreview = new URLSearchParams(location.search).get("embedded") === "1";
+  if (isEmbeddedPreview) document.documentElement.classList.add("aura-embedded-template");
+</script>
 <style>
 :root{
   --bg:#0f0d0a;
@@ -303,6 +307,8 @@ img{display:block;width:100%}
 }
 </style>
   <link rel="stylesheet" href="preview.css">
+<script src="preview.js?v=20261124-images" defer></script>
+<script src="preview-core.js?v=20261124-images" defer></script>
 </head>
 
 <body>
@@ -323,7 +329,7 @@ img{display:block;width:100%}
       <h1>طعام طازج وطلب سريع.</h1>
       <p>تصميم حديث ومتحرك لقائمة مطعم، مناسب للهواتف وسهل لطلب الوجبات بسرعة.</p>
       <div class="hero-floating">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80" alt="برجر كلاسيك">
+        <img id="demoHeroPhoto" fetchpriority="high" decoding="async" alt="برجر كلاسيك">
       </div>
     </div>
   </section>
@@ -356,58 +362,58 @@ img{display:block;width:100%}
 
 <script>
 const img = {
-  burger:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
-  pizza:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
-  meat:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
-  chicken:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
-  fries:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
-  drink:"https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80",
-  dessert:"https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=900&q=80"
+  burger:"/media/template-photos/photo-1568901346375-23c9450c58cd.webp",
+  pizza:"/media/template-photos/photo-1565299624946-b28f40a0ae38.webp",
+  meat:"/media/template-photos/photo-1544025162-d76694265947.webp",
+  chicken:"/media/template-photos/photo-1598515214211-89d3c73ae83b.webp",
+  fries:"/media/template-photos/photo-1573080496219-bb080dd4f877.webp",
+  drink:"/media/template-photos/photo-1544145945-f90425340c7e.webp",
+  dessert:"/media/template-photos/photo-1563729784474-d77dbb933a9e.webp"
 };
 
 const specificProductImages = {
-  "برجر كلاسيك":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
-  "تشيز برجر":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
-  "دبل تشيز برجر":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80",
-  "برجر باربكيو":"https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80",
-  "برجر دجاج مقرمش":"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80",
-  "برجر الفطر":"https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?auto=format&fit=crop&w=900&q=80",
-  "بيتزا مارغريتا":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",
-  "بيتزا ببروني":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80",
-  "بيتزا أربع أجبان":"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80",
-  "بيتزا دجاج باربكيو":"https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80",
-  "بيتزا عشاق اللحوم":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",
-  "بيتزا خضار":"https://images.unsplash.com/photo-1604917877934-07d8d248d396?auto=format&fit=crop&w=900&q=80",
-  "ستيك ريب آي":"https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80",
-  "ستيك تي بون":"https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80",
-  "ريش غنم":"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80",
-  "مشاوي مشكلة":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80",
-  "كباب لحم":"https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80",
-  "كفتة تركية":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=80",
-  "دجاج مشوي":"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
-  "دجاج مقرمش":"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80",
-  "أجنحة دجاج":"https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=900&q=80",
-  "شنيتزل دجاج":"https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?auto=format&fit=crop&w=900&q=80",
-  "راب دجاج":"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80",
-  "شيش دجاج":"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=80",
-  "بطاطس مقلية":"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
-  "بطاطس حلزونية":"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=900&q=80",
-  "بطاطس ودجز":"https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=900&q=80",
-  "خبز بالثوم":"https://images.unsplash.com/photo-1619535860434-cf9b16a8e2af?auto=format&fit=crop&w=900&q=80",
-  "أرز":"https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80",
-  "سلطة كولسلو":"https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80",
-  "كوكاكولا":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80",
-  "سبرايت":"https://images.unsplash.com/photo-1581636625402-29b2a704ef13?auto=format&fit=crop&w=900&q=80",
-  "فانتا":"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80",
-  "آيس تي":"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=900&q=80",
-  "عصير برتقال طازج":"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=80",
-  "مياه معدنية":"https://images.unsplash.com/photo-1559839914-17aae19cec71?auto=format&fit=crop&w=900&q=80",
-  "تشيز كيك":"https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=80",
-  "كيك الشوكولاتة":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",
-  "براوني":"https://images.unsplash.com/photo-1606312619070-d48b4c652a52?auto=format&fit=crop&w=900&q=80",
-  "تيراميسو":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80",
-  "آيس كريم":"https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?auto=format&fit=crop&w=900&q=80",
-  "كنافة":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80"
+  "برجر كلاسيك":"/media/template-photos/photo-1568901346375-23c9450c58cd.webp",
+  "تشيز برجر":"/media/template-photos/photo-1550547660-d9450f859349.webp",
+  "دبل تشيز برجر":"/media/template-photos/photo-1594212699903-ec8a3eca50f5.webp",
+  "برجر باربكيو":"/media/template-photos/photo-1553979459-d2229ba7433b.webp",
+  "برجر دجاج مقرمش":"/media/template-photos/photo-1606755962773-d324e0a13086.webp",
+  "برجر الفطر":"/media/template-photos/photo-1596662951482-0c4ba74a6df6.webp",
+  "بيتزا مارغريتا":"/media/template-photos/photo-1574071318508-1cdbab80d002.webp",
+  "بيتزا ببروني":"/media/template-photos/photo-1628840042765-356cda07504e.webp",
+  "بيتزا أربع أجبان":"/media/template-photos/photo-1594007654729-407eedc4be65.webp",
+  "بيتزا دجاج باربكيو":"/media/template-photos/photo-1593560708920-61dd98c46a4e.webp",
+  "بيتزا عشاق اللحوم":"/media/template-photos/photo-1513104890138-7c749659a591.webp",
+  "بيتزا خضار":"/media/template-photos/photo-1604917877934-07d8d248d396.webp",
+  "ستيك ريب آي":"/media/template-photos/photo-1600891964092-4316c288032e.webp",
+  "ستيك تي بون":"/media/template-photos/photo-1558030006-450675393462.webp",
+  "ريش غنم":"/media/template-photos/photo-1529692236671-f1f6cf9683ba.webp",
+  "مشاوي مشكلة":"/media/template-photos/photo-1555939594-58d7cb561ad1.webp",
+  "كباب لحم":"/media/template-photos/photo-1633321702518-7feccafb94d5.webp",
+  "كفتة تركية":"/media/template-photos/photo-1529042410759-befb1204b468.webp",
+  "دجاج مشوي":"/media/template-photos/photo-1598515214211-89d3c73ae83b.webp",
+  "دجاج مقرمش":"/media/template-photos/photo-1562967914-608f82629710.webp",
+  "أجنحة دجاج":"/media/template-photos/photo-1608039829572-78524f79c4c7.webp",
+  "شنيتزل دجاج":"/media/template-photos/photo-1610057099431-d73a1c9d2f2f.webp",
+  "راب دجاج":"/media/template-photos/photo-1626700051175-6818013e1d4f.webp",
+  "شيش دجاج":"/media/template-photos/photo-1532550907401-a500c9a57435.webp",
+  "بطاطس مقلية":"/media/template-photos/photo-1573080496219-bb080dd4f877.webp",
+  "بطاطس حلزونية":"/media/template-photos/photo-1639024471283-03518883512d.webp",
+  "بطاطس ودجز":"/media/template-photos/photo-1598679253544-2c97992403ea.webp",
+  "خبز بالثوم":"/media/template-photos/photo-1573140247632-f8fd74997d5c.webp",
+  "أرز":"/media/template-photos/photo-1516684732162-798a0062be99.webp",
+  "سلطة كولسلو":"/media/template-photos/photo-1505253716362-afaea1d3d1af.webp",
+  "كوكاكولا":"/media/template-photos/photo-1622483767028-3f66f32aef97.webp",
+  "سبرايت":"/media/template-photos/photo-1581636625402-29b2a704ef13.webp",
+  "فانتا":"/media/template-photos/photo-1624517452488-04869289c4ca.webp",
+  "آيس تي":"/media/template-photos/photo-1499638673689-79a0b5115d87.webp",
+  "عصير برتقال طازج":"/media/template-photos/photo-1600271886742-f049cd451bba.webp",
+  "مياه معدنية":"/media/template-photos/photo-1559839914-17aae19cec71.webp",
+  "تشيز كيك":"/media/template-photos/photo-1565958011703-44f9829ba187.webp",
+  "كيك الشوكولاتة":"/media/template-photos/photo-1606313564200-e75d5e30476c.webp",
+  "براوني":"/media/template-photos/photo-1606312619070-d48b4c652a52.webp",
+  "تيراميسو":"/media/template-photos/photo-1571877227200-a0d98ea607e9.webp",
+  "آيس كريم":"/media/template-photos/photo-1567206563064-6f60f40a2b57.webp",
+  "كنافة":"/media/template-photos/photo-1578985545062-69928b1d9587.webp"
 };
 
 function productImage(product){
@@ -503,7 +509,7 @@ function renderProducts(list){
     card.className = "food-card reveal";
     card.style.animationDelay = `${i*65}ms`;
     card.innerHTML = `
-      <div class="food-img"><img src="${productImage(p)}" alt="${p[0]}"></div>
+      <div class="food-img"><img src="${productImage(p)}" alt="${p[0]}" loading="lazy" decoding="async"></div>
       <div class="food-info">
         <h3>${p[0]}</h3>
         <p>${p[2]}</p>
@@ -546,7 +552,7 @@ searchEl.addEventListener("input",()=>{
     card.className = "food-card reveal";
     card.style.animationDelay = `${i*65}ms`;
     card.innerHTML = `
-      <div class="food-img"><img src="${productImage(p)}" alt="${p[0]}"></div>
+      <div class="food-img"><img src="${productImage(p)}" alt="${p[0]}" loading="lazy" decoding="async"></div>
       <div class="food-info">
         <h3>${p[0]}</h3>
         <p>${p[2]}</p>
@@ -561,10 +567,12 @@ searchEl.addEventListener("input",()=>{
   });
 });
 
-renderProducts(data[activeCategory]);
+if (!isEmbeddedPreview) {
+  document.getElementById("demoHeroPhoto").src = "/media/template-photos/photo-1568901346375-23c9450c58cd.webp";
+  renderProducts(data[activeCategory]);
+}
 </script>
 
-<script src="preview.js"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
 </body>

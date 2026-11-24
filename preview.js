@@ -11,13 +11,9 @@
     document.head.appendChild(icon);
   }
 
-  // Load the original shared menu renderer first.
-  const core = document.createElement("script");
-  core.src = "preview-core.js";
-  core.defer = false;
-  document.head.append(core);
-
   // Nova/modern menus are rendered dynamically, so use delegated events.
+  if (!document.getElementById("sheet")) return;
+
   function closeNovaSheet() {
     const sheet = document.getElementById("sheet");
     if (!sheet || !sheet.classList.contains("show")) return;
@@ -53,15 +49,22 @@
   });
 
   // Keep body scroll usable after the renderer opens/closes a Nova product.
-  const observer = new MutationObserver(() => {
-    const sheet = document.getElementById("sheet");
-    if (!sheet) return;
+  const sheetObserver = new MutationObserver(([{target: sheet}]) => {
     const open = sheet.classList.contains("show");
-    sheet.setAttribute("aria-hidden", open ? "false" : "true");
-    if (!open) {
-      document.body.style.overflow = "";
-      document.body.classList.remove("sheet-open");
-    }
+    sheet.setAttribute("aria-hidden", String(!open));
+    if (open) return;
+    document.body.style.overflow = "";
+    document.body.classList.remove("sheet-open");
   });
-  observer.observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+
+  function observeSheet() {
+    sheetObserver.disconnect();
+    const sheet = document.getElementById("sheet");
+    if (sheet) sheetObserver.observe(sheet, { attributeFilter: ["class"] });
+  }
+
+  observeSheet();
+  if (document.documentElement.classList.contains("aura-embedded-template")) {
+    new MutationObserver(observeSheet).observe(document.body, { childList: true });
+  }
 })();

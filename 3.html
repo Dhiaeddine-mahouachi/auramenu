@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>قائمة مطعم فاخرة</title>
 
+<link rel="stylesheet" href="/fonts/arabic.css">
+<script>
+  const isEmbeddedPreview = new URLSearchParams(location.search).get("embedded") === "1";
+  if (isEmbeddedPreview) document.documentElement.classList.add("aura-embedded-template");
+</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900;1000&family=Tajawal:wght@400;700;800;900&display=swap');
 :root{
   --paper:#fbf4e8;
   --ink:#20150f;
@@ -38,8 +42,7 @@ img{width:100%;display:block}
   min-height:94vh;
   border-radius:38px;
   background:
-    linear-gradient(rgba(32,21,15,.42),rgba(32,21,15,.62)),
-    url("https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=80");
+    linear-gradient(rgba(32,21,15,.42),rgba(32,21,15,.62));
   background-size:cover;
   background-position:center;
   color:white;
@@ -49,6 +52,14 @@ img{width:100%;display:block}
   justify-content:space-between;
   overflow:hidden;
   position:relative;
+}
+html:not(.aura-embedded-template) .header{
+  background-image:linear-gradient(rgba(32,21,15,.42),rgba(32,21,15,.62)),url("/media/template-photos/maison-1400.webp");
+}
+@media(max-width:640px){
+  html:not(.aura-embedded-template) .header{
+    background-image:linear-gradient(rgba(32,21,15,.42),rgba(32,21,15,.62)),url("/media/template-photos/maison-768.webp");
+  }
 }
 .header:after{
   content:"";
@@ -372,6 +383,8 @@ h1{
 }
 </style>
   <link rel="stylesheet" href="preview.css">
+<script src="preview.js?v=20261124-images" defer></script>
+<script src="preview-core.js?v=20261124-images" defer></script>
 </head>
 <body>
 
@@ -400,7 +413,7 @@ h1{
     <main class="content">
       <section class="feature fade-in" id="feature">
         <div class="feature-media">
-          <img id="featureImg" src="" alt="">
+          <img id="featureImg" alt="" decoding="async" loading="lazy">
         </div>
         <div class="feature-text">
           <div class="feature-label" id="featureCat"></div>
@@ -436,59 +449,55 @@ const fallbackSvg = encodeURIComponent(`
 </svg>`);
 const fallbackImage = `data:image/svg+xml;charset=UTF-8,${fallbackSvg}`;
 
-function img(url){
-  return url + "?auto=format&fit=crop&w=1000&q=85";
-}
-
 const images = {
-  classicBurger: img("https://images.unsplash.com/photo-1568901346375-23c9450c58cd"),
-  cheeseburger: img("https://images.unsplash.com/photo-1550547660-d9450f859349"),
-  doubleCheese: img("https://images.unsplash.com/photo-1572802419224-296b0aeee0d9"),
-  bbqBurger: img("https://images.unsplash.com/photo-1550317138-10000687a72b"),
-  chickenBurger: img("https://images.unsplash.com/photo-1606755962773-d324e0a13086"),
-  mushroomBurger: img("https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5"),
+  classicBurger: "/media/template-photos/photo-1568901346375-23c9450c58cd.webp",
+  cheeseburger: "/media/template-photos/photo-1550547660-d9450f859349.webp",
+  doubleCheese: "/media/template-photos/photo-1572802419224-296b0aeee0d9.webp",
+  bbqBurger: "/media/template-photos/photo-1550317138-10000687a72b.webp",
+  chickenBurger: "/media/template-photos/photo-1606755962773-d324e0a13086.webp",
+  mushroomBurger: "/media/template-photos/photo-1594212699903-ec8a3eca50f5.webp",
 
-  margherita: img("https://images.unsplash.com/photo-1604382354936-07c5d9983bd3"),
-  pepperoni: img("https://images.unsplash.com/photo-1628840042765-356cda07504e"),
-  fourCheese: img("https://images.unsplash.com/photo-1513104890138-7c749659a591"),
-  bbqChickenPizza: img("https://images.unsplash.com/photo-1594007654729-407eedc4be65"),
-  meatPizza: img("https://images.unsplash.com/photo-1565299624946-b28f40a0ae38"),
-  veggiePizza: img("https://images.unsplash.com/photo-1574071318508-1cdbab80d002"),
+  margherita: "/media/template-photos/photo-1604382354936-07c5d9983bd3.webp",
+  pepperoni: "/media/template-photos/photo-1628840042765-356cda07504e.webp",
+  fourCheese: "/media/template-photos/photo-1513104890138-7c749659a591.webp",
+  bbqChickenPizza: "/media/template-photos/photo-1594007654729-407eedc4be65.webp",
+  meatPizza: "/media/template-photos/photo-1565299624946-b28f40a0ae38.webp",
+  veggiePizza: "/media/template-photos/photo-1574071318508-1cdbab80d002.webp",
 
-  ribeye: img("https://images.unsplash.com/photo-1544025162-d76694265947"),
-  tbone: img("https://images.unsplash.com/photo-1558030006-450675393462"),
-  lambChops: img("https://images.unsplash.com/photo-1600891964092-4316c288032e"),
-  mixedGrill: img("https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba"),
-  kebab: img("https://images.unsplash.com/photo-1529563021893-cc83c992d75d"),
-  kofta: img("https://images.unsplash.com/photo-1603360946369-dc9bb6258143"),
+  ribeye: "/media/template-photos/photo-1544025162-d76694265947.webp",
+  tbone: "/media/template-photos/photo-1558030006-450675393462.webp",
+  lambChops: "/media/template-photos/photo-1600891964092-4316c288032e.webp",
+  mixedGrill: "/media/template-photos/photo-1529692236671-f1f6cf9683ba.webp",
+  kebab: "/media/template-photos/photo-1529563021893-cc83c992d75d.webp",
+  kofta: "/media/template-photos/photo-1603360946369-dc9bb6258143.webp",
 
-  grilledChicken: img("https://images.unsplash.com/photo-1532550907401-a500c9a57435"),
-  crispyChicken: img("https://images.unsplash.com/photo-1562967914-608f82629710"),
-  wings: img("https://images.unsplash.com/photo-1608039829572-78524f79c4c7"),
-  schnitzel: img("https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8"),
-  chickenWrap: img("https://images.unsplash.com/photo-1529006557810-274b9b2fc783"),
-  chickenSkewers: img("https://images.unsplash.com/photo-1529193591184-b1d58069ecdd"),
+  grilledChicken: "/media/template-photos/photo-1532550907401-a500c9a57435.webp",
+  crispyChicken: "/media/template-photos/photo-1562967914-608f82629710.webp",
+  wings: "/media/template-photos/photo-1608039829572-78524f79c4c7.webp",
+  schnitzel: "/media/template-photos/photo-1632778149955-e80f8ceca2e8.webp",
+  chickenWrap: "/media/template-photos/photo-1529006557810-274b9b2fc783.webp",
+  chickenSkewers: "/media/template-photos/photo-1529193591184-b1d58069ecdd.webp",
 
-  fries: img("https://images.unsplash.com/photo-1576107232684-1279f390859f"),
-  curlyFries: img("https://images.unsplash.com/photo-1630384060421-cb20d0e0649d"),
-  wedges: img("https://images.unsplash.com/photo-1623238913973-21e45cced554"),
-  garlicBread: img("https://images.unsplash.com/photo-1619531040576-f9416740661f"),
-  rice: img("https://images.unsplash.com/photo-1512058564366-18510be2db19"),
-  coleslaw: img("https://images.unsplash.com/photo-1547496502-affa22d38842"),
+  fries: "/media/template-photos/photo-1576107232684-1279f390859f.webp",
+  curlyFries: "/media/template-photos/photo-1630384060421-cb20d0e0649d.webp",
+  wedges: "/media/template-photos/photo-1623238913973-21e45cced554.webp",
+  garlicBread: "/media/template-photos/photo-1573140247632-f8fd74997d5c.webp",
+  rice: "/media/template-photos/photo-1512058564366-18510be2db19.webp",
+  coleslaw: "/media/template-photos/photo-1547496502-affa22d38842.webp",
 
-  cola: img("https://images.unsplash.com/photo-1629203851122-3726ecdf080e"),
-  sprite: img("https://images.unsplash.com/photo-1581636625402-29b2a704ef13"),
-  fanta: img("https://images.unsplash.com/photo-1613478223719-2ab802602423"),
-  icedTea: img("https://images.unsplash.com/photo-1556679343-c7306c1976bc"),
-  orangeJuice: img("https://images.unsplash.com/photo-1600271886742-f049cd451bba"),
-  water: img("https://images.unsplash.com/photo-1559839734-2b71ea197ec2"),
+  cola: "/media/template-photos/photo-1629203851122-3726ecdf080e.webp",
+  sprite: "/media/template-photos/photo-1581636625402-29b2a704ef13.webp",
+  fanta: "/media/template-photos/photo-1613478223719-2ab802602423.webp",
+  icedTea: "/media/template-photos/photo-1556679343-c7306c1976bc.webp",
+  orangeJuice: "/media/template-photos/photo-1600271886742-f049cd451bba.webp",
+  water: "/media/template-photos/photo-1559839734-2b71ea197ec2.webp",
 
-  cheesecake: img("https://images.unsplash.com/photo-1533134242443-d4fd215305ad"),
-  chocolateCake: img("https://images.unsplash.com/photo-1578985545062-69928b1d9587"),
-  brownie: img("https://images.unsplash.com/photo-1606313564200-e75d5e30476c"),
-  tiramisu: img("https://images.unsplash.com/photo-1571877227200-a0d98ea607e9"),
-  icecream: img("https://images.unsplash.com/photo-1563805042-7684c019e1cb"),
-  kunafa: img("https://images.unsplash.com/photo-1571115177098-24ec42ed204d")
+  cheesecake: "/media/template-photos/photo-1533134242443-d4fd215305ad.webp",
+  chocolateCake: "/media/template-photos/photo-1578985545062-69928b1d9587.webp",
+  brownie: "/media/template-photos/photo-1606313564200-e75d5e30476c.webp",
+  tiramisu: "/media/template-photos/photo-1571877227200-a0d98ea607e9.webp",
+  icecream: "/media/template-photos/photo-1563805042-7684c019e1cb.webp",
+  kunafa: "/media/template-photos/photo-1571115177098-24ec42ed204d.webp"
 };
 
 const menu = {
@@ -606,7 +615,7 @@ function renderProducts(){
     card.className = "card fade-in" + (i === activeIndex ? " active" : "");
     card.style.animationDelay = `${i*55}ms`;
     card.innerHTML = `
-      <div class="card-img"><img src="${item[3]}" alt="${item[0]}" loading="lazy" onerror="this.onerror=null;this.src=fallbackImage;"></div>
+      <div class="card-img"><img src="${item[3]}" alt="${item[0]}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=fallbackImage;"></div>
       <div class="card-body">
         <h3>${item[0]}</h3>
         <p>${item[2]}</p>
@@ -638,12 +647,13 @@ function showToast(text){
   setTimeout(()=>toast.classList.remove("show"),1200);
 }
 
-makeCatButtons(desktopCats);
-makeCatButtons(mobileTabs);
-renderAll();
+if (!isEmbeddedPreview) {
+  makeCatButtons(desktopCats);
+  makeCatButtons(mobileTabs);
+  renderAll();
+}
 </script>
 
-<script src="preview.js"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
 </body>

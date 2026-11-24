@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Premium 3D Restaurant Menu</title>
 
+<script>
+  const isEmbeddedPreview = new URLSearchParams(location.search).get("embedded") === "1";
+  if (isEmbeddedPreview) document.documentElement.classList.add("aura-embedded-template");
+</script>
 <style>
 :root{
   --bg:#fff8ef;
@@ -292,6 +296,8 @@ h1{
 }
 </style>
   <link rel="stylesheet" href="preview.css">
+<script src="preview.js?v=20261124-images" defer></script>
+<script src="preview-core.js?v=20261124-images" defer></script>
 </head>
 
 <body id="top">
@@ -346,54 +352,54 @@ const fallbackSvg = (name) => {
 };
 
 const productImages = {
-  "Classic Burger":"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85",
-  "Cheese Burger":"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=85",
-  "Double Cheese Burger":"https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=900&q=85",
-  "BBQ Burger":"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=85",
-  "Crispy Chicken Burger":"https://images.unsplash.com/photo-1606755962773-d324e7a7a7e9?auto=format&fit=crop&w=900&q=85",
-  "Mushroom Burger":"https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&w=900&q=85",
+  "Classic Burger":"/media/template-photos/photo-1568901346375-23c9450c58cd.webp",
+  "Cheese Burger":"/media/template-photos/photo-1550547660-d9450f859349.webp",
+  "Double Cheese Burger":"/media/template-photos/photo-1572802419224-296b0aeee0d9.webp",
+  "BBQ Burger":"/media/template-photos/photo-1594212699903-ec8a3eca50f5.webp",
+  "Crispy Chicken Burger":"/media/template-photos/photo-1606755962773-d324e0a13086.webp",
+  "Mushroom Burger":"/media/template-photos/photo-1585238342024-78d387f4a707.webp",
 
-  "Margherita":"https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=85",
-  "Pepperoni":"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=85",
-  "Four Cheese":"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=85",
-  "BBQ Chicken":"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85",
-  "Meat Lovers":"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=85",
-  "Vegetarian":"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85",
+  "Margherita":"/media/template-photos/photo-1604382354936-07c5d9983bd3.webp",
+  "Pepperoni":"/media/template-photos/photo-1628840042765-356cda07504e.webp",
+  "Four Cheese":"/media/template-photos/photo-1513104890138-7c749659a591.webp",
+  "BBQ Chicken":"/media/template-photos/photo-1565299624946-b28f40a0ae38.webp",
+  "Meat Lovers":"/media/template-photos/photo-1594007654729-407eedc4be65.webp",
+  "Vegetarian":"/media/template-photos/photo-1574071318508-1cdbab80d002.webp",
 
-  "Ribeye Steak":"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=85",
-  "T-Bone Steak":"https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=85",
-  "Lamb Chops":"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=85",
-  "Mixed Grill":"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=85",
-  "Beef Kebab":"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=85",
-  "Meatballs":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=85",
+  "Ribeye Steak":"/media/template-photos/photo-1544025162-d76694265947.webp",
+  "T-Bone Steak":"/media/template-photos/photo-1558030006-450675393462.webp",
+  "Lamb Chops":"/media/template-photos/photo-1603360946369-dc9bb6258143.webp",
+  "Mixed Grill":"/media/template-photos/photo-1529692236671-f1f6cf9683ba.webp",
+  "Beef Kebab":"/media/template-photos/photo-1555939594-58d7cb561ad1.webp",
+  "Meatballs":"/media/template-photos/photo-1529042410759-befb1204b468.webp",
 
-  "Grilled Chicken":"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=85",
-  "Crispy Chicken":"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=85",
-  "Chicken Wings":"https://images.unsplash.com/photo-1608039755401-742074f0548d?auto=format&fit=crop&w=900&q=85",
-  "Chicken Schnitzel":"https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?auto=format&fit=crop&w=900&q=85",
-  "Chicken Wrap":"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=85",
-  "Chicken Kebab":"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=85",
+  "Grilled Chicken":"/media/template-photos/photo-1532550907401-a500c9a57435.webp",
+  "Crispy Chicken":"/media/template-photos/photo-1562967914-608f82629710.webp",
+  "Chicken Wings":"/media/template-photos/photo-1608039755401-742074f0548d.webp",
+  "Chicken Schnitzel":"/media/template-photos/photo-1569058242253-92a9c755a0ec.webp",
+  "Chicken Wrap":"/media/template-photos/photo-1626700051175-6818013e1d4f.webp",
+  "Chicken Kebab":"/media/template-photos/photo-1599487488170-d11ec9c172f0.webp",
 
-  "French Fries":"https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=900&q=85",
-  "Curly Fries":"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=900&q=85",
-  "Potato Wedges":"https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=900&q=85",
-  "Garlic Bread":"https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=85",
-  "Rice":"https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=85",
-  "Coleslaw":"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=85",
+  "French Fries":"/media/template-photos/photo-1576107232684-1279f390859f.webp",
+  "Curly Fries":"/media/template-photos/photo-1639024471283-03518883512d.webp",
+  "Potato Wedges":"/media/template-photos/photo-1630384060421-cb20d0e0649d.webp",
+  "Garlic Bread":"/media/template-photos/photo-1573140247632-f8fd74997d5c.webp",
+  "Rice":"/media/template-photos/photo-1536304993881-ff6e9eefa2a6.webp",
+  "Coleslaw":"/media/template-photos/photo-1529042410759-befb1204b468.webp",
 
-  "Coca-Cola":"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=85",
-  "Sprite":"https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=900&q=85",
-  "Fanta":"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=85",
-  "Ice Tea":"https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=900&q=85",
-  "Fresh Orange Juice":"https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=900&q=85",
-  "Mineral Water":"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=900&q=85",
+  "Coca-Cola":"/media/template-photos/photo-1622483767028-3f66f32aef97.webp",
+  "Sprite":"/media/template-photos/photo-1625772299848-391b6a87d7b3.webp",
+  "Fanta":"/media/template-photos/photo-1624517452488-04869289c4ca.webp",
+  "Ice Tea":"/media/template-photos/photo-1499638673689-79a0b5115d87.webp",
+  "Fresh Orange Juice":"/media/template-photos/photo-1613478223719-2ab802602423.webp",
+  "Mineral Water":"/media/template-photos/photo-1548839140-29a749e1cf4d.webp",
 
-  "Cheesecake":"https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=85",
-  "Chocolate Cake":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85",
-  "Brownie":"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=85",
-  "Tiramisu":"https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=85",
-  "Ice Cream":"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=85",
-  "Kunafa":"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85"
+  "Cheesecake":"/media/template-photos/photo-1533134242443-d4fd215305ad.webp",
+  "Chocolate Cake":"/media/template-photos/photo-1578985545062-69928b1d9587.webp",
+  "Brownie":"/media/template-photos/photo-1606313564200-e75d5e30476c.webp",
+  "Tiramisu":"/media/template-photos/photo-1571877227200-a0d98ea607e9.webp",
+  "Ice Cream":"/media/template-photos/photo-1563805042-7684c019e1cb.webp",
+  "Kunafa":"/media/template-photos/photo-1578985545062-69928b1d9587.webp"
 };
 
 function getProductImage(productName){
@@ -454,7 +460,7 @@ const categories = [
 
 const menu = document.getElementById("menu");
 
-categories.forEach(cat => {
+if (!isEmbeddedPreview) categories.forEach(cat => {
   const firstProduct = cat.products[0];
   const section = document.createElement("section");
   section.className = "section";
@@ -469,7 +475,7 @@ categories.forEach(cat => {
         <div class="stage">
           <div class="featured">
             <div class="photo-frame">
-              <img class="featured-img" src="${getProductImage(firstProduct[0])}" alt="${firstProduct[0]}" loading="lazy" onerror="this.onerror=null;this.src=fallbackSvg(this.alt);">
+              <img class="featured-img" src="${getProductImage(firstProduct[0])}" alt="${firstProduct[0]}" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=fallbackSvg(this.alt);">
             </div>
             <div class="feature-info">
               <h3 class="featured-name">${firstProduct[0]}</h3>
@@ -516,16 +522,12 @@ document.querySelectorAll(".menu-block").forEach(block => {
       featured.classList.remove("pop");
       void featured.offsetWidth;
       featured.classList.add("pop");
-      img.style.opacity = "0";
-      setTimeout(() => {
-        img.src = getProductImage(product[0]);
-        img.alt = product[0];
-        img.onerror = function(){
-          this.onerror = null;
-          this.src = fallbackSvg(product[0]);
-        };
-        img.style.opacity = "1";
-      }, 120);
+      img.src = getProductImage(product[0]);
+      img.alt = product[0];
+      img.onerror = function(){
+        this.onerror = null;
+        this.src = fallbackSvg(product[0]);
+      };
       name.textContent = product[0];
       desc.textContent = product[2];
       price.textContent = product[1];
@@ -545,7 +547,6 @@ document.querySelectorAll(".menu-block").forEach(block => {
   });
 });
 </script>
-<script src="preview.js"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
 </body>

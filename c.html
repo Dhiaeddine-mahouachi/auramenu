@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Restaurant Menu App</title>
 
+<script>
+  const isEmbeddedPreview = new URLSearchParams(location.search).get("embedded") === "1";
+  if (isEmbeddedPreview) document.documentElement.classList.add("aura-embedded-template");
+</script>
 <style>
 :root{
   --bg:#0f0d0a;
@@ -316,6 +320,8 @@ img{display:block;width:100%}
 }
 </style>
 <link rel="stylesheet" href="preview.css">
+<script src="preview.js?v=20261124-images" defer></script>
+<script src="preview-core.js?v=20261124-images" defer></script>
 </head>
 <body>
 
@@ -335,7 +341,7 @@ img{display:block;width:100%}
       <h1>Fresh food, fast order.</h1>
       <p>A completely new animated restaurant menu design made for mobile-first ordering.</p>
       <div class="hero-floating">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80" alt="Food">
+        <img id="demoHeroPhoto" fetchpriority="high" decoding="async" alt="Food">
       </div>
     </div>
   </section>
@@ -370,60 +376,60 @@ img{display:block;width:100%}
 <script>
 const data = {
   Burgers:[
-    ["Classic Burger","₺220","Beef patty, lettuce, tomato, special sauce","https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80"],
-    ["Cheese Burger","₺250","Beef patty, cheddar cheese, pickles, burger sauce","https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"],
-    ["Double Cheese","₺320","Double beef, double cheddar, onion, special sauce","https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=900&q=80"],
-    ["BBQ Burger","₺290","Beef patty, BBQ sauce, crispy onion","https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80"],
-    ["Crispy Chicken Burger","₺260","Crispy chicken, mayo, lettuce","https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80"],
-    ["Mushroom Burger","₺280","Beef patty, mushroom sauce, cheddar","https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=900&q=80"]
+    ["Classic Burger","₺220","Beef patty, lettuce, tomato, special sauce","/media/template-photos/photo-1550547660-d9450f859349.webp"],
+    ["Cheese Burger","₺250","Beef patty, cheddar cheese, pickles, burger sauce","/media/template-photos/photo-1568901346375-23c9450c58cd.webp"],
+    ["Double Cheese","₺320","Double beef, double cheddar, onion, special sauce","/media/template-photos/photo-1607013251379-e6eecfffe234.webp"],
+    ["BBQ Burger","₺290","Beef patty, BBQ sauce, crispy onion","/media/template-photos/photo-1594212699903-ec8a3eca50f5.webp"],
+    ["Crispy Chicken Burger","₺260","Crispy chicken, mayo, lettuce","/media/template-photos/photo-1606755962773-d324e0a13086.webp"],
+    ["Mushroom Burger","₺280","Beef patty, mushroom sauce, cheddar","/media/template-photos/photo-1550317138-10000687a72b.webp"]
   ],
   Pizza:[
-    ["Margherita","₺260","Mozzarella, tomato sauce, basil","https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80"],
-    ["Pepperoni","₺320","Pepperoni, mozzarella, tomato sauce","https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80"],
-    ["Four Cheese","₺340","Mozzarella, parmesan, cheddar, blue cheese","https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80"],
-    ["BBQ Chicken","₺350","Chicken, BBQ sauce, mozzarella","https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"],
-    ["Meat Lovers","₺390","Beef, sausage, pepperoni, mozzarella","https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&w=900&q=80"],
-    ["Vegetarian","₺290","Mushroom, pepper, olive, corn","https://images.unsplash.com/photo-1601924582970-9238bcb495d9?auto=format&fit=crop&w=900&q=80"]
+    ["Margherita","₺260","Mozzarella, tomato sauce, basil","/media/template-photos/photo-1574071318508-1cdbab80d002.webp"],
+    ["Pepperoni","₺320","Pepperoni, mozzarella, tomato sauce","/media/template-photos/photo-1628840042765-356cda07504e.webp"],
+    ["Four Cheese","₺340","Mozzarella, parmesan, cheddar, blue cheese","/media/template-photos/photo-1594007654729-407eedc4be65.webp"],
+    ["BBQ Chicken","₺350","Chicken, BBQ sauce, mozzarella","/media/template-photos/photo-1513104890138-7c749659a591.webp"],
+    ["Meat Lovers","₺390","Beef, sausage, pepperoni, mozzarella","/media/template-photos/photo-1593560708920-61dd98c46a4e.webp"],
+    ["Vegetarian","₺290","Mushroom, pepper, olive, corn","/media/template-photos/photo-1601924582970-9238bcb495d9.webp"]
   ],
   Meat:[
-    ["Ribeye Steak","₺780","Grilled ribeye, butter, herbs","https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80"],
-    ["T-Bone Steak","₺890","Large T-bone steak, grilled vegetables","https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80"],
-    ["Lamb Chops","₺720","Lamb chops, rice, grilled pepper","https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"],
-    ["Mixed Grill","₺850","Kebab, lamb, chicken, meatballs","https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80"],
-    ["Beef Kebab","₺450","Grilled beef kebab, lavash, salad","https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=80"],
-    ["Meatballs","₺380","Turkish köfte, fries, salad","https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=80"]
+    ["Ribeye Steak","₺780","Grilled ribeye, butter, herbs","/media/template-photos/photo-1558030006-450675393462.webp"],
+    ["T-Bone Steak","₺890","Large T-bone steak, grilled vegetables","/media/template-photos/photo-1600891964092-4316c288032e.webp"],
+    ["Lamb Chops","₺720","Lamb chops, rice, grilled pepper","/media/template-photos/photo-1544025162-d76694265947.webp"],
+    ["Mixed Grill","₺850","Kebab, lamb, chicken, meatballs","/media/template-photos/photo-1529692236671-f1f6cf9683ba.webp"],
+    ["Beef Kebab","₺450","Grilled beef kebab, lavash, salad","/media/template-photos/photo-1603360946369-dc9bb6258143.webp"],
+    ["Meatballs","₺380","Turkish köfte, fries, salad","/media/template-photos/photo-1599487488170-d11ec9c172f0.webp"]
   ],
   Chicken:[
-    ["Grilled Chicken","₺320","Grilled chicken breast, rice, salad","https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80"],
-    ["Crispy Chicken","₺340","Crispy strips, fries, sauce","https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?auto=format&fit=crop&w=900&q=80"],
-    ["Chicken Wings","₺310","Spicy wings, fries, ranch sauce","https://images.unsplash.com/photo-1608039829572-78524f79c4c7?auto=format&fit=crop&w=900&q=80"],
-    ["Chicken Schnitzel","₺350","Schnitzel, fries, lemon","https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?auto=format&fit=crop&w=900&q=80"],
-    ["Chicken Wrap","₺280","Chicken, tortilla, sauce, lettuce","https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80"],
-    ["Chicken Kebab","₺360","Chicken skewers, rice, salad","https://images.unsplash.com/photo-1633321702518-7feccafb94d5?auto=format&fit=crop&w=900&q=80"]
+    ["Grilled Chicken","₺320","Grilled chicken breast, rice, salad","/media/template-photos/photo-1598515214211-89d3c73ae83b.webp"],
+    ["Crispy Chicken","₺340","Crispy strips, fries, sauce","/media/template-photos/photo-1626645738196-c2a7c87a8f58.webp"],
+    ["Chicken Wings","₺310","Spicy wings, fries, ranch sauce","/media/template-photos/photo-1608039829572-78524f79c4c7.webp"],
+    ["Chicken Schnitzel","₺350","Schnitzel, fries, lemon","/media/template-photos/photo-1632778149955-e80f8ceca2e8.webp"],
+    ["Chicken Wrap","₺280","Chicken, tortilla, sauce, lettuce","/media/template-photos/photo-1626700051175-6818013e1d4f.webp"],
+    ["Chicken Kebab","₺360","Chicken skewers, rice, salad","/media/template-photos/photo-1633321702518-7feccafb94d5.webp"]
   ],
   Sides:[
-    ["French Fries","₺120","Golden crispy fries","https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80"],
-    ["Curly Fries","₺140","Seasoned curly fries","https://images.unsplash.com/photo-1585109649139-366815a0d713?auto=format&fit=crop&w=900&q=80"],
-    ["Potato Wedges","₺150","Spicy potato wedges","https://images.unsplash.com/photo-1598679253544-2c97992403ea?auto=format&fit=crop&w=900&q=80"],
-    ["Garlic Bread","₺130","Toasted bread, garlic butter","https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?auto=format&fit=crop&w=900&q=80"],
-    ["Rice","₺90","Butter rice","https://images.unsplash.com/photo-1516684732162-798a0062be99?auto=format&fit=crop&w=900&q=80"],
-    ["Coleslaw","₺80","Cabbage, carrot, creamy sauce","https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=900&q=80"]
+    ["French Fries","₺120","Golden crispy fries","/media/template-photos/photo-1573080496219-bb080dd4f877.webp"],
+    ["Curly Fries","₺140","Seasoned curly fries","/media/template-photos/photo-1585109649139-366815a0d713.webp"],
+    ["Potato Wedges","₺150","Spicy potato wedges","/media/template-photos/photo-1598679253544-2c97992403ea.webp"],
+    ["Garlic Bread","₺130","Toasted bread, garlic butter","/media/template-photos/photo-1573140247632-f8fd74997d5c.webp"],
+    ["Rice","₺90","Butter rice","/media/template-photos/photo-1516684732162-798a0062be99.webp"],
+    ["Coleslaw","₺80","Cabbage, carrot, creamy sauce","/media/template-photos/photo-1505253716362-afaea1d3d1af.webp"]
   ],
   Drinks:[
-    ["Coca-Cola","₺70","Cold 330ml drink","https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80"],
-    ["Sprite","₺70","Cold 330ml drink","https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80"],
-    ["Fanta","₺70","Cold 330ml drink","https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?auto=format&fit=crop&w=900&q=80"],
-    ["Ice Tea","₺80","Peach or lemon ice tea","https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80"],
-    ["Fresh Orange Juice","₺120","Fresh squeezed orange juice","https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=900&q=80"],
-    ["Mineral Water","₺40","Cold mineral water","https://images.unsplash.com/photo-1616118132534-381148898bb4?auto=format&fit=crop&w=900&q=80"]
+    ["Coca-Cola","₺70","Cold 330ml drink","/media/template-photos/photo-1622483767028-3f66f32aef97.webp"],
+    ["Sprite","₺70","Cold 330ml drink","/media/template-photos/photo-1624517452488-04869289c4ca.webp"],
+    ["Fanta","₺70","Cold 330ml drink","/media/template-photos/photo-1625772299848-391b6a87d7b3.webp"],
+    ["Ice Tea","₺80","Peach or lemon ice tea","/media/template-photos/photo-1556679343-c7306c1976bc.webp"],
+    ["Fresh Orange Juice","₺120","Fresh squeezed orange juice","/media/template-photos/photo-1621506289937-a8e4df240d0b.webp"],
+    ["Mineral Water","₺40","Cold mineral water","/media/template-photos/photo-1616118132534-381148898bb4.webp"]
   ],
   Desserts:[
-    ["Cheesecake","₺180","Slice cheesecake with fruit sauce","https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=900&q=80"],
-    ["Chocolate Cake","₺170","Rich chocolate cake","https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80"],
-    ["Brownie","₺160","Warm brownie, chocolate sauce","https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"],
-    ["Tiramisu","₺190","Coffee cream dessert","https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80"],
-    ["Ice Cream","₺130","Vanilla, chocolate or strawberry","https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=80"],
-    ["Kunafa","₺220","Hot kunafa with pistachio","https://images.unsplash.com/photo-1579372786545-d24232daf58c?auto=format&fit=crop&w=900&q=80"]
+    ["Cheesecake","₺180","Slice cheesecake with fruit sauce","/media/template-photos/photo-1533134242443-d4fd215305ad.webp"],
+    ["Chocolate Cake","₺170","Rich chocolate cake","/media/template-photos/photo-1606890737304-57a1ca8a5b62.webp"],
+    ["Brownie","₺160","Warm brownie, chocolate sauce","/media/template-photos/photo-1606313564200-e75d5e30476c.webp"],
+    ["Tiramisu","₺190","Coffee cream dessert","/media/template-photos/photo-1571877227200-a0d98ea607e9.webp"],
+    ["Ice Cream","₺130","Vanilla, chocolate or strawberry","/media/template-photos/photo-1563805042-7684c019e1cb.webp"],
+    ["Kunafa","₺220","Hot kunafa with pistachio","/media/template-photos/photo-1579372786545-d24232daf58c.webp"]
   ]
 };
 
@@ -464,7 +470,7 @@ function renderProducts(list, title = activeCategory){
     card.style.animationDelay = `${i*65}ms`;
     card.innerHTML = `
       <div class="food-img">
-        <img src="${p[3]}" alt="${p[0]}" loading="lazy">
+        <img src="${p[3]}" alt="${p[0]}" loading="lazy" decoding="async">
       </div>
       <div class="food-info">
         <h3>${p[0]}</h3>
@@ -531,10 +537,12 @@ searchEl.addEventListener("input",()=>{
   renderProducts(filtered, q ? "Search Results" : activeCategory);
 });
 
-renderProducts(data[activeCategory], activeCategory);
+if (!isEmbeddedPreview) {
+  document.getElementById("demoHeroPhoto").src = "/media/template-photos/photo-1568901346375-23c9450c58cd.webp";
+  renderProducts(data[activeCategory], activeCategory);
+}
 </script>
 
-<script src="preview.js"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
 </body>

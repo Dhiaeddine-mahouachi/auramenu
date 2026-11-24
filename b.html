@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Food Orbit Menu</title>
 
+<script>
+  const isEmbeddedPreview = new URLSearchParams(location.search).get("embedded") === "1";
+  if (isEmbeddedPreview) document.documentElement.classList.add("aura-embedded-template");
+</script>
 <style>
 :root{
   --bg:#f4f7fb;
@@ -371,6 +375,8 @@ img{width:100%;display:block}
 }
 </style>
   <link rel="stylesheet" href="preview.css">
+<script src="preview.js?v=20261124-images" defer></script>
+<script src="preview-core.js?v=20261124-images" defer></script>
 </head>
 
 <body>
@@ -393,7 +399,7 @@ img{width:100%;display:block}
 
     <div class="orbit" id="orbit">
       <div class="spotlight" id="spotlight">
-        <div class="spot-img"><img id="spotImg" src="" alt=""></div>
+        <div class="spot-img"><img id="spotImg" alt="" fetchpriority="high" decoding="async"></div>
         <div class="spot-body">
           <div class="label" id="spotCat"></div>
           <h2 id="spotName"></h2>
@@ -427,62 +433,62 @@ img{width:100%;display:block}
 
 <script>
 const categoryImages = {
-  Burgers:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
-  Pizza:"https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
-  Grill:"https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80",
-  Chicken:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80",
-  Sides:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80",
-  Drinks:"https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=80"
+  Burgers:"/media/template-photos/photo-1568901346375-23c9450c58cd.webp",
+  Pizza:"/media/template-photos/photo-1565299624946-b28f40a0ae38.webp",
+  Grill:"/media/template-photos/photo-1544025162-d76694265947.webp",
+  Chicken:"/media/template-photos/photo-1598515214211-89d3c73ae83b.webp",
+  Sides:"/media/template-photos/photo-1573080496219-bb080dd4f877.webp",
+  Drinks:"/media/template-photos/photo-1544145945-f90425340c7e.webp"
 };
 
 const menu = {
   Burgers:[
-    {name:"Classic Burger",price:"₺220",desc:"Beef patty, lettuce, tomato, sauce",img:"https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"},
-    {name:"Cheese Burger",price:"₺250",desc:"Cheddar, pickles, beef patty, sauce",img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80"},
-    {name:"Double Cheese",price:"₺320",desc:"Double beef, double cheddar, onion",img:"https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=900&q=80"},
-    {name:"BBQ Burger",price:"₺290",desc:"BBQ sauce, crispy onion, beef",img:"https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=900&q=80"},
-    {name:"Mushroom Burger",price:"₺280",desc:"Mushroom sauce, cheddar, beef",img:"https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80"},
-    {name:"Chicken Burger",price:"₺260",desc:"Crispy chicken, mayo, lettuce",img:"https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80"}
+    {name:"Classic Burger",price:"₺220",desc:"Beef patty, lettuce, tomato, sauce",img:"/media/template-photos/photo-1568901346375-23c9450c58cd.webp"},
+    {name:"Cheese Burger",price:"₺250",desc:"Cheddar, pickles, beef patty, sauce",img:"/media/template-photos/photo-1550547660-d9450f859349.webp"},
+    {name:"Double Cheese",price:"₺320",desc:"Double beef, double cheddar, onion",img:"/media/template-photos/photo-1553979459-d2229ba7433b.webp"},
+    {name:"BBQ Burger",price:"₺290",desc:"BBQ sauce, crispy onion, beef",img:"/media/template-photos/photo-1571091718767-18b5b1457add.webp"},
+    {name:"Mushroom Burger",price:"₺280",desc:"Mushroom sauce, cheddar, beef",img:"/media/template-photos/photo-1594212699903-ec8a3eca50f5.webp"},
+    {name:"Chicken Burger",price:"₺260",desc:"Crispy chicken, mayo, lettuce",img:"/media/template-photos/photo-1606755962773-d324e0a13086.webp"}
   ],
   Pizza:[
-    {name:"Margherita",price:"₺260",desc:"Mozzarella, tomato, basil",img:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80"},
-    {name:"Pepperoni",price:"₺320",desc:"Pepperoni, mozzarella, tomato sauce",img:"https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80"},
-    {name:"Four Cheese",price:"₺340",desc:"Four cheese blend",img:"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"},
-    {name:"BBQ Chicken",price:"₺350",desc:"Chicken, BBQ sauce, mozzarella",img:"https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=900&q=80"},
-    {name:"Meat Lovers",price:"₺390",desc:"Beef, sausage, pepperoni",img:"https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&w=900&q=80"},
-    {name:"Vegetarian",price:"₺290",desc:"Mushroom, pepper, olive, corn",img:"https://images.unsplash.com/photo-1571066811602-716837d681de?auto=format&fit=crop&w=900&q=80"}
+    {name:"Margherita",price:"₺260",desc:"Mozzarella, tomato, basil",img:"/media/template-photos/photo-1574071318508-1cdbab80d002.webp"},
+    {name:"Pepperoni",price:"₺320",desc:"Pepperoni, mozzarella, tomato sauce",img:"/media/template-photos/photo-1628840042765-356cda07504e.webp"},
+    {name:"Four Cheese",price:"₺340",desc:"Four cheese blend",img:"/media/template-photos/photo-1513104890138-7c749659a591.webp"},
+    {name:"BBQ Chicken",price:"₺350",desc:"Chicken, BBQ sauce, mozzarella",img:"/media/template-photos/photo-1565299507177-b0ac66763828.webp"},
+    {name:"Meat Lovers",price:"₺390",desc:"Beef, sausage, pepperoni",img:"/media/template-photos/photo-1594007654729-407eedc4be65.webp"},
+    {name:"Vegetarian",price:"₺290",desc:"Mushroom, pepper, olive, corn",img:"/media/template-photos/photo-1571066811602-716837d681de.webp"}
   ],
   Grill:[
-    {name:"Ribeye Steak",price:"₺780",desc:"Grilled ribeye, butter, herbs",img:"https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=80"},
-    {name:"T-Bone Steak",price:"₺890",desc:"T-bone steak, grilled vegetables",img:"https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=900&q=80"},
-    {name:"Lamb Chops",price:"₺720",desc:"Lamb chops, rice, pepper",img:"https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=900&q=80"},
-    {name:"Mixed Grill",price:"₺850",desc:"Kebab, lamb, chicken, meatballs",img:"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=900&q=80"},
-    {name:"Beef Kebab",price:"₺450",desc:"Lavash, salad, grilled beef",img:"https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=900&q=80"},
-    {name:"Meatballs",price:"₺380",desc:"Köfte, fries, salad",img:"https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=900&q=80"}
+    {name:"Ribeye Steak",price:"₺780",desc:"Grilled ribeye, butter, herbs",img:"/media/template-photos/photo-1546833999-b9f581a1996d.webp"},
+    {name:"T-Bone Steak",price:"₺890",desc:"T-bone steak, grilled vegetables",img:"/media/template-photos/photo-1600891964092-4316c288032e.webp"},
+    {name:"Lamb Chops",price:"₺720",desc:"Lamb chops, rice, pepper",img:"/media/template-photos/photo-1603360946369-dc9bb6258143.webp"},
+    {name:"Mixed Grill",price:"₺850",desc:"Kebab, lamb, chicken, meatballs",img:"/media/template-photos/photo-1529692236671-f1f6cf9683ba.webp"},
+    {name:"Beef Kebab",price:"₺450",desc:"Lavash, salad, grilled beef",img:"/media/template-photos/photo-1599487488170-d11ec9c172f0.webp"},
+    {name:"Meatballs",price:"₺380",desc:"Köfte, fries, salad",img:"/media/template-photos/photo-1529042410759-befb1204b468.webp"}
   ],
   Chicken:[
-    {name:"Grilled Chicken",price:"₺320",desc:"Chicken breast, rice, salad",img:"https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=900&q=80"},
-    {name:"Crispy Chicken",price:"₺340",desc:"Crispy strips, fries, sauce",img:"https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=900&q=80"},
-    {name:"Chicken Wings",price:"₺310",desc:"Spicy wings, ranch, fries",img:"https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=900&q=80"},
-    {name:"Schnitzel",price:"₺350",desc:"Crispy schnitzel, lemon, fries",img:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=900&q=80"},
-    {name:"Chicken Wrap",price:"₺280",desc:"Tortilla, chicken, lettuce, sauce",img:"https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=900&q=80"},
-    {name:"Chicken Kebab",price:"₺360",desc:"Skewers, rice, salad",img:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80"}
+    {name:"Grilled Chicken",price:"₺320",desc:"Chicken breast, rice, salad",img:"/media/template-photos/photo-1532550907401-a500c9a57435.webp"},
+    {name:"Crispy Chicken",price:"₺340",desc:"Crispy strips, fries, sauce",img:"/media/template-photos/photo-1562967914-608f82629710.webp"},
+    {name:"Chicken Wings",price:"₺310",desc:"Spicy wings, ranch, fries",img:"/media/template-photos/photo-1527477396000-e27163b481c2.webp"},
+    {name:"Schnitzel",price:"₺350",desc:"Crispy schnitzel, lemon, fries",img:"/media/template-photos/photo-1604908176997-125f25cc6f3d.webp"},
+    {name:"Chicken Wrap",price:"₺280",desc:"Tortilla, chicken, lettuce, sauce",img:"/media/template-photos/photo-1626700051175-6818013e1d4f.webp"},
+    {name:"Chicken Kebab",price:"₺360",desc:"Skewers, rice, salad",img:"/media/template-photos/photo-1598515214211-89d3c73ae83b.webp"}
   ],
   Sides:[
-    {name:"French Fries",price:"₺120",desc:"Golden fries",img:"https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=80"},
-    {name:"Curly Fries",price:"₺140",desc:"Seasoned curly fries",img:"https://images.unsplash.com/photo-1639024471283-03518883512d?auto=format&fit=crop&w=900&q=80"},
-    {name:"Potato Wedges",price:"₺150",desc:"Spicy wedges",img:"https://images.unsplash.com/photo-1623238913973-21e45cced554?auto=format&fit=crop&w=900&q=80"},
-    {name:"Garlic Bread",price:"₺130",desc:"Garlic butter bread",img:"https://images.unsplash.com/photo-1619535860434-cf9b6bfb8105?auto=format&fit=crop&w=900&q=80"},
-    {name:"Rice",price:"₺90",desc:"Butter rice",img:"https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=80"},
-    {name:"Coleslaw",price:"₺80",desc:"Creamy cabbage salad",img:"https://images.unsplash.com/photo-1625944525533-473f1a3d54e7?auto=format&fit=crop&w=900&q=80"}
+    {name:"French Fries",price:"₺120",desc:"Golden fries",img:"/media/template-photos/photo-1573080496219-bb080dd4f877.webp"},
+    {name:"Curly Fries",price:"₺140",desc:"Seasoned curly fries",img:"/media/template-photos/photo-1639024471283-03518883512d.webp"},
+    {name:"Potato Wedges",price:"₺150",desc:"Spicy wedges",img:"/media/template-photos/photo-1623238913973-21e45cced554.webp"},
+    {name:"Garlic Bread",price:"₺130",desc:"Garlic butter bread",img:"/media/template-photos/photo-1573140247632-f8fd74997d5c.webp"},
+    {name:"Rice",price:"₺90",desc:"Butter rice",img:"/media/template-photos/photo-1536304993881-ff6e9eefa2a6.webp"},
+    {name:"Coleslaw",price:"₺80",desc:"Creamy cabbage salad",img:"/media/template-photos/photo-1625944525533-473f1a3d54e7.webp"}
   ],
   Drinks:[
-    {name:"Coca-Cola",price:"₺70",desc:"Cold 330ml drink",img:"https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=900&q=80"},
-    {name:"Sprite",price:"₺70",desc:"Cold 330ml drink",img:"https://images.unsplash.com/photo-1581006852262-e4307cf6283a?auto=format&fit=crop&w=900&q=80"},
-    {name:"Fanta",price:"₺70",desc:"Cold 330ml drink",img:"https://images.unsplash.com/photo-1624517452488-04869289c4ca?auto=format&fit=crop&w=900&q=80"},
-    {name:"Ice Tea",price:"₺80",desc:"Peach or lemon",img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=80"},
-    {name:"Orange Juice",price:"₺120",desc:"Fresh orange juice",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=80"},
-    {name:"Mineral Water",price:"₺40",desc:"Cold mineral water",img:"https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=900&q=80"}
+    {name:"Coca-Cola",price:"₺70",desc:"Cold 330ml drink",img:"/media/template-photos/photo-1622483767028-3f66f32aef97.webp"},
+    {name:"Sprite",price:"₺70",desc:"Cold 330ml drink",img:"/media/template-photos/photo-1581006852262-e4307cf6283a.webp"},
+    {name:"Fanta",price:"₺70",desc:"Cold 330ml drink",img:"/media/template-photos/photo-1624517452488-04869289c4ca.webp"},
+    {name:"Ice Tea",price:"₺80",desc:"Peach or lemon",img:"/media/template-photos/photo-1556679343-c7306c1976bc.webp"},
+    {name:"Orange Juice",price:"₺120",desc:"Fresh orange juice",img:"/media/template-photos/photo-1600271886742-f049cd451bba.webp"},
+    {name:"Mineral Water",price:"₺40",desc:"Cold mineral water",img:"/media/template-photos/photo-1548839140-29a749e1cf4d.webp"}
   ]
 };
 
@@ -493,10 +499,10 @@ const orbit = document.getElementById("orbit");
 const grid = document.getElementById("grid");
 const select = document.getElementById("select");
 
-Object.keys(menu).forEach((cat,i)=>{
+if (!isEmbeddedPreview) Object.keys(menu).forEach((cat,i)=>{
   const p = document.createElement("button");
   p.className = "planet p" + (i+1) + (cat===activeCat ? " active" : "");
-  p.innerHTML = `<img src="${categoryImages[cat]}" alt="${cat}" loading="lazy">`;
+  p.innerHTML = `<img src="${categoryImages[cat]}" alt="${cat}" loading="lazy" decoding="async">`;
   p.onclick = () => setCategory(cat);
   orbit.appendChild(p);
 
@@ -541,7 +547,7 @@ function renderGrid(){
     const card = document.createElement("article");
     card.className = "item";
     card.innerHTML = `
-      <div class="item-img"><img src="${item.img}" alt="${item.name}" loading="lazy"></div>
+      <div class="item-img"><img src="${item.img}" alt="${item.name}" loading="lazy" decoding="async"></div>
       <h3>${item.name}</h3>
       <p>${item.desc}</p>
       <div class="price">${item.price}</div>
@@ -566,9 +572,8 @@ function openDrawer(item){
   document.getElementById("drawer").classList.add("show");
 }
 
-setCategory(activeCat);
+if (!isEmbeddedPreview) setCategory(activeCat);
 </script>
-<script src="preview.js"></script>
 <link rel="stylesheet" href="/support-report.css?v=2">
 <script src="/support-report.js?v=2" defer></script>
 </body>
