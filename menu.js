@@ -81,7 +81,7 @@
         console.warn("AuraMenu Standard template failed. Falling back to Nova Mobile.",error);
       }
     }
-    const templateFile = templateFiles[menu.templateId] || templateFiles.modern;
+    const templateFile = Object.hasOwn(templateFiles,menu.templateId) ? templateFiles[menu.templateId] : templateFiles.modern;
     const frame = document.createElement("iframe");
     frame.className = "public-template-frame";
     frame.title = `${menu.businessName} menu`;

@@ -21,6 +21,8 @@ The optional presentation table stores brand settings by menu ID. Existing categ
 
 ## Performance
 
+Before changes, the standalone Nova Mobile and Maison demos measured median LCP of 0.92 s and 1.84 s. The comparison below uses the same public-menu route and restaurant fixture for both generations after fixing the existing URL loader.
+
 Cold-load measurements used local Chromium 153 with the Pixel 7 profile, 4× CPU slowdown, 150 ms network latency and 1.6 Mbps downstream. Each row is three runs on the public-menu route with the same eight-dish Patty Club fixture and a mocked API response. Third-party requests were blocked in this lab run. LCP is relative to initial page navigation, including the legacy iframe's navigation offset. Transfer is the locally served browser-reported traffic, with no production CDN compression. CLS and click timing report the maximum observed across the three runs.
 
 | Menu | Median LCP | Slowest LCP | Max CLS | Max sampled click | Transfer |
@@ -40,6 +42,7 @@ The new menu loads only the selected template's CSS and layout module. Fixture p
 ## Verification
 
 - 18 AuraMenu Node tests passed. Syntax checks use Node; the static frontend has no TypeScript build to run.
+- The existing voice and assistant browser tests passed. The assistant test used a local copy of the existing QR library because the lab could not reach its CDN.
 - The Chromium matrix passed all 450 combinations of 15 templates, ten datasets and three languages at 320 px. The browser suite also checked the 375, 390 and 430 px presets, desktop sizing, category and product interactions, search, failed photos, currency and price visibility, external links, AuraPlay, builder preview, authenticated settings save, and legacy and Standard public routes. Full-size local screenshots were captured for every template, and the gallery includes optimized copies.
 - 381 AuraDigital tests passed. The worker bundled with the repository's esbuild tool. D1-style SQLite fixtures verified ownership, rejected unsafe URLs and unsupported templates, enforced approval and paid access, preserved nested products, and checked the legacy release path.
 - Physical iOS Safari and Android Chrome coverage is pending. Large menus were tested with a 320-item fixture. Existing authoring limits cap saved customer menus at 100 products. The existing AuraHub private draft contract still exposes its legacy template choices.
@@ -55,6 +58,6 @@ The browser suite uses Playwright and Chromium. Set `CHROMIUM_PATH` when testing
 
 ## Rollout and rollback
 
-The customer-facing production branches, DNS and D1 database have not been updated. For a controlled rollout, apply migration 0041 in a non-production AuraDigital D1 environment, deploy the AuraMenu frontend with the Standard files, then deploy the companion API. Enable `AURAMENU_STANDARD_ENABLED=true` only in the environment where you want to enable new selections and approval. Confirm the same menu opens from its QR URL and that both save and approval still enforce ownership and billing.
+The customer-facing production branches, DNS and D1 database have not been updated. For a controlled rollout, apply migration 0041 in a non-production AuraDigital D1 environment, deploy the AuraMenu frontend with the Standard files, then deploy the companion API. Keep the `studio/` fixture gallery on the protected review deployment when preparing a customer-facing package. Enable `AURAMENU_STANDARD_ENABLED=true` only in the environment where you want to enable new selections and approval. Confirm the same menu opens from its QR URL and that both save and approval still enforce ownership and billing.
 
 For immediate rollback after enablement, unset `AURAMENU_STANDARD_ENABLED`. This stops new Standard selections and first approvals while preserving existing published Standard menus. Keep the additive presentation table and renderer deployed while customers use these layouts. If a full frontend revert is necessary, migrate those menus back to a legacy template through the authenticated edit flow before reverting. The private review release itself can be rolled back independently.

@@ -117,6 +117,14 @@ try {
   await production.goto(origin + '/404.html?slug=legacy-fixture');
   await production.frameLocator('iframe.public-template-frame').getByText('Legacy QR menu',{exact:true}).first().waitFor();
 
+
+  await production.route(url => url.pathname === '/api/auramenu/sites/unknown-fixture',route => route.fulfill({json:{menu:{
+    templateId:'constructor',businessName:'Unknown design fallback',menuLanguage:'en',currency:'TRY',
+    categories:[{name:'Entrées',items:[{name:'Legacy fallback dish',price:'50'}]}],
+  }}}));
+  await production.goto(origin + '/menu.html?slug=unknown-fixture');
+  await production.frameLocator('iframe[src^="/c.html"]').getByText('Unknown design fallback',{exact:true}).first().waitFor();
+
   const ownerPage = await desktop.newPage();
   observe(ownerPage);
   const designIds = registry.map(entry => entry.id);
