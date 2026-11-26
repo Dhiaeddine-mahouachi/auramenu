@@ -1,0 +1,16 @@
+.sm-studio .sm-hero {min-height:250px;display:grid;align-items:end;border-block-end:8px solid var(--sm-primary)}
+.sm-studio .pa-rules {background:linear-gradient(90deg,var(--sm-line) 1px,transparent 1px) var(--pa-inset) 0/25% 100%;opacity:.75}
+.sm-studio .sm-heading h1 {font-weight:900;font-size:clamp(3rem,13vw,8rem)}
+.sm-studio .sm-heading p {max-width:32ch}
+.sm-studio .sm-nav-matrix {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-block-start:var(--pa-rule);border-inline-start:var(--pa-rule)}
+.sm-studio .sm-nav-button {border:0;border-inline-end:var(--pa-rule);border-block-end:var(--pa-rule)}
+.sm-studio .sm-section-heading {border-block-end:3px solid var(--sm-primary);padding-block-end:9px;text-transform:uppercase}
+.sm-studio .sm-products-studio {gap:0}
+.sm-studio .sm-card-studio {display:grid;grid-template-columns:68px minmax(0,1fr);gap:12px;border-block-end:var(--pa-rule);padding-block:8px}
+.sm-studio .sm-card-studio .sm-media {aspect-ratio:1;align-self:center;filter:saturate(.75)}
+.sm-studio .sm-card-studio.sm-no-image {grid-template-columns:1fr}
+.sm-studio .sm-connect,.sm-studio .pa-product {border-block-start:6px solid var(--sm-primary)}
+.sm-studio .sm-game {border-radius:0}
+@media(min-width:760px){.sm-studio .sm-nav-matrix,.sm-studio .sm-products-studio {grid-template-columns:repeat(3,minmax(0,1fr))}.sm-studio .sm-products-studio {gap:12px}}
+.sm-studio .pa-studio-nav {display:flex;flex-wrap:wrap;gap:6px;padding:6px var(--pa-inset);border-block-end:var(--pa-rule)}
+.sm-studio .pa-studio-nav .sm-pill {border:0;border-radius:0;text-decoration:underline;text-underline-offset:4px}

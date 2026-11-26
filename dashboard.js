@@ -1,4 +1,5 @@
 (() => {
+  let standardEditor, designUi, availableTemplates = [];
   const api = window.AURA_MENU_CONFIG?.apiBase || 'https://auradigital.ink/api/auramenu';
   const params = new URLSearchParams(location.search);
   const $ = id => document.getElementById(id);
@@ -9,6 +10,12 @@
   let timer = null;
 
   const storageKey = id => `auraMenuDashboardToken:${id}`;
+  function storedToken(id) {
+    try {
+      return [storageKey(id),`auraMenuToken:${id}`].map(key => localStorage.getItem(key))
+        .find(value => /^[a-f0-9]{64}$/.test(value || '')) || '';
+    } catch { return ''; }
+  }
   const requestId = () => params.get('id') || localStorage.getItem('auraMenuLastRequest') || '';
 
   function esc(value) {
@@ -230,13 +237,21 @@
     throw new Error('Fotoğraf küçültülemedi. Daha küçük fotoğraf seçin.');
   }
 
+  function allowedTemplates() {
+    return [...(menu?.designAccess?.standard ? designUi?.standardTemplateIds || availableTemplates : availableTemplates),
+      ...(menu?.designAccess?.premium || [])];
+  }
+
   function fill() {
     if (!menu) return;
     $('businessTitle').textContent = menu.businessName;
     $('menuUrl').textContent = `auramenu.space/${menu.slug}`;
     $('openMenu').href = `https://auramenu.space/${menu.slug}`;
     $('businessName').value = menu.businessName || '';
+    designUi?.offerTemplates($('templateId'),allowedTemplates(),menu.templateId);
     $('templateId').value = menu.templateId || 'modern';
+    if (!$('templateId').value) $('templateId').value = 'modern';
+    standardEditor?.sync($('templateId').value,menu);
     $('tagline').value = menu.tagline || '';
     $('description').value = menu.description || '';
     $('address').value = menu.address || '';
@@ -343,7 +358,7 @@
     }
 
     try {
-      const existing = localStorage.getItem(storageKey(menuId)) || '';
+      const existing = storedToken(menuId);
       const data = await request(`/dashboard/${encodeURIComponent(menuId)}/claim`, {
         method: 'POST',
         body: JSON.stringify({ existingToken: existing }),
@@ -367,6 +382,7 @@
       const r=await fetch("/api/aurapops/account/session",{cache:"no-store"});
       const session=await r.json();
       if(!r.ok||!session.user?.emailVerified){location.replace("/login");return;}
+      token = storedToken(menuId);
       const data=await request("/dashboard/"+encodeURIComponent(menuId));
       menu=data.menu;show();
     }catch(error){$("claim").hidden=false;$("claim").innerHTML='<h1>Open your menu from your account</h1><p></p><a href="/account">Back to my menus →</a>';$("claim").querySelector("p").textContent=error.message;}
@@ -395,6 +411,7 @@
   }
 
   async function save() {
+    if (standardEditor && !standardEditor.validate()) return;
     try {
       menu.businessName = $('businessName').value.trim();
       menu.templateId = $('templateId').value;
@@ -409,7 +426,7 @@
 
       const data = await request(`/dashboard/${encodeURIComponent(menu.id)}`, {
         method: 'PATCH',
-        body: JSON.stringify(menu),
+        body: JSON.stringify({...menu,...standardEditor?.values()}),
       });
       menu = data.menu;
       fill();
@@ -423,6 +440,7 @@
   $('requestAccess').onclick = accessRequest;
   $('accessDays').addEventListener('change', updateAccessOffer);
   $('saveMenu').onclick = save;
+  $('templateId').addEventListener('change',() => standardEditor?.sync($('templateId').value));
   $('downloadQr').onclick = downloadQr;
   $('addCategory').onclick = () => {
     menu.categories.push({
@@ -434,4 +452,15 @@
   };
 
   restore();
+  import('./standard/editor.mjs').then(async editor => {
+    const ids = await editor.availableDesigns(window.AURA_MENU_CONFIG.apiBase);
+    designUi = editor;
+    availableTemplates = ids;
+    standardEditor = editor.addDesignEditor($('standardDesign'));
+    if (menu) {
+      editor.offerTemplates($('templateId'),allowedTemplates(),menu.templateId);
+      $('templateId').value = menu.templateId;
+      standardEditor.sync($('templateId').value,menu);
+    }
+  }).catch(() => {});
 })();

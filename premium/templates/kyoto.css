@@ -1,0 +1,15 @@
+.sm-kyoto .sm-hero {display:flex;flex-direction:column;gap:20px;margin-inline:var(--pa-inset);padding-inline:0}
+.sm-kyoto .sm-heading {order:-1;padding-inline-start:6px;border-inline-start:1px solid var(--sm-accent)}
+.sm-kyoto .sm-hero>.sm-media {width:78%;align-self:end;aspect-ratio:1.24}
+.sm-kyoto .sm-heading h1 {font-weight:400;font-size:clamp(2.7rem,11vw,6rem)}
+.sm-kyoto .sm-nav-index {display:grid;gap:0;border-block-start:var(--pa-rule)}
+.sm-kyoto .sm-nav-button {background:transparent;color:var(--sm-text);border:0;border-block-end:var(--pa-rule)}
+.sm-kyoto .sm-nav-button[aria-current=true] {border-inline-start:3px solid var(--sm-primary)}
+.sm-kyoto .sm-card-quiet {display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,29%);align-items:center;gap:14px;border-block-end:var(--pa-rule);padding-block:12px}
+.sm-kyoto .sm-card-quiet .sm-media {grid-column:2;grid-row:1;aspect-ratio:1.18}
+.sm-kyoto .sm-card-quiet .sm-card-body {grid-column:1;grid-row:1}
+.sm-kyoto .sm-card-quiet .sm-product-title {display:grid}
+.sm-kyoto .sm-card-quiet .sm-price {text-align:start;max-width:none}
+.sm-kyoto .sm-card-quiet.sm-no-image {grid-template-columns:1fr}
+.sm-kyoto .sm-connect,.sm-kyoto .sm-play {background:none;border-block-start:var(--pa-rule)}
+@media(min-width:760px){.sm-kyoto .sm-hero {flex-direction:row-reverse;align-items:end;gap:50px}.sm-kyoto .sm-heading {order:0;flex:1}.sm-kyoto .sm-hero>.sm-media {width:48%}.sm-kyoto .sm-products-quiet {grid-template-columns:repeat(2,minmax(0,1fr));column-gap:30px}}

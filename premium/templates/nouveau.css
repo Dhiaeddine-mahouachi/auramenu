@@ -1,0 +1,12 @@
+.sm-nouveau .sm-hero {text-align:center;margin:18px var(--pa-inset) 22px;padding:28px clamp(20px,6vw,72px);border:3px double var(--sm-primary);border-radius:49% 49% 8% 8% / 30% 30% 2% 2%}
+.sm-nouveau .pa-botanical {background:url('../botanical.svg') center top/100% 100% no-repeat;opacity:.6}
+.sm-nouveau .sm-hero>.sm-media {max-width:350px;margin:0 auto 20px;border-radius:50% 50% 3px 3px / 38% 38% 3px 3px;aspect-ratio:1.9;border:3px double var(--sm-primary)}
+.sm-nouveau :is(.sm-intro,.sm-logo) {margin-inline:auto}
+.sm-nouveau .sm-nav-chapters {justify-content:center;border-block:3px double var(--sm-line);padding-block:5px}
+.sm-nouveau .sm-nav-button {border:0}
+.sm-nouveau .sm-section-heading {text-align:center}
+.sm-nouveau .sm-section-heading h2::after {content:'';display:block;width:55px;height:7px;border-radius:0 0 50% 50%;border-bottom:1px solid var(--sm-accent);margin:6px auto}
+.sm-nouveau .sm-card-feature .sm-media {outline:1px solid var(--sm-accent);outline-offset:-6px}
+.sm-nouveau .sm-connect {text-align:center;border-block-start:3px double var(--sm-primary)}
+.sm-nouveau .sm-connect :is(.sm-connect-brand,.sm-links) {justify-content:center}
+.sm-nouveau .sm-game {border:4px double var(--sm-primary);border-radius:34px 34px 0 0}

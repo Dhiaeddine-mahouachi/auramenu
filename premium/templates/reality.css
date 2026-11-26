@@ -1,0 +1,15 @@
+.sm-reality .sm-hero {border-block-end:3px double var(--sm-accent);padding-block:36px;overflow:hidden}
+.sm-reality .pa-graph {background:linear-gradient(90deg,transparent 95%,var(--sm-line) 95%),linear-gradient(0deg,transparent 95%,var(--sm-line) 95%);background-size:23px 23px;opacity:.4;mask-image:linear-gradient(115deg,transparent,#000)}
+.sm-reality .sm-heading h1 {font-size:clamp(2.8rem,10vw,6.5rem)}
+.sm-reality .sm-browse-controls {border-block:var(--pa-rule)}
+.sm-reality .sm-nav-console .sm-nav-button {border-style:dashed}
+.sm-reality .sm-products-instrument {gap:12px}
+.sm-reality .sm-card-instrument {display:grid;grid-template-columns:minmax(88px,34%) minmax(0,1fr);background:var(--sm-surface);align-items:center;border:var(--pa-rule)}
+.sm-reality .sm-card-instrument .sm-media {aspect-ratio:1.15}
+.sm-reality .sm-card-instrument .sm-card-body {padding-inline:9px}
+.sm-reality .sm-card-instrument.sm-no-image {grid-template-columns:1fr}
+.sm-reality .sm-card-instrument .sm-product-title {display:grid;gap:3px}
+.sm-reality .sm-card-instrument .sm-price {max-width:none;text-align:start}
+.sm-reality .sm-connect,.sm-reality .pa-product {border-block-start:3px double var(--sm-accent)}
+.sm-reality .pa-model-stage {border:1px dashed var(--sm-accent);padding:7px}
+@media(min-width:760px){.sm-reality .sm-products-instrument {grid-template-columns:repeat(2,minmax(0,1fr))}}

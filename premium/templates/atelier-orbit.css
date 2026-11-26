@@ -1,0 +1,14 @@
+.sm-atelier-orbit .sm-hero {padding-block:46px 28px}
+.sm-atelier-orbit .sm-hero>.sm-media {display:none}
+.sm-atelier-orbit .pa-rings {background:repeating-radial-gradient(circle at 85% 40%,transparent 0 29px,var(--sm-line) 29px 30px);opacity:.5}
+.sm-atelier-orbit .pa-orbit {text-align:center}
+.sm-atelier-orbit .pa-orbit-stage {border:var(--pa-rule);border-radius:48% 48% 14px 14px;padding:19px;max-width:410px;margin:auto;background:var(--sm-surface)}
+.sm-atelier-orbit .sm-card-orbit .sm-media {width:min(100%,218px);aspect-ratio:1;margin:auto;border-radius:50%;border:4px double var(--sm-accent)}
+.sm-atelier-orbit .sm-card-orbit .sm-product-title {display:grid;justify-items:center;justify-content:center;gap:2px}
+.sm-atelier-orbit .sm-card-orbit .sm-price {max-width:none}
+.sm-atelier-orbit .pa-orbit-markers {justify-content:center}
+.sm-atelier-orbit .pa-orbit-marker {width:44px;aspect-ratio:1;border:var(--pa-rule);background:var(--sm-background);border-radius:50%}
+.sm-atelier-orbit .pa-orbit-marker[aria-pressed=true] {background:var(--sm-primary);color:var(--sm-on-primary)}
+.sm-atelier-orbit .sm-nav-ribbon {flex-wrap:nowrap}
+.sm-atelier-orbit .sm-connect {border-block-start:4px double var(--sm-primary)}
+.sm-atelier-orbit .sm-game .sm-canvas {border-radius:12px}

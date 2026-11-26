@@ -1,0 +1,10 @@
+.sm-royal .sm-hero-arch{padding-top:16px;text-align:center;background:repeating-linear-gradient(45deg,transparent 0 13px,color-mix(in srgb,var(--sm-secondary) 10%,transparent) 13px 14px)}
+.sm-royal .sm-hero-arch .sm-media{max-width:470px;aspect-ratio:2.1;border-radius:55% 55% 4px 4px / 105% 105% 4px 4px;border:3px double var(--sm-accent);margin-inline:auto}
+.sm-royal .sm-hero-arch .sm-intro,.sm-royal .sm-logo{margin-inline:auto}
+.sm-royal .sm-products-portrait{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sm-royal .sm-card-portrait .sm-media{border-radius:50% 50% 0 0 / 48% 48% 0 0;aspect-ratio:1.22}
+.sm-royal .sm-card-portrait{border:3px double var(--sm-line);padding:5px}
+.sm-royal[dir=rtl] .sm-heading h1,.sm-royal[dir=rtl] .sm-section-heading h2{font-family:Georgia,"Noto Naskh Arabic",serif}
+.sm-royal .sm-connect{border:3px double var(--sm-line)}
+@font-face{font-family:AuraRoyalArabic;src:url('../../fonts/cairo-arabic-400-1000.woff2') format('woff2');font-display:swap;font-weight:400 1000;unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+FB50-FDFF,U+FE70-FEFF}
+.sm-royal[dir=rtl] .sm-heading h1,.sm-royal[dir=rtl] .sm-section-heading h2{font-family:AuraRoyalArabic,var(--sm-heading);font-weight:720}

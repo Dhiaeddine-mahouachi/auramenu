@@ -1,0 +1,11 @@
+.sm-bento .sm-hero-split{display:grid;gap:12px;align-items:center;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+.sm-bento .sm-hero-split .sm-media{aspect-ratio:1;order:1;margin:0}
+.sm-bento .sm-heading h1{font-size:clamp(1.55rem,5vw,3.5rem)}
+.sm-bento .sm-hero-split .sm-announcement{grid-column:1/-1}
+.sm-bento .sm-card-feature .sm-card-body{padding:12px 14px}
+.sm-bento .sm-card-feature .sm-product-title h3{font-size:1.25rem}
+.sm-bento .sm-nav-button{border-radius:8px}
+.sm-bento .sm-connect{background:var(--sm-surface)}
+
+.sm-bento .sm-hero-split>.sm-media{grid-column:2;grid-row:1}
+.sm-bento .sm-hero-split>.sm-heading{grid-column:1;grid-row:1}

@@ -63,8 +63,26 @@
     root.innerHTML = `<section class="menu-locked"><span>🔒</span><h1>${esc(t.notFound)}</h1><p>${esc(message || t.notFoundText)}</p><a href="/index.html?lang=${language}">${esc(t.home)}</a></section>`;
   }
 
-  function renderTemplate(menu) {
-    const templateFile = templateFiles[menu.templateId] || templateFiles.modern;
+  async function renderTemplate(menu) {
+    if (/^(?:std-(?:0[1-9]|1[0-5])|pre-(?:1[6-9]|2[0-9]|30))$/.test(menu.templateId)) {
+      try {
+        const { prepareTemplate } = await import('./standard/entry.mjs');
+        const { mount } = await prepareTemplate(menu.templateId);
+        let active;
+        function paint(language,state) {
+          active?.dispose();
+          active = mount(root,menu,{language,state,onLanguage:paint});
+          document.documentElement.lang = root.firstElementChild.lang;
+          document.documentElement.dir = root.firstElementChild.dir;
+        }
+        paint(menu.menuLanguage);
+        return;
+      } catch (error) {
+        console.warn("AuraMenu collection template failed. Trying Classic.",error);
+        if (menu.templateId !== 'std-01') return renderTemplate({...menu,templateId:'std-01'});
+      }
+    }
+    const templateFile = Object.hasOwn(templateFiles,menu.templateId) ? templateFiles[menu.templateId] : templateFiles.modern;
     const frame = document.createElement("iframe");
     frame.className = "public-template-frame";
     frame.title = `${menu.businessName} menu`;
@@ -111,7 +129,7 @@
       document.documentElement.lang = language;
       document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
       document.title = `${data.menu.businessName} — AuraMenu`;
-      renderTemplate(data.menu);
+      await renderTemplate(data.menu);
     } catch {
       locked();
     }

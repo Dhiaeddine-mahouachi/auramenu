@@ -1,0 +1,14 @@
+.sm-gatsby .sm-hero {margin:18px var(--pa-inset);border:5px double var(--sm-primary);text-align:center;padding-block:60px 35px}
+.sm-gatsby .pa-deco {inset:7px;background:repeating-conic-gradient(from 240deg at 50% 0%,transparent 0deg 8deg,var(--sm-primary) 8deg 8.5deg);mask-image:linear-gradient(#000 0%,transparent 70%);opacity:.32}
+.sm-gatsby .sm-heading h1 {text-transform:uppercase;letter-spacing:.045em;font-size:clamp(2.55rem,10vw,6.5rem)}
+.sm-gatsby .sm-heading :is(.sm-logo,.sm-intro) {margin-inline:auto}
+.sm-gatsby .sm-nav-directory {display:grid;grid-template-columns:1fr;margin-block:9px;border-block:4px double var(--sm-line)}
+.sm-gatsby .sm-nav-button {border:0;border-block-end:var(--pa-rule);text-align:center;text-transform:uppercase}
+.sm-gatsby .pa-ordinal {color:var(--sm-primary)}
+.sm-gatsby .sm-nav-button[aria-current=true] .pa-ordinal {color:inherit}
+.sm-gatsby .sm-section-heading {text-align:center;text-transform:uppercase;letter-spacing:.09em}
+.sm-gatsby .sm-card-ledger .sm-media {border:3px double var(--sm-primary);transform:scale(.95)}
+.sm-gatsby .sm-connect {border-block-start:4px double var(--sm-primary);text-align:center}
+.sm-gatsby .sm-connect :is(.sm-connect-brand,.sm-links) {justify-content:center}
+.sm-gatsby .sm-game,.sm-gatsby .pa-product {border:4px double var(--sm-primary);border-radius:0}
+@media(min-width:760px){.sm-gatsby .sm-browse {display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px}.sm-gatsby .sm-browse-controls {align-self:start;position:sticky;top:10px}}

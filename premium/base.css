@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'Aura Arabic';
+  src: url('../fonts/cairo-arabic-400-1000.woff2') format('woff2');
+  font-weight:400 1000;
+  font-display:swap;
+  unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+200C-200F,U+FB50-FDFF,U+FE70-FEFF;
+}
+.pa:lang(ar) {font-family:'Aura Arabic',var(--sm-body),sans-serif}
+.pa:lang(ar) :is(h1,h2,h3,.sm-disclosure) {font-family:'Aura Arabic',var(--sm-heading),sans-serif;font-style:normal;line-height:1.18}
+.pa {
+  --pa-inset:clamp(18px,5vw,62px);
+  --pa-rule:1px solid var(--sm-line);
+}
+.pa .sm-utility {min-height:58px;padding-inline:var(--pa-inset)}
+.pa .sm-language,.pa .sm-nav-button,.pa .sm-link,.pa .sm-action,.pa .sm-dialog-close,.pa .sm-pill,.pa .sm-search {min-height:44px}
+.pa .sm-hero {padding:clamp(28px,9vw,92px) var(--pa-inset)}
+.pa .sm-heading h1 {font-size:clamp(2.85rem,12vw,7.6rem);line-height:.93}
+.pa .sm-intro {max-width:38ch}
+.pa .sm-heading .sm-logo {width:42px;height:42px}
+.pa .pa-enter {border-radius:var(--sm-radius);margin-block-start:16px;line-height:1.2}
+.pa .sm-hero>.sm-media {margin:0;aspect-ratio:1.55}
+.pa .pa-decoration {position:absolute;inset:0;z-index:-1;pointer-events:none}
+.pa[data-ornaments=off] .pa-decoration {display:none}
+.pa .sm-browse {padding-inline:var(--pa-inset)}
+.pa .sm-browse-controls {padding-block:8px}
+.pa .sm-nav {align-items:stretch;flex-wrap:wrap;gap:4px}
+.pa .sm-nav-button {font-size:.8rem;border-radius:var(--sm-radius)}
+.pa .pa-ordinal {margin-inline-end:.65em;opacity:.75;font-variant-numeric:tabular-nums}
+.pa .sm-section {padding-block:26px 18px;scroll-margin-block-start:50px}
+.pa .sm-section-heading h2 {font-size:clamp(1.7rem,6vw,3rem)}
+.pa .sm-card .sm-product-open {min-height:44px;padding-block:4px}
+.pa .sm-product-title {align-items:center}
+.pa .sm-card-body {padding-block:9px}
+.pa .sm-description {font-size:.88rem}
+.pa .sm-card :is(.sm-media,.sm-card-body) {min-width:0}
+.pa .sm-card .sm-transparent {overflow:visible;background:transparent;isolation:isolate}
+.pa .sm-transparent img {object-fit:contain;filter:drop-shadow(0 14px 9px #0004)}
+.pa .pa-product {max-height:90dvh}
+.pa .pa-product .sm-dialog-top {padding-inline:clamp(14px,4vw,25px)}
+.pa .pa-product .sm-dialog-top h2 {font-size:clamp(1.35rem,5vw,2.2rem)}
+.pa .pa-product .sm-detail-content>.sm-media {max-height:min(44dvh,360px)}
+.pa .sm-connect,.pa .sm-play {padding-inline:var(--pa-inset)}
+.pa .sm-play {border-block-start:3px solid var(--sm-accent)}
+.pa .sm-game .sm-canvas {outline:3px double var(--sm-accent);outline-offset:4px}
+.pa-spotlight,.pa-orbit {padding:16px var(--pa-inset) 24px}
+.pa-spotlight>h2,.pa-orbit>h2 {font-size:1.35rem;margin-block-end:10px}
+.pa .pa-chapters,.pa .pa-orbit-markers,.pa-model-controls {display:flex;flex-wrap:wrap;gap:6px;margin-block-start:8px}
+.pa .pa-chapters .sm-pill {flex:1;min-width:0}
+.pa .pa-enhancement {border-block-start:var(--pa-rule);padding-block:10px}
+.pa .pa-layers-diagram {list-style:none;padding:10px 0;display:grid;gap:8px}
+.pa .pa-layers-diagram li {display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;gap:14px;border-block-end:var(--pa-rule)}
+.pa .pa-layers-diagram img {width:92px;height:53px;object-fit:contain}
+.pa-model-stage canvas {width:100%;height:clamp(180px,42vw,300px);display:block;touch-action:none;background:var(--sm-surface)}
+.pa-model-stage:empty {display:none}
+.pa-model-controls .sm-pill {font-size:.75rem}
+.pa[data-motion=on] .pa-product[open] {animation:pa-open .22s ease-out}
+@keyframes pa-open {from {opacity:.4;transform:translateY(10px)} to {opacity:1;transform:none}}
+@media (min-width:760px) {
+  .pa .sm-hero>.sm-media {aspect-ratio:2.2}
+  .pa .pa-product {width:min(90vw,660px)}
+}
+
+.pa .pa-demo-cutout {background:radial-gradient(ellipse,var(--sm-secondary),transparent 70%);container-type:inline-size}
+.pa .pa-demo-cutout img {object-fit:fill;position:absolute;width:155%;height:auto;max-width:none;inset:auto;left:50%;top:50%;transform:translate(-74%,-57%);clip-path:polygon(48% 36%,51% 28%,60% 24%,76% 24%,83% 29%,87% 44%,86% 56%,88% 60%,87% 73%,83% 86%,77% 91%,51% 91%,46% 85%,43% 77%,42% 67%,47% 55%,43% 48%,47% 44%)}
+.pa .pa-product .pa-demo-cutout img {width:135%}

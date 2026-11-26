@@ -1,0 +1,13 @@
+.sm-exhibition .sm-hero {text-align:center;margin-inline:var(--pa-inset);border-block-end:4px solid var(--sm-primary);padding-inline:0}
+.sm-exhibition .sm-hero>.sm-media {aspect-ratio:2.25;max-height:295px;margin:0 auto 16px}
+.sm-exhibition .sm-heading h1 {font-weight:400}
+.sm-exhibition .sm-heading :is(.sm-logo,.sm-intro) {margin-inline:auto}
+.sm-exhibition .pa-plinth {background:radial-gradient(ellipse at 50% 65%,var(--sm-surface),transparent 72%)}
+.sm-exhibition .sm-card-pedestal .sm-media {aspect-ratio:1.75;border:8px solid var(--sm-surface);box-shadow:0 8px 0 var(--sm-line)}
+.sm-exhibition .sm-card-pedestal .sm-transparent {background:radial-gradient(ellipse at 50% 85%,var(--sm-line),transparent 42%);border-width:0 0 9px;border-color:var(--sm-secondary);overflow:visible}
+.sm-exhibition .sm-card-pedestal .sm-card-body {margin-block-start:9px;padding-inline:9px;border:var(--pa-rule)}
+.sm-exhibition .sm-nav-plates {justify-content:center}
+.sm-exhibition .sm-nav-button {border-radius:2px}
+.sm-exhibition .sm-connect {border-block-start:7px solid var(--sm-primary)}
+.sm-exhibition .pa-product {border:3px double var(--sm-accent)}
+@media(min-width:760px){.sm-exhibition .sm-products-pedestal {grid-template-columns:repeat(3,minmax(0,1fr))}.sm-exhibition .pa-spotlight .sm-card {max-width:500px;margin:auto}}

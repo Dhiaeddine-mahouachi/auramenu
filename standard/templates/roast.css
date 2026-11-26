@@ -1,0 +1,12 @@
+.sm-roast .sm-hero-split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:14px}
+.sm-roast .sm-hero-split .sm-media{aspect-ratio:1.2;margin:0;border-radius:50% 50% var(--sm-radius) var(--sm-radius)}
+.sm-roast .sm-hero-split .sm-announcement{grid-column:1/-1}
+.sm-roast .sm-heading h1{font-size:clamp(1.65rem,5.2vw,3.4rem)}
+.sm-roast .sm-featured-gallery{padding-block:14px;background:var(--sm-surface);border-block:1px solid var(--sm-line)}
+.sm-roast .sm-nav-index{flex-wrap:wrap;padding-top:14px}
+.sm-roast .sm-nav-button{border:0;text-decoration:underline;text-underline-offset:4px}
+.sm-roast .sm-card-compact{grid-template-columns:54px minmax(0,1fr)}
+.sm-roast .sm-connect{border-top-style:dashed}
+
+.sm-roast .sm-hero-split>.sm-media{grid-column:1;grid-row:1}
+.sm-roast .sm-hero-split>.sm-heading{grid-column:2;grid-row:1}

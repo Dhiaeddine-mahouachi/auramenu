@@ -1,0 +1,8 @@
+.sm-dolce .sm-hero-simple{text-align:center;padding-block:31px;background:var(--sm-surface);border-radius:0 0 44px 44px}
+.sm-dolce .sm-heading .sm-logo,.sm-dolce .sm-intro{margin-inline:auto}
+.sm-dolce .sm-heading h1{font-style:italic;font-weight:550}
+.sm-dolce .sm-featured{padding-top:18px}
+.sm-dolce .sm-card-portrait .sm-media{aspect-ratio:1.07;margin:6px 6px 0;border-radius:var(--sm-radius)}
+.sm-dolce .sm-card-gallery .sm-media{aspect-ratio:1.32}
+.sm-dolce .sm-nav-index{flex-wrap:wrap;justify-content:center}
+.sm-dolce .sm-connect{border-radius:36px 36px 0 0;background:var(--sm-surface)}

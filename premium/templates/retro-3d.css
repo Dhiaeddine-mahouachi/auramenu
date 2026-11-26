@@ -1,0 +1,13 @@
+.sm-retro-3d .sm-hero {margin:14px var(--pa-inset) 22px;border:2px solid var(--sm-accent);box-shadow:5px 5px 0 var(--sm-secondary);padding:20px 14px}
+.sm-retro-3d .sm-hero>.sm-media {display:none}
+.sm-retro-3d .sm-heading h1 {font-size:clamp(2.3rem,10vw,6rem);text-transform:uppercase;text-shadow:3px 3px var(--sm-secondary);font-weight:900}
+.sm-retro-3d .pa-pixels {background:repeating-linear-gradient(0deg,transparent 0 5px,var(--sm-line) 5px 6px);opacity:.45}
+.sm-retro-3d .sm-nav-arcade .sm-nav-button {box-shadow:2px 2px 0 var(--sm-secondary);border-radius:0}
+.sm-retro-3d .sm-products-arcade {grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sm-retro-3d .sm-card-arcade {background:var(--sm-surface);border:var(--pa-rule);box-shadow:3px 3px 0 var(--sm-secondary)}
+.sm-retro-3d .sm-card-arcade .sm-card-body {padding-inline:8px}
+.sm-retro-3d .sm-card-arcade .sm-product-title {display:grid;gap:2px}
+.sm-retro-3d .sm-card-arcade .sm-price {max-width:none;text-align:start}
+.sm-retro-3d .sm-card-arcade .sm-transparent img {filter:drop-shadow(5px 6px var(--sm-secondary));transform:scale(1.09)}
+.sm-retro-3d .sm-connect,.sm-retro-3d .pa-product,.sm-retro-3d .sm-game {border:2px solid var(--sm-accent);border-radius:0}
+@media(min-width:760px){.sm-retro-3d .sm-products-arcade {grid-template-columns:repeat(4,minmax(0,1fr))}}

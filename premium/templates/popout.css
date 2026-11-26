@@ -1,0 +1,14 @@
+.sm-popout .sm-hero {margin-block-end:12px;overflow:hidden;border-block-end:5px solid var(--sm-accent)}
+.sm-popout .sm-hero>.sm-media {display:none}
+.sm-popout .pa-shape {background:linear-gradient(153deg,transparent 54%,var(--sm-surface) 54% 80%,var(--sm-secondary) 80%);transform:scale(1.08)}
+.sm-popout .sm-heading h1 {font-weight:900;text-transform:uppercase;line-height:.86}
+.sm-popout .sm-card-popout {background:var(--sm-surface);border-radius:var(--sm-radius);padding:9px}
+.sm-popout .sm-card-popout .sm-media {aspect-ratio:1.65}
+.sm-popout .sm-card-popout .sm-transparent {background:radial-gradient(ellipse at center,var(--sm-secondary),transparent 65%)}
+.sm-popout .sm-card-popout .sm-transparent img {transform:rotate(-7deg) scale(1.14)}
+.sm-popout[data-motion=on] .sm-card-popout .sm-transparent img {transition:transform .22s ease-out}
+.sm-popout[data-motion=on] .sm-card-popout:is(:hover,:focus-within) .sm-transparent img {transform:rotate(0) scale(1.18)}
+.sm-popout .sm-nav-blocks .sm-nav-button {border-radius:0;border-width:2px}
+.sm-popout .sm-connect,.sm-popout .pa-product {border-block-start:5px solid var(--sm-accent)}
+.sm-popout .sm-play {box-shadow:inset -6px -6px 0 var(--sm-secondary)}
+@media(min-width:760px){.sm-popout .sm-products-popout {grid-template-columns:repeat(3,minmax(0,1fr))}.sm-popout .pa-spotlight .sm-card-popout {max-width:570px}}

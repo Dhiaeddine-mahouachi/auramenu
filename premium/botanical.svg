@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" preserveAspectRatio="none" fill="none" stroke="#657757" stroke-width="1.2">
+<defs><path id="sprig" d="M9 220c-4-50 17-87 22-117S24 54 44 39c7-5 14-3 15 3s-4 8-9 6M14 185c4-21 21-34 28-51 3 18-11 32-28 51Zm4-18c-10-12-13-24-11-39 11 12 14 24 11 39Zm9-36c10-15 19-15 28-27-1 15-14 23-28 27Zm6-21c-9-10-10-18-7-29 9 8 12 19 7 29ZM28 75C14 72 8 63 10 52c13 7 18 12 18 23Z"/></defs>
+<use href="#sprig"/><use href="#sprig" transform="translate(360 0) scale(-1 1)"/>
+<path d="M137 27c15 0 24-4 43-15 19 11 28 15 43 15m-51-12 8 9 8-9"/>
+</svg>

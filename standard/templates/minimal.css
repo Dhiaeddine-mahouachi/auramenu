@@ -1,0 +1,12 @@
+.sm-minimal .sm-masthead,.sm-minimal .sm-hero-masthead{text-align:center;padding-block:39px}
+.sm-minimal .sm-heading .sm-logo,.sm-minimal .sm-intro{margin-inline:auto}
+.sm-minimal .sm-heading h1{font-weight:500}
+.sm-minimal .sm-nav-index{flex-wrap:wrap;justify-content:center;border-block:1px solid var(--sm-line);padding:3px 0}
+.sm-minimal .sm-nav-button{background:none;color:inherit;border:0;border-radius:0;text-decoration:none;font-family:var(--sm-heading);font-size:.97rem}
+.sm-minimal .sm-nav-button[aria-current=true]{text-decoration:underline;text-underline-offset:4px}
+.sm-minimal .sm-section-heading{text-align:center;padding-top:13px}
+.sm-minimal .sm-products{gap:0}
+.sm-minimal .sm-card-ledger{grid-template-columns:minmax(0,1fr) 40px;padding-block:15px}
+.sm-minimal .sm-card-ledger .sm-media{order:1;opacity:.86}
+.sm-minimal .sm-connect{text-align:center}
+.sm-minimal .sm-connect-brand,.sm-minimal .sm-links{justify-content:center}
