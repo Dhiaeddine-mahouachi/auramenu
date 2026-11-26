@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Preview and compare all 30 AuraMenu Standard and Premium designs.">
+  <link rel="canonical" href="https://auramenu.space/studio/">
   <meta name="theme-color" content="#edf0e7">
   <title>AuraMenu Design Studio</title>
   <link rel="stylesheet" href="./studio.css">
@@ -14,7 +15,7 @@
     <div class="identity"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><strong>Aura<span>Menu</span></strong></div>
     <span class="workspace-name">Design Studio</span>
     <div class="top-spacer"></div>
-    <span class="status"><span></span> Review preview</span>
+    <a class="studio-home" href="/">AuraMenu home</a>
   </header>
   <main class="studio">
     <header class="intro">
@@ -48,11 +49,13 @@
           <label>Width<select id="width"><option value="320">320 px</option><option value="360">360 px</option><option value="375">375 px</option><option value="390" selected>390 px</option><option value="430">430 px</option><option value="768">768 px</option></select></label>
         </div>
         <div class="controls review-controls">
-          <label>Account view<select id="account-view"><option value="standard">Standard simulation</option><option value="premium">Premium simulation</option></select></label>
           <label>Assets<select id="assets"><option value="auto">Template defaults</option><option value="standard">Ordinary photos</option><option value="advanced">Advanced demo assets</option><option value="missing">Missing photos</option><option value="slow">Slow device</option></select></label>
           <button id="comparison" type="button" aria-pressed="false">Compare designs</button>
         </div>
-        <p id="access-note" class="access-note" role="status"></p>
+        <div class="studio-next">
+          <p id="access-note" class="access-note" role="status"></p>
+          <a id="design-action" href="/builder.html?template=std-01&amp;lang=en">Use this design</a>
+        </div>
         <details id="design">
           <summary>Brand customization</summary>
           <div class="settings">

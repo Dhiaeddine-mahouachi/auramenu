@@ -68,9 +68,15 @@ function applyFilter() {
   $('visible-count').textContent = count + ' designs';
   filterButtons.forEach(control => control.setAttribute('aria-pressed',String(control.dataset.collection === filter)));
 }
-function accessNote() {
-  const entitled = current.tier === 'standard' || $('account-view').value === 'premium';
-  $('access-note').textContent = entitled ? 'Included in the selected account tier.' : 'Premium preview · activation requires Premium access.';
+function updateDesignAction() {
+  const premium = current.tier === 'premium';
+  $('access-note').textContent = premium ?
+    'Preview any Premium design. Activate it from a menu with Premium access.' :
+    'This Standard design is available in the menu builder.';
+  const action = $('design-action');
+  action.textContent = premium ? 'Manage my menus' : 'Use this design';
+  action.href = premium ? '/account' :
+    '/builder.html?' + new URLSearchParams({template:current.id,lang:$('language').value});
 }
 function postMenu(target = frame) {
   if (!sample) return;
@@ -108,7 +114,7 @@ function choose(entry, show) {
   current = entry;
   $('preview-name').textContent = current.name;
   $('product-shot').href = new URL('./screens/' + entry.key + '.webp',import.meta.url).href;
-  accessNote();
+  updateDesignAction();
   for (const [index,tile] of previews.entries()) tile.setAttribute('aria-pressed',String(registry[index] === entry));
   if (previous?.id !== current.id || !frame.hasAttribute('src')) {
     frame.src = '../standard/frame.html?template=' + current.id;
@@ -157,6 +163,7 @@ window.addEventListener('message',event => {
   }
   if (event.data?.type === 'auramenu:language' && ['en','tr','ar'].includes(event.data.language)) {
     $('language').value = event.data.language;
+    updateDesignAction();
     if (comparison) postMenu(comparison);
   }
 });
@@ -185,14 +192,13 @@ $('reset').addEventListener('click',() => {
   syncSettings(); postActive();
 });
 $('dataset').addEventListener('change',applySample);
-$('language').addEventListener('change',postActive);
+$('language').addEventListener('change',() => { updateDesignAction(); postActive(); });
 $('width').addEventListener('change',configureDevice);
 for (const mode of modes) mode.addEventListener('click',() => {
   desktop = mode.dataset.mode === 'desktop';
   configureDevice();
 });
 $('assets').addEventListener('change',postActive);
-$('account-view').addEventListener('change',accessNote);
 function refreshComparison() {
   const entry = getTemplate($('compare-template').value);
   if (!comparison || !entry) return;

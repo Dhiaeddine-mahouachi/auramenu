@@ -1407,3 +1407,24 @@ body.am-home{
   .am-nfc-card{padding:16px}
   .am-nfc-card-bottom strong{font-size:19px}
 }
+
+.am-atelier-grid .am-template-card footer{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  text-align:start;font-size:15px;
+}
+.am-atelier-grid .am-template-card footer small{color:#c2cbc2;font-size:.78rem;font-weight:600}
+.am-template-preview.am-atelier-preview{
+  display:grid;place-items:start center;height:clamp(245px,30vw,405px);
+  padding:12px 14px 0;isolation:isolate;
+}
+.am-atelier-preview img{
+  display:block;width:min(74%,256px);height:auto;border-radius:10px 10px 0 0;
+  box-shadow:0 8px 26px #0004;
+}
+@media(max-width:620px){
+  .am-atelier-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .am-template-preview.am-atelier-preview{height:clamp(145px,42vw,255px);padding:7px 5px 0}
+  .am-atelier-preview img{width:min(88%,256px)}
+  .am-atelier-grid .am-template-card footer{font-size:.83rem;flex-wrap:wrap;gap:3px 6px}
+}
+.am-templates .am-section-head>.am-pill{display:inline-flex}

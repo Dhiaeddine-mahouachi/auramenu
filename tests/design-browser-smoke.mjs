@@ -167,6 +167,20 @@ try {
   const mobile = await context({...devices['Pixel 7'],viewport:{width:320,height:780},reducedMotion:'reduce'});
   const production = await mobile.newPage();
   observe(production);
+  await production.route('**/api/auramenu/designs',route=>route.fulfill({json:{
+    standard:registry.filter(entry=>entry.tier === 'standard').map(entry=>entry.id),
+    premium:registry.filter(entry=>entry.tier === 'premium').map(entry=>entry.id),
+  }}));
+  await production.goto(origin + '/index.html');
+  await production.getByRole('link',{name:'Browse all 30 designs'}).click();
+  await production.getByRole('button',{name:'Preview Aura Reality',exact:true}).click();
+  assert.equal(await production.getByRole('link',{name:'Manage my menus'}).getAttribute('href'),'/account');
+  await production.getByRole('button',{name:'Preview Aura Grid',exact:true}).click();
+  await production.getByRole('link',{name:'Use this design'}).click();
+  await production.frameLocator('#templatePreview').locator('.sm-grid').waitFor();
+  assert.equal(await production.locator('#templateId').inputValue(),'std-02');
+  assert.equal(await production.locator('#templateId option[value^=std-]').count(),15);
+  assert.equal(await production.locator('#templateId option[value^=pre-]').count(),0);
   await production.route(url => url.pathname === '/api/auramenu/sites/design-fixture',route => route.fulfill({json:{menu:{
     templateId:'std-05',businessName:'Public QR menu',menuLanguage:'en',currency:'TRY',whatsapp:'+905551112233',
     categories:[{name:'Entrées',items:[{name:'Grilled dish',price:'50',featured:true,description:'Prepared to order.'}]}],
