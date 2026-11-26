@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#edf0e7">
+  <title>AuraMenu Design Studio</title>
+  <link rel="stylesheet" href="./studio.css">
+  <script type="module" src="./studio.mjs"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="identity"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span><strong>Aura<span>Menu</span></strong></div>
+    <span class="workspace-name">Design Studio</span>
+    <div class="top-spacer"></div>
+    <span class="status"><span></span> Review preview</span>
+  </header>
+  <main class="studio">
+    <header class="intro">
+      <div class="intro-copy">
+        <p class="collection">Standard collection</p>
+        <h1>Design Studio</h1>
+        <p class="summary">Preview 15 mobile menu designs with the same restaurant data.</p>
+      </div>
+      <svg class="brand-pattern" viewBox="0 0 280 132" aria-hidden="true">
+        <path d="M5 130C135 130 170 51 270 51M42 130C167 130 198 69 270 69M79 130C200 130 223 87 270 87M116 130C217 130 245 105 270 105M153 130C228 130 257 122 270 122" fill="none" stroke="currentColor"/>
+        <circle cx="239" cy="24" r="7" fill="currentColor"/>
+      </svg>
+    </header>
+    <div class="workbench">
+      <section class="gallery-region" aria-labelledby="library-label">
+        <div class="gallery-header"><h2 id="library-label">Template library</h2><span>15 designs</span></div>
+        <div class="gallery" id="gallery"></div>
+      </section>
+      <section class="inspector" id="inspector" aria-labelledby="preview-name">
+        <header class="inspector-head">
+          <div><p class="inspector-kicker"><span></span> Live preview</p><h2 id="preview-name">Aura Classic</h2></div>
+          <div class="device-actions" role="group" aria-label="Preview device">
+            <button type="button" data-mode="mobile" aria-label="Mobile preview" title="Mobile preview" aria-pressed="true"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 17h2"/></svg></button>
+            <button type="button" data-mode="desktop" aria-label="Desktop preview" title="Desktop preview" aria-pressed="false"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></button>
+          </div>
+        </header>
+        <div class="controls">
+          <label>Restaurant<select id="dataset"><option value="">Suggested restaurant</option></select></label>
+          <label>Language<select id="language"><option value="en">English</option><option value="tr">Türkçe</option><option value="ar">العربية</option></select></label>
+          <label>Width<select id="width"><option value="320">320 px</option><option value="375">375 px</option><option value="390" selected>390 px</option><option value="430">430 px</option></select></label>
+        </div>
+        <details id="design">
+          <summary>Brand customization</summary>
+          <div class="settings">
+            <div class="colors" id="colors"></div>
+            <div class="type-settings">
+              <label>Heading font<select data-font="heading"></select></label>
+              <label>Body font<select data-font="body"></select></label>
+              <label>Card corners<input type="range" min="0" max="32" data-radius></label>
+            </div>
+            <div class="asset-settings">
+              <label>Logo URL<input type="url" data-asset="logo" placeholder="Use restaurant logo"></label>
+              <label>Cover URL<input type="url" data-asset="cover" placeholder="Use restaurant cover"></label>
+            </div>
+            <div class="toggle-settings" id="toggles"></div>
+            <div class="custom-footer"><p id="contrast" role="status"></p><button id="reset" type="button">Reset customization</button></div>
+          </div>
+        </details>
+        <div class="stage">
+          <div class="device" id="device"><iframe id="frame" title="Interactive restaurant menu preview"></iframe></div>
+        </div>
+        <footer class="inspector-foot"><span id="preview-size">390 px mobile</span><span id="sample-label">Demo restaurant</span></footer>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

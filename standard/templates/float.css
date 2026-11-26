@@ -1,0 +1,9 @@
+.sm-float .sm-hero-simple{padding-bottom:18px}
+.sm-float .sm-featured-float{padding-top:13px;background:var(--sm-surface);border-radius:38px 38px 0 0}
+.sm-float .sm-card-float{background:var(--sm-background);overflow:visible;margin-top:15px}
+.sm-float .sm-card-float .sm-media{margin:-13px 10px 2px;aspect-ratio:1.3;transform:translateY(-3px);border-radius:var(--sm-radius);transition:transform .18s ease}
+.sm-float .sm-card-float:focus-within .sm-media{transform:translateY(-6px)}
+.sm-float .sm-card-float .sm-transparent{background:none}
+.sm-float .sm-card-float .sm-transparent img{object-fit:contain}
+.sm-float .sm-strip-track>.sm-card{flex-basis:min(73%,260px)}
+.sm-float .sm-card-compact{grid-template-columns:52px minmax(0,1fr)}

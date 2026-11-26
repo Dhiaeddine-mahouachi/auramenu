@@ -1,0 +1,7 @@
+.sm-grid .sm-hero-band{padding-top:16px;display:grid;gap:12px}
+.sm-grid .sm-hero-band>.sm-media{aspect-ratio:2.8;margin:0}
+.sm-grid .sm-heading h1{font-size:clamp(2rem,8vw,3.5rem)}
+.sm-grid .sm-products{gap:12px}
+.sm-grid .sm-card-gallery .sm-media{aspect-ratio:1.05}
+.sm-grid .sm-card-gallery .sm-card-body{padding:11px}
+.sm-grid .sm-connect .sm-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr))}

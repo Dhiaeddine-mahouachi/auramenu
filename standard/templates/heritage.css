@@ -1,0 +1,11 @@
+.sm-heritage .sm-hero-masthead{text-align:center;border-block:4px double var(--sm-line);margin:0 clamp(15px,5vw,54px);padding:25px 0 20px}
+.sm-heritage .sm-heading h1{font-size:clamp(2rem,9vw,4.5rem)}
+.sm-heritage .sm-heading .sm-logo,.sm-heritage .sm-intro{margin-inline:auto}
+.sm-heritage .sm-featured{padding-top:20px}
+.sm-heritage .sm-featured h2,.sm-heritage .sm-section-heading h2{border-block:1px solid var(--sm-line);padding:6px 0}
+.sm-heritage .sm-card-feature .sm-media{aspect-ratio:1.7}
+.sm-heritage .sm-nav-index{flex-wrap:wrap;border-bottom:1px solid var(--sm-line)}
+.sm-heritage .sm-nav-button{border:0;border-radius:0;border-inline-end:1px solid var(--sm-line)}
+.sm-heritage .sm-card-ledger{grid-template-columns:minmax(0,1fr) 46px}
+.sm-heritage .sm-card-ledger .sm-media{order:1}
+@media(min-width:770px){.sm-heritage .sm-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}}

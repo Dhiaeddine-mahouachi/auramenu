@@ -1,0 +1,13 @@
+.sm-tiles .sm-hero-simple{padding-bottom:18px}
+.sm-tiles .sm-heading h1{font-size:clamp(2rem,7.5vw,3.65rem)}
+.sm-tile-page{padding:10px clamp(16px,5vw,54px) 28px;scroll-margin-top:10px}
+.sm-tile-page h2{margin-bottom:12px}
+.sm-tile-page .sm-featured{padding:24px 0 0}
+.sm-tile-page>.sm-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.sm-tile{display:grid;grid-template-rows:auto 1fr;align-content:start;border-radius:var(--sm-radius);background:var(--sm-surface);text-align:start;border:1px solid var(--sm-line);overflow:hidden;padding:0}
+.sm-tile:hover strong{text-decoration:underline}
+.sm-tile .sm-media{aspect-ratio:1.45}
+.sm-tile strong{padding:8px 9px;font-size:.94rem;align-self:center}
+.sm-tile>span{padding:0 9px 7px;font-size:.78rem;color:var(--sm-muted)}
+.sm-tile-back{margin-bottom:4px}
+@media(min-width:780px){.sm-tile-page>.sm-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}

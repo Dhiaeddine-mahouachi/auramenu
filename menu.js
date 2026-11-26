@@ -63,7 +63,24 @@
     root.innerHTML = `<section class="menu-locked"><span>🔒</span><h1>${esc(t.notFound)}</h1><p>${esc(message || t.notFoundText)}</p><a href="/index.html?lang=${language}">${esc(t.home)}</a></section>`;
   }
 
-  function renderTemplate(menu) {
+  async function renderTemplate(menu) {
+    if (/^std-(?:0[1-9]|1[0-5])$/.test(menu.templateId)) {
+      try {
+        const { prepareStandard } = await import('./standard/entry.mjs');
+        const { mount } = await prepareStandard(menu.templateId);
+        let active;
+        function paint(language,state) {
+          active?.dispose();
+          active = mount(root,menu,{language,state,onLanguage:paint});
+          document.documentElement.lang = root.firstElementChild.lang;
+          document.documentElement.dir = root.firstElementChild.dir;
+        }
+        paint(menu.menuLanguage);
+        return;
+      } catch (error) {
+        console.warn("AuraMenu Standard template failed. Falling back to Nova Mobile.",error);
+      }
+    }
     const templateFile = templateFiles[menu.templateId] || templateFiles.modern;
     const frame = document.createElement("iframe");
     frame.className = "public-template-frame";
@@ -93,7 +110,7 @@
       return;
     }
     try {
-      const endpoint = new URL(`${config.apiBase}/sites/${encodeURIComponent(id)}`);
+      const endpoint = new URL(`${config.apiBase}/sites/${encodeURIComponent(id)}`,location.origin);
       endpoint.searchParams.set("_", String(Date.now()));
       const response = await fetch(endpoint, {
         headers: { Accept: "application/json" },
@@ -111,7 +128,7 @@
       document.documentElement.lang = language;
       document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
       document.title = `${data.menu.businessName} — AuraMenu`;
-      renderTemplate(data.menu);
+      await renderTemplate(data.menu);
     } catch {
       locked();
     }

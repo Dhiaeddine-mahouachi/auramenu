@@ -240,6 +240,7 @@
     : localStorage.getItem("auraMenuUiLanguage") || "en";
   let categories = [];
   let previewTimer;
+  let standardEditor;
   const $ = (id) => document.getElementById(id);
   const uid = () => crypto.randomUUID();
   try {
@@ -580,10 +581,11 @@
   function updatePreview() {
     const templateId = $("templateId").value;
     const frame = $("templatePreview");
-    $("previewTemplate").textContent = templateNames[templateId];
+    $("previewTemplate").textContent = templateNames[templateId] || "";
+    standardEditor?.sync(templateId);
     if (frame.dataset.template !== templateId) {
       frame.dataset.template = templateId;
-      frame.src = `${templateFiles[templateId]}?embedded=1`;
+      frame.src = templateFiles[templateId] ? `${templateFiles[templateId]}?embedded=1` : `standard/frame.html?template=${encodeURIComponent(templateId)}`;
     }
     clearTimeout(previewTimer);
     previewTimer = setTimeout(sendTemplatePreview, 45);
@@ -591,6 +593,7 @@
   function previewMenuData() {
     return {
       templateId: $("templateId").value,
+      ...(!templateFiles[$("templateId").value] && standardEditor?.values()),
       menuLanguage: $("menuLanguage").value,
       businessName: $("businessName").value.trim() || "Aura Restaurant",
       tagline: $("tagline").value.trim(),
@@ -630,6 +633,7 @@
       })),
       fields: {},
       slugEdited: $("slug").dataset.edited === "1",
+      presentation: standardEditor?.values(),
     };
     [
       "businessName",
@@ -731,6 +735,7 @@
   $("menuForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     $("formMessage").className = "form-message";
+    if (standardEditor && !standardEditor.validate()) return;
     const required = [
       "businessName",
       "slug",
@@ -756,6 +761,7 @@
     }
     const payload = {
       templateId: $("templateId").value,
+      ...(!templateFiles[$("templateId").value] && standardEditor?.values()),
       interfaceLanguage: lang,
       menuLanguage: $("menuLanguage").value,
       businessName: $("businessName").value.trim(),
@@ -885,10 +891,27 @@
     $("quickImportStatus").textContent = importCopy[lang].success;
   });
 
+  let savedDesign;
+  try { savedDesign = JSON.parse(localStorage.getItem('auraMenuDraft')); } catch {}
   restoreDraft();
+  if (!Object.hasOwn(templateFiles,$("templateId").value)) $("templateId").value = 'modern';
   const requested = params.get("template");
-  if (templateNames[requested]) $("templateId").value = requested;
+  if (Object.hasOwn(templateNames,requested)) $("templateId").value = requested;
   if (!localStorage.getItem("auraMenuDraft")) $("menuLanguage").value = lang;
   applyLanguage(lang);
   updatePreview();
+  import('./standard/editor.mjs').then(async editor => {
+    const select = $("templateId");
+    const initial = select.value;
+    const ids = await editor.availableDesigns(window.AURA_MENU_CONFIG.apiBase);
+    if (!ids.length) return;
+    editor.offerTemplates(select,ids);
+    const { registry } = await import('./standard/registry.mjs');
+    for (const entry of registry) if (ids.includes(entry.id)) templateNames[entry.id] = entry.name;
+    standardEditor = editor.addDesignEditor($("standardDesign"),() => { updatePreview(); saveDraft(); });
+    const desired = requested || savedDesign?.fields?.templateId;
+    if (select.value === initial && ids.includes(desired)) select.value = desired;
+    standardEditor.sync(select.value,savedDesign?.presentation);
+    updatePreview();
+  }).catch(() => {});
 })();
