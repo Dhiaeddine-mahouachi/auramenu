@@ -11,6 +11,6 @@ export default {
   },
   layout:api=>[
     opening(api,'book','engraving'),
-    api.browse({nav:'book',type:'ledger',behavior:'switch',chapters:premiumCopy(api.menu.lang)})
+    api.browse({nav:'book',type:'ledger',chapters:premiumCopy(api.menu.lang)})
   ].filter(Boolean),
 };

@@ -162,24 +162,22 @@ export function renderMenu(root, raw, template, options = {}) {
     }
     return track;
   }
-  function browse({nav = 'tabs',type = 'row',behavior = 'jump',action = 'dialog',search = premium,numbered = false,chapters} = {}) {
+  function browse({nav = 'tabs',type = 'row',action = 'dialog',search = premium,numbered = false,chapters} = {}) {
     const content = el('div','sm-sections');
+    content.id = 'sm-category-products';
     const navNode = el('nav','sm-nav sm-nav-' + nav);
     navNode.setAttribute('aria-label',t.sections);
     const selectCategory = index => {
-      const value = sections[index];
-      if (!value) return;
+      if (!sections[index]) return;
       state.selected = index;
-      if (state.query) { state.query = ''; if (input) input.value = ''; if (behavior === 'jump') draw(); }
-      select();
-      if (behavior === 'jump') {
-        const target = content.querySelector('#sm-section-' + value.id);
-        target?.scrollIntoView({block:'start'});
-        target?.querySelector('h2')?.focus({preventScroll:true});
-      }
+      state.query = '';
+      if (input) input.value = '';
+      markSelected();
+      draw();
     };
     const navButtons = sections.map((value,index) => {
       const entry = button(value.name,() => selectCategory(index),'sm-nav-button');
+      entry.setAttribute('aria-controls',content.id);
       if (numbered) {
         const ordinal = el('span','pa-ordinal',new Intl.NumberFormat(menu.lang,{minimumIntegerDigits:2}).format(index+1));
         ordinal.setAttribute('aria-hidden','true');
@@ -191,16 +189,15 @@ export function renderMenu(root, raw, template, options = {}) {
     const chapterControls = chapters && sections.length>1 ? el('div','pa-chapters',
       button(chapters.previousChapter,() => selectCategory(Math.max(0,state.selected-1)),'sm-pill'),
       button(chapters.nextChapter,() => selectCategory(Math.min(sections.length-1,state.selected+1)),'sm-pill')) : null;
-    function select() {
+    function markSelected() {
       for (const [index,entry] of navButtons.entries()) {
         if (index === state.selected) entry.setAttribute('aria-current','true');
         else entry.removeAttribute('aria-current');
       }
-      if (behavior !== 'jump') draw();
     }
     function draw() {
       const query = state.query.trim().toLocaleLowerCase(menu.lang);
-      const visible = (query ? sections : behavior === 'jump' ? sections : sections.slice(state.selected,state.selected+1))
+      const visible = (query ? sections : sections.slice(state.selected,state.selected+1))
         .map(value => query ? {...value, items:value.items.filter(item => (item.name + ' ' + item.description).toLocaleLowerCase(menu.lang).includes(query))} : value)
         .filter(value => !query || value.items.length);
       content.replaceChildren(...visible.map(value => section(value,type,action)));
@@ -217,26 +214,23 @@ export function renderMenu(root, raw, template, options = {}) {
     if (sections.length > 1) controls.append(navNode);
     if (chapterControls) controls.append(chapterControls);
     draw();
-    for (const [index,entry] of navButtons.entries()) if (index === state.selected) entry.setAttribute('aria-current','true');
+    markSelected();
     return el('div','sm-browse sm-browse-' + nav,controls,content);
   }
   function tiles() {
     const page = el('div','sm-tile-page');
-    function paint(focus = false) {
+    function paint(focusId) {
       const active = sections.find(section => section.id === state.tile);
       if (active) {
-        const back = button(t.back,() => { state.tile = null; paint(true); },'sm-pill sm-tile-back');
+        const back = button(t.back,() => { state.tile = null; paint(active.id); },'sm-pill sm-tile-back');
         page.replaceChildren(back,section(active,'gallery'));
-        if (focus) {
-          page.scrollIntoView({block:'start'});
-          page.querySelector('h2').focus({preventScroll:true});
-        }
+        if (focusId) page.querySelector('h2').focus({preventScroll:true});
         return;
       }
       const buttons = sections.map(value => {
         const item = value.items.find(item => item.image);
         const image = media(value.image ? {image:value.image} : item || {},'tile');
-        const tile = button('',() => { state.tile = value.id; paint(true); },'sm-tile');
+        const tile = button('',() => { state.tile = value.id; paint(value.id); },'sm-tile');
         if (image) tile.append(image);
         tile.append(el('strong','',value.name));
         if (value.description) tile.append(el('span','',value.description));
@@ -244,9 +238,9 @@ export function renderMenu(root, raw, template, options = {}) {
       });
       page.replaceChildren(el('h2','',t.sections),el('div','sm-tiles',buttons),
         ...[featured('gallery')].filter(Boolean));
-      if (focus) {
-        page.scrollIntoView({block:'start'});
-        buttons[0]?.focus({preventScroll:true});
+      if (focusId) {
+        const index = sections.findIndex(section => section.id === focusId);
+        buttons[index]?.focus({preventScroll:true});
       }
     }
     paint();

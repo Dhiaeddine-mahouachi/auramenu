@@ -82,8 +82,13 @@ try {
   assert.ok(await frame.locator('.sm-tile').count()>1);
   await studio.getByRole('button',{name:'Preview Aura Panel'}).click();
   await frame.locator('.sm-panel').waitFor();
+  assert.equal(await frame.locator('.sm-sections>.sm-section').count(),1);
   await frame.getByRole('searchbox').fill('Paprika');
   assert.equal(await frame.locator('.sm-card').count(),1);
+  assert.match(await frame.locator('.sm-card').innerText(),/Paprika Fries/);
+  await frame.getByRole('button',{name:'Drinks',exact:true}).click();
+  assert.equal(await frame.getByRole('searchbox').inputValue(),'');
+  assert.equal(await frame.locator('.sm-sections h2').innerText(),'Drinks');
   await frame.getByRole('searchbox').fill('not on the menu');
   assert.match(await frame.locator('.sm-empty').innerText(),/No dishes match/);
   await studio.locator('#dataset').selectOption('large');
@@ -227,6 +232,21 @@ try {
           const live = ready.mount(root,fixture(id),{language});
           if (!root.querySelector('h1')?.textContent || !root.querySelector('.sm-card')) throw Error('Empty menu ' + entry.id + '/' + id);
           if (root.scrollWidth > document.documentElement.clientWidth + 1) throw Error('Horizontal overflow ' + entry.id + '/' + id + '/' + language);
+          const browse = root.querySelector('.sm-browse');
+          if (browse) {
+            const content = browse.querySelector('.sm-sections');
+            if (content.querySelectorAll('.sm-section').length !== 1) throw Error('Expected one initial category ' + entry.id + '/' + id + '/' + language);
+            const headings = [...browse.querySelectorAll('.sm-nav-button')];
+            for (const heading of headings.slice(1,2)) {
+              const previousCategory = content.firstElementChild.id;
+              const before = scrollY;
+              heading.click();
+              if (content.children.length !== 1 || content.firstElementChild.id === previousCategory || heading.getAttribute('aria-current') !== 'true') {
+                throw Error('Failed to switch category ' + entry.id + '/' + id + '/' + language);
+              }
+              if (scrollY !== before) throw Error('Category click jumped the page ' + entry.id + '/' + id + '/' + language);
+            }
+          }
           live.dispose();
           cases++;
         }
