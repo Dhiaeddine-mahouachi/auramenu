@@ -93,7 +93,7 @@
       return;
     }
     try {
-      const endpoint = new URL(`${config.apiBase}/sites/${encodeURIComponent(id)}`);
+      const endpoint = new URL(`${config.apiBase}/sites/${encodeURIComponent(id)}`, location.origin);
       endpoint.searchParams.set("_", String(Date.now()));
       const response = await fetch(endpoint, {
         headers: { Accept: "application/json" },
