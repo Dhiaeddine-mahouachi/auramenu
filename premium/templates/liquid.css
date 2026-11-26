@@ -7,8 +7,8 @@
 .sm-liquid .sm-heading h1 {font-size:clamp(2.2rem,8vw,4.5rem)}
 .sm-liquid .sm-browse-controls {position:sticky;top:0;background:var(--sm-background);border-radius:var(--sm-radius)}
 .sm-liquid .sm-nav-float {overflow:auto;flex-wrap:nowrap;padding:3px}
-.sm-liquid .sm-card-glass {display:grid;grid-template-columns:83px minmax(0,1fr);align-items:center;gap:12px;border:var(--pa-rule);border-radius:var(--sm-radius);padding:8px;background:var(--sm-surface)}
-.sm-liquid .sm-card-glass .sm-media {border-radius:calc(var(--sm-radius) * .72);aspect-ratio:1}
+.sm-liquid .sm-card-glass {display:grid;grid-template-columns:var(--sm-photo-width) minmax(0,1fr);align-items:center;gap:12px;border:var(--pa-rule);border-radius:var(--sm-radius);padding:8px;background:var(--sm-surface)}
+.sm-liquid .sm-card-glass .sm-media {border-radius:calc(var(--sm-photo-radius) * .72);aspect-ratio:1.12}
 .sm-liquid .sm-card-glass.sm-no-image {grid-template-columns:1fr}
 .sm-liquid .sm-connect,.sm-liquid .sm-play {border-radius:var(--sm-radius);background:var(--sm-surface)}
 .sm-liquid .sm-game,.sm-liquid .pa-product {border-radius:var(--sm-radius) var(--sm-radius) 0 0}

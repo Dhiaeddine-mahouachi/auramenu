@@ -40,12 +40,12 @@ test('validates assets and ensures readable custom text',async () => {
 test('Light and Dark palettes keep the foreground and accents readable across designs',async () => {
   for (const entry of registry) {
     const {default:template} = await entry.load();
-    const original = theme(template.defaults);
-    assert.equal(appearanceColors(original,'original'),original);
+    const defaults = theme(template.defaults);
     for (const mode of ['light','dark']) {
-      const colors = appearanceColors(original,mode);
+      const colors = appearanceColors(defaults,mode,entry.key);
       const {surface,muted} = premiumSurfaces(colors);
-      assert.equal(colors.background,mode === 'light' ? '#ffffff' : '#131518');
+      assert.notEqual(colors.background,'#ffffff');
+      assert.ok(contrast(mode === 'light' ? '#17191b' : '#f4f4f3',colors.background)>=7);
       for (const foreground of [colors.text,colors.primary,colors.accent,muted]) {
         for (const background of [colors.background,surface]) {
           assert.ok(contrast(foreground,background)>=4.5,entry.id + ' ' + mode);

@@ -6,8 +6,8 @@
 .sm-studio .sm-nav-button {border:0;border-inline-end:var(--pa-rule);border-block-end:var(--pa-rule)}
 .sm-studio .sm-section-heading {border-block-end:3px solid var(--sm-primary);padding-block-end:9px;text-transform:uppercase}
 .sm-studio .sm-products-studio {gap:0}
-.sm-studio .sm-card-studio {display:grid;grid-template-columns:68px minmax(0,1fr);gap:12px;border-block-end:var(--pa-rule);padding-block:8px}
-.sm-studio .sm-card-studio .sm-media {aspect-ratio:1;align-self:center;filter:saturate(.75)}
+.sm-studio .sm-card-studio {display:grid;grid-template-columns:var(--sm-photo-width) minmax(0,1fr);gap:12px;border-block-end:var(--pa-rule);padding-block:8px}
+.sm-studio .sm-card-studio .sm-media {aspect-ratio:1.13;align-self:center}
 .sm-studio .sm-card-studio.sm-no-image {grid-template-columns:1fr}
 .sm-studio .sm-connect,.sm-studio .pa-product {border-block-start:6px solid var(--sm-primary)}
 .sm-studio .sm-game {border-radius:0}

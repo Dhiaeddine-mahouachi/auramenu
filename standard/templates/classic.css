@@ -3,5 +3,5 @@
 .sm-classic .sm-products{gap:0}
 .sm-classic .sm-nav-tabs{padding-block:10px}
 .sm-classic .sm-section-heading h2{border-inline-start:3px solid var(--sm-accent);padding-inline-start:9px}
-.sm-classic .sm-card-row{grid-template-columns:58px minmax(0,1fr)}
+.sm-classic .sm-card-row{grid-template-columns:var(--sm-photo-width) minmax(0,1fr)}
 .sm-classic .sm-connect{border-top-width:2px}

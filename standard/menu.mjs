@@ -13,16 +13,18 @@ export function renderMenu(root, raw, template, options = {}) {
   const menu = normalize(raw,options.language,options.preview);
   const t = copy(menu.lang);
   const appearanceText = appearanceCopy(menu.lang);
-  const appearanceSelect = el('select','sm-appearance');
-  appearanceSelect.setAttribute('aria-label',appearanceText.label);
-  for (const mode of ['original','light','dark']) appearanceSelect.add(new Option(appearanceText[mode],mode));
-  appearanceSelect.addEventListener('change',() => {
-    setAppearance(appearanceSelect.value);
+  const appearanceIcon = el('span','sm-appearance-icon');
+  appearanceIcon.setAttribute('aria-hidden','true');
+  const appearanceLabel = el('span','');
+  const appearanceButton = button('',() => {
+    setAppearance(state.appearance === 'dark' ? 'light' : 'dark');
     if (options.persistAppearance) {
       try { localStorage.setItem(appearanceKey,state.appearance); } catch {}
     }
     options.onAppearance?.(state.appearance);
-  });
+  },'sm-appearance');
+  appearanceButton.setAttribute('aria-label',appearanceText.label);
+  appearanceButton.append(appearanceIcon,appearanceLabel);
   const tokens = theme(template.defaults,menu.design);
   const premium = template.tier === 'premium';
   host.classList.toggle('pa',premium);
@@ -33,24 +35,22 @@ export function renderMenu(root, raw, template, options = {}) {
   host.lang = menu.lang;
   host.dir = menu.dir;
   host.dataset.layout = template.key;
+  const defaultAppearance = contrast('#f4f4f3',tokens.background) >= 7 ? 'dark' : 'light';
   function setAppearance(value) {
-    const mode = appearanceMode(value);
+    const mode = appearanceMode(value,defaultAppearance);
     state.appearance = mode;
-    appearanceSelect.value = mode;
+    appearanceButton.setAttribute('aria-pressed',String(mode === 'dark'));
+    appearanceIcon.textContent = mode === 'dark' ? '☾' : '☀';
+    appearanceLabel.textContent = appearanceText[mode];
     host.dataset.appearance = mode;
-    const palette = appearanceColors(tokens,mode);
+    const palette = appearanceColors(tokens,mode,template.key);
     for (const name of ['primary','secondary','background','text','accent']) {
       host.style.setProperty('--sm-' + name,palette[name]);
     }
     host.style.setProperty('--sm-on-primary',contrast('#ffffff',palette.primary)>=4.5 ? '#ffffff' : '#000000');
     host.style.colorScheme = contrast('#ffffff',palette.background)>=4.5 ? 'dark' : 'light';
-    if (premium || mode !== 'original') {
-      for (const [name,value] of Object.entries(premiumSurfaces(palette))) {
-        host.style.setProperty('--sm-' + name,value);
-      }
-    } else {
-      host.style.removeProperty('--sm-surface');
-      host.style.removeProperty('--sm-muted');
+    for (const [name,value] of Object.entries(premiumSurfaces(palette))) {
+      host.style.setProperty('--sm-' + name,value);
     }
   }
   let initialAppearance = options.appearance ?? state.appearance;
@@ -95,8 +95,11 @@ export function renderMenu(root, raw, template, options = {}) {
     if (eager) selectedPhotos.add(item.image);
     return el('div','sm-media' + (item.transparent ? ' sm-transparent' : '') + (template.cutout && item.demoCutout ? ' pa-demo-cutout' : ''),
       photo(item.image,{small:item.imageSmall,eager,
-        sizes:['row','ledger','rail','compact'].includes(mode) ? '80px' :
-          ['gallery','portrait','tile'].includes(mode) ? '(min-width: 760px) 270px, 48vw' : '(min-width: 760px) 460px, 94vw'}));
+        sizes:mode === 'rail' ? '(min-width: 640px) 146px, 70vw' :
+          ['row','ledger','compact','quiet','studio','glass','specimen','instrument'].includes(mode) ?
+            '(min-width: 430px) 146px, (min-width: 330px) 34vw, 112px' :
+          ['gallery','portrait','tile','exhibit','arcade'].includes(mode) ? '(min-width: 760px) 270px, 48vw' :
+            '(min-width: 760px) 460px, 94vw'}));
   }
   function details(item,{showImage = false,signal} = {}) {
     const lines = [
@@ -163,7 +166,7 @@ export function renderMenu(root, raw, template, options = {}) {
     select.addEventListener('change',() => options.onLanguage?.(select.value,state));
     return el('div','sm-utility',el('span','',t.menu),
       tokens.information && whatsapp(menu) && external(t.order,whatsapp(menu)),
-      el('div','sm-utility-controls',appearanceSelect,options.onLanguage && select));
+      el('div','sm-utility-controls',appearanceButton,options.onLanguage && select));
   }
   function section(section, type, action = 'dialog') {
     const heading = el('h2','',section.name);

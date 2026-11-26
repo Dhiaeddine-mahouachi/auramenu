@@ -7,7 +7,8 @@
 .sm-panel .sm-search{font-size:.82rem;padding-inline:5px}
 .sm-panel .sm-section{padding-top:4px}
 .sm-panel .sm-products{gap:0}
-.sm-panel .sm-card-rail{grid-template-columns:44px minmax(0,1fr);gap:6px}
+.sm-panel .sm-card-rail{grid-template-columns:minmax(0,1fr);gap:4px}
 .sm-panel .sm-card-rail .sm-product-title{display:grid;gap:4px}
 .sm-panel .sm-card-rail .sm-price{text-align:start;max-width:none}
-@media(min-width:760px){.sm-panel .sm-browse-side{grid-template-columns:190px minmax(0,1fr);gap:22px;padding-inline:28px}.sm-panel .sm-card-rail{grid-template-columns:80px minmax(0,1fr)}}
+@media(min-width:640px){.sm-panel .sm-card-rail{grid-template-columns:var(--sm-photo-width) minmax(0,1fr)}.sm-panel .sm-card-rail .sm-media{aspect-ratio:1.14}}
+@media(min-width:760px){.sm-panel .sm-browse-side{grid-template-columns:190px minmax(0,1fr);gap:22px;padding-inline:28px}}

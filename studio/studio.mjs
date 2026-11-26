@@ -25,7 +25,7 @@ for (const [id,label] of datasets) {
 }
 if (validDataset(options.get('dataset'))) $('dataset').value = options.get('dataset');
 if (['en','tr','ar'].includes(options.get('lang'))) $('language').value = options.get('lang');
-$('appearance').value = appearanceMode(options.get('appearance'));
+let appearance = options.has('appearance') ? appearanceMode(options.get('appearance')) : null;
 for (const [key,label] of Object.entries(colors)) {
   const input = el('input');
   input.type = 'color';
@@ -80,19 +80,17 @@ function postMenu(target = frame) {
   const fixtureData = advanced ? fixture(sample.fixture,{advanced:true}) : sample;
   const mode = assetMode === 'missing' ? {images:false} : assetMode === 'slow' ? {motion:false,slow:true} : {};
   const menu = {...fixtureData,design:{...overrides,...mode},menuLanguage:$('language').value};
-  target.contentWindow?.postMessage({type:'auramenu:render',menu,draft:true,appearance:$('appearance').value},location.origin);
+  target.contentWindow?.postMessage({type:'auramenu:render',menu,draft:true,appearance},location.origin);
 }
 function updateAppearance(value,source) {
-  const appearance = appearanceMode(value);
-  $('appearance').value = appearance;
+  appearance = appearanceMode(value);
   for (const pane of [frame,comparison]) {
     if (pane && pane.contentWindow !== source) {
       pane.contentWindow?.postMessage({type:'auramenu:appearance',appearance},location.origin);
     }
   }
   const url = new URL(location.href);
-  if (appearance === 'original') url.searchParams.delete('appearance');
-  else url.searchParams.set('appearance',appearance);
+  url.searchParams.set('appearance',appearance);
   history.replaceState(null,'',url);
 }
 function postActive() {
@@ -188,7 +186,6 @@ $('reset').addEventListener('click',() => {
 });
 $('dataset').addEventListener('change',applySample);
 $('language').addEventListener('change',postActive);
-$('appearance').addEventListener('change',event=>updateAppearance(event.target.value));
 $('width').addEventListener('change',configureDevice);
 for (const mode of modes) mode.addEventListener('click',() => {
   desktop = mode.dataset.mode === 'desktop';

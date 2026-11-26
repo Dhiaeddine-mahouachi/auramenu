@@ -5,7 +5,7 @@
 .sm-roast .sm-featured-gallery{padding-block:14px;background:var(--sm-surface);border-block:1px solid var(--sm-line)}
 .sm-roast .sm-nav-index{flex-wrap:wrap;padding-top:14px}
 .sm-roast .sm-nav-button{border:0;text-decoration:underline;text-underline-offset:4px}
-.sm-roast .sm-card-compact{grid-template-columns:54px minmax(0,1fr)}
+.sm-roast .sm-card-compact{grid-template-columns:var(--sm-photo-width) minmax(0,1fr)}
 .sm-roast .sm-connect{border-top-style:dashed}
 
 .sm-roast .sm-hero-split>.sm-media{grid-column:1;grid-row:1}

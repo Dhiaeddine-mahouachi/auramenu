@@ -7,7 +7,7 @@
 .sm-cinematic .sm-nav-reels {overflow:auto;flex-wrap:nowrap;border-block:var(--pa-rule)}
 .sm-cinematic .sm-nav-button {border:0;white-space:nowrap}
 .sm-cinematic .sm-card-film {border-block-end:var(--pa-rule)}
-.sm-cinematic .sm-card-film .sm-media {aspect-ratio:2.28}
+.sm-cinematic .sm-card-film .sm-media {aspect-ratio:1.78}
 .sm-cinematic .sm-card-film .sm-card-body {padding-block:11px}
 .sm-cinematic .sm-section-heading {border-inline-start:4px solid var(--sm-accent);padding-inline-start:9px}
 .sm-cinematic .pa-product {border-block-start:3px solid var(--sm-accent)}

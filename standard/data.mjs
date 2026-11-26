@@ -110,12 +110,20 @@ export function premiumSurfaces(tokens) {
   const muted = Math.min(contrast(subtle,background),contrast(subtle,surface))>=4.5 ? subtle : text;
   return {surface,muted};
 }
-export const appearanceMode = value => value === 'light' || value === 'dark' ? value : 'original';
+export const appearanceMode = (value,fallback = 'light') =>
+  value === 'light' || value === 'dark' ? value : fallback;
 
-export function appearanceColors(tokens, mode) {
-  if (appearanceMode(mode) === 'original') return tokens;
-  const background = mode === 'dark' ? '#131518' : '#ffffff';
-  const neutral = mode === 'dark' ? '#f4f4f3' : '#17191b';
+const lightBackgrounds = Object.freeze({
+  noir:'#f3e9dc',gatsby:'#f7ead7',cinematic:'#f3e5df',
+  'atelier-orbit':'#e5f0e3','retro-3d':'#f3e2e7',reality:'#e4efed',
+});
+
+export function appearanceColors(tokens,mode,templateKey) {
+  const dark = mode === 'dark';
+  const neutral = dark ? '#f4f4f3' : '#17191b';
+  const defaultBackground = dark ? mixHex(tokens.secondary,'#101114',.09) :
+    lightBackgrounds[templateKey] ?? mixHex(tokens.secondary,'#f9f4e9',.13);
+  const background = contrast(neutral,tokens.background) >= 7 ? tokens.background : defaultBackground;
   const text = contrast(tokens.text,background) >= 7 ? tokens.text : neutral;
   const {surface} = premiumSurfaces({...tokens,background,text});
   function readableAccent(hex) {

@@ -6,7 +6,7 @@
 .sm-minimal .sm-nav-button[aria-current=true]{text-decoration:underline;text-underline-offset:4px}
 .sm-minimal .sm-section-heading{text-align:center;padding-top:13px}
 .sm-minimal .sm-products{gap:0}
-.sm-minimal .sm-card-ledger{grid-template-columns:minmax(0,1fr) 40px;padding-block:15px}
-.sm-minimal .sm-card-ledger .sm-media{order:1;opacity:.86}
+.sm-minimal .sm-card-ledger{grid-template-columns:minmax(0,1fr) var(--sm-photo-width);padding-block:15px}
+.sm-minimal .sm-card-ledger .sm-media{order:1}
 .sm-minimal .sm-connect{text-align:center}
 .sm-minimal .sm-connect-brand,.sm-minimal .sm-links{justify-content:center}

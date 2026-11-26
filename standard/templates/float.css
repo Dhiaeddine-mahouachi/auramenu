@@ -6,4 +6,4 @@
 .sm-float .sm-card-float .sm-transparent{background:none}
 .sm-float .sm-card-float .sm-transparent img{object-fit:contain}
 .sm-float .sm-strip-track>.sm-card{flex-basis:min(73%,260px)}
-.sm-float .sm-card-compact{grid-template-columns:52px minmax(0,1fr)}
+.sm-float .sm-card-compact{grid-template-columns:var(--sm-photo-width) minmax(0,1fr)}

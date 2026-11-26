@@ -2,7 +2,7 @@
 .sm-noir .sm-hero-cover>.sm-media{margin-inline:calc(-1 * clamp(16px,5vw,54px));border-radius:0;aspect-ratio:2.25}
 .sm-noir .sm-tagline{color:var(--sm-accent)}
 .sm-noir .sm-nav-button{border-radius:4px}
-.sm-noir .sm-card-row{grid-template-columns:88px minmax(0,1fr);padding:7px;border:1px solid var(--sm-line);background:var(--sm-surface);border-radius:var(--sm-radius)}
+.sm-noir .sm-card-row{grid-template-columns:var(--sm-photo-width) minmax(0,1fr);padding:7px;border:1px solid var(--sm-line);background:var(--sm-surface);border-radius:var(--sm-radius)}
 .sm-noir .sm-card-row .sm-media{aspect-ratio:1.12}
 .sm-noir .sm-card-body{padding-block:3px}
 .sm-noir .sm-connect{border-top-color:var(--sm-accent)}

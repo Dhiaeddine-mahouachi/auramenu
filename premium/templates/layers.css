@@ -2,7 +2,7 @@
 .sm-layers .pa-graph {background:linear-gradient(var(--sm-line) 1px,transparent 1px),linear-gradient(90deg,var(--sm-line) 1px,transparent 1px);background-size:17px 17px;opacity:.32}
 .sm-layers .sm-heading h1 {font-size:clamp(2.35rem,9vw,6rem)}
 .sm-layers .sm-nav-technical {border:var(--pa-rule);padding:4px}
-.sm-layers .sm-card-specimen {padding:8px 0;border-block-end:var(--pa-rule);display:grid;grid-template-columns:86px minmax(0,1fr);align-items:center;gap:14px}
+.sm-layers .sm-card-specimen {padding:8px 0;border-block-end:var(--pa-rule);display:grid;grid-template-columns:var(--sm-photo-width) minmax(0,1fr);align-items:center;gap:14px}
 .sm-layers .sm-card-specimen .sm-media {aspect-ratio:1;border:1px dashed var(--sm-accent)}
 .sm-layers .sm-card-specimen.sm-no-image {grid-template-columns:1fr}
 .sm-layers .sm-section-heading {border-block-end:var(--pa-rule);padding-bottom:8px}

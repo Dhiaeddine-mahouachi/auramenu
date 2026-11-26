@@ -4,7 +4,7 @@
 .sm-reality .sm-browse-controls {border-block:var(--pa-rule)}
 .sm-reality .sm-nav-console .sm-nav-button {border-style:dashed}
 .sm-reality .sm-products-instrument {gap:12px}
-.sm-reality .sm-card-instrument {display:grid;grid-template-columns:minmax(88px,34%) minmax(0,1fr);background:var(--sm-surface);align-items:center;border:var(--pa-rule)}
+.sm-reality .sm-card-instrument {display:grid;grid-template-columns:var(--sm-photo-width) minmax(0,1fr);background:var(--sm-surface);align-items:center;border:var(--pa-rule)}
 .sm-reality .sm-card-instrument .sm-media {aspect-ratio:1.15}
 .sm-reality .sm-card-instrument .sm-card-body {padding-inline:9px}
 .sm-reality .sm-card-instrument.sm-no-image {grid-template-columns:1fr}

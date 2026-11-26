@@ -89,15 +89,14 @@ try {
   await frame.getByRole('button',{name:'Drinks',exact:true}).click();
   assert.equal(await frame.getByRole('searchbox').inputValue(),'');
   assert.equal(await frame.locator('.sm-sections h2').innerText(),'Drinks');
-  await studio.locator('#appearance').selectOption('dark');
+  const modeButton = frame.getByRole('button',{name:'Dark mode',exact:true});
+  await modeButton.click();
   await frame.locator('.sm-panel[data-appearance=dark]').waitFor();
   assert.equal(await frame.locator('.sm-sections h2').innerText(),'Drinks');
-  await frame.getByRole('combobox',{name:'Appearance'}).selectOption('light');
-  assert.equal(await frame.locator('.sm-panel').evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(255, 255, 255)');
+  await modeButton.click();
   await studio.waitForURL(/appearance=light/);
-  assert.equal(await studio.locator('#appearance').inputValue(),'light');
-  await studio.locator('#appearance').selectOption('original');
-  await frame.locator('.sm-panel[data-appearance=original]').waitFor();
+  assert.equal(await frame.locator('.sm-panel').evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(244, 248, 246)');
+  assert.equal(await frame.locator('.sm-appearance').count(),1);
   await frame.getByRole('searchbox').fill('not on the menu');
   assert.match(await frame.locator('.sm-empty').innerText(),/No dishes match/);
   await studio.locator('#dataset').selectOption('large');
@@ -157,9 +156,9 @@ try {
   await studio.getByRole('button',{name:'Compare designs'}).click();
   await studio.frameLocator('#compare-device iframe').locator('.pa').waitFor();
   assert.equal(await studio.locator('iframe').count(),2);
-  await studio.frameLocator('#compare-device iframe').getByRole('combobox',{name:'Appearance'}).selectOption('dark');
+  await studio.frameLocator('#compare-device iframe').getByRole('button',{name:'Dark mode',exact:true}).click();
   await frame.locator('.sm-reality[data-appearance=dark]').waitFor();
-  await studio.locator('#appearance').selectOption('original');
+  await frame.getByRole('button',{name:'Dark mode',exact:true}).click();
   await studio.getByRole('button',{name:'Compare designs'}).click();
   assert.equal(await studio.locator('iframe').count(),1);
   await studio.getByRole('button',{name:'All designs',exact:true}).click();
@@ -178,12 +177,12 @@ try {
   assert.equal(await production.locator('iframe').count(),0);
   assert.equal(await production.locator('a[href^="javascript:"]').count(),0);
   assert.ok(await production.getByRole('link',{name:'Order on WhatsApp'}).getAttribute('href'));
-  await production.getByRole('combobox',{name:'Appearance'}).selectOption('dark');
+  await production.getByRole('button',{name:'Dark mode',exact:true}).click();
   await production.reload();
   await production.locator('.sm[data-appearance=dark]').waitFor();
   await production.getByRole('combobox',{name:'Language'}).selectOption('ar');
-  await production.getByRole('combobox',{name:'المظهر'}).waitFor();
-  assert.equal(await production.getByRole('combobox',{name:'المظهر'}).inputValue(),'dark');
+  await production.getByRole('button',{name:'الوضع الداكن',exact:true}).waitFor();
+  assert.equal(await production.getByRole('button',{name:'الوضع الداكن',exact:true}).getAttribute('aria-pressed'),'true');
   await production.route(url => url.pathname === '/api/auramenu/sites/legacy-fixture',route => route.fulfill({json:{menu:{
     templateId:'modern',businessName:'Legacy QR menu',menuLanguage:'en',currency:'TRY',
     categories:[{name:'Entrées',items:[{name:'Classic dish',price:'50'}]}],
@@ -251,18 +250,27 @@ try {
           if (!root.querySelector('h1')?.textContent || !root.querySelector('.sm-card')) throw Error('Empty menu ' + entry.id + '/' + id);
           if (root.scrollWidth > document.documentElement.clientWidth + 1) throw Error('Horizontal overflow ' + entry.id + '/' + id + '/' + language);
           if (id === 'burger') {
-            const appearance = root.querySelector('.sm-appearance');
-            const original = getComputedStyle(root.firstElementChild).backgroundColor;
-            for (const [mode,expected] of [['light','rgb(255, 255, 255)'],['dark','rgb(19, 21, 24)']]) {
-              appearance.value = mode;
-              appearance.dispatchEvent(new Event('change'));
-              if (getComputedStyle(root.firstElementChild).backgroundColor !== expected ||
+            const appearance = root.querySelector('button.sm-appearance');
+            if (root.querySelectorAll('.sm-appearance').length !== 1) throw Error('Expected one toggle ' + entry.id);
+            const colors = [];
+            for (const mode of ['light','dark']) {
+              if (root.firstElementChild.dataset.appearance !== mode) appearance.click();
+              colors.push(getComputedStyle(root.firstElementChild).backgroundColor);
+              if (root.firstElementChild.dataset.appearance !== mode ||
+                  appearance.getAttribute('aria-pressed') !== String(mode === 'dark') ||
                   root.scrollWidth > document.documentElement.clientWidth + 1) {
                 throw Error('Invalid ' + mode + ' appearance ' + entry.id + '/' + language);
               }
             }
-            live.setAppearance('original');
-            if (getComputedStyle(root.firstElementChild).backgroundColor !== original) throw Error('Original colors changed ' + entry.id);
+            if (colors[0] === colors[1] || colors[0] === 'rgb(255, 255, 255)') {
+              throw Error('Appearance lacks separate tinted palettes ' + entry.id);
+            }
+            root.querySelector('.sm-tile')?.click();
+            const images = [...root.querySelectorAll('.sm-card>.sm-media')];
+            if (!images.length || images.some(image=> {
+              const {width,height} = image.getBoundingClientRect();
+              return width<100 || height<90;
+            })) throw Error('Product photo too small ' + entry.id + '/' + language);
           }
           const browse = root.querySelector('.sm-browse');
           if (browse) {

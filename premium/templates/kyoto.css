@@ -5,7 +5,7 @@
 .sm-kyoto .sm-nav-index {display:grid;gap:0;border-block-start:var(--pa-rule)}
 .sm-kyoto .sm-nav-button {background:transparent;color:var(--sm-text);border:0;border-block-end:var(--pa-rule)}
 .sm-kyoto .sm-nav-button[aria-current=true] {border-inline-start:3px solid var(--sm-primary)}
-.sm-kyoto .sm-card-quiet {display:grid;grid-template-columns:minmax(0,1fr) minmax(70px,29%);align-items:center;gap:14px;border-block-end:var(--pa-rule);padding-block:12px}
+.sm-kyoto .sm-card-quiet {display:grid;grid-template-columns:minmax(0,1fr) var(--sm-photo-width);align-items:center;gap:14px;border-block-end:var(--pa-rule);padding-block:12px}
 .sm-kyoto .sm-card-quiet .sm-media {grid-column:2;grid-row:1;aspect-ratio:1.18}
 .sm-kyoto .sm-card-quiet .sm-card-body {grid-column:1;grid-row:1}
 .sm-kyoto .sm-card-quiet .sm-product-title {display:grid}
