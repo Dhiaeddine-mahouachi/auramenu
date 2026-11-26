@@ -71,7 +71,7 @@
         let active;
         function paint(language,state) {
           active?.dispose();
-          active = mount(root,menu,{language,state,onLanguage:paint});
+          active = mount(root,menu,{language,state,onLanguage:paint,persistAppearance:true});
           document.documentElement.lang = root.firstElementChild.lang;
           document.documentElement.dir = root.firstElementChild.dir;
         }

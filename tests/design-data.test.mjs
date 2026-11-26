@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { getTemplate,registry } from '../standard/registry.mjs';
-import { imageUrl,money,normalize,theme,contrast,webUrl } from '../standard/data.mjs';
+import { imageUrl,money,normalize,theme,contrast,webUrl,appearanceColors,premiumSurfaces } from '../standard/data.mjs';
 import { fixture } from '../studio/fixtures.mjs';
 
 test('all thirty records resolve distinct production modules',async () => {
@@ -35,4 +35,22 @@ test('validates assets and ensures readable custom text',async () => {
   assert.equal(tokens.radius,32);
   assert.equal(tokens.heading,classic.defaults.heading);
   assert.equal(tokens.play,false);
+});
+
+test('Light and Dark palettes keep the foreground and accents readable across designs',async () => {
+  for (const entry of registry) {
+    const {default:template} = await entry.load();
+    const original = theme(template.defaults);
+    assert.equal(appearanceColors(original,'original'),original);
+    for (const mode of ['light','dark']) {
+      const colors = appearanceColors(original,mode);
+      const {surface,muted} = premiumSurfaces(colors);
+      assert.equal(colors.background,mode === 'light' ? '#ffffff' : '#131518');
+      for (const foreground of [colors.text,colors.primary,colors.accent,muted]) {
+        for (const background of [colors.background,surface]) {
+          assert.ok(contrast(foreground,background)>=4.5,entry.id + ' ' + mode);
+        }
+      }
+    }
+  }
 });

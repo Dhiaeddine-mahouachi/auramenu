@@ -5,3 +5,10 @@ const dictionaries = {
 };
 export const copy = lang => dictionaries[lang] || dictionaries.en;
 export const languageNames = {en:'English',tr:'Türkçe',ar:'العربية'};
+
+const appearances = {
+  en:{label:'Appearance',original:'Original',light:'Light',dark:'Dark'},
+  tr:{label:'Görünüm',original:'Orijinal',light:'Açık',dark:'Koyu'},
+  ar:{label:'المظهر',original:'الأصلي',light:'فاتح',dark:'داكن'},
+};
+export const appearanceCopy = lang => appearances[lang] || appearances.en;

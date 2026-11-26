@@ -1,8 +1,10 @@
-import { copy, languageNames } from './copy.mjs';
-import { fonts, normalize, theme, contrast, premiumSurfaces } from './data.mjs';
+import { copy, languageNames, appearanceCopy } from './copy.mjs';
+import { fonts, normalize, theme, contrast, premiumSurfaces, appearanceColors, appearanceMode } from './data.mjs';
 import { button, el, external, photo } from './dom.mjs';
 import { connect, whatsapp } from './connect.mjs';
 import { playInvitation } from './play.mjs';
+
+const appearanceKey = 'auraMenuAppearance';
 
 export function renderMenu(root, raw, template, options = {}) {
   const state = {selected:0, query:'', tile:null, ...options.state};
@@ -10,12 +12,20 @@ export function renderMenu(root, raw, template, options = {}) {
   const host = el('article','sm sm-' + template.key);
   const menu = normalize(raw,options.language,options.preview);
   const t = copy(menu.lang);
+  const appearanceText = appearanceCopy(menu.lang);
+  const appearanceSelect = el('select','sm-appearance');
+  appearanceSelect.setAttribute('aria-label',appearanceText.label);
+  for (const mode of ['original','light','dark']) appearanceSelect.add(new Option(appearanceText[mode],mode));
+  appearanceSelect.addEventListener('change',() => {
+    setAppearance(appearanceSelect.value);
+    if (options.persistAppearance) {
+      try { localStorage.setItem(appearanceKey,state.appearance); } catch {}
+    }
+    options.onAppearance?.(state.appearance);
+  });
   const tokens = theme(template.defaults,menu.design);
   const premium = template.tier === 'premium';
   host.classList.toggle('pa',premium);
-  if (premium) for (const [key,value] of Object.entries(premiumSurfaces(tokens))) {
-    host.style.setProperty('--sm-' + key,value);
-  }
   host.dataset.motion = tokens.motion && !menu.design.slow ? 'on' : 'off';
   host.dataset.ornaments = tokens.ornaments ? 'on' : 'off';
   const selectedPhotos = new Set();
@@ -23,8 +33,31 @@ export function renderMenu(root, raw, template, options = {}) {
   host.lang = menu.lang;
   host.dir = menu.dir;
   host.dataset.layout = template.key;
-  for (const token of ['primary','secondary','background','text','accent']) host.style.setProperty('--sm-' + token,tokens[token]);
-  host.style.setProperty('--sm-on-primary',contrast('#ffffff',tokens.primary)>=4.5 ? '#ffffff' : '#000000');
+  function setAppearance(value) {
+    const mode = appearanceMode(value);
+    state.appearance = mode;
+    appearanceSelect.value = mode;
+    host.dataset.appearance = mode;
+    const palette = appearanceColors(tokens,mode);
+    for (const name of ['primary','secondary','background','text','accent']) {
+      host.style.setProperty('--sm-' + name,palette[name]);
+    }
+    host.style.setProperty('--sm-on-primary',contrast('#ffffff',palette.primary)>=4.5 ? '#ffffff' : '#000000');
+    host.style.colorScheme = contrast('#ffffff',palette.background)>=4.5 ? 'dark' : 'light';
+    if (premium || mode !== 'original') {
+      for (const [name,value] of Object.entries(premiumSurfaces(palette))) {
+        host.style.setProperty('--sm-' + name,value);
+      }
+    } else {
+      host.style.removeProperty('--sm-surface');
+      host.style.removeProperty('--sm-muted');
+    }
+  }
+  let initialAppearance = options.appearance ?? state.appearance;
+  if (initialAppearance == null && options.persistAppearance) {
+    try { initialAppearance = localStorage.getItem(appearanceKey); } catch {}
+  }
+  setAppearance(initialAppearance);
   host.style.setProperty('--sm-heading',fonts[tokens.heading]);
   host.style.setProperty('--sm-body',fonts[tokens.body]);
   host.style.setProperty('--sm-radius',tokens.radius + 'px');
@@ -129,7 +162,8 @@ export function renderMenu(root, raw, template, options = {}) {
     select.setAttribute('aria-label',t.language);
     select.addEventListener('change',() => options.onLanguage?.(select.value,state));
     return el('div','sm-utility',el('span','',t.menu),
-      ...[tokens.information && whatsapp(menu) && external(t.order,whatsapp(menu)),options.onLanguage && select].filter(Boolean));
+      tokens.information && whatsapp(menu) && external(t.order,whatsapp(menu)),
+      el('div','sm-utility-controls',appearanceSelect,options.onLanguage && select));
   }
   function section(section, type, action = 'dialog') {
     const heading = el('h2','',section.name);
@@ -255,5 +289,5 @@ export function renderMenu(root, raw, template, options = {}) {
     tokens.play && playInvitation(t,(title,render) => dialog('AuraPlay',render,'sm-game'),lifecycle.signal)
   ].filter(Boolean));
   root.replaceChildren(host);
-  return {dispose:() => { lifecycle.abort(); host.remove(); },tokens,state};
+  return {dispose:() => { lifecycle.abort(); host.remove(); },tokens,state,setAppearance};
 }

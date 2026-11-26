@@ -89,6 +89,15 @@ try {
   await frame.getByRole('button',{name:'Drinks',exact:true}).click();
   assert.equal(await frame.getByRole('searchbox').inputValue(),'');
   assert.equal(await frame.locator('.sm-sections h2').innerText(),'Drinks');
+  await studio.locator('#appearance').selectOption('dark');
+  await frame.locator('.sm-panel[data-appearance=dark]').waitFor();
+  assert.equal(await frame.locator('.sm-sections h2').innerText(),'Drinks');
+  await frame.getByRole('combobox',{name:'Appearance'}).selectOption('light');
+  assert.equal(await frame.locator('.sm-panel').evaluate(node=>getComputedStyle(node).backgroundColor),'rgb(255, 255, 255)');
+  await studio.waitForURL(/appearance=light/);
+  assert.equal(await studio.locator('#appearance').inputValue(),'light');
+  await studio.locator('#appearance').selectOption('original');
+  await frame.locator('.sm-panel[data-appearance=original]').waitFor();
   await frame.getByRole('searchbox').fill('not on the menu');
   assert.match(await frame.locator('.sm-empty').innerText(),/No dishes match/);
   await studio.locator('#dataset').selectOption('large');
@@ -148,6 +157,9 @@ try {
   await studio.getByRole('button',{name:'Compare designs'}).click();
   await studio.frameLocator('#compare-device iframe').locator('.pa').waitFor();
   assert.equal(await studio.locator('iframe').count(),2);
+  await studio.frameLocator('#compare-device iframe').getByRole('combobox',{name:'Appearance'}).selectOption('dark');
+  await frame.locator('.sm-reality[data-appearance=dark]').waitFor();
+  await studio.locator('#appearance').selectOption('original');
   await studio.getByRole('button',{name:'Compare designs'}).click();
   assert.equal(await studio.locator('iframe').count(),1);
   await studio.getByRole('button',{name:'All designs',exact:true}).click();
@@ -166,6 +178,12 @@ try {
   assert.equal(await production.locator('iframe').count(),0);
   assert.equal(await production.locator('a[href^="javascript:"]').count(),0);
   assert.ok(await production.getByRole('link',{name:'Order on WhatsApp'}).getAttribute('href'));
+  await production.getByRole('combobox',{name:'Appearance'}).selectOption('dark');
+  await production.reload();
+  await production.locator('.sm[data-appearance=dark]').waitFor();
+  await production.getByRole('combobox',{name:'Language'}).selectOption('ar');
+  await production.getByRole('combobox',{name:'المظهر'}).waitFor();
+  assert.equal(await production.getByRole('combobox',{name:'المظهر'}).inputValue(),'dark');
   await production.route(url => url.pathname === '/api/auramenu/sites/legacy-fixture',route => route.fulfill({json:{menu:{
     templateId:'modern',businessName:'Legacy QR menu',menuLanguage:'en',currency:'TRY',
     categories:[{name:'Entrées',items:[{name:'Classic dish',price:'50'}]}],
@@ -232,6 +250,20 @@ try {
           const live = ready.mount(root,fixture(id),{language});
           if (!root.querySelector('h1')?.textContent || !root.querySelector('.sm-card')) throw Error('Empty menu ' + entry.id + '/' + id);
           if (root.scrollWidth > document.documentElement.clientWidth + 1) throw Error('Horizontal overflow ' + entry.id + '/' + id + '/' + language);
+          if (id === 'burger') {
+            const appearance = root.querySelector('.sm-appearance');
+            const original = getComputedStyle(root.firstElementChild).backgroundColor;
+            for (const [mode,expected] of [['light','rgb(255, 255, 255)'],['dark','rgb(19, 21, 24)']]) {
+              appearance.value = mode;
+              appearance.dispatchEvent(new Event('change'));
+              if (getComputedStyle(root.firstElementChild).backgroundColor !== expected ||
+                  root.scrollWidth > document.documentElement.clientWidth + 1) {
+                throw Error('Invalid ' + mode + ' appearance ' + entry.id + '/' + language);
+              }
+            }
+            live.setAppearance('original');
+            if (getComputedStyle(root.firstElementChild).backgroundColor !== original) throw Error('Original colors changed ' + entry.id);
+          }
           const browse = root.querySelector('.sm-browse');
           if (browse) {
             const content = browse.querySelector('.sm-sections');

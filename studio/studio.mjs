@@ -1,6 +1,6 @@
 import { registry,getTemplate } from '../standard/registry.mjs';
 import { button,el } from '../standard/dom.mjs';
-import { webUrl } from '../standard/data.mjs';
+import { webUrl,appearanceMode } from '../standard/data.mjs';
 import { datasets,fixture } from './fixtures.mjs';
 
 const $ = id => document.getElementById(id);
@@ -25,6 +25,7 @@ for (const [id,label] of datasets) {
 }
 if (validDataset(options.get('dataset'))) $('dataset').value = options.get('dataset');
 if (['en','tr','ar'].includes(options.get('lang'))) $('language').value = options.get('lang');
+$('appearance').value = appearanceMode(options.get('appearance'));
 for (const [key,label] of Object.entries(colors)) {
   const input = el('input');
   input.type = 'color';
@@ -79,7 +80,20 @@ function postMenu(target = frame) {
   const fixtureData = advanced ? fixture(sample.fixture,{advanced:true}) : sample;
   const mode = assetMode === 'missing' ? {images:false} : assetMode === 'slow' ? {motion:false,slow:true} : {};
   const menu = {...fixtureData,design:{...overrides,...mode},menuLanguage:$('language').value};
-  target.contentWindow?.postMessage({type:'auramenu:render',menu,draft:true},location.origin);
+  target.contentWindow?.postMessage({type:'auramenu:render',menu,draft:true,appearance:$('appearance').value},location.origin);
+}
+function updateAppearance(value,source) {
+  const appearance = appearanceMode(value);
+  $('appearance').value = appearance;
+  for (const pane of [frame,comparison]) {
+    if (pane && pane.contentWindow !== source) {
+      pane.contentWindow?.postMessage({type:'auramenu:appearance',appearance},location.origin);
+    }
+  }
+  const url = new URL(location.href);
+  if (appearance === 'original') url.searchParams.delete('appearance');
+  else url.searchParams.set('appearance',appearance);
+  history.replaceState(null,'',url);
 }
 function postActive() {
   postMenu();
@@ -127,11 +141,16 @@ function syncSettings() {
 }
 window.addEventListener('message',event => {
   if (event.origin !== location.origin) return;
+  const knownFrame = event.source === frame.contentWindow || (comparison && event.source === comparison.contentWindow);
+  if (!knownFrame) return;
+  if (event.data?.type === 'auramenu:appearance') {
+    updateAppearance(event.data.appearance,event.source);
+    return;
+  }
   if (comparison && event.source === comparison.contentWindow) {
     if (event.data?.type === 'auramenu:template-ready') postMenu(comparison);
     return;
   }
-  if (event.source !== frame.contentWindow) return;
   if (event.data?.type === 'auramenu:template-ready') postMenu();
   if (event.data?.type === 'auramenu:rendered') {
     defaults = event.data.defaults;
@@ -169,6 +188,7 @@ $('reset').addEventListener('click',() => {
 });
 $('dataset').addEventListener('change',applySample);
 $('language').addEventListener('change',postActive);
+$('appearance').addEventListener('change',event=>updateAppearance(event.target.value));
 $('width').addEventListener('change',configureDevice);
 for (const mode of modes) mode.addEventListener('click',() => {
   desktop = mode.dataset.mode === 'desktop';

@@ -110,6 +110,23 @@ export function premiumSurfaces(tokens) {
   const muted = Math.min(contrast(subtle,background),contrast(subtle,surface))>=4.5 ? subtle : text;
   return {surface,muted};
 }
+export const appearanceMode = value => value === 'light' || value === 'dark' ? value : 'original';
+
+export function appearanceColors(tokens, mode) {
+  if (appearanceMode(mode) === 'original') return tokens;
+  const background = mode === 'dark' ? '#131518' : '#ffffff';
+  const neutral = mode === 'dark' ? '#f4f4f3' : '#17191b';
+  const text = contrast(tokens.text,background) >= 7 ? tokens.text : neutral;
+  const {surface} = premiumSurfaces({...tokens,background,text});
+  function readableAccent(hex) {
+    for (const amount of [1,.85,.65,.45,.25]) {
+      const color = mixHex(hex,neutral,amount);
+      if (contrast(color,background) >= 4.5 && contrast(color,surface) >= 4.5) return color;
+    }
+    return neutral;
+  }
+  return {...tokens,background,text,primary:readableAccent(tokens.primary),accent:readableAccent(tokens.accent)};
+}
 export const fonts = Object.freeze({
   sans:'system-ui, sans-serif', serif:'Georgia, serif', mono:'ui-monospace, monospace',
   editorial:'"Palatino Linotype", Georgia, serif', condensed:'"Arial Narrow", "Liberation Sans Narrow", Arial, sans-serif',

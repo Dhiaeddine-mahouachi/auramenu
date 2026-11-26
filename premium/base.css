@@ -12,7 +12,7 @@
   --pa-rule:1px solid var(--sm-line);
 }
 .pa .sm-utility {min-height:58px;padding-inline:var(--pa-inset)}
-.pa .sm-language,.pa .sm-nav-button,.pa .sm-link,.pa .sm-action,.pa .sm-dialog-close,.pa .sm-pill,.pa .sm-search {min-height:44px}
+.pa .sm-language,.pa .sm-appearance,.pa .sm-nav-button,.pa .sm-link,.pa .sm-action,.pa .sm-dialog-close,.pa .sm-pill,.pa .sm-search {min-height:44px}
 .pa .sm-hero {padding:clamp(28px,9vw,92px) var(--pa-inset)}
 .pa .sm-heading h1 {font-size:clamp(2.85rem,12vw,7.6rem);line-height:.93}
 .pa .sm-intro {max-width:38ch}
