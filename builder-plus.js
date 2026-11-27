@@ -146,28 +146,10 @@
   cust.querySelectorAll("[data-m]").forEach((b) => (b.onclick = () => { extras.mode = b.dataset.m; markMode(); saveExtras(); }));
   markColor(); markMode();
 
-  /* ── Step navigation ───────────────────────────────────────────────── */
-  const stepIds = ["businessSection", "smartSection", "contentSection", "customizeSection", "publishSection", "qrBuilder"].filter((id) => $(id));
-  const nav = document.createElement("nav"); nav.className = "am-steps-nav"; nav.setAttribute("aria-label", "Steps");
-  form.prepend(nav);
-  function renderNav() {
-    nav.innerHTML = `<div class="am-steps-track">${stepIds.map((id, i) => `<a href="#${id}" data-step="${id}"><b>${i + 1}</b><span>${t("steps")[["businessSection", "smartSection", "contentSection", "customizeSection", "publishSection", "qrBuilder"].indexOf(id)]}</span></a>`).join("")}</div><div class="am-steps-progress"><i id="stepProgress"></i></div>`;
-    nav.querySelectorAll("a").forEach((a) => (a.onclick = (e) => { e.preventDefault(); $(a.dataset.step).scrollIntoView({ behavior: "smooth", block: "start" }); }));
-    done();
-  }
-  function done() {
-    const d = window.AuraMenuVoiceBridge?.getDraft();
-    const ok = { businessSection: !!$("businessName")?.value.trim(), smartSection: !!d?.categories.some((c) => c.items.length), contentSection: !!d?.categories.some((c) => c.items.some((i) => i.name && i.price)), customizeSection: !!(extras.accent || extras.mode || extras.logo || extras.socials || extras.video), publishSection: !!$("slug")?.value.trim(), qrBuilder: false };
-    nav.querySelectorAll("[data-step]").forEach((a) => a.classList.toggle("is-done", !!ok[a.dataset.step]));
-    const n = Object.values(ok).filter(Boolean).length; const bar = $("stepProgress"); if (bar) bar.style.width = `${Math.round((n / (stepIds.length - 1)) * 100)}%`;
-  }
-  const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) nav.querySelectorAll("[data-step]").forEach((a) => a.classList.toggle("is-active", a.dataset.step === en.target.id)); }), { rootMargin: "-30% 0px -60% 0px" });
-  stepIds.forEach((id) => io.observe($(id)));
-  stepIds.slice(0, -1).forEach((id, i) => { const b = document.createElement("button"); b.type = "button"; b.className = "am-next"; b.dataset.bp = "next"; b.onclick = () => $(stepIds[i + 1]).scrollIntoView({ behavior: "smooth", block: "start" }); $(id).append(b); });
-  form.addEventListener("input", done); form.addEventListener("click", () => setTimeout(done, 50));
+  /* Step navigation lives in am2/builder-wizard.js (one step per screen). */
 
   /* ── i18n for injected UI ──────────────────────────────────────────── */
-  function applyText() { document.querySelectorAll("[data-bp]").forEach((el) => (el.textContent = t(el.dataset.bp))); renderNav(); }
+  function applyText() { document.querySelectorAll("[data-bp]").forEach((el) => (el.textContent = t(el.dataset.bp))); }
   new MutationObserver(applyText).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
   applyText();
 })();
