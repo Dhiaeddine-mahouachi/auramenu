@@ -82,7 +82,7 @@
     if (DEMO) { menu = demoMenu(); $("banner").hidden = false; $("banner").textContent = t("demoBanner"); return boot(); }
     try {
       const sr = await fetch(ACCOUNT + "/session", { cache: "no-store", credentials: "same-origin" }); const sess = await sr.json().catch(() => ({}));
-      if (!sr.ok || !sess.user?.emailVerified) { location.replace(`/login?lang=${S.lang}&next=${encodeURIComponent("studio.html" + location.search)}`); return; }
+      if (!sr.ok || !sess.user?.emailVerified) { location.replace(`/signin.html?lang=${S.lang}&next=${encodeURIComponent("studio.html" + location.search)}`); return; }
       $("hello").textContent = `${t("hello")} ${sess.user.name ? "· " + sess.user.name : ""}`;
     } catch { return showError(t("errLoad")); }
     const id = params.get("id") || localStorage.getItem("auraMenuLastRequest") || "";
@@ -227,7 +227,7 @@
   document.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => go(b.dataset.tab)));
   $("save").onclick = save;
   $("burger").onclick = () => document.body.classList.toggle("is-nav");
-  $("logout").onclick = async () => { if (!DEMO) { try { await fetch(ACCOUNT + "/logout", { method: "POST", credentials: "same-origin" }); } catch {} } location.href = `/login?lang=${S.lang}`; };
+  $("logout").onclick = async () => { if (!DEMO) { try { await fetch(ACCOUNT + "/logout", { method: "POST", credentials: "same-origin" }); } catch {} } location.href = `/signin.html?lang=${S.lang}`; };
   addEventListener("beforeunload", (e) => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
   addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); save(); } });
   load();

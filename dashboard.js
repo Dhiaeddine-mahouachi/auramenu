@@ -376,16 +376,16 @@
 
   async function restore() {
     const menuId=params.get("id");
-    if(!menuId){location.replace("/account");return;}
+    if(!menuId){location.replace("/studio.html");return;}
     $("claim").hidden=true;
     try{
       const r=await fetch("/api/aurapops/account/session",{cache:"no-store"});
       const session=await r.json();
-      if(!r.ok||!session.user?.emailVerified){location.replace("/login");return;}
+      if(!r.ok||!session.user?.emailVerified){location.replace("/signin.html");return;}
       token = storedToken(menuId);
       const data=await request("/dashboard/"+encodeURIComponent(menuId));
       menu=data.menu;show();
-    }catch(error){$("claim").hidden=false;$("claim").innerHTML='<h1>Open your menu from your account</h1><p></p><a href="/account">Back to my menus →</a>';$("claim").querySelector("p").textContent=error.message;}
+    }catch(error){$("claim").hidden=false;$("claim").innerHTML='<h1>Open your menu from your account</h1><p></p><a href="/studio.html">Back to my menus →</a>';$("claim").querySelector("p").textContent=error.message;}
   }
 
   function show() {
