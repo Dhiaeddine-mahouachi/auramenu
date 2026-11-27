@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
+const origin = process.env.AURA_TEST_ORIGIN || "http://127.0.0.1:4173";
 const browser=await chromium.launch({headless:true,...(process.env.CHROMIUM_PATH?{executablePath:process.env.CHROMIUM_PATH}:{}),args:['--no-sandbox']});
 try {
  const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];
@@ -9,7 +10,7 @@ try {
    'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js',
    route=>route.fulfill({path:process.env.AURA_QR_SCRIPT,contentType:'application/javascript'})
  );
- await page.goto('http://127.0.0.1:4173/builder.html?lang=en');
+ await page.goto(origin+'/builder.html?lang=en&step=menu');
  // Smart Fill invokes the review handler programmatically and hides its legacy button.
  const review = () => page.locator('#assistantReview').evaluate(button => button.click());
  assert.equal(await page.locator('[data-item-field="name"]').count(),0,'No invented demo facts in new draft');
@@ -40,8 +41,8 @@ try {
  await page.locator('#assistantApply').click();assert.equal(await page.locator('#businessName').inputValue(),'<img src=x onerror=alert(1)>');
  await page.locator('#assistantSource').fill('Set restaurant name to Istanbul Burger');
  await review();await page.locator('#assistantApply').click();
- await page.waitForFunction(()=>document.querySelector('#qrUrl').textContent.endsWith('/'+document.querySelector('#slug').value));
- assert.equal(await page.locator('#qrUrl').innerText(),'https://auramenu.space/istanbul-burger','QR tracks automatically changed slug');
+ await page.goto(origin+'/builder.html?lang=en&step=business');
+ assert.equal(await page.locator('#slug').inputValue(),'istanbul-burger','Menu link tracks the restaurant name');
  await page.locator('#slug').fill('my-custom-menu');await page.reload();
  await page.locator('#businessName').fill('New restaurant name');await page.locator('#businessName').press('Tab');
  assert.equal(await page.locator('#slug').inputValue(),'my-custom-menu','Custom menu URL is retained across reload');

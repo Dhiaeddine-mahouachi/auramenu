@@ -29,7 +29,7 @@ async function openBuilder() {
     serverDraft = { name, data, version: version + 1, updatedAt: "2026-11-27 12:00:00" };
     return respond(version ? 200 : 201, { version: serverDraft.version });
   });
-  await page.goto(origin + "/builder.html?lang=en");
+  await page.goto(origin + "/builder.html?lang=en&step=business");
   return { page, context };
 }
 

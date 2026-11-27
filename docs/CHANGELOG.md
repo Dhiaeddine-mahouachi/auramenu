@@ -9,6 +9,9 @@
 - Tightened plan tier enforcement while retaining one-time menu grants. Added an AuraMenu readiness response and expanded lifecycle, draft and design regression coverage.
 - Corrected heading and category-number contrast in Neon and Ivory light mode.
 - Live route ownership verified. No production deployment from these branches.
+## 2026-11-28
+- Builder is a 5-step wizard (Plan → Restaurant → Menu → Look → Register), one screen per step with checks before moving on. Removed: description, city, payment note, email-code verification, the QR designer (QR is in Studio). Registration needs a signed-in AuraDigital account; the account owns the menu at once.
+- Status page shows a live tracker (registered → payment confirmed → live) and refreshes itself every 15 s until the menu is live.
 
 ## 2026-11-27
 - Designs follow the plan: Standard and Annual show and accept only the 15 standard designs, Premium only the 15 premium designs (builder, Studio, pricing cards, FAQ; enforced by the backend). Choosing a premium design from the gallery selects the Premium plan.

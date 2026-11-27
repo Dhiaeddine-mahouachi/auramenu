@@ -19,6 +19,9 @@ try {
   const page = await browser.newPage();
   await page.route("**/*", async (route) => {
     const url = new URL(route.request().url());
+    if (process.env.AURA_QR_SCRIPT && url.href === "https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js") {
+      return route.fulfill({ path: process.env.AURA_QR_SCRIPT, contentType: "application/javascript" });
+    }
     if (url.origin !== origin) return route.abort();
     if (url.pathname === "/api/auramenu/account/session") {
       return route.fulfill({ json: { user: { emailVerified: true } } });
@@ -64,6 +67,9 @@ try {
   page.once("dialog", dialog => dialog.accept());
   await page.getByRole("button", { name: "Restore", exact: true }).click();
   await page.waitForFunction(() => document.querySelector("#bizName")?.textContent === "Earlier Café");
+  await page.locator('[data-tab="qr"]').click();
+  assert.match(await page.locator(".st-qrbox small").textContent(), /auramenu\.space\/test-cafe/);
+  if (process.env.AURA_QR_SCRIPT) await page.locator("#qrBox canvas").waitFor({ state: "attached" });
   console.log("PASS earlier builder token, payment gate, publication, private preview and restoration");
 } finally {
   await browser.close();

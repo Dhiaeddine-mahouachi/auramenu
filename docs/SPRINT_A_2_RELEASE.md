@@ -1,5 +1,7 @@
 # AuraMenu Sprint A.2 release candidate
 
+Draft reviews: [AuraMenu #10](https://github.com/Dhiaeddine-mahouachi/auramenu/pull/10) and [AuraDigital #115](https://github.com/Dhiaeddine-mahouachi/auradigital/pull/115).
+
 ## Verified on the development branches
 
 - The AuraMenu edge Worker serves published slugs at the original guest URL. It supplies canonical, Open Graph, Twitter and Restaurant structured data. It returns 404 for unpublished or unknown slugs and 503 for upstream failures. Apex and www request shapes, legacy query links, API proxying, and the edge rollback switch passed local Worker tests, including a two-Worker workerd smoke backed by isolated D1.

@@ -75,3 +75,8 @@ Used the same ten-sample Chromium profile as the Sprint A test, with the same vi
 | Velvet Premium | 1.912 s | 0.052 |
 
 Remote staging deployment, a full approved staging D1 restore, real email and Google authentication, physical scans and alert delivery are open. The release procedure and rollback steps are in [the Sprint A.2 release candidate](SPRINT_A_2_RELEASE.md).
+
+
+### Integration with the current main branches
+
+Integrated AuraMenu `dd34c90` and AuraDigital `7d4e081` into the draft branches. The five-step builder and account-only menu registration were retained. The revised wizard reads the shared plan catalogue and leaves its nested Smart Fill panels available on the Menu step. The merged branches passed 28 AuraMenu and 405 AuraDigital automated tests, 900 legacy browser combinations, draft recovery, Studio history and QR rendering, assistant review and voice entry. QR compatibility now runs through Studio and the public legacy URLs because the current builder no longer has a QR panel.

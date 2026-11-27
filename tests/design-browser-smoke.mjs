@@ -182,7 +182,7 @@ try {
   await production.locator('#grid [data-open="simit"]').first().click();
   await production.locator('#pv-want').click();
   await production.locator('#pv-self').click();
-  await production.frameLocator('#templatePreview').locator('.d-simit').waitFor();
+  await production.frameLocator('#templatePreview').locator('.d-simit').waitFor({state:'attached'});
   assert.equal(await production.locator('#templateId').inputValue(),'std-02');
   assert.equal(await production.locator('#templateId option[value^=std-]').count(),15);
   assert.equal(await production.locator('#templateId option[value^=pre-]:not([disabled])').count(),0);
@@ -243,10 +243,11 @@ try {
     if (route.request().method() === 'PATCH') savedMenu = route.request().postDataJSON();
     return route.fulfill({json:{menu:savedMenu || draftMenu}});
   });
-  await ownerPage.goto(origin + '/builder.html?lang=en&template=std-02');
+  await ownerPage.goto(origin + '/builder.html?lang=en&template=std-02&step=business');
   const builderFrame = ownerPage.frameLocator('#templatePreview');
-  await builderFrame.locator('.d-simit').waitFor();
+  await builderFrame.locator('.d-simit').waitFor({state:'attached'});
   await ownerPage.locator('#businessName').fill('Builder fixture');
+  await ownerPage.goto(origin + '/builder.html?lang=en&template=std-02&step=look');
   await builderFrame.getByRole('heading',{name:'Builder fixture'}).waitFor();
   await ownerPage.locator('#custColor').fill('#165943');
   await builderFrame.locator('html[style*="#165943"]').waitFor();

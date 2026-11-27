@@ -5,3 +5,18 @@ html,body{background:#F8EFE2!important;color:#24191E}
 body{font-family:"Inter","Cairo",system-ui,sans-serif!important}
 h1,h2,h3,.brand{font-family:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif!important;letter-spacing:-.02em}
 .brand-mark img{filter:none!important}
+/* Status page: registration → payment → live tracker */
+.am-track{list-style:none;margin:22px 0 10px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:relative}
+.am-track li{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;position:relative}
+.am-track li+li::before{content:"";position:absolute;top:17px;inset-inline-end:calc(50% + 22px);width:calc(100% - 44px);height:3px;border-radius:3px;background:rgba(36,25,30,.15)}
+.am-track li.is-done+li::before,.am-track li.is-done+li.is-done::before{background:#6E2037}
+.am-track b{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2.5px solid #24191E;background:#F8EFE2;color:#24191E;font:800 15px/1 "Baloo 2",system-ui,sans-serif;position:relative;z-index:1}
+.am-track .is-done b{background:#6E2037;border-color:#6E2037;color:#F8EFE2}
+.am-track .is-now b{background:#F5BD43;animation:am-track-pulse 1.8s ease-in-out infinite}
+.am-track span{font:800 14px/1.2 "Baloo 2",system-ui,sans-serif}
+.am-track small{display:block;font:600 12px/1.3 Inter,system-ui,sans-serif;color:#6B5450}
+.am-track-auto{display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:#6B5450;margin:6px 0}
+.am-track-auto i{width:8px;height:8px;border-radius:50%;background:#2E7D5B;animation:am-track-pulse 1.8s ease-in-out infinite}
+.am-track-studio{text-align:center;margin:4px 0 14px}.am-track-studio a{font-weight:800;color:#6E2037}
+@keyframes am-track-pulse{50%{box-shadow:0 0 0 6px rgba(245,189,67,.35)}}
+@media (prefers-reduced-motion:reduce){.am-track .is-now b,.am-track-auto i{animation:none}}

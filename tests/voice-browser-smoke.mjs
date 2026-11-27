@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
+const origin = process.env.AURA_TEST_ORIGIN || "http://127.0.0.1:4173";
 
 const browser = await chromium.launch({ headless: true, ...(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}), args: ["--no-sandbox"] });
 try {
@@ -17,7 +18,7 @@ try {
     }
     window.SpeechRecognition = MockSpeechRecognition;
   });
-  const response = await page.goto("http://127.0.0.1:4173/builder.html?lang=en", { waitUntil: "domcontentloaded" });
+  const response = await page.goto(origin + "/builder.html?lang=en&step=menu", { waitUntil: "domcontentloaded" });
   assert.equal(response.status(), 200);
   await page.locator("#smartMore summary").click();
   await page.locator("#voiceTarget").selectOption("businessName");
