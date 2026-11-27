@@ -8,6 +8,7 @@
   const ACCOUNTS = window.AURAMENU_ACCOUNTS_ORIGIN || "https://auradigitalworks.com";
   const copy = {
     tr: {
+      termsDoc: "Kullanım koşulları", privacyDoc: "Gizlilik bildirimi",
       kicker: "AuraMenu", artA: "Selam şef!", artB: "Menün seni bekliyor.", artP: "Fiyatları güncelle, ürünü tükendi yap, tasarımı değiştir. Hepsi tek yerden.",
       signinTitle: "Tekrar hoş geldin.", signinSub: "Menünü yönetmek için giriş yap.",
       registerTitle: "Hesabını oluştur.", registerSub: "Bir dakikada hazır. Menünü bu hesapla kaydedip yönetirsin.",
@@ -28,6 +29,7 @@
       google_off: "Google ile giriş şu an kullanılamıyor. E-posta ile devam et.", google_canceled: "Google girişi iptal edildi.", google_link_required: "Bu e-postayla zaten bir hesap var. E-posta ve şifrenle giriş yap.", google_failed: "Google girişi tamamlanamadı. Tekrar dene.",
     },
     en: {
+      termsDoc: "Terms of service", privacyDoc: "Privacy notice",
       kicker: "AuraMenu", artA: "Hey, chef!", artB: "Your menu is waiting.", artP: "Update prices, mark items sold out, change the design. All in one place.",
       signinTitle: "Welcome back.", signinSub: "Sign in to manage your menu.",
       registerTitle: "Create your account.", registerSub: "Ready in a minute. You register and manage your menu with this account.",
@@ -48,6 +50,7 @@
       google_off: "Google sign-in is not available right now. Continue with email.", google_canceled: "Google sign-in was canceled.", google_link_required: "An account with this email already exists. Sign in with email and password.", google_failed: "Google sign-in could not be completed. Try again.",
     },
     ar: {
+      termsDoc: "شروط الاستخدام", privacyDoc: "إشعار الخصوصية",
       kicker: "AuraMenu", artA: "أهلاً يا شيف!", artB: "قائمتك بانتظارك.", artP: "حدّث الأسعار، علّم الأصناف النافدة، غيّر التصميم. كل ذلك في مكان واحد.",
       signinTitle: "مرحباً بعودتك.", signinSub: "سجّل الدخول لإدارة قائمتك.",
       registerTitle: "أنشئ حسابك.", registerSub: "جاهز خلال دقيقة. تسجّل قائمتك وتديرها بهذا الحساب.",
@@ -117,7 +120,7 @@
       <a class="am-btn am-btn--ghost am-auth-demo" href="studio.html?demo=1&lang=${S.lang}">${esc(t("demo"))}</a>`,
     register: () => `<form id="authForm" novalidate>${field("name", "name", "text", 'autocomplete="name" maxlength="100"')}${field("email", "email", "email", 'autocomplete="email" inputmode="email"')}
       ${field("password", "password", "password", 'autocomplete="new-password" minlength="12"')}${field("confirm", "confirm", "password", 'autocomplete="new-password" minlength="12"')}
-      <label class="am-check"><input type="checkbox" id="terms"> <span>${esc(t("terms"))}</span></label><div class="am-turnstile" id="ts"></div>
+      <label class="am-check"><input type="checkbox" id="terms"> <span>${esc(t("terms"))} <a href="terms.html?lang=${S.lang}" target="_blank" rel="noopener">${esc(t("termsDoc"))}</a> · <a href="privacy.html?lang=${S.lang}" target="_blank" rel="noopener">${esc(t("privacyDoc"))}</a></span></label><div class="am-turnstile" id="ts"></div>
       <button class="am-btn am-btn--brand" type="submit" style="width:100%">${esc(t("create"))} <span class="am-arrow">→</span></button></form>${googleBlock()}`,
     check: () => `<div class="am-auth-check"><span class="am-auth-check-ico" aria-hidden="true">✉</span><p id="checkEmail"></p></div>
       <button class="am-btn am-btn--brand" type="button" id="doneBtn" style="width:100%">${esc(t("done"))} <span class="am-arrow">→</span></button>
