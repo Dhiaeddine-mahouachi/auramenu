@@ -74,13 +74,14 @@
     for (const k of ["tagline", "description", "address"]) if (r[k] && !raw[k]) out[k] = r[k];
     if (r.name && !raw.businessName) out.businessName = r.name;
     if (r.openingHours && !raw.openingHours) out.openingHours = typeof r.openingHours === "object" ? r.openingHours.tr || r.openingHours.en || "" : r.openingHours;
-    if (!raw.hours) out.hours = parseHours(out.openingHours) || null;
+    if (!raw.hours) out.hours = (r.hours && typeof r.hours === "object" && Object.keys(r.hours).length ? { ...r.hours } : null) || parseHours(out.openingHours) || null;
     if (r.logo && !raw.logo) out.logo = r.logo;
     out.socials = { ...(raw.socials || {}), ...(l.instagram ? { instagram: l.instagram } : {}), ...(l.tiktok ? { tiktok: l.tiktok } : {}), ...(l.facebook ? { facebook: l.facebook } : {}) };
     if (l.review && !raw.reviewUrl) out.reviewUrl = l.review;
     if (l.directions && !raw.mapsUrl) out.mapsUrl = l.directions;
     const vid = [d.cover, r.cover].find(isVideo);
-    if (vid && !(raw.video && (raw.video.src || typeof raw.video === "string"))) out.video = { src: vid, poster: [r.coverSmall, r.cover].find((u) => u && !isVideo(u)) || "" };
+    if (r.video && r.video.src && !(raw.video && (raw.video.src || typeof raw.video === "string"))) out.video = { src: r.video.src, poster: r.video.poster || "" };
+    else if (vid && !(raw.video && (raw.video.src || typeof raw.video === "string"))) out.video = { src: vid, poster: [r.coverSmall, r.cover].find((u) => u && !isVideo(u)) || "" };
     if (!raw.theme && (d.accent || d.primary || d.background)) out.theme = { accent: d.accent || d.primary || "", mode: d.background && /^#[0-9a-f]{6}$/i.test(d.background) ? (lum(d.background) < 0.35 ? "dark" : "light") : "" };
     out.toggles = { images: d.images !== false, prices: d.prices !== false, information: d.information !== false, socials: d.socials !== false, play: d.play !== false };
     if (d.play === false) out.gameEnabled = false;

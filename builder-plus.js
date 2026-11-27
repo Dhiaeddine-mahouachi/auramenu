@@ -26,8 +26,9 @@
       const design = {};
       if (accent) { design.accent = accent; design.primary = accent; }
       if (e.mode === "dark") design.background = "#1C1317"; else if (e.mode === "light") design.background = "#F8EFE2";
-      if (url(e.video)) design.cover = url(e.video);
+      if (url(e.video)) design.cover = url(e.video); // kept for servers without the video field
       const restaurant = { links };
+      if (url(e.video)) restaurant.video = { src: url(e.video) };
       if (url(e.logo)) restaurant.logo = url(e.logo);
       return { restaurant, design };
     },
