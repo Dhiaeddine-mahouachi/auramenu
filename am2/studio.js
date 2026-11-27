@@ -40,7 +40,7 @@
   };
   const t = (k) => copy[S.lang]?.[k] ?? copy.en[k];
 
-  let menu = null, token = "", tab = "overview", dirty = false, frameReady = false, canEdit = true, role = "owner";
+  let menu = null, token = "", tab = "overview", dirty = false, frameReady = false, canEdit = true, role = "owner", designTier = null;
   // Tabs each role may open; the server enforces the same rules on save.
   const ROLE_TABS = { owner: null, manager: ["overview", "menu", "design", "info", "media", "qr", "team"], editor: ["overview", "menu", "qr"] };
   const allowed = (name) => !ROLE_TABS[role] || ROLE_TABS[role].includes(name);
@@ -105,6 +105,9 @@
       const data = await req(`/dashboard/${encodeURIComponent(id)}`);
       menu = fromServer(data.menu || data); localStorage.setItem("auraMenuLastRequest", id);
       role = ["owner", "manager", "editor"].includes((data.menu || data).role) ? (data.menu || data).role : "owner";
+      // The plan decides the designs: Standard/Annual → standard, Premium → premium (server enforces the same).
+      const da = (data.menu || data).designAccess || {}, hasPremium = Array.isArray(da.premium) && da.premium.length > 0;
+      designTier = da.standard && !hasPremium ? "standard" : !da.standard && hasPremium ? "premium" : null;
       canEdit = Boolean(menu.editAccess?.active || menu.billing?.active);
       if (!canEdit) { $("banner").hidden = false; $("banner").textContent = t("locked"); }
       boot();
@@ -155,7 +158,7 @@
         <button class="st-add" data-iadd="${ci}">${t("addItem")}</button></section>`).join("") + `<button class="am-btn am-btn--ghost" data-cadd style="width:100%">${t("addCat")}</button>`;
     },
     design() {
-      return `<div class="st-card"><h2>${t("dTitle")}</h2><p class="st-muted">${t("dText")}</p><div class="st-designs">${designs.map((d) => `<button class="st-design${d.code === menu.templateId ? " is-on" : ""}" data-design="${d.code}"><img src="media/gallery-v3/${d.id}.webp" alt="" loading="lazy"><span>${esc(d.name)}${d.tier === "premium" ? " ★" : ""}</span>${d.code === menu.templateId ? `<em>${t("current")}</em>` : ""}</button>`).join("")}</div></div>`;
+      return `<div class="st-card"><h2>${t("dTitle")}</h2><p class="st-muted">${t("dText")}</p><div class="st-designs">${designs.filter((d) => !designTier || d.tier === designTier || d.code === menu.templateId).map((d) => `<button class="st-design${d.code === menu.templateId ? " is-on" : ""}" data-design="${d.code}"><img src="media/gallery-v3/${d.id}.webp" alt="" loading="lazy"><span>${esc(d.name)}${d.tier === "premium" ? " ★" : ""}</span>${d.code === menu.templateId ? `<em>${t("current")}</em>` : ""}</button>`).join("")}</div></div>`;
     },
     info() {
       const h = menu.hours || {}, s = menu.socials || {};

@@ -761,10 +761,9 @@
       return;
     }
     const chosen = $("templateId").value;
-    const premiumChoice = window.AURAMENU_V2?.tiers[chosen] === "premium";
     const payload = {
       // Premium designs are switched on by AuraDigital after approval; the request starts on Aura Classic and records the choice.
-      templateId: premiumChoice ? "std-15" : chosen,
+      templateId: chosen,
       ...(!templateFiles[chosen] && window.AuraMenuExtras ? window.AuraMenuExtras.get() : {}),
       interfaceLanguage: lang,
       menuLanguage: $("menuLanguage").value,
@@ -784,7 +783,7 @@
       paymentReference: $("paymentReference").value.trim(),
       serviceMode: "self",
       planId: $("planId").value,
-      notes: [premiumChoice ? `[Premium design requested: ${window.AURAMENU_V2.names[chosen]} (${chosen})]` : "", $("notes").value.trim()].filter(Boolean).join("\n"),
+      notes: $("notes").value.trim(),
       categories: cleanCategories.map((category) => ({
         name: category.name.trim(),
         emoji: category.emoji.trim(),
@@ -905,11 +904,22 @@
   applyLanguage(lang);
   updatePreview();
   window.addEventListener("auramenu:extras", () => { updatePreview(); saveDraft(); });
-  const premiumNote = () => {
-    const id = $("templateId").value, note = $("premiumNote"); if (!note) return;
-    const premium = window.AURAMENU_V2?.tiers[id] === "premium";
-    note.hidden = !premium;
-    if (premium) note.textContent = ({ tr: "★ Premium tasarım: talebin Aura Classic ile başlar, AuraDigital onaydan sonra bu tasarımı açar.", en: "★ Premium design: your request starts on Aura Classic and AuraDigital switches it on after approval.", ar: "★ تصميم مميز: يبدأ طلبك بتصميم Aura Classic وتفعّل AuraDigital هذا التصميم بعد الموافقة." })[lang] || "";
-  };
-  $("templateId").addEventListener("change", premiumNote); premiumNote();
+  // Designs follow the plan: Standard and Annual show the standard designs, Premium shows the premium designs.
+  const tierOf = (id) => window.AURAMENU_V2?.tiers?.[id] || "standard";
+  const wantedTier = () => ($("planId")?.value === "pro" ? "premium" : "standard");
+  if (tierOf(params.get("template")) === "premium" && $("planId")) $("planId").value = "pro";
+  function syncPlanDesigns() {
+    const want = wantedTier(), select = $("templateId");
+    select.querySelectorAll("option").forEach((o) => { const off = tierOf(o.value) !== want; o.hidden = off; o.disabled = off; });
+    select.querySelectorAll("optgroup").forEach((g) => { g.hidden = ![...g.querySelectorAll("option")].some((o) => !o.hidden); });
+    if (tierOf(select.value) !== want) {
+      const first = [...select.querySelectorAll("option")].find((o) => !o.hidden);
+      if (first) { select.value = first.value; select.dispatchEvent(new Event("change", { bubbles: true })); }
+    }
+    document.querySelectorAll("#custDesigns [data-d]").forEach((b) => { b.hidden = tierOf(b.dataset.d) !== want; });
+    const note = $("premiumNote"); if (note) note.hidden = true;
+  }
+  $("planId")?.addEventListener("change", () => { syncPlanDesigns(); saveDraft(); });
+  new MutationObserver(() => { if (document.querySelector("#custDesigns [data-d]:not([data-tier-synced])")) { document.querySelectorAll("#custDesigns [data-d]").forEach((b) => (b.dataset.tierSynced = "1")); syncPlanDesigns(); } }).observe(document.body, { childList: true, subtree: true });
+  syncPlanDesigns();
 })();

@@ -1,6 +1,7 @@
 # AuraMenu changelog
 
 ## 2026-11-27
+- Designs follow the plan: Standard and Annual show and accept only the 15 standard designs, Premium only the 15 premium designs (builder, Studio, pricing cards, FAQ; enforced by the backend). Choosing a premium design from the gallery selects the Premium plan.
 - Staff roles per menu: owner, manager, editor (Team tab in Studio). Editors change items, prices and stock; managers also design and info; plan and team stay with the owner. Enforced on the server.
 - AuraHub has an AuraMenu page listing the same menus with your role.
 - Builder drafts are saved to your AuraDigital account and continue on another device.
