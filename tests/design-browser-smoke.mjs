@@ -174,6 +174,7 @@ try {
   }}));
   await production.goto(origin + '/index.html?lang=en');
   await production.locator('[data-i18n="ctaDesigns"]').click();
+  await production.locator('#grid .am-design').first().waitFor();
   assert.equal(await production.locator('#grid .am-design').count(),30);
   assert.match(await production.locator('a.am-login').getAttribute('href'),/^\/?signin\.html/);
   await production.locator('#grid [data-open="noir"]').first().click();
