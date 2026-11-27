@@ -168,7 +168,18 @@
     r.setProperty("--bg", p.bg); r.setProperty("--surface", p.surface); r.setProperty("--text", p.text); r.setProperty("--muted", p.muted); r.setProperty("--line", p.line);
     const custom = state.menu?.theme?.accent && /^#[0-9a-f]{6}$/i.test(state.menu.theme.accent) ? state.menu.theme.accent : "";
     const lum = (h) => { const n = parseInt(h.slice(1), 16); const c = [n >> 16, (n >> 8) & 255, n & 255].map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
-    r.setProperty("--accent", custom || design.accent); r.setProperty("--accent2", design.accent2); r.setProperty("--on-accent", custom ? (lum(custom) > 0.4 ? "#1B1B1B" : "#FFFFFF") : design.onAccent);
+    // Readable text versions of the theme colours (WCAG AA 4.5:1): only nudged darker/lighter when a design's colour is too faint.
+    const hex = (h) => /^#[0-9a-f]{6}$/i.test(String(h || ""));
+    const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+    const mix = (h, to, k) => "#" + [0, 2, 4].map((i) => { const a = parseInt(h.slice(1 + i, 3 + i), 16), b = parseInt(to.slice(1 + i, 3 + i), 16); return Math.round(a + (b - a) * k).toString(16).padStart(2, "0"); }).join("");
+    const tryReadable = (fg, bgs) => { const ok = (c) => bgs.every((b) => ratio(c, b) >= 4.6); if (ok(fg)) return fg; const to = lum(bgs[0]) > 0.35 ? "#000000" : "#FFFFFF"; for (let k = 0.04; k <= 1.001; k += 0.04) { const c = mix(fg, to, Math.min(k, 1)); if (ok(c)) return c; } return null; };
+    // Prefer a colour that reads on both the page and the cards; when a design's page and cards are too different, cards win.
+    const readable = (fg, bgs) => (!hex(fg) || !bgs.length || !bgs.every(hex) ? fg : tryReadable(fg, bgs) || tryReadable(fg, bgs.slice(0, 1)) || fg);
+    const accent = custom || design.accent, bgs = [p.surface, p.bg].filter(hex);
+    const bestOn = (a) => (ratio(a, "#FFFFFF") >= ratio(a, "#1B1B1B") ? "#FFFFFF" : "#1B1B1B");
+    const onAccent = custom || !hex(design.onAccent) || !hex(accent) || ratio(accent, design.onAccent) < 4.5 ? (hex(accent) ? bestOn(accent) : design.onAccent) : design.onAccent;
+    r.setProperty("--accent", accent); r.setProperty("--accent2", design.accent2); r.setProperty("--on-accent", onAccent);
+    r.setProperty("--accent-text", bgs.length ? readable(accent, bgs) : accent); r.setProperty("--muted", bgs.length ? readable(p.muted, bgs) : p.muted);
     r.setProperty("--radius", `${design.radius}px`); r.setProperty("--img-radius", `${Math.min(design.radius, 40)}px`);
     const ar = state.lang === "ar";
     r.setProperty("--f-display", `"${ar ? design.font.ar : design.font.display}", "${design.font.ar}", system-ui, sans-serif`);

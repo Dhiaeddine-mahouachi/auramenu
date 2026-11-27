@@ -152,3 +152,7 @@ body.am-builder{font-family:"Inter","Cairo",system-ui,sans-serif}
 .am-smart-inner #assistantStop:not([hidden]){display:inline-flex!important;background:#D43B2E!important}
 .am-smart-inner .voice-privacy{font-size:12px;color:#6B5450}
 .am-premium-note{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:#FCEFD2;border:2px dashed #F5BD43;font:600 13px/1.4 "Inter","Cairo",sans-serif;color:#24191E}
+
+small[data-bp="photoSub"]{color:#24191E!important}
+.slug-field>span{color:#6B5450!important}
+[data-qr="download"]{color:#24191E!important}
