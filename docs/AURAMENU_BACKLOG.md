@@ -24,9 +24,9 @@ Status: `todo` · `doing` · `done` · `blocked`. Findings reference `HEALTH_AUD
 | S-4 | P1 | Remove unused pages — audit corrected: legacy design pages are live dependencies; only `legacy-index.html` retired | — | Old menus still render | done |
 | S-5 | P2 | Regenerate gallery thumbnails with French enabled | — | No greyed "FR" in thumbnails | todo |
 | A-1 | P0 | AuraMenu sign-in on AuraDigital customer identity (one-time code + PKCE; separate host-only `__Host-auramenu_customer` session; no shared cookies). Older AuraPops sign-in kept as secondary until migration is decided | — | One login works on both; Google sign-in same account | done — needs one real-account test by Dhia |
-| A-2 | P0 | Bind menus to `workspace_id` + `user_id`; keep menu token as legacy claim | A-1 | Owner opens menu on a new device after sign-in | todo (next) |
+| A-2 | P0 | Bind menus to the AuraDigital account (`auramenu_menu_owners`); token + signed-in account links an unowned menu; token still works | A-1 | Owner opens menu on a new device after sign-in | done (account level; workspace binding comes with A-3) |
 | A-3 | P1 | Roles owner/manager/editor via existing hub workspace authorize() | A-2 | Editor cannot change plan; isolation test passes | blocked |
-| A-4 | P1 | "My menus" list in Studio + AuraHub `apps/auramenu` (validate route: hub lives at `auradigitalworks.com/hub`) | A-2 | Same data from both entry points | blocked |
+| A-4 | P1 | "My menus" list in Studio (done) + AuraHub `apps/auramenu` (todo) | A-2 | Same data from both entry points | doing |
 | D-1 | P1 | Enable cloud drafts (`MENU_DRAFTS_ENABLED`) for builder with autosave + save indicator | A-2 | Refresh/new device keeps draft | blocked |
 | D-2 | P2 | Version history + restore published version | D-1 | Restore previous version works | todo |
 | M-1 | P1 | Edge-cache public menu API (short TTL) + purge on publish | — | Second scan served from cache; edit visible ≤ 60 s | done (verify live `X-Menu-Cache`) |

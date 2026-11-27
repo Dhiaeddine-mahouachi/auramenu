@@ -46,6 +46,9 @@ Validation lives in `src/auramenu-designs.js` (`normalizeMenuPresentation`, `nor
 | POST | `/api/auramenu/connect/exchange` `{code, verifier}` | auramenu.space | Checks PKCE, issues `__Host-auramenu_customer` (HttpOnly, Secure, Lax, 7 days). Session row lives in `customer_sessions`. |
 | GET | `/api/auramenu/account/session` | auramenu.space | `{user}` or `{user:null}` |
 | POST | `/api/auramenu/account/logout` | auramenu.space | Ends the AuraMenu session |
+| GET | `/api/auramenu/account/menus` | auramenu.space | Menus owned by the signed-in account |
+
+Dashboard routes accept either `X-Aura-Menu-Token` or the owner's AuraMenu session. `POST /dashboard/:id/claim` with a valid token while signed in links an unowned menu (`owned: true`); a menu already owned by another account is never moved.
 
 ## Account endpoints in use by AuraMenu today
 `/api/aurapops/account/{session,login,logout,register,verification/send,verification/confirm}` — AuraPops worker (to be replaced, see A-1).
