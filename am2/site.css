@@ -256,3 +256,15 @@
 .am-feat:hover i.am-feat-ico{transform:rotate(0) scale(1.06)}
 @media (prefers-reduced-motion:reduce){.am-feat i.am-feat-ico{transition:none}}
 .am-feat i.am-feat-ico svg{width:34px;height:34px;flex:none}
+/* SEO pages: drawn symbols and guides hub */
+.am-step b.am-seo-ico,.am-hub-card b.am-seo-ico{display:grid;place-items:center;width:60px;height:60px;border-radius:17px;background:var(--am-saffron);color:var(--am-plum);-webkit-text-stroke:0;transform:rotate(-4deg);box-shadow:3px 3px 0 var(--am-plum);margin-bottom:14px}
+.am-step:nth-child(2) b.am-seo-ico,.am-hub-card:nth-child(3n+2) b.am-seo-ico{background:#E9A07E;transform:rotate(3deg)}
+.am-step:nth-child(3) b.am-seo-ico,.am-hub-card:nth-child(3n) b.am-seo-ico{background:#FCEFD2}
+.am-seo-ico svg{width:34px;height:34px}
+.am-hub-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.am-hub-card{display:flex;flex-direction:column;padding:22px;text-decoration:none;color:inherit;transition:transform .2s ease}
+.am-hub-card:hover{transform:translateY(-3px)}
+.am-hub-card h2{font:800 22px/1.1 var(--am-display);margin:0 0 8px}
+.am-hub-card p{margin:0 0 14px;font-size:14.5px;color:var(--am-muted,#6B5450);flex:1}
+.am-hub-more{font:700 14px/1 var(--am-body);color:var(--am-bordeaux)}
+[data-theme="dark"] .am-hub-more{color:var(--am-saffron)}
