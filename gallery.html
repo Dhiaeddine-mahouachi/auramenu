@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6E2037">
+  <meta name="description" content="30 AuraMenu dijital menü tasarımını canlı deneyin.">
+  <meta property="og:title" content="AuraMenu · Tasarım koleksiyonu">
+  <meta property="og:description" content="30 AuraMenu dijital menü tasarımını canlı deneyin.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://auramenu.space/gallery.html">
+  <link rel="canonical" href="https://auramenu.space/gallery.html">
+  <link rel="icon" type="image/svg+xml" href="brand/mark.svg">
+  <title>AuraMenu · Tasarım koleksiyonu</title>
+  <script>try{var t=localStorage.getItem("auramenu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="brand/aura-brand.css?v=3">
+  <link rel="stylesheet" href="brand/site.css?v=3">
+  <link rel="stylesheet" href="support-report.css?v=2">
+</head>
+<body>
+<a class="am-skip" href="#main" data-i18n="skip">İçeriğe geç</a>
+<header class="am-header">
+  <div class="am-wrap am-header-in">
+    <a class="am-logo" href="index.html" data-lang-link aria-label="AuraMenu"><img src="brand/mark.svg" alt="" width="40" height="40">AuraMenu</a>
+    <nav class="am-nav" data-nav id="site-nav" aria-label="Primary">
+      <a href="gallery.html" data-lang-link data-i18n="navDesigns">Tasarımlar</a>
+      <a href="index.html#how" data-lang-link data-i18n="navHow">Nasıl çalışır</a>
+      <a href="index.html#features" data-lang-link data-i18n="navFeatures">Özellikler</a>
+      <a href="index.html#nfc" data-lang-link data-i18n="navNfc">NFC kartlar</a>
+      <a href="index.html#pricing" data-lang-link data-i18n="navPricing">Fiyatlar</a>
+      <a href="login.html" data-lang-link data-i18n="login">Giriş</a>
+      <div class="am-lang" role="group" aria-label="Language"><button data-lang-btn="tr">TR</button><button data-lang-btn="en">EN</button><button data-lang-btn="ar">AR</button></div>
+    </nav>
+    <div class="am-header-tools">
+      <div class="am-lang" role="group" aria-label="Language"><button data-lang-btn="tr">TR</button><button data-lang-btn="en">EN</button><button data-lang-btn="ar">AR</button></div>
+      <button class="am-theme-toggle" data-theme-toggle data-i18n-attr="aria-label:themeLabel" aria-label="Light / dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+      <a class="am-login" href="login.html" data-lang-link data-i18n="login">Giriş</a>
+      <a class="am-btn am-btn--sm" href="builder.html" data-lang-link data-i18n="cta">Menünü oluştur</a>
+      <button class="am-burger" data-nav-toggle aria-controls="site-nav" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <section class="am-g-hero am-wrap">
+    <span class="am-eyebrow" data-i18n="gKicker">AuraMenu Koleksiyonu</span>
+    <h1><span data-i18n="gTitleA">Lezzetini</span><br><span class="am-swoosh" data-i18n="gTitleB">bul.</span></h1>
+    <p class="am-lede" data-i18n="gLede">30 gerçek menü tasarımı. Hepsini dene, kategorilere gir, ürün aç, sipariş sepetini doldur. Kayıt gerekmez.</p>
+    <div class="am-g-stats"><div><b>30</b><span data-i18n="gTotal">tasarım</span></div><div><b>15</b><span data-i18n="gStd">standart</span></div><div><b>15</b><span data-i18n="gPrem">premium</span></div><div><b>20</b><span data-i18n="gFeat">özellik her tasarımda</span></div></div>
+    <span class="am-g-mascot" data-mascot="thinking" aria-hidden="true"></span>
+    <div class="am-stamp" aria-hidden="true"><svg viewBox="0 0 120 120"><defs><path id="gc" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/></defs><text><textPath href="#gc">GOOD FOOD ✦ GREAT MENUS ✦ AURAMENU ✦ </textPath></text></svg></div>
+  </section>
+  <div class="am-wrap">
+    <div class="am-filters" role="group" aria-label="Filter">
+      <button class="am-chip" data-f="all" aria-pressed="true" data-i18n="fAll">Tümü</button>
+      <button class="am-chip" data-f="standard" aria-pressed="false" data-i18n="gStdCap">Standart</button>
+      <button class="am-chip" data-f="premium" aria-pressed="false" data-i18n="gPremCap">Premium ★</button>
+      <span class="am-sep" aria-hidden="true"></span>
+      <span id="collections" style="display:contents"></span>
+      <span class="am-g-count" id="count" aria-live="polite"></span>
+    </div>
+    <div class="am-g-grid" id="grid"></div>
+  </div>
+</main>
+<dialog class="am-preview" id="preview" aria-labelledby="pv-name">
+  <div class="am-preview-shell">
+    <div class="am-preview-bar">
+      <button class="am-btn am-btn--sm am-btn--ghost" id="pv-back"><span class="am-arrow" style="display:inline-block;transform:scaleX(-1)">→</span> <span data-i18n="back">Tüm tasarımlar</span></button>
+      <strong id="pv-name"></strong>
+      <div class="am-seg" role="group" aria-label="Viewport"><button id="pv-phone" aria-pressed="true" data-i18n="phone">Telefon</button><button id="pv-wide" aria-pressed="false" data-i18n="wide">Geniş</button></div>
+      <div class="am-seg" role="group" aria-label="Language" id="pv-lang"><button data-l="tr">TR</button><button data-l="en">EN</button><button data-l="ar">AR</button></div>
+    </div>
+    <div class="am-preview-body">
+      <div class="am-viewport" id="pv-viewport"><iframe id="pv-frame" title="Menu preview"></iframe></div>
+      <aside class="am-preview-side">
+        <span class="am-eyebrow" data-i18n="sideKicker">Senin menün, senin kimliğin</span>
+        <h2 data-i18n="want">Bu tasarımı restoranın için ister misin?</h2>
+        <p data-i18n="wantText">Bu tasarımı kendi yemeklerin, fotoğrafların, fiyatların ve renklerinle kullan.</p>
+        <ul class="am-featlist" id="pv-feats"></ul>
+        <button class="am-btn am-btn--brand" id="pv-want" style="width:100%"><span data-i18n="wantBtn">Bu tasarımı istiyorum</span> <span class="am-arrow">→</span></button>
+        <div class="am-choices" id="pv-choices" hidden>
+          <a class="am-choice" id="pv-self" href="#"><i>✎</i><span><b data-i18n="self">Kendim özelleştireceğim</b><small data-i18n="selfText">Menü stüdyosunda ürünleri, fiyatları ve fotoğrafları sen düzenle.</small></span></a>
+          <a class="am-choice" id="pv-help" href="#" target="_blank" rel="noopener"><i>🤝</i><span><b data-i18n="help">AuraDigital benim için hazırlasın</b><small data-i18n="helpText">Seçtiğin tasarım bilgisiyle talep gönder; biz kuralım.</small></span></a>
+        </div>
+        <p class="am-small" data-i18n="safe">Sadece önizleme. Tasarımları gezmekle hiçbir şey satın alınmaz veya yayınlanmaz.</p>
+      </aside>
+    </div>
+  </div>
+</dialog>
+<footer class="am-footer">
+  <div class="am-wrap">
+    <div class="am-footer-grid">
+      <div><a class="am-logo" href="index.html" data-lang-link style="color:var(--am-cream)"><img src="brand/mark.svg" alt="" width="40" height="40">AuraMenu</a><p data-i18n="footTag">Restoranlar için lezzetli dijital menüler.</p></div>
+      <div><h4 data-i18n="fProduct">Ürün</h4><a href="gallery.html" data-lang-link data-i18n="navDesigns">Tasarımlar</a><a href="index.html#features" data-lang-link data-i18n="navFeatures">Özellikler</a><a href="index.html#pricing" data-lang-link data-i18n="navPricing">Fiyatlar</a><a href="index.html#nfc" data-lang-link data-i18n="navNfc">NFC kartlar</a></div>
+      <div><h4>QR menü</h4><a href="qr-menu.html" data-lang-link>QR menü</a><a href="dijital-menu.html" data-lang-link>Dijital menü</a><a href="nfc-menu.html" data-lang-link>NFC menü</a><a href="kafe-qr-menu.html" data-lang-link>Kafe QR menü</a><a href="restoran-qr-menu.html" data-lang-link>Restoran QR menü</a><a href="istanbul-qr-menu.html" data-lang-link>İstanbul QR menü</a></div>
+      <div><h4 data-i18n="fHelp">Yardım</h4><a href="builder.html" data-lang-link data-i18n="fBuilder">Menü oluşturucu</a><a href="status.html" data-lang-link data-i18n="fStatus">Başvuru durumu</a><a href="faq.html" data-lang-link data-i18n="fFaq">SSS</a><a href="login.html" data-lang-link data-i18n="login">Giriş</a></div>
+      <div><h4 data-i18n="fCompany">Şirket</h4><a href="https://auradigitalworks.com">AuraDigital</a><a href="https://auradigitalworks.com/contact?service=auramenu" data-i18n="fContact">İletişim</a></div>
+    </div>
+    <div class="am-footer-bottom"><span data-i18n="rights">© 2026 AuraMenu.</span><span data-i18n="madeBy">AuraDigital tarafından yapıldı</span></div>
+  </div>
+</footer>
+<script src="brand/site.js?v=3"></script>
+<script src="brand/mascot.js?v=3" defer></script>
+<script src="menu-v2/designs.js?v=3"></script>
+<script src="brand/gallery.js?v=3"></script>
+<script src="support-report.js?v=2" defer></script>
+</body>
+</html>

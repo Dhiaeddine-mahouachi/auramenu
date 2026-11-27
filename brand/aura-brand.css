@@ -1,0 +1,107 @@
+/* AuraMenu 2.0 brand system — tokens, fonts and shared components.
+   Phase 1–2 (tasks 08–23). Every page that adopts the new identity loads this first. */
+
+@font-face{font-family:"Baloo 2";font-style:normal;font-weight:400 800;font-display:swap;src:url("../fonts/v2/baloo-2-latin-wght-normal.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Baloo 2";font-style:normal;font-weight:400 800;font-display:swap;src:url("../fonts/v2/baloo-2-latin-ext-wght-normal.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/v2/inter-latin-wght-normal.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url("../fonts/v2/inter-latin-ext-wght-normal.woff2") format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Baloo Bhaijaan 2";font-style:normal;font-weight:400 800;font-display:swap;src:url("../fonts/v2/baloo-bhaijaan-2-arabic-wght-normal.woff2") format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+@font-face{font-family:"Cairo";font-style:normal;font-weight:400 1000;font-display:swap;src:url("../fonts/cairo-arabic-400-1000.woff2") format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
+
+:root{
+  /* Core palette */
+  --am-bordeaux:#6E2037; --am-bordeaux-deep:#561729; --am-cream:#F8EFE2; --am-saffron:#F5BD43; --am-plum:#24191E;
+  /* Accent palette */
+  --am-terracotta:#D86A41; --am-olive:#778A3D; --am-tomato:#D43B2E; --am-apricot:#F7B68B;
+  --am-paper:#FFF9F0; --am-sand:#EFDFCB; --am-line:#E2CDB6; --am-ink-soft:#6B5450;
+  /* Semantic */
+  --am-bg:var(--am-cream); --am-surface:var(--am-paper); --am-text:var(--am-plum); --am-muted:var(--am-ink-soft);
+  --am-brand:var(--am-bordeaux); --am-on-brand:var(--am-cream); --am-accent:var(--am-saffron); --am-border:var(--am-line);
+  /* Type */
+  --am-display:"Baloo 2","Baloo Bhaijaan 2",ui-rounded,system-ui,sans-serif;
+  --am-body:"Inter","Cairo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  /* Shape & depth: flat, printed feel — hard offset shadows instead of blur */
+  --am-r-sm:10px; --am-r:18px; --am-r-lg:28px; --am-r-arch:999px 999px 22px 22px;
+  --am-shadow:4px 4px 0 var(--am-plum); --am-shadow-lg:7px 7px 0 var(--am-plum);
+  --am-ease:cubic-bezier(.2,.8,.2,1.1);
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --am-bg:#1C1317; --am-surface:#2A1D22; --am-text:#F8EFE2; --am-muted:#CDB8AA; --am-border:#4A3239;
+  --am-brand:#F5BD43; --am-on-brand:#24191E; --am-shadow:4px 4px 0 #000; --am-shadow-lg:7px 7px 0 #000;
+  color-scheme:dark;
+}
+:root[lang="ar"]{--am-display:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif;--am-body:"Cairo","Inter",system-ui,sans-serif}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;overflow-x:clip;background:var(--am-bg);color:var(--am-text);font:400 16px/1.6 var(--am-body);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+img,svg,video{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--am-terracotta);outline-offset:3px;border-radius:6px}
+.am-skip{position:absolute;left:8px;transform:translateY(-200%);top:8px;background:var(--am-saffron);color:var(--am-plum);padding:10px 16px;border-radius:10px;z-index:99;font-weight:700}
+.am-skip:focus{transform:none}
+.am-visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Typography */
+.am-display,h1,h2,h3{font-family:var(--am-display);font-weight:800;line-height:.98;letter-spacing:-.02em;margin:0}
+.am-eyebrow{display:inline-flex;align-items:center;gap:.6em;font:700 12px/1 var(--am-body);letter-spacing:.16em;text-transform:uppercase;color:var(--am-terracotta)}
+.am-eyebrow::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+:root[lang="ar"] .am-eyebrow{letter-spacing:0}
+.am-swoosh{position:relative;display:inline-block;white-space:nowrap;color:var(--am-saffron)}
+.am-swoosh::after{content:"";position:absolute;left:2%;right:-2%;bottom:-.06em;height:.16em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M3 14C50 4 120 2 197 9' fill='none' stroke='%23D86A41' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+
+/* Buttons — chunky, printed, playful */
+.am-btn{--bg:var(--am-saffron);--fg:var(--am-plum);display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:48px;padding:0 22px;border:2.5px solid var(--am-plum);border-radius:999px;background:var(--bg);color:var(--fg);font:800 16px/1 var(--am-display);text-decoration:none;cursor:pointer;box-shadow:var(--am-shadow);transition:transform .18s var(--am-ease),box-shadow .18s var(--am-ease)}
+.am-btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--am-plum)}
+.am-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--am-plum)}
+.am-btn--brand{--bg:var(--am-bordeaux);--fg:var(--am-cream)}
+.am-btn--ghost{--bg:transparent;--fg:currentColor;border-color:currentColor;box-shadow:none}
+.am-btn--ghost:hover{box-shadow:none;background:rgba(255,255,255,.08)}
+.am-btn--sm{min-height:40px;padding:0 16px;font-size:15px}
+.am-btn .am-arrow{transition:transform .2s var(--am-ease)}
+.am-btn:hover .am-arrow{transform:translateX(3px)}
+:root[dir="rtl"] .am-arrow{transform:scaleX(-1)}
+:root[dir="rtl"] .am-btn:hover .am-arrow{transform:scaleX(-1) translateX(3px)}
+:root[data-theme="dark"] .am-btn{border-color:#000}
+
+/* Chips */
+.am-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:2px solid var(--am-plum);border-radius:999px;background:var(--am-surface);font:700 14px/1.2 var(--am-body);color:var(--am-text);cursor:pointer;text-decoration:none}
+.am-chip[aria-pressed="true"],.am-chip.is-active{background:var(--am-bordeaux);color:var(--am-cream);border-color:var(--am-bordeaux)}
+:root[data-theme="dark"] .am-chip{border-color:var(--am-border)}
+:root[data-theme="dark"] .am-chip[aria-pressed="true"]{background:var(--am-saffron);color:var(--am-plum);border-color:var(--am-saffron)}
+
+/* Card */
+.am-card{background:var(--am-surface);border:2.5px solid var(--am-plum);border-radius:var(--am-r);box-shadow:var(--am-shadow)}
+:root[data-theme="dark"] .am-card{border-color:#000}
+
+/* Stamp — rotating circular badge */
+.am-stamp{width:118px;aspect-ratio:1;border-radius:50%;background:var(--am-saffron);color:var(--am-plum);display:grid;place-items:center;border:2.5px solid var(--am-plum);box-shadow:var(--am-shadow)}
+.am-stamp svg{width:100%;height:100%;animation:am-spin 22s linear infinite}
+.am-stamp text{font:800 11.5px var(--am-display);letter-spacing:.18em;fill:var(--am-plum)}
+@keyframes am-spin{to{transform:rotate(360deg)}}
+
+/* Scalloped edge (awning) */
+.am-scallop{height:22px;background:radial-gradient(circle at 16px 0,var(--sc,var(--am-bordeaux)) 15px,transparent 16px) 0 0/32px 22px repeat-x}
+
+/* Logo lockup */
+.am-logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit;font:800 25px/1 var(--am-display);letter-spacing:-.02em}
+.am-logo img{width:40px;height:40px}
+
+/* Theme toggle — single sun/moon button */
+.am-theme-toggle{width:44px;height:44px;border-radius:50%;border:2px solid currentColor;background:transparent;display:grid;place-items:center;cursor:pointer;padding:0}
+.am-theme-toggle svg{width:22px;height:22px}
+.am-theme-toggle .moon{display:none}
+:root[data-theme="dark"] .am-theme-toggle .sun{display:none}
+:root[data-theme="dark"] .am-theme-toggle .moon{display:block}
+
+/* Language switch */
+.am-lang{display:inline-flex;border:2px solid currentColor;border-radius:999px;padding:3px;gap:2px}
+.am-lang button{border:0;background:transparent;border-radius:999px;padding:5px 10px;font:700 13px/1 var(--am-body);cursor:pointer;color:inherit}
+.am-lang button[aria-pressed="true"]{background:var(--am-saffron);color:var(--am-plum)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+.am-mascot{display:inline-block;line-height:0}
+.am-mascot svg{width:100%;height:auto;display:block}

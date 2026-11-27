@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6E2037">
+  <meta name="robots" content="noindex">
+  <title>AuraMenu Studio</title>
+  <link rel="icon" type="image/svg+xml" href="brand/mark.svg">
+  <script>try{var t=localStorage.getItem("auramenu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="brand/aura-brand.css?v=3">
+  <link rel="stylesheet" href="brand/studio.css?v=3">
+</head>
+<body class="am-studio">
+  <aside class="st-side" id="side">
+    <a class="am-logo" href="index.html" data-lang-link><img src="brand/mark.svg" alt="" width="36" height="36">AuraMenu</a>
+    <small class="st-side-tag">Studio</small>
+    <nav class="st-nav" aria-label="Studio">
+      <button data-tab="overview" aria-current="page"><i>🏠</i><span data-i18n="tOverview">Genel bakış</span></button>
+      <button data-tab="menu"><i>🍽️</i><span data-i18n="tMenu">Menüm</span></button>
+      <button data-tab="design"><i>🎨</i><span data-i18n="tDesign">Tasarım</span></button>
+      <button data-tab="info"><i>🕒</i><span data-i18n="tInfo">Bilgiler & saatler</span></button>
+      <button data-tab="media"><i>🎬</i><span data-i18n="tMedia">Video</span></button>
+      <button data-tab="qr"><i>🔳</i><span data-i18n="tQr">QR & NFC</span></button>
+      <button data-tab="plan"><i>💳</i><span data-i18n="tPlan">Plan & ödeme</span></button>
+    </nav>
+    <div class="st-side-foot">
+      <div class="am-lang" role="group" aria-label="Language"><button data-lang-btn="tr">TR</button><button data-lang-btn="en">EN</button><button data-lang-btn="ar">AR</button></div>
+      <button class="am-theme-toggle" data-theme-toggle aria-label="Light / dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+      <button class="st-logout" id="logout" data-i18n="logout">Çıkış</button>
+    </div>
+  </aside>
+  <div class="st-main">
+    <header class="st-top">
+      <button class="st-burger" id="burger" aria-label="Menu" aria-controls="side"><span></span><span></span><span></span></button>
+      <span class="st-mascot" data-mascot="idle" aria-hidden="true"></span><div><p class="st-hello" id="hello">Selam şef!</p><h1 id="bizName">AuraMenu</h1></div>
+      <div class="st-top-actions"><span class="st-badge" id="statusBadge"></span><a class="am-btn am-btn--sm am-btn--ghost" id="openMenu" href="#" target="_blank" rel="noopener" data-i18n="openMenu">Menüyü aç ↗</a><button class="am-btn am-btn--sm am-btn--brand" id="save" data-i18n="save">Kaydet</button></div>
+    </header>
+    <p class="st-banner" id="banner" hidden></p>
+    <div class="st-body">
+      <main class="st-panel" id="panel"></main>
+      <aside class="st-preview"><div class="st-preview-head"><b data-i18n="live">Canlı önizleme</b><span id="designName"></span></div><div class="st-phone"><iframe id="preview" title="Preview"></iframe></div></aside>
+    </div>
+  </div>
+  <div class="am-toast-s" id="toast" role="status" aria-live="polite"></div>
+  <script src="config.js?v=20261002-saas"></script>
+  <script src="menu-v2/designs.js?v=3"></script>
+  <script src="menu-v2/data.js?v=3"></script>
+  <script src="brand/site.js?v=3"></script>
+  <script src="brand/mascot.js?v=3"></script>
+  <script src="brand/studio.js?v=3"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+/* AuraMenu 2.0 builder skin — generated from builder-theme.css with the new identity palette (cream / bordeaux / saffron / plum). */
+@import url("aura-brand.css");
+/* AuraMenu builder — shared landing-page palette and visual language. */
+body.am-builder{--ink:#24191E;--muted:#6B5450;--paper:#F8EFE2;--card:#FFF9F0;--orange:#F5BD43;--forest:#F5BD43;--lime:#F5BD43;--line:rgba(36,25,30,0.13);--shadow:0 22px 70px rgba(0,0,0,.22);background:#F8EFE2;color:#24191E;color-scheme:light}
+.am-builder [hidden]{display:none!important}
+.am-builder ::selection{background:#F5BD43;color:#F8EFE2}
+.am-builder .simple-header{position:sticky;top:14px;z-index:50;width:min(1380px,calc(100% - 32px));min-height:70px;margin:14px auto 0;padding:12px 22px;border:1px solid var(--line);border-radius:999px;background:rgba(248,239,226,.9);box-shadow:0 18px 55px rgba(0,0,0,.25);backdrop-filter:blur(18px)}
+.am-builder .brand{font-size:20px;color:#24191E;letter-spacing:-.045em;gap:10px}
+.am-builder .brand-mark{width:40px;height:28px;padding:0;border-radius:0;background:none}
+.am-builder .brand-mark img{width:40px;height:auto;filter:brightness(0) saturate(100%) invert(92%) sepia(100%) saturate(1500%) hue-rotate(3deg) brightness(108%)}
+.am-builder .brand>span:last-child b{color:inherit}
+.am-builder .simple-header .right{gap:18px}
+.am-builder .back-link{color:#6B5450;font-size:12px}
+.am-builder .builder-account-link{padding:12px 18px;border:1px solid rgba(36,25,30,0.33);border-radius:999px;font-size:12px;font-weight:800;color:#24191E}
+.am-builder .language-switch{padding:3px;border:1px solid var(--line);border-radius:999px;background:#FFF9F0}
+.am-builder .language-switch button{background:transparent;color:#6B5450;min-height:34px;border-radius:999px}
+.am-builder .language-switch button.active{background:#F5BD43;color:#F8EFE2}
+.am-builder .builder-layout{width:min(1380px,calc(100% - 48px));margin:50px auto 80px;grid-template-columns:minmax(0,1fr) 410px;gap:30px}
+.am-builder .form-panel{padding:0;background:none;border:0;box-shadow:none}
+.am-builder .form-head{margin:0 0 32px;padding:0 4px}
+.am-builder .form-head>small{color:#6E2037;font-size:10px;font-weight:900;letter-spacing:.17em}
+.am-builder .form-head h1{margin:16px 0;color:#24191E;font-size:clamp(40px,4.8vw,66px);line-height:.98;letter-spacing:-.06em}
+.am-builder .form-head>p{font-size:14px;line-height:1.65;color:#6B5450;max-width:560px}
+.am-builder .builder-price{margin-top:26px;padding:20px 22px;background:#FFF9F0;border:1px solid var(--line);border-radius:20px;box-shadow:none}
+.am-builder .builder-price small{font-size:10px;color:#6B5450}
+.am-builder .builder-price strong{font-family:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif;color:#6E2037;font-size:30px}
+.am-builder .builder-price p{color:#6B5450;font-size:12px;line-height:1.6}
+.am-builder .hosting-policy{border:1px solid rgba(110,32,55,.24);border-radius:20px;background:rgba(110,32,55,.035);box-shadow:none;padding:18px 22px}
+.am-builder .hosting-policy__top strong{color:#24191E}
+.am-builder .hosting-policy__price b{background:#F5BD43;color:#F8EFE2}
+.am-builder .hosting-policy__copy{font-size:12px;color:#6B5450;opacity:1}
+.am-builder .form-section{margin:20px 0;padding:26px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#FFF9F0,#FFF9F0);box-shadow:none}
+.am-builder .form-section h2{font-family:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif;color:#24191E;font-size:20px;letter-spacing:-.035em;margin-bottom:22px}
+.am-builder .form-grid{gap:18px}
+.am-builder .field>span{color:#6B5450;font-size:10px;letter-spacing:.05em}
+.am-builder input,.am-builder textarea,.am-builder select{color:#24191E}
+.am-builder .field input,.am-builder .field textarea,.am-builder .field select,.am-builder .category-row input,.am-builder .item-editor input,.am-builder .item-editor textarea,.am-builder #menuVerificationCode{border:1px solid rgba(36,25,30,0.18);border-radius:12px;background:#F8EFE2;padding:13px 14px;font-size:13px;min-height:46px}
+.am-builder input::placeholder,.am-builder textarea::placeholder{color:#747d77}
+.am-builder .field input:focus,.am-builder .field textarea:focus,.am-builder .field select:focus,.am-builder .category-row input:focus,.am-builder .item-editor input:focus,.am-builder .item-editor textarea:focus{border-color:#6E2037;outline:0;box-shadow:0 0 0 3px rgba(110,32,55,.1)}
+.am-builder .slug-field{border-color:rgba(36,25,30,0.18);background:#F8EFE2}
+.am-builder .slug-field>span{color:#8A7268;font-size:12px}
+.am-builder .slug-field input{border:0;border-radius:0}
+.am-builder .category-editor{padding:18px;border:1px solid rgba(36,25,30,0.14);border-radius:18px;background:#FFF9F0}
+.am-builder .category-row{grid-template-columns:65px minmax(0,1fr) 44px}
+.am-builder .item-editor{padding:14px;background:#FFF9F0;border:1px solid rgba(36,25,30,0.09);border-radius:14px;grid-template-columns:minmax(0,1fr) 90px}
+.am-builder .item-editor>input[data-item-field="imageUrl"],.am-builder .item-editor>textarea,.am-builder .item-featured{grid-column:1/-1}
+.am-builder .item-editor>.icon-button{grid-column:2;justify-self:end;width:44px}
+.am-builder .icon-button{background:#EFDFCB;color:#6B5450;border:1px solid var(--line);min-height:44px}
+.am-builder .add-button{border-color:rgba(110,32,55,.3);color:#6E2037;background:rgba(110,32,55,.035);padding:12px 16px;min-height:44px;font-size:12px;border-radius:12px}
+.am-builder .add-button:hover{background:rgba(110,32,55,.09)}
+.am-builder .item-featured{font-size:12px;color:#6B5450}
+.am-builder input[type=checkbox]{accent-color:#F5BD43}
+.am-builder .item-photo{border-color:var(--line);background:#FFF9F0;border-radius:14px;padding:12px}
+.am-builder .photo-thumb{background:#EFDFCB;color:#8A7268;border-color:#3d4540}
+.am-builder .photo-copy strong{font-size:12px;color:#24191E}
+.am-builder .photo-copy small{font-size:10px;color:#6B5450}
+.am-builder .photo-button{background:#F5BD43;color:#F8EFE2;font-size:10px;min-height:42px;border-radius:999px;padding:10px 15px}
+.am-builder .photo-remove{background:#F7D9CF;color:#ffb2aa;min-height:42px}
+.am-builder .photo-button input[type=file]{min-height:0;padding:0}
+.am-builder .preview-panel{top:108px;padding:20px;border:1px solid rgba(36,25,30,0.20);border-radius:22px;background:#FFF9F0;box-shadow:0 30px 75px rgba(0,0,0,.3)}
+.am-builder .preview-label{margin:3px 0 18px;font-size:10px;letter-spacing:.12em;color:#6B5450;gap:12px}
+.am-builder .preview-label span{color:#6E2037}
+.am-builder .preview-label b{color:#24191E}
+.am-builder .template-preview-shell{border-color:#333b36}
+.am-builder .account-note p{font-size:13px;line-height:1.65;color:#6B5450}
+.am-builder .account-note a{color:#6E2037;text-decoration:underline;text-underline-offset:4px}
+.am-builder #menuSignedIn{padding:14px 16px;border:1px solid rgba(110,32,55,.25);border-radius:12px;background:rgba(110,32,55,.045);color:#24191E}
+.am-builder #menuAccountFields label,.am-builder #menuVerification label{font-size:12px}
+.am-builder .qr-help{color:#6B5450;opacity:1}
+.am-builder .qr-builder{grid-template-columns:minmax(0,1fr) 270px;gap:18px}
+.am-builder .qr-color-field code{font-size:11px;color:#6B5450}
+.am-builder .qr-preview-card{color-scheme:light;background:#24191E;color:#F8EFE2}
+.am-builder .qr-preview-card[data-frame=dark]{background:#F8EFE2;color:#24191E}
+.am-builder .qr-file{min-width:0}
+.am-builder .qr-file input{font-size:11px}
+.am-builder .button-orange{background:#F5BD43;color:#F8EFE2;border-color:#6E2037;border-radius:999px;box-shadow:none;font-size:12px}
+.am-builder .button-orange:hover{background:#E9A92E;color:#F8EFE2}
+.am-builder .submit-hosting-note{border:1px solid var(--line);border-radius:14px;background:#FFF9F0;color:#6B5450;padding:16px;font-size:12px}
+.am-builder .submit-row{padding:16px 4px 0}
+.am-builder .submit-row small{color:#6B5450;font-size:11px;line-height:1.6}
+.am-builder .submit-row .button{min-height:52px;white-space:nowrap}
+.am-builder .form-message.error{color:#ffc2b8;background:#F7D9CF;border:1px solid #633b34}
+.am-builder .form-message.success{color:#dcf5e5;background:#E8F0D8}
+.am-builder .form-message{font-size:13px}
+@media(max-width:1150px){.am-builder .builder-layout{grid-template-columns:minmax(0,1fr) 350px;gap:22px}.am-builder .qr-builder{grid-template-columns:1fr}.am-builder .qr-preview-card{position:static;max-width:300px;margin:auto;width:100%}}
+@media(max-width:920px){.am-builder .builder-layout{grid-template-columns:1fr;max-width:760px;margin-top:36px}.am-builder .preview-panel{position:static;max-width:430px;width:100%;margin:auto}.am-builder .simple-header .right{gap:10px}}
+@media(max-width:580px){.am-builder .simple-header{width:calc(100% - 20px);top:10px;border-radius:22px;padding:12px;gap:10px;flex-wrap:wrap}.am-builder .simple-header .right{margin-left:auto;gap:8px}.am-builder .brand{font-size:17px}.am-builder .builder-account-link{font-size:10px;padding:10px 12px}.am-builder .language-switch{order:2}.am-builder .language-switch button{width:28px;font-size:9px}.am-builder .builder-layout{width:calc(100% - 24px);margin:32px auto 48px}.am-builder .form-head h1{font-size:42px}.am-builder .form-head>p{font-size:13px}.am-builder .form-section{padding:18px 14px;border-radius:18px}.am-builder .form-section h2{font-size:18px}.am-builder .builder-price,.am-builder .hosting-policy{padding:16px;border-radius:16px}.am-builder .form-grid{grid-template-columns:1fr;gap:16px}.am-builder .category-editor{padding:12px}.am-builder .category-row{grid-template-columns:48px minmax(0,1fr) 44px}.am-builder .category-row input{padding:11px 9px}.am-builder .item-editor{grid-template-columns:minmax(0,1fr) 78px;padding:10px}.am-builder .item-editor>input[data-item-field="name"]{grid-column:1/-1}.am-builder .item-editor>input[data-item-field="price"]{grid-column:1/-1}.am-builder .item-photo{grid-template-columns:52px minmax(0,1fr)}.am-builder .photo-actions{grid-column:1/-1;justify-content:stretch}.am-builder .photo-button,.am-builder .photo-remove{flex:1}.am-builder .submit-row{align-items:stretch;flex-direction:column}.am-builder .submit-row small{max-width:none}.am-builder .preview-panel{padding:16px}.am-builder .slug-field>span{font-size:10px}}
+
+body.am-builder{font-family:"Inter","Cairo",system-ui,sans-serif}
+.am-builder .form-head h1,.am-builder .form-section h2{font-family:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif;font-weight:800;letter-spacing:-.02em}
+.am-builder .form-section,.am-builder .builder-price,.am-builder .hosting-policy,.am-builder .preview-panel{border:2.5px solid #24191E!important;box-shadow:4px 4px 0 #24191E;border-radius:18px}
+.am-builder .simple-header{border-bottom:2px solid #24191E}
+.am-builder .language-switch button.active{background:#F5BD43;color:#24191E}
+.am-builder .add-button,.am-builder button[type=submit],.am-builder .primary-button{background:#6E2037!important;color:#F8EFE2!important;border:2.5px solid #24191E!important;box-shadow:4px 4px 0 #24191E;border-radius:999px}
+.am-builder .brand-mark img{filter:none!important}
+
+/* ── Builder 2.0: steps, smart fill, customize ─────────────────────── */
+.am-steps-nav{position:sticky;top:96px;z-index:30;margin:0 0 18px;background:#FFF9F0;border:2.5px solid #24191E;border-radius:20px;box-shadow:4px 4px 0 #24191E;padding:10px 12px 0;overflow:hidden}
+.am-steps-track{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px}
+.am-steps-track::-webkit-scrollbar{display:none}
+.am-steps-nav a{flex:1 0 auto;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;text-decoration:none;color:#6B5450;font:700 13.5px/1 "Inter","Cairo",sans-serif;white-space:nowrap}
+.am-steps-nav a b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:2px solid #E2CDB6;font:800 13px/1 "Baloo 2",sans-serif;color:#24191E;background:#F8EFE2}
+.am-steps-nav a.is-active{background:#6E2037;color:#F8EFE2}
+.am-steps-nav a.is-active b{border-color:#F5BD43;background:#F5BD43}
+.am-steps-nav a.is-done b{background:#778A3D;border-color:#778A3D;color:#fff}
+.am-steps-nav a.is-done b::before{content:"✓"}.am-steps-nav a.is-done b{font-size:0}.am-steps-nav a.is-done b::before{font-size:14px}
+.am-steps-progress{height:5px;background:#EFDFCB;margin:0 -12px}.am-steps-progress i{display:block;height:100%;width:0;background:#F5BD43;transition:width .4s}
+.am-next{display:block;margin:22px 0 0 auto;border:0;background:none;color:#6E2037;font:800 15px/1 "Baloo 2","Baloo Bhaijaan 2",sans-serif;cursor:pointer}
+[dir=rtl] .am-next{margin:22px auto 0 0}
+.am-flash{animation:am-flash 1.6s}
+@keyframes am-flash{20%{box-shadow:0 0 0 6px #F5BD43}}
+.am-smart .am-smart-lede{margin-top:0}
+.am-smart-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+@media(max-width:700px){.am-smart-grid{grid-template-columns:1fr 1fr}}
+.am-smart-tile{display:grid;justify-items:start;gap:4px;padding:18px 16px;border-radius:18px;border:2.5px solid #24191E;background:#F8EFE2;box-shadow:4px 4px 0 #24191E;cursor:pointer;text-align:start;transition:transform .15s}
+.am-smart-tile:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 #24191E}
+.am-smart-tile:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #24191E}
+.am-smart-tile i{font-style:normal;font-size:30px}
+.am-smart-tile b{font:800 18px/1.1 "Baloo 2","Baloo Bhaijaan 2",sans-serif;color:#24191E}
+.am-smart-tile small{color:#6B5450;font-size:13px}
+.am-smart-tile[data-smart=photo]{background:#F5BD43}
+.am-smart-status{padding:14px;border:2px dashed #F5BD43;border-radius:16px;margin-bottom:12px}
+.am-smart-status p{margin:8px 0 0;font-weight:700}
+.am-smart-bar{display:block;height:8px;border-radius:99px;background:#EFDFCB;overflow:hidden}.am-smart-bar i{display:block;height:100%;width:0;background:#6E2037;transition:width .3s}
+.am-smart-tip{font-size:13px;color:#6B5450}
+.am-smart-inner .am-smart-assistant{border:0!important;box-shadow:none!important;padding:0!important;margin:0!important;background:none!important}
+.am-smart-inner #assistantHeading,.am-smart-inner #assistantHeading+p{display:none}
+.am-smart-fill{margin:10px 0}
+.am-smart-more{margin-top:14px;border-top:1.5px dashed #E2CDB6;padding-top:12px}
+.am-smart-more>summary{cursor:pointer;font:800 15px/1.2 "Baloo 2",sans-serif;color:#6E2037}
+.am-smart-more #voiceFillSection{border:0!important;box-shadow:none!important;padding:10px 0 0!important;background:none!important}
+.am-cust-h{font:800 18px/1 "Baloo 2","Baloo Bhaijaan 2",sans-serif;margin:20px 0 10px}
+.am-cust-designs{display:grid;grid-auto-flow:column;grid-auto-columns:110px;gap:10px;overflow-x:auto;padding:4px 2px 12px}
+.am-cust-designs button{border:2.5px solid #E2CDB6;border-radius:16px;padding:5px;background:#F8EFE2;cursor:pointer;text-align:start}
+.am-cust-designs img{width:100%;aspect-ratio:9/14;object-fit:cover;object-position:top;border-radius:11px}
+.am-cust-designs span{display:block;font:800 12.5px/1.2 "Baloo 2",sans-serif;padding:6px 3px 2px;color:#24191E}
+.am-cust-designs button.is-on{border-color:#6E2037;box-shadow:3px 3px 0 #6E2037}
+.am-cust-row{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+@media(max-width:700px){.am-cust-row{grid-template-columns:1fr}}
+.am-swatches{display:flex;flex-wrap:wrap;gap:8px}
+.am-swatches button,.am-swatch-pick{width:38px;height:38px;border-radius:50%;border:3px solid #FFF9F0;outline:2px solid #E2CDB6;background:var(--sw);cursor:pointer;padding:0;position:relative;overflow:hidden}
+.am-swatches button.is-on{outline:3px solid #24191E}
+.am-swatch-pick{background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red)}
+.am-swatch-pick input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.am-cust-seg{display:inline-flex;border:2px solid #24191E;border-radius:999px;padding:3px}
+.am-cust-seg button{border:0;background:none;border-radius:999px;padding:8px 14px;font:700 13px/1 "Inter",sans-serif;cursor:pointer;color:#24191E}
+.am-cust-seg button[aria-pressed=true]{background:#6E2037;color:#F8EFE2}
+.am-builder .builder-layout>*{min-width:0}
+.am-builder .form-panel,.am-builder #menuForm,.am-cust,.am-smart{min-width:0;max-width:100%}
+.am-cust-designs{max-width:100%}
+.am-smart-inner #assistantStart,.am-smart-inner #assistantReview,.am-smart-inner label:has(#assistantCsv),.am-smart-inner #assistantHeading~p:not(#assistantStatus):not(.voice-privacy){display:none!important}
+.am-smart-inner #assistantStop:not([hidden]){display:inline-flex!important;background:#D43B2E!important}
+.am-smart-inner .voice-privacy{font-size:12px;color:#6B5450}
+.am-premium-note{margin:8px 0 0;padding:10px 12px;border-radius:12px;background:#FCEFD2;border:2px dashed #F5BD43;font:600 13px/1.4 "Inter","Cairo",sans-serif;color:#24191E}

@@ -1,0 +1,7 @@
+/* AuraMenu 2.0 skin for legacy app pages (status, dashboard, FAQ, features, how-it-works): remaps their tokens to the new identity. */
+@import url("aura-brand.css");
+:root{--ink:#24191E!important;--muted:#6B5450!important;--paper:#F8EFE2!important;--card:#FFF9F0!important;--orange:#6E2037!important;--red:#D43B2E!important;--green:#778A3D!important;--forest:#6E2037!important;--soft:#F7B68B!important;--lime:#F5BD43!important;--line:#E2CDB6!important}
+html,body{background:#F8EFE2!important;color:#24191E}
+body{font-family:"Inter","Cairo",system-ui,sans-serif!important}
+h1,h2,h3,.brand{font-family:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif!important;letter-spacing:-.02em}
+.brand-mark img{filter:none!important}

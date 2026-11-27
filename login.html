@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#6E2037">
+  <meta name="robots" content="noindex">
+  <title>AuraMenu · Giriş</title>
+  <link rel="icon" type="image/svg+xml" href="brand/mark.svg">
+  <script>try{var t=localStorage.getItem("auramenu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="stylesheet" href="brand/aura-brand.css?v=3">
+  <link rel="stylesheet" href="brand/studio.css?v=3">
+</head>
+<body class="am-auth">
+  <main class="am-auth-wrap" id="main">
+    <section class="am-auth-art" aria-hidden="true">
+      <a class="am-logo" href="index.html" data-lang-link><img src="brand/mark.svg" alt="" width="40" height="40">AuraMenu</a>
+      <div class="am-auth-art-in">
+        <h2><span data-i18n="artA">Hey, chef!</span><br><span class="am-swoosh" data-i18n="artB">Menün seni bekliyor.</span></h2>
+        <p data-i18n="artP">Fiyatları güncelle, ürünü tükendi yap, tasarımı değiştir. Hepsi tek yerden.</p>
+        <span class="am-auth-mascot" data-mascot="wave"></span>
+      </div>
+      <div class="am-scallop" style="--sc:var(--am-saffron)"></div>
+    </section>
+    <section class="am-auth-panel">
+      <div class="am-auth-tools">
+        <div class="am-lang" role="group" aria-label="Language"><button data-lang-btn="tr">TR</button><button data-lang-btn="en">EN</button><button data-lang-btn="ar">AR</button></div>
+        <button class="am-theme-toggle" data-theme-toggle aria-label="Light / dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+      </div>
+      <div class="am-auth-card">
+        <span class="am-eyebrow" data-i18n="kicker">AuraMenu Studio</span>
+        <h1 data-i18n="title">Tekrar hoş geldin.</h1>
+        <p class="am-auth-sub" data-i18n="sub">Menünü yönetmek için giriş yap.</p>
+        <form id="loginForm" novalidate>
+          <label class="am-field"><span data-i18n="email">E-posta</span><input type="email" id="email" autocomplete="email" required></label>
+          <label class="am-field"><span data-i18n="password">Şifre</span>
+            <span class="am-pass"><input type="password" id="password" autocomplete="current-password" required minlength="8"><button type="button" id="showPass" data-i18n="show">Göster</button></span></label>
+          <div class="am-auth-row"><label class="am-check"><input type="checkbox" id="remember" checked> <span data-i18n="remember">Beni hatırla</span></label><a href="/account?reset=1" data-i18n="forgot">Şifremi unuttum</a></div>
+          <p class="am-msg" id="msg" role="alert" aria-live="polite"></p>
+          <button class="am-btn am-btn--brand" type="submit" id="submit" style="width:100%"><span data-i18n="login">Giriş yap</span> <span class="am-arrow">→</span></button>
+        </form>
+        <div class="am-verify" id="verify" hidden>
+          <p data-i18n="verifyText">E-postana gönderdiğimiz doğrulama bağlantısına tıkla, sonra tekrar dene.</p>
+          <button class="am-btn am-btn--sm am-btn--ghost" id="resend" type="button" data-i18n="resend">Bağlantıyı tekrar gönder</button>
+        </div>
+        <div class="am-auth-or"><span data-i18n="or">veya</span></div>
+        <a class="am-btn am-btn--ghost" href="studio.html?demo=1" data-lang-link style="width:100%" data-i18n="demo">Demo Studio'yu dene</a>
+        <p class="am-auth-foot"><span data-i18n="new">Henüz menün yok mu?</span> <a href="builder.html" data-lang-link data-i18n="create">Menünü oluştur</a></p>
+      </div>
+    </section>
+  </main>
+  <script src="config.js?v=20261002-saas"></script>
+  <script src="brand/site.js?v=3"></script>
+  <script src="brand/mascot.js?v=3"></script>
+  <script src="brand/login.js?v=3"></script>
+</body>
+</html>

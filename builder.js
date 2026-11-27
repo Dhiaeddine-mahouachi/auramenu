@@ -223,6 +223,7 @@
     maison: "Maison",
     taste3d: "Taste 3D",
   };
+  if (window.AURAMENU_V2) Object.assign(templateNames, window.AURAMENU_V2.names);
   const templateFiles = {
     modern: "c.html",
     orbit: "b.html",
@@ -585,7 +586,7 @@
     standardEditor?.sync(templateId);
     if (frame.dataset.template !== templateId) {
       frame.dataset.template = templateId;
-      frame.src = templateFiles[templateId] ? `${templateFiles[templateId]}?embedded=1` : `standard/frame.html?template=${encodeURIComponent(templateId)}`;
+      frame.src = templateFiles[templateId] ? `${templateFiles[templateId]}?embedded=1` : window.AURAMENU_V2.src(templateId);
     }
     clearTimeout(previewTimer);
     previewTimer = setTimeout(sendTemplatePreview, 45);
@@ -593,7 +594,7 @@
   function previewMenuData() {
     return {
       templateId: $("templateId").value,
-      ...(!templateFiles[$("templateId").value] && standardEditor?.values()),
+      ...(!templateFiles[$("templateId").value] && window.AuraMenuExtras ? window.AuraMenuExtras.get() : {}),
       menuLanguage: $("menuLanguage").value,
       businessName: $("businessName").value.trim() || "Aura Restaurant",
       tagline: $("tagline").value.trim(),
@@ -759,9 +760,12 @@
       showMessage(i18n[lang].menuRequired);
       return;
     }
+    const chosen = $("templateId").value;
+    const premiumChoice = window.AURAMENU_V2?.tiers[chosen] === "premium";
     const payload = {
-      templateId: $("templateId").value,
-      ...(!templateFiles[$("templateId").value] && standardEditor?.values()),
+      // Premium designs are switched on by AuraDigital after approval; the request starts on Aura Classic and records the choice.
+      templateId: premiumChoice ? "std-15" : chosen,
+      ...(!templateFiles[chosen] && window.AuraMenuExtras ? window.AuraMenuExtras.get() : {}),
       interfaceLanguage: lang,
       menuLanguage: $("menuLanguage").value,
       businessName: $("businessName").value.trim(),
@@ -780,7 +784,7 @@
       paymentReference: $("paymentReference").value.trim(),
       serviceMode: "self",
       planId: $("planId").value,
-      notes: $("notes").value.trim(),
+      notes: [premiumChoice ? `[Premium design requested: ${window.AURAMENU_V2.names[chosen]} (${chosen})]` : "", $("notes").value.trim()].filter(Boolean).join("\n"),
       categories: cleanCategories.map((category) => ({
         name: category.name.trim(),
         emoji: category.emoji.trim(),
@@ -894,24 +898,18 @@
   let savedDesign;
   try { savedDesign = JSON.parse(localStorage.getItem('auraMenuDraft')); } catch {}
   restoreDraft();
-  if (!Object.hasOwn(templateFiles,$("templateId").value)) $("templateId").value = 'modern';
+  if (!Object.hasOwn(templateFiles,$("templateId").value) && !window.AURAMENU_V2?.isV2($("templateId").value)) $("templateId").value = 'std-01';
   const requested = params.get("template");
-  if (Object.hasOwn(templateNames,requested)) $("templateId").value = requested;
+  if (Object.hasOwn(templateNames,requested) || window.AURAMENU_V2?.isV2(requested)) $("templateId").value = window.AURAMENU_V2?.code(requested) || requested;
   if (!localStorage.getItem("auraMenuDraft")) $("menuLanguage").value = lang;
   applyLanguage(lang);
   updatePreview();
-  import('./standard/editor.mjs').then(async editor => {
-    const select = $("templateId");
-    const initial = select.value;
-    const ids = await editor.availableDesigns(window.AURA_MENU_CONFIG.apiBase);
-    if (!ids.length) return;
-    editor.offerTemplates(select,ids);
-    const { registry } = await import('./standard/registry.mjs');
-    for (const entry of registry) if (ids.includes(entry.id)) templateNames[entry.id] = entry.name;
-    standardEditor = editor.addDesignEditor($("standardDesign"),() => { updatePreview(); saveDraft(); });
-    const desired = requested || savedDesign?.fields?.templateId;
-    if (select.value === initial && ids.includes(desired)) select.value = desired;
-    standardEditor.sync(select.value,savedDesign?.presentation);
-    updatePreview();
-  }).catch(() => {});
+  window.addEventListener("auramenu:extras", () => { updatePreview(); saveDraft(); });
+  const premiumNote = () => {
+    const id = $("templateId").value, note = $("premiumNote"); if (!note) return;
+    const premium = window.AURAMENU_V2?.tiers[id] === "premium";
+    note.hidden = !premium;
+    if (premium) note.textContent = ({ tr: "★ Premium tasarım: talebin Aura Classic ile başlar, AuraDigital onaydan sonra bu tasarımı açar.", en: "★ Premium design: your request starts on Aura Classic and AuraDigital switches it on after approval.", ar: "★ تصميم مميز: يبدأ طلبك بتصميم Aura Classic وتفعّل AuraDigital هذا التصميم بعد الموافقة." })[lang] || "";
+  };
+  $("templateId").addEventListener("change", premiumNote); premiumNote();
 })();

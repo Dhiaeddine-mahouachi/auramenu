@@ -64,25 +64,9 @@
   }
 
   async function renderTemplate(menu) {
-    if (/^(?:std-(?:0[1-9]|1[0-5])|pre-(?:1[6-9]|2[0-9]|30))$/.test(menu.templateId)) {
-      try {
-        const { prepareTemplate } = await import('./standard/entry.mjs');
-        const { mount } = await prepareTemplate(menu.templateId);
-        let active;
-        function paint(language,state) {
-          active?.dispose();
-          active = mount(root,menu,{language,state,onLanguage:paint,persistAppearance:true});
-          document.documentElement.lang = root.firstElementChild.lang;
-          document.documentElement.dir = root.firstElementChild.dir;
-        }
-        paint(menu.menuLanguage);
-        return;
-      } catch (error) {
-        console.warn("AuraMenu collection template failed. Trying Classic.",error);
-        if (menu.templateId !== 'std-01') return renderTemplate({...menu,templateId:'std-01'});
-      }
-    }
-    const templateFile = Object.hasOwn(templateFiles,menu.templateId) ? templateFiles[menu.templateId] : templateFiles.modern;
+    // AuraMenu 2.0: the 30 collection IDs (std-01…pre-30) render with the shared menu engine (menu-v2.html).
+    const v2 = window.AURAMENU_V2 && window.AURAMENU_V2.isV2(menu.templateId);
+    const templateFile = v2 ? "" : Object.hasOwn(templateFiles,menu.templateId) ? templateFiles[menu.templateId] : templateFiles.modern;
     const frame = document.createElement("iframe");
     frame.className = "public-template-frame";
     frame.title = `${menu.businessName} menu`;
@@ -101,7 +85,7 @@
       if (event.data?.type === "auramenu:template-ready") sendMenu();
     });
     frame.addEventListener("load", sendMenu);
-    frame.src = `/${templateFile}?embedded=1`;
+    frame.src = v2 ? window.AURAMENU_V2.src(menu.templateId, "/") : `/${templateFile}?embedded=1`;
   }
 
   async function load() {
