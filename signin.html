@@ -6,9 +6,10 @@
   <meta name="theme-color" content="#6E2037">
   <meta name="robots" content="noindex">
   <title>AuraMenu · Giriş</title>
+  <meta name="referrer" content="no-referrer">
   <script>try{var t=localStorage.getItem("auramenu-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
   <link rel="stylesheet" href="am2/aura-brand.css?v=7">
-  <link rel="stylesheet" href="am2/studio.css?v=10">
+  <link rel="stylesheet" href="am2/studio.css?v=11">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="apple-touch-icon" href="/apple-touch-icon.png"></head>
 <body class="am-auth">
   <main class="am-auth-wrap" id="main">
@@ -26,16 +27,14 @@
         <div class="am-lang" role="group" aria-label="Language"><button data-lang-btn="tr">TR</button><button data-lang-btn="en">EN</button><button data-lang-btn="ar">AR</button></div>
         <button class="am-theme-toggle" data-theme-toggle aria-label="Light / dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
       </div>
-      <div class="am-auth-card">
-        <span class="am-eyebrow" data-i18n="kicker">AuraMenu Studio</span>
-        <h1 data-i18n="title">Tekrar hoş geldin.</h1>
-        <p class="am-auth-sub" data-i18n="sub">Menünü yönetmek için giriş yap.</p>
-        <button class="am-btn am-btn--brand" type="button" id="auraConnect" style="width:100%"><span data-i18n="connect">AuraDigital hesabınla giriş yap</span> <span class="am-arrow">→</span></button>
-        <p class="am-auth-note" data-i18n="connectNote">Google veya e-posta ile. AuraHub ile aynı hesap. Hesabın yoksa bu adımda oluşturabilirsin.</p>
+      <div class="am-auth-card" id="authCard">
+        <span class="am-eyebrow" id="authKicker">AuraMenu</span>
+        <h1 id="authTitle">Tekrar hoş geldin.</h1>
+        <p class="am-auth-sub" id="authSub">Menünü yönetmek için giriş yap.</p>
+        <div id="authBody"><noscript><p>JavaScript gerekli.</p></noscript></div>
         <p class="am-msg" id="msg" role="alert" aria-live="polite"></p>
-        <div class="am-auth-or"><span data-i18n="or">veya</span></div>
-        <a class="am-btn am-btn--ghost" href="studio.html?demo=1" data-lang-link style="width:100%" data-i18n="demo">Demo Studio'yu dene</a>
-        <p class="am-auth-foot"><span data-i18n="new">Henüz menün yok mu?</span> <a href="builder.html" data-lang-link data-i18n="create">Menünü oluştur</a></p>
+        <p class="am-auth-foot" id="authFoot"></p>
+        <p class="am-auth-account-note" id="authNote"></p>
       </div>
     </section>
   </main>
@@ -43,6 +42,6 @@
   <script src="am2/site.js?v=7"></script>
   <script src="am2/mascot.js?v=7"></script>
   <script src="/edge-runtime.js"></script>
-  <script src="am2/signin.js?v=10"></script>
+  <script src="am2/signin.js?v=11"></script>
 </body>
 </html>

@@ -149,7 +149,8 @@
   /* Account: registration needs a signed-in AuraDigital account (no email codes here) */
   let account = null;
   async function loadAccount() {
-    try { account = (await (await fetch("/api/auramenu/account/session", { cache: "no-store", credentials: "same-origin" })).json()).user || null; }
+    // Registration needs a verified email; an unverified account finishes verification on the sign-in page.
+    try { const user = (await (await fetch("/api/auramenu/account/session", { cache: "no-store", credentials: "same-origin" })).json()).user || null; account = user && user.emailVerified !== false ? user : null; }
     catch { account = null; }
     if (account) { $("contactName").value = account.name || ""; $("email").value = account.email || ""; }
     renderAccount();

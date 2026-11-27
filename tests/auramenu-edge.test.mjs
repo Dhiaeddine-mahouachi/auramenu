@@ -72,7 +72,12 @@ test('API requests keep method, query and session, and static paths keep their o
   for (const path of ['/', '/gallery.html', '/menu-v2/engine.js']) {
     assert.equal(await (await worker.fetch(new Request('https://auramenu.space' + path), env)).text(), 'static');
   }
-  for (const path of ['/login', '/account', '/.well-known/missing', '/assets/missing.png']) {
+  for (const [path, query] of [['/login', ''], ['/login/', '?lang=ar'], ['/login.html', '?next=studio.html']]) {
+    const r = await worker.fetch(new Request('https://auramenu.space' + path + query), env);
+    assert.equal(r.status, 301); assert.equal(r.headers.get('Location'), '/signin.html' + query);
+  }
+  assert.equal((await worker.fetch(new Request('https://auramenu.space/login', { method: 'POST', body: '{}' }), env)).status, 404, 'non-GET legacy login is not redirected');
+  for (const path of ['/account', '/.well-known/missing', '/assets/missing.png']) {
     assert.equal((await worker.fetch(new Request('https://auramenu.space' + path), env)).status, 404);
   }
   const request = new Request('https://auramenu.space/api/auramenu/requests?test=1', {

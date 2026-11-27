@@ -154,3 +154,19 @@
 .st-menus li span{display:grid;gap:2px;min-width:0}
 .st-menus small{color:var(--am-muted);font-size:13px;overflow:hidden;text-overflow:ellipsis}
 .st-team-add{margin-top:16px}
+/* Native AuraMenu authentication screens */
+.am-auth-card form{display:grid;gap:14px}
+.am-auth-card .am-check{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.4}
+.am-auth-card .am-check a{color:var(--am-bordeaux);font-weight:700}
+:root[data-theme="dark"] .am-auth-card .am-check a{color:var(--am-saffron)}
+.am-google{display:inline-flex;justify-content:center;align-items:center;gap:10px}
+.am-auth-demo{width:100%;margin-top:10px;justify-content:center}
+.am-turnstile:empty{display:none}
+.am-auth-account-note{margin:16px 0 0;text-align:center;font-size:12.5px;color:var(--am-muted)}
+.am-auth-account-note:empty{display:none}
+.am-auth-check{display:grid;justify-items:center;gap:10px;margin:6px 0 18px;text-align:center}
+.am-auth-check p{margin:0;font-weight:800;overflow-wrap:anywhere}
+.am-auth-check-ico{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:28px;background:var(--am-saffron);border:2.5px solid var(--am-plum);color:var(--am-plum)}
+.am-auth-spin{width:42px;height:42px;border-radius:50%;border:4px solid var(--am-border);border-top-color:var(--am-bordeaux);animation:am-spin .9s linear infinite}
+@keyframes am-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.am-auth-spin{animation:none}}

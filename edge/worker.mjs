@@ -67,6 +67,10 @@ export default {
         headers: { 'Content-Type': 'application/javascript; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' },
       });
     }
+    // Legacy AuraMenu sign-in addresses go to AuraMenu's own authentication page (query such as lang/next kept).
+    if (['/login', '/login/', '/login.html'].includes(url.pathname) && ['GET', 'HEAD'].includes(request.method)) {
+      return new Response(null, { status: 301, headers: { Location: `/signin.html${url.search}`, 'Cache-Control': 'public, max-age=3600' } });
+    }
     if (url.pathname.startsWith('/api/auramenu/')) {
       try {
         return await env.AURADIGITAL.fetch(new Request(request, { redirect: 'manual' }));
