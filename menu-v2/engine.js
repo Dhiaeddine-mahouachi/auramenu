@@ -180,6 +180,7 @@
     const bestOn = (a) => (ratio(a, "#FFFFFF") >= ratio(a, "#1B1B1B") ? "#FFFFFF" : "#1B1B1B");
     const onAccent = custom || !hex(design.onAccent) || !hex(accent) || ratio(accent, design.onAccent) < 4.5 ? (hex(accent) ? bestOn(accent) : design.onAccent) : design.onAccent;
     r.setProperty("--accent", accent); r.setProperty("--accent2", design.accent2); r.setProperty("--on-accent", onAccent);
+    r.setProperty("--accent2-text", readable(design.accent2, bgs));
     r.setProperty("--accent-text", bgs.length ? readable(accent, bgs) : accent); r.setProperty("--muted", bgs.length ? readable(p.muted, bgs) : p.muted);
     r.setProperty("--radius", `${design.radius}px`); r.setProperty("--img-radius", `${Math.min(design.radius, 40)}px`);
     const ar = state.lang === "ar";
