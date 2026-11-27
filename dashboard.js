@@ -271,7 +271,7 @@
       $('editorFields').disabled=!enabled; $('saveMenu').disabled=!enabled;
       $('editBadge').textContent=enabled?'Editing included':'Renewal required'; $('editBadge').classList.toggle('active',enabled);
       $('requestAccess').hidden=true; $('accessDays').hidden=true;
-      $('accessTitle').textContent=b.planName+' · '+b.amount+' TL '+(b.interval==='monthly'?'/ month':'one-time');
+      $('accessTitle').textContent=b.planName+' · '+b.amount+' TL '+(b.interval==='monthly'?'/ month':b.interval==='yearly'?'/ year':'one-time');
       $('accessText').textContent=b.active?'Editing is included during your paid period.':enabled?'Your draft is saved. Your menu is not live until payment and approval.':'Renew your plan to restore hosting and editing.';
       $('accessPrice').textContent=b.hostingAmount?'Hosting: 200 TL / 6 months':'Hosting included';
       $('countdown').textContent=b.paidUntil?'Paid until: '+new Date(b.paidUntil).toLocaleDateString():'';

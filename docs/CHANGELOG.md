@@ -1,6 +1,9 @@
 # AuraMenu changelog
 
 ## 2026-11-27
+- Pricing: Standard 399 TL/month, Premium 599 TL/month, Annual 2,500 TL/year (site, builder, FAQ, SEO pages, backend). The one-time plan is no longer sold; existing one-time contracts keep their terms.
+- Public menus cached at the edge for 60 s, cleared when the owner saves or an admin changes status.
+- `legacy-index.html` (old home page with old pricing) now redirects to `/`.
 - Sprint 0 audit documents: backlog, architecture, security, health audit, API, deployment, recovery, test report.
 - 10 new Turkish SEO guides + `/qr-menu-rehberi.html` hub; sitemap now 21 URLs.
 - New favicon (Bordeaux tile, saffron cloche) across all pages; `favicon.ico`, `apple-touch-icon.png`.

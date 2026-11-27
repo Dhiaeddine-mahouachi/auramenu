@@ -3,7 +3,7 @@ window.AURA_MENU_CONFIG = Object.freeze({
   publicBase: "https://auramenu.space",
   dashboardUrl: "/account",
   selfBuildPrice: 399,
-  plans: [{id:"starter",name:"Starter",amount:399,interval:"monthly",hostingAmount:0},{id:"pro",name:"Pro",amount:599,interval:"monthly",hostingAmount:0},{id:"onetime",name:"One-time",amount:2500,interval:"one-time",hostingAmount:200}],
+  plans: [{id:"starter",name:"Standard",amount:399,interval:"monthly",hostingAmount:0},{id:"pro",name:"Premium",amount:599,interval:"monthly",hostingAmount:0},{id:"annual",name:"Annual",amount:2500,interval:"yearly",hostingAmount:0}],
   currencyLabel: "TL",
 });
 
