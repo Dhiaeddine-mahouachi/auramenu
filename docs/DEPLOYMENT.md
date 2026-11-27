@@ -1,5 +1,15 @@
 # AuraMenu deployment
 
+## Sprint A promotion and rollback
+
+The isolated development branch in both repositories is `codex/auramenu-sprint-a-stabilization`. The static workflow publishes Pages on pushes to `main`. AuraDigital's active GitHub workflow syncs `main` to `contact-autoreply`, which feeds the Cloudflare production build. Validate the separate staging environment and its D1 binding before using it for integrated acceptance.
+
+Record the current Pages commit, Worker version, D1 backup bookmark and applicable route inventory before promotion. Smoke-check known printed slugs, current sign-in, health, the public API and a staged publishing lifecycle. If a release fails, restore the previous Pages commit or Worker version and recheck the exact same URLs. Restore data only under the separate [recovery runbook](RECOVERY.md) after incident approval.
+
+The development branch adds `GET /api/auramenu/health`, returning 200 or 503 without exposing database configuration. Confirm existing structured Worker logs and configure alerts on repeated publication 5xx responses and health 503s. Test alert delivery using a controlled staging failure and ensure the destination is available before release.
+
+Cloudflare access is scoped to Zone Read and Workers Routes Read for inventory, Workers Scripts Read to inspect metadata, a scoped D1 read/export source and D1 write on the isolated restore target, and R2 access for the approved media bucket. Any routing change requires owner-approved write scope on the AuraMenu zone. Refer to [Cloudflare Worker routes](https://developers.cloudflare.com/workers/configuration/routing/routes/) and [D1 export/import](https://developers.cloudflare.com/d1/best-practices/import-export-data/).
+
 ## Static site (this repo)
 1. Work on a branch or locally; run tests:
    - `node --test tests/*.test.mjs`

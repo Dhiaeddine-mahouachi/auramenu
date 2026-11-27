@@ -1,5 +1,15 @@
 # AuraMenu changelog
 
+## 2026-11-28 · Sprint A development branches
+
+- Reconciled 90 original backlog tasks and 30 Sprint 0/Sprint A rows.
+- New signed-in submissions bind the menu to the AuraDigital account in the creation transaction. Studio accepts the builder’s earlier claim key, and staff save responses retain their role.
+- Activated subscription menus can be published by an authorized owner or manager through Studio. Pending paid menus retain their pending badge until public approval.
+- Cloud drafts protect against writes without a current version, recover offline startup, and only clear the version the submitting device saw.
+- Tightened plan tier enforcement while retaining one-time menu grants. Added an AuraMenu readiness response and expanded lifecycle, draft and design regression coverage.
+- Corrected heading and category-number contrast in Neon and Ivory light mode.
+- Live route ownership verified. No production deployment from these branches.
+
 ## 2026-11-27
 - Designs follow the plan: Standard and Annual show and accept only the 15 standard designs, Premium only the 15 premium designs (builder, Studio, pricing cards, FAQ; enforced by the backend). Choosing a premium design from the gallery selects the Premium plan.
 - Staff roles per menu: owner, manager, editor (Team tab in Studio). Editors change items, prices and stock; managers also design and info; plan and team stay with the owner. Enforced on the server.

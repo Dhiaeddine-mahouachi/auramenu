@@ -1,4 +1,23 @@
-# AuraMenu — Health audit (Sprint 0)
+# AuraMenu health audit
+
+## Sprint A · 2026-11-28
+
+| Priority | Finding | Evidence and next action |
+|---|---|---|
+| P0 | Published restaurant slugs currently return HTTP 404. | Live `/moka` is 404, its JSON API is 200, and the HTML body lacks per-menu metadata. Current ingress is documented in [Sprint A progress](SPRINT_A_PROGRESS.md). Stage the AuraMenu-only routing plan first. |
+| P0 | End-to-end provider and commercial acceptance remains open. | AuraDigital identity, PKCE, cookie flags, replay/expiry, role isolation, approval, publication and drafts were tested in local fixtures. Real email/Google and two-device browser acceptance need authorized staged accounts. |
+| P1 | Menu ownership depended on a later Studio claim, and team saves returned an owner label. | Fixed on the backend development branch. Signed-in submissions now link atomically. Studio continues to read the older builder token key for earlier menus. |
+| P1 | Offline draft startup or concurrent requests could lose work. | Development changes require a current version, preserve local work, and retry the initial cloud read. Browser conflict/resolution and backend concurrency regression tests passed. |
+| P1 | The legacy Premium allow-list applied to currently offered Standard and Annual plans. | Development branch keeps legacy one-time grants while enforcing current plan tiers. Pricing copy generation remains open. |
+| P1 | Published revisions have no restore history. | The current revision survives invalid writes. Safe historical restoration needs snapshots and associated image retention. |
+| P1 | R2 is disabled. | Cloudflare returned the account-level disabled response. Existing D1-backed image URLs remain in place. |
+| P1 | Recovery drill is partial. | Cloudflare D1 metadata confirmed separate staging D1. Local Wrangler export/import passed a synthetic fixture. Real staged backup/restore and production rollback remain to be rehearsed. |
+| P1 | Early local performance baseline varies by design. | 720 render checks passed. Sofra's local lab p75 LCP exceeded 2.5 s. Field LCP, INP and CLS are pending. |
+| P2 | `/login` is an older edge-managed login page. | It and its two referenced assets returned 200 in this check. The current sign-in entry and main builder also return 200. |
+
+Read [the master backlog](AURAMENU_MASTER_BACKLOG.md) for current statuses and [the test report](SPRINT_A_TEST_REPORT.md) for scope and observations.
+
+## Sprint 0 historical findings
 
 Audited 2026-11-27 against live auramenu.space, repo `Dhiaeddine-mahouachi/auramenu` (main) and `Dhiaeddine-mahouachi/auradigital` (main, fb2f127).
 Priorities: **P0** critical · **P1** important · **P2** improvement · **P3** future.

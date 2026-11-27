@@ -1,5 +1,11 @@
 # AuraMenu security notes (Sprint 0)
 
+## Sprint A verification · 2026-11-28
+
+AuraDigital is the operator identity provider. The Worker tests cover PKCE and host-only sessions, access boundaries between accounts, role enforcement after saves and removal, private drafts, pending image visibility, and entitlement checks for publication. Signed-in submissions link ownership in the same write as the request. Manual menu tokens remain for compatibility with earlier menus. Test identity-provider integration and full two-restaurant coverage in staging before release.
+
+The findings below record the earlier Sprint 0 baseline. Current statuses and outstanding security work appear in [the master backlog](AURAMENU_MASTER_BACKLOG.md).
+
 ## Verified
 - API responses: `Content-Security-Policy: default-src 'none'; frame-ancestors 'none'`, HSTS (1y, subdomains), `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy: no-referrer`, `Cache-Control: no-store`.
 - CORS allow-list on the worker includes `https://auramenu.space`, `https://www.auramenu.space`.

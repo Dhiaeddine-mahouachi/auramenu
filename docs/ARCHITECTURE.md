@@ -1,5 +1,13 @@
 # AuraMenu architecture (as of 2026-11-27)
 
+## Sprint A updates · 2026-11-28
+
+AuraDigital customer identity handles verification and Google/email sign-in. Studio's current `/signin.html` exchanges an AuraDigital one-time PKCE code for an AuraMenu host-only session. The same AuraDigital Worker serves Studio and AuraHub menu records using D1. The AuraMenu domain's existing `aurapops` edge route forwards `/api/auramenu/*` and serves legacy account paths. GitHub Pages is the HTML origin for restaurant slugs. Scope and open routing work are listed in [Sprint A progress](SPRINT_A_PROGRESS.md).
+
+The baseline has per-menu ownership, owner/manager/editor access, and account-scoped builder drafts. The Sprint A branch adds atomic account ownership on signup-authenticated menu submissions and a publish action after manual activation. AuraHub's menu screen consumes the same list; restaurant/workspace ownership consolidation remains tracked in the master backlog.
+
+The diagram below describes the Sprint 0 baseline at the time it was written.
+
 ```
 Guest phone ──QR/NFC──> auramenu.space/<slug>
                           │  (Cloudflare zone; GitHub Pages origin serves 404.html → menu.js)
