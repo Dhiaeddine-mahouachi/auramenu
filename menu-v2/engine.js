@@ -301,7 +301,7 @@
   }
 
   function footer() {
-    return `<footer class="am-foot"><a href="https://auramenu.space" target="_blank" rel="noopener"><img src="brand/mark.svg" alt="" width="18" height="18">${t("powered")}</a></footer>`;
+    return `<footer class="am-foot"><a href="https://auramenu.space" target="_blank" rel="noopener"><img src="am2/mark.svg" alt="" width="18" height="18">${t("powered")}</a></footer>`;
   }
 
   function cartBar() {
