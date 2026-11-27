@@ -114,6 +114,8 @@
       document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
       document.title = `${data.menu.businessName} — AuraMenu`;
       await renderTemplate(data.menu);
+      // Offline copy for weak café Wi-Fi (network first; see /menu-sw.js).
+      if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1")) navigator.serviceWorker.register("/menu-sw.js").catch(() => {});
     } catch {
       locked();
     }
