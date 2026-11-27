@@ -42,6 +42,9 @@ jobs:
             --exclude='README.md' \
             --exclude='docs/' \
             --exclude='tests/' \
+            --exclude='edge/' \
+            --exclude='wrangler.jsonc' \
+            --exclude='.wrangler/' \
             --exclude='node_modules/' \
             --exclude='package*.json' \
             --exclude='_site/' \

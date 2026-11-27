@@ -65,8 +65,9 @@
 
   async function renderTemplate(menu) {
     // AuraMenu 2.0: the 30 collection IDs (std-01…pre-30) render with the shared menu engine (menu-v2.html).
-    const v2 = window.AURAMENU_V2 && window.AURAMENU_V2.isV2(menu.templateId);
-    const templateFile = v2 ? "" : Object.hasOwn(templateFiles,menu.templateId) ? templateFiles[menu.templateId] : templateFiles.modern;
+    const legacy = Object.hasOwn(templateFiles, menu.templateId) ? templateFiles[menu.templateId] : "";
+    const v2 = !legacy && window.AURAMENU_V2?.isV2(menu.templateId);
+    const templateFile = legacy || templateFiles.modern;
     const frame = document.createElement("iframe");
     frame.className = "public-template-frame";
     frame.title = `${menu.businessName} menu`;

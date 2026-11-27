@@ -14,7 +14,7 @@
   const msg = (m, ok) => { $("msg").textContent = m || ""; $("msg").classList.toggle("is-ok", !!ok); };
   const next = () => { const n = new URLSearchParams(location.search).get("next"); return n && /^[a-z0-9_-]+\.html(\?[^#]*)?$/i.test(n) ? n : `studio.html?lang=${S.lang}`; };
   // AuraDigital account: one-time code + PKCE; auramenu.space keeps its own session cookie.
-  const ACCOUNTS = "https://auradigitalworks.com";
+  const ACCOUNTS = window.AURAMENU_ACCOUNTS_ORIGIN || "https://auradigitalworks.com";
   const b64 = (bytes) => btoa(String.fromCharCode(...bytes)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
   const rand = (n) => b64(crypto.getRandomValues(new Uint8Array(n)));
   $("auraConnect").onclick = async () => {

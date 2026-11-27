@@ -49,6 +49,14 @@
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  function safeLink(value) {
+    if (typeof value !== "string") return "";
+    try {
+      const url = new URL(value);
+      if (["https:", "http:"].includes(url.protocol) && !url.username && !url.password) return url.href;
+    } catch {}
+    return "";
+  }
 
   /* ── Data model ──────────────────────────────────────────────────────── */
   function demoMenu() {
@@ -103,8 +111,8 @@
       demo, businessName: raw.businessName || "AuraMenu", tagline: raw.tagline || raw.description || "",
       address: raw.address || "", hours: raw.hours || null, hoursText: raw.openingHours || "",
       whatsapp: String(raw.whatsapp || "").replace(/\D/g, ""), phone: raw.phone || "", currency: CURRENCIES[raw.currency] ? raw.currency : "TRY",
-      mapsQuery: raw.mapsQuery || tx(raw.address) || raw.businessName || "", reviewUrl: raw.reviewUrl || "", mapsUrl: raw.mapsUrl || "",
-      theme: raw.theme && typeof raw.theme === "object" ? { accent: String(raw.theme.accent || ""), mode: ["light", "dark"].includes(raw.theme.mode) ? raw.theme.mode : "" } : null, toggles: raw.toggles || {}, socials: raw.socials || {}, video: raw.video && typeof raw.video === "object" ? { src: safeVideo(raw.video.src), poster: raw.video.poster || "", title: raw.video.title || "" } : { src: safeVideo(raw.videoUrl || raw.video), poster: raw.videoPoster || "", title: "" }, logo: raw.logo || "", gameEnabled: raw.gameEnabled !== false, categories: cats,
+      mapsQuery: raw.mapsQuery || tx(raw.address) || raw.businessName || "", reviewUrl: safeLink(raw.reviewUrl), mapsUrl: safeLink(raw.mapsUrl),
+      theme: raw.theme && typeof raw.theme === "object" ? { accent: String(raw.theme.accent || ""), mode: ["light", "dark"].includes(raw.theme.mode) ? raw.theme.mode : "" } : null, toggles: raw.toggles || {}, socials: Object.fromEntries(["instagram", "tiktok", "facebook"].map(key => [key, safeLink(raw.socials?.[key])])), video: raw.video && typeof raw.video === "object" ? { src: safeVideo(raw.video.src), poster: raw.video.poster || "", title: raw.video.title || "" } : { src: safeVideo(raw.videoUrl || raw.video), poster: raw.videoPoster || "", title: "" }, logo: raw.logo || "", gameEnabled: raw.gameEnabled !== false, categories: cats,
     };
   }
 
@@ -240,6 +248,10 @@
 
   function hero() {
     const m = state.menu, name = esc(tx(m.businessName)), tag = esc(tx(m.tagline)), img = heroPhoto(), v = design.hero;
+    const responsive = img === "/media/template-photos/photo-1603360946369-dc9bb6258143.webp" ||
+      img === "media/template-photos/photo-1603360946369-dc9bb6258143.webp"
+      ? ' srcset="/media/template-photos/photo-1603360946369-dc9bb6258143-420.webp 420w, /media/template-photos/photo-1603360946369-dc9bb6258143.webp 560w" sizes="(max-width: 560px) 100vw, 560px"'
+      : "";
     const logo = m.logo ? `<img class="am-logo-img" src="${esc(m.logo)}" alt="">` : "";
     const head = `${logo}<p class="am-kicker">${statusPill()}</p><h1 class="am-title">${name}</h1>${tag ? `<p class="am-tagline">${tag}</p>` : ""}`;
     if (v === "orbit") {
@@ -250,7 +262,7 @@
       const date = new Intl.DateTimeFormat(state.lang === "ar" ? "ar" : state.lang, { weekday: "long", day: "numeric", month: "long" }).format(new Date());
       return `<header class="am-hero am-hero--${v}"><div class="am-hero-copy">${v === "magazine" ? `<p class="am-masthead"><span>${esc(t("menu"))}</span><span>${esc(date)}</span></p>` : ""}${v === "frame" ? '<span class="am-orn" aria-hidden="true"></span>' : ""}${head}${v === "frame" ? '<span class="am-orn am-orn--b" aria-hidden="true"></span>' : ""}${quickActions()}</div>${v === "magazine" && img ? `<figure class="am-hero-img" data-parallax><img src="${esc(img)}" alt=""></figure>` : ""}</header>`;
     }
-    return `<header class="am-hero am-hero--${v}">${img ? `<figure class="am-hero-img"><img src="${esc(img)}" alt="" fetchpriority="high"></figure>` : ""}<div class="am-hero-copy">${head}${quickActions()}</div>${design.fx.includes("embers") ? '<canvas class="am-embers" aria-hidden="true"></canvas>' : ""}${design.fx.includes("waves") ? '<svg class="am-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 Q 150 0 300 30 T 600 30 T 900 30 T 1200 30 V60 H0z"/></svg>' : ""}</header>`;
+    return `<header class="am-hero am-hero--${v}">${img ? `<figure class="am-hero-img"><img src="${esc(img)}"${responsive} alt="" fetchpriority="high"></figure>` : ""}<div class="am-hero-copy">${head}${quickActions()}</div>${design.fx.includes("embers") ? '<canvas class="am-embers" aria-hidden="true"></canvas>' : ""}${design.fx.includes("waves") ? '<svg class="am-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 Q 150 0 300 30 T 600 30 T 900 30 T 1200 30 V60 H0z"/></svg>' : ""}</header>`;
   }
 
   function videoBlock() {
@@ -471,7 +483,15 @@
   }
 
   /* ── Boot ────────────────────────────────────────────────────────────── */
-  function boot(menu) { state.menu = menu; state.cart.clear(); if (embedded) state.mode = menu.theme?.mode || design.mode; else if (menu.theme?.mode && !store.get(`am2-mode-${design.id}`)) state.mode = menu.theme.mode; render(); }
+  function boot(menu) {
+    state.menu = menu;
+    state.cart.clear();
+    const guestMode = store.get(`am2-mode-${design.id}`);
+    if (embedded && menu.demo) state.mode = menu.theme?.mode || design.mode;
+    else if (embedded) state.mode = guestMode || menu.theme?.mode || design.mode;
+    else if (menu.theme?.mode && !guestMode) state.mode = menu.theme.mode;
+    render();
+  }
   if (embedded) {
     window.addEventListener("message", (e) => {
       if (location.origin !== "null" && e.origin !== location.origin) return;

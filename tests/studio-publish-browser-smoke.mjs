@@ -10,7 +10,7 @@ const id = "ddee74bd-3b1c-4784-b44c-68352314dd28";
 const menu = {
   id, templateId: "std-01", businessName: "Test Café", slug: "test-cafe",
   status: "pending", paymentStatus: "paid", billing: { planId: "starter", active: true },
-  editAccess: { active: true }, designAccess: { standard: true }, role: "owner", canPublish: true,
+  editAccess: { active: true }, designAccess: { standard: true }, role: "owner", canPublish: true, revision: 1,
   categories: [{ name: "Food", items: [{ name: "Toast", price: "95" }] }],
 };
 let calls = 0;
@@ -33,7 +33,18 @@ try {
     if (url.pathname === `/api/auramenu/dashboard/${id}/publish`) {
       assert.equal(route.request().method(), "POST");
       calls += 1;
-      return route.fulfill({ json: { menu: { ...menu, status: "approved", canPublish: false } } });
+      return route.fulfill({ json: { menu: { ...menu, status: "approved", canPublish: false, revision: 2 } } });
+    }
+    if (url.pathname === `/api/auramenu/dashboard/${id}/revisions`) {
+      return route.fulfill({ json: { revisions: [{ revision: 1, publishedAt: "2026-11-28T00:00:00Z" }] } });
+    }
+    if (url.pathname === `/api/auramenu/dashboard/${id}/revisions/1`) {
+      const history = { ...menu, businessName: "Earlier Café", canPublish: false, status: "approved" };
+      if (route.request().method() === "POST") {
+        assert.equal(route.request().postDataJSON().expectedRevision, 2);
+        return route.fulfill({ json: { menu: { ...history, revision: 3 } } });
+      }
+      return route.fulfill({ json: { menu: history } });
     }
     return route.continue();
   });
@@ -46,7 +57,14 @@ try {
   await publish.waitFor({ state: "detached" });
   assert.equal(await page.locator("#statusBadge").getAttribute("data-s"), "live");
   assert.equal(calls, 1);
-  console.log("PASS earlier builder token, pending paid status, and Studio publish action");
+  await page.getByRole("button", { name: "Published versions" }).click();
+  await page.getByRole("button", { name: "Preview", exact: true }).click();
+  await page.frameLocator("#preview").getByRole("heading", { name: "Earlier Café" }).waitFor();
+  assert.equal(await page.locator("#bizName").textContent(), "Test Café");
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByRole("button", { name: "Restore", exact: true }).click();
+  await page.waitForFunction(() => document.querySelector("#bizName")?.textContent === "Earlier Café");
+  console.log("PASS earlier builder token, payment gate, publication, private preview and restoration");
 } finally {
   await browser.close();
 }
