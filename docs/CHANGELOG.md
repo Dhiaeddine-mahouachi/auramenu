@@ -1,6 +1,7 @@
 # AuraMenu changelog
 
 ## 2026-11-27
+- Sign in to AuraMenu Studio with the AuraDigital account (Google or email, same as AuraHub). auramenu.space gets its own session through a one-time code with PKCE; no cookies are shared between domains. The older AuraMenu (AuraPops) sign-in still works below it.
 - Pricing: Standard 399 TL/month, Premium 599 TL/month, Annual 2,500 TL/year (site, builder, FAQ, SEO pages, backend). The one-time plan is no longer sold; existing one-time contracts keep their terms.
 - Public menus cached at the edge for 60 s, cleared when the owner saves or an admin changes status.
 - `legacy-index.html` (old home page with old pricing) now redirects to `/`.

@@ -32,6 +32,7 @@
 .am-verify{margin-top:14px;padding:14px;border:2px dashed var(--am-saffron);border-radius:14px}
 .am-auth-or{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--am-muted);font-size:13px}
 .am-auth-or::before,.am-auth-or::after{content:"";flex:1;height:1.5px;background:var(--am-border)}
+.am-auth-note{margin:8px 0 0;text-align:center;color:var(--am-muted);font-size:13px}
 .am-auth-foot{text-align:center;color:var(--am-muted);margin-top:22px}
 @media(max-width:860px){.am-auth-wrap{grid-template-columns:1fr}.am-auth-art{min-height:auto;padding-bottom:50px}.am-auth-art p,.am-auth-mascot{display:none}.am-auth-art h2{font-size:42px;margin-top:20px}}
 

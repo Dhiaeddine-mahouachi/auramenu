@@ -39,6 +39,14 @@ Base: `https://auramenu.space/api/auramenu` (also reachable on auradigitalworks.
 ```
 Validation lives in `src/auramenu-designs.js` (`normalizeMenuPresentation`, `normalizeItemMetadata`).
 
+## AuraDigital account sign-in (since 2026-11-27)
+| Method | Path | Where | Purpose |
+|---|---|---|---|
+| GET | `/api/auramenu/connect?challenge=<S256>&state=<random>` | auradigitalworks.com | Signed-in, verified customer → 303 to `auramenu.space/signin.html#code=…&state=…` (code valid 2 min, single use). Signed out → AuraHub login, then back. |
+| POST | `/api/auramenu/connect/exchange` `{code, verifier}` | auramenu.space | Checks PKCE, issues `__Host-auramenu_customer` (HttpOnly, Secure, Lax, 7 days). Session row lives in `customer_sessions`. |
+| GET | `/api/auramenu/account/session` | auramenu.space | `{user}` or `{user:null}` |
+| POST | `/api/auramenu/account/logout` | auramenu.space | Ends the AuraMenu session |
+
 ## Account endpoints in use by AuraMenu today
 `/api/aurapops/account/{session,login,logout,register,verification/send,verification/confirm}` — AuraPops worker (to be replaced, see A-1).
 AuraDigital identity (target): `/api/customer/{session,login,logout,register,google/start,google/callback,verify,forgot-password,…}`.
