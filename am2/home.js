@@ -13,7 +13,7 @@
   const tt = (k) => copy[S.lang][k] ?? copy.en[k];
   function build() {
     const st = tt("strip").map((w) => `<span>${w}</span>`).join(""); document.getElementById("strip").innerHTML = st + st;
-    document.getElementById("feats").innerHTML = tt("feats").map(([i, h, p, planned]) => `<article class="am-feat" data-reveal><i>${i}</i><h3>${h}${planned ? `<em>${tt("planned")}</em>` : ""}</h3><p>${p}</p></article>`).join("");
+    document.getElementById("feats").innerHTML = tt("feats").map(([i, h, p, planned], n) => `<article class="am-feat" data-reveal><i class="am-feat-ico">${(window.AuraFeatureIcons && window.AuraFeatureIcons[n]) || i}</i><h3>${h}${planned ? `<em>${tt("planned")}</em>` : ""}</h3><p>${p}</p></article>`).join("");
     const picks = ["sofra", "pazar", "noir", "medina", "lokanta", "neon", "tatli", "kor", "bahce", "saray", "smash", "riviera"];
     document.getElementById("rail").innerHTML = picks.map((id) => designs.find((d) => d.id === id)).map((d) => `<a class="am-design" href="gallery.html?template=${d.id}&lang=${S.lang}"><div class="am-design-frame"><img src="media/gallery-v3/${d.id}.webp" alt="${d.name}" loading="lazy" width="420" height="840"><span class="am-design-badge${d.tier === "premium" ? " is-premium" : ""}">${d.tier === "premium" ? "★ " + tt("premium") : tt("standard")}</span></div><h3>${d.name}</h3><p>${d.restaurant.name}</p></a>`).join("");
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { threshold: 0.1 });

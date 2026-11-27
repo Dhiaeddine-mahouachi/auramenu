@@ -248,3 +248,11 @@
 .am-seo-links a{padding:9px 14px;border-radius:999px;border:2px solid var(--am-border);text-decoration:none;font-weight:700;font-size:14px}
 .am-seo-links a:hover{border-color:var(--am-bordeaux)}
 @media(max-width:860px){.am-seo-grid{grid-template-columns:1fr}.am-steps--3{grid-template-columns:1fr}.am-seo-mascot{inset-inline-start:-20px;width:90px}}
+
+/* Feature symbols: saffron tiles, playful tilt */
+.am-feat i.am-feat-ico{display:grid;place-items:center;width:60px;height:60px;border-radius:17px;background:var(--am-saffron);color:var(--am-plum);margin-bottom:14px;transform:rotate(-4deg);box-shadow:3px 3px 0 rgba(0,0,0,.35);transition:transform .25s ease}
+.am-feat:nth-child(even) i.am-feat-ico{transform:rotate(3deg);background:#F8EFE2}
+.am-feat:nth-child(4n) i.am-feat-ico{background:#E9A07E}
+.am-feat:hover i.am-feat-ico{transform:rotate(0) scale(1.06)}
+@media (prefers-reduced-motion:reduce){.am-feat i.am-feat-ico{transition:none}}
+.am-feat i.am-feat-ico svg{width:34px;height:34px;flex:none}
