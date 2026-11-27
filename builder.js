@@ -805,7 +805,7 @@
       payload.email = account.email;
       payload.contactName = account.name;
       const response = await fetch(
-        `${window.AURA_MENU_CONFIG.apiBase}/requests`,
+        `${window.AURA_MENU_CONFIG.apiBase}/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
