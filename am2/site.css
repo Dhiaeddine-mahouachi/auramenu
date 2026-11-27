@@ -268,38 +268,23 @@
 .am-hub-card p{margin:0 0 14px;font-size:14.5px;color:var(--am-muted,#6B5450);flex:1}
 .am-hub-more{font:700 14px/1 var(--am-body);color:var(--am-bordeaux)}
 [data-theme="dark"] .am-hub-more{color:var(--am-saffron)}
-/* Hero: brand identity stage — one restaurant identity carried from brand kit to menu, QR and NFC */
-.am-bk-stage{padding-inline-start:0;justify-content:center;height:clamp(520px,50vw,660px)}
-.am-bk-board{position:absolute;z-index:1;top:2%;inset-inline:4% 2%;background:var(--am-cream);color:var(--am-plum);border:3px solid var(--am-plum);border-radius:22px;padding:14px 18px 16px;box-shadow:8px 8px 0 rgba(36,25,30,.45);transform:rotate(-2deg)}
-.am-bk-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:2px dashed rgba(36,25,30,.3);padding-bottom:8px;margin-bottom:14px}
-.am-bk-head span{font:800 11px/1 var(--am-body);letter-spacing:.1em;text-transform:uppercase;color:#A84A26}
-.am-bk-head b{font:800 22px/1 var(--am-display)}
-.am-bk-row{display:flex;align-items:center;gap:16px}
-.am-bk-logo{width:70px;height:70px;flex:none}
-.am-bk-logo text{fill:#F6EBDD;font:800 11px/1 var(--am-display);letter-spacing:.12em}
-.am-bk-swatches{display:flex;gap:8px;flex:1;min-width:0}
-.am-bk-swatches i{flex:1;height:62px;border-radius:12px;background:var(--c);border:2px solid var(--am-plum);position:relative}
-.am-bk-swatches em{position:absolute;inset-inline:0;bottom:6px;text-align:center;font:700 9.5px/1 var(--am-body);font-style:normal;color:var(--t,#fff);opacity:.9}
-.am-bk-type{text-align:center;flex:none}
-.am-bk-type b{display:block;font:800 44px/1 var(--am-display);color:#E8622C}
-.am-bk-type small{font:600 10px/1 var(--am-body);color:var(--am-muted)}
-.am-bk-phone{z-index:2;width:min(44%,236px);transform:rotate(2deg);transform-origin:bottom center}
-.am-bk-nfc{position:absolute;z-index:3;inset-inline-start:-2%;bottom:40%;width:clamp(180px,15vw,214px);aspect-ratio:1.586;border-radius:16px;background:linear-gradient(135deg,#2a211d,#1C1714 60%);border:3px solid var(--am-plum);box-shadow:6px 6px 0 rgba(0,0,0,.35);display:flex;align-items:center;gap:10px;padding:14px;color:#F6EBDD;transform:rotate(-8deg);animation:am-sway 7s ease-in-out infinite}
-.am-bk-nfc .am-bk-logo{width:48px;height:48px}
-.am-bk-nfc b{display:block;font:800 22px/1 var(--am-display);letter-spacing:.08em;color:#E8622C}
-.am-bk-nfc small{font:600 11px/1.3 var(--am-body);color:#F6EBDD;opacity:.85}
-.am-bk-waves{position:absolute;inset-inline-end:12px;top:12px;width:22px;height:22px;fill:none;stroke:#F4B63F;stroke-width:2;stroke-linecap:round}
-[dir=rtl] .am-bk-waves{transform:scaleX(-1)}
-.am-bk-tent{position:absolute;z-index:3;inset-inline-end:2%;bottom:12%;width:clamp(116px,10vw,140px);background:#F6EBDD;border:3px solid var(--am-plum);border-radius:14px;overflow:hidden;box-shadow:6px 6px 0 var(--am-plum);text-align:center;transform:rotate(5deg)}
-.am-bk-tent-top{background:#1C1714;display:flex;align-items:center;gap:6px;padding:7px 8px}
-.am-bk-tent-top .am-bk-logo{width:24px;height:24px}
-.am-bk-tent-top b{font:800 11px/1.1 var(--am-display);color:#E8622C;text-align:start}
-.am-bk-tent>svg{display:block;width:calc(100% - 20px);margin:10px auto 4px;fill:#1C1714}
-.am-bk-tent small{display:block;font:800 10.5px/1.2 var(--am-body);color:#1C1714;padding:0 6px 8px}
-.am-bk-chip{position:absolute;z-index:4;inset-inline-start:2%;bottom:5%;background:var(--am-saffron);color:var(--am-plum);border:2.5px solid var(--am-plum);border-radius:14px;padding:9px 12px;box-shadow:var(--am-shadow);transform:rotate(-2deg)}
-.am-bk-chip span{display:block;font:700 11px/1.2 var(--am-body)}
-.am-bk-chip b{font:800 17px/1.1 var(--am-display)}
-@keyframes am-sway{50%{transform:rotate(-5deg) translateY(-6px)}}
-@media(max-width:900px){.am-bk-stage{height:620px}.am-bk-board{inset-inline:2%}}
-@media(max-width:560px){.am-bk-stage{height:580px}.am-bk-board{padding:10px 12px 14px}.am-bk-head b{font-size:16px}.am-bk-logo{width:44px;height:44px}.am-bk-swatches i{height:40px}.am-bk-swatches em{display:none}.am-bk-type b{font-size:28px}.am-bk-nfc{width:150px;padding:10px;bottom:42%}.am-bk-nfc .am-bk-logo{width:36px;height:36px}.am-bk-nfc b{font-size:17px}.am-bk-tent{width:92px;bottom:14%}.am-bk-phone{width:min(56%,220px)}.am-bk-chip b{font-size:14px}}
-@media (prefers-reduced-motion:reduce){.am-bk-nfc{animation:none}}
+/* Hero: photo stage — real table scene with QR/NFC stand, framed in the brand style */
+.am-ph-stage{padding-inline-start:0;justify-content:center;align-items:center;height:auto;min-height:0;padding-block:8px 46px}
+.am-ph-frame{position:relative;margin:0;width:min(100%,500px);aspect-ratio:3/4;border:3px solid var(--am-plum);border-radius:30px;overflow:hidden;background:#3a2219;box-shadow:12px 12px 0 var(--am-saffron),12px 12px 0 3px var(--am-plum);transform:rotate(1.5deg)}
+.am-ph-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.am-ph-frame::after{content:"";position:absolute;inset:0;border-radius:27px;box-shadow:inset 0 0 0 6px rgba(248,239,226,.18);pointer-events:none}
+.am-ph-stamp{position:absolute;z-index:3;top:-10px;inset-inline-end:-14px}
+.am-ph-chip{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;background:var(--am-cream);color:var(--am-plum);border:2.5px solid var(--am-plum);border-radius:16px;padding:10px 14px;box-shadow:var(--am-shadow);max-width:250px}
+.am-ph-chip b{display:block;font:800 16px/1.1 var(--am-display)}
+.am-ph-chip small{display:block;font:600 12px/1.3 var(--am-body);color:var(--am-muted)}
+.am-ph-chip i{flex:none;width:38px;height:38px;border-radius:12px;background:var(--am-bordeaux,#6E2037);display:grid;place-items:center}
+.am-ph-chip i svg{width:22px;height:22px;fill:var(--am-saffron)}
+.am-ph-chip--scan{inset-inline-start:-9%;bottom:40%;transform:rotate(-3deg);animation:am-sway 7s ease-in-out infinite}
+.am-ph-chip--langs{inset-inline-end:-6%;top:34%;transform:rotate(3deg);background:var(--am-saffron)}
+.am-ph-chip--langs small{color:var(--am-plum)}
+@keyframes am-sway{50%{transform:rotate(-1deg) translateY(-6px)}}
+@media(max-width:1240px) and (min-width:901px){.am-ph-chip--scan{inset-inline-start:-2%}.am-ph-chip--langs{inset-inline-end:-2%}}
+@media(max-width:900px){.am-ph-stage{padding-block:24px 40px}.am-ph-frame{width:min(92%,460px)}.am-ph-chip--scan{inset-inline-start:0}.am-ph-chip--langs{inset-inline-end:0}.am-ph-stamp{inset-inline-end:0}}
+@media(max-width:560px){.am-ph-chip{padding:8px 10px;max-width:200px}.am-ph-chip b{font-size:14px}.am-ph-chip small{font-size:11px}.am-ph-chip i{width:30px;height:30px}.am-ph-stamp{width:96px;height:96px;top:6px}}
+@media (prefers-reduced-motion:reduce){.am-ph-chip--scan{animation:none}}
+.am-ph-stamp svg{direction:ltr;unicode-bidi:isolate}
