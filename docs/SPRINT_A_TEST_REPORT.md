@@ -45,3 +45,33 @@ Run `tests/auramenu-performance.cjs` against a local static server with Playwrig
 | Velvet Premium gallery menu | 1.816 s | 0.052 |
 
 Sofra exceeded the 2.5 s target under these lab conditions. Use the same cold-cache profile to isolate large guest assets before rechecking deployed field performance. Field p75 and INP were not measured.
+
+## Sprint A.2 release candidate
+
+The following runs used isolated local test environments. No result in this section is a production acceptance check.
+
+| Check | Result |
+|---|---|
+| AuraMenu automated suite | 28 passed, including 4 edge route and rollback tests |
+| AuraDigital automated suite | 405 passed, including staging origin isolation, publication restore, retained image and failed-publication event checks |
+| Current browser guest suite | All 30 designs passed feature smoke |
+| Current design matrix | 720/720 across 30 templates, 4 languages, 3 widths and 2 themes |
+| Guest accessibility | 60/60 axe-core cases for all 30 designs in both English themes |
+| Legacy browser suite | 900 combinations plus Studio, current gallery, public routing and Legacy Orbit and unknown-design fallback checks passed |
+| Cloud drafts | Browser recovery, conflict detection and explicit resolution passed |
+| Studio publication and history | Browser verified publication, historical preview without changing the working menu, and restore confirmation |
+| Full synthetic database backup and application rollback | Restored restaurant, plan, staff, categories, publications and image in a fresh local SQLite/D1 fixture. The earlier Worker source read the same menu and image. Reapplying the candidate exposed unchanged history records. |
+| Local two-Worker staging smoke | Bundled Workers and static assets ran in workerd against an isolated D1 fixture. Both apex/www request shapes, staging host, GET/HEAD, missing menu, public API and staged sign-in configuration passed. |
+| Staging builds | Both Wrangler dry runs passed. AuraMenu assets bind to the staging backend Worker. AuraDigital shows the dedicated staging D1 and static asset binding. |
+
+### Performance retest
+
+Used the same ten-sample Chromium profile as the Sprint A test, with the same viewport, throttling, observation window and p75 method. The earlier Sofra value was 3.328 s. A fresh control run was 3.348 s and reported the original hero photograph as the LCP element. The focused optimized run was 1.756 s. The full post-change suite measured:
+
+| Page | p75 LCP | p75 CLS |
+|---|---:|---:|
+| Homepage | 2.364 s | 0.005 |
+| Sofra Standard | 1.840 s | 0.005 |
+| Velvet Premium | 1.912 s | 0.052 |
+
+Remote staging deployment, a full approved staging D1 restore, real email and Google authentication, physical scans and alert delivery are open. The release procedure and rollback steps are in [the Sprint A.2 release candidate](SPRINT_A_2_RELEASE.md).

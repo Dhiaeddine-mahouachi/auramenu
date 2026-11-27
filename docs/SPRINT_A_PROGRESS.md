@@ -2,6 +2,10 @@
 
 Updated 2026-11-28 (Europe/Istanbul). **Stabilization in progress. Production release gates are open.** Development branch in both repositories is `codex/auramenu-sprint-a-stabilization`. Baselines are AuraMenu `f8a0d71` and AuraDigital `4539927`. Production checks were read-only.
 
+## Sprint A.2 follow-up
+
+See [the Sprint A.2 release candidate](SPRINT_A_2_RELEASE.md) for the staging configuration, routing implementation, publication history, promotion sequence and remaining gates. See [the test report](SPRINT_A_TEST_REPORT.md) for local acceptance evidence.
+
 | Phase | Result | Release work |
 |---|---|---|
 | A1 · Backlog | Recovered the local source at `36ae2c7` and reconciled 90 original IDs and 30 later rows. | Keep [the master backlog](AURAMENU_MASTER_BACKLOG.md) current. |
