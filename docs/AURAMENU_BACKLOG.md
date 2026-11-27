@@ -8,7 +8,7 @@ Status: `todo` · `doing` · `done` · `blocked`. Findings reference `HEALTH_AUD
 | ID | Blocker | Owner | Unblocks |
 |---|---|---|---|
 | BLK-1 | Resolved 2026-11-27: AuraDigital account only. Old AuraPops-only users are not migrated (Dhia will reset the data). Previously open: AuraMenu moves to AuraDigital `/api/customer` identity. What happens to users who only have AuraPops accounts (migrate by verified email? ask them to sign in with Google/AuraDigital?). AuraPops is a separate product — do not change it without approval. | Dhia | A-1…A-4 |
-| BLK-2 | Which Cloudflare worker/route serves `auramenu.space/login*` and `/brand/*`? Its code is not in GitHub. Needed to serve `/<slug>` with 200 + meta and to fix `/login`. | Dhia | S-1, S-2 |
+| BLK-2 | (2026-11-28: the same unknown worker also intercepts `POST /api/auramenu/requests` on auramenu.space and demands an AuraPops email code; the builder now uses `/api/auramenu/register`. Retire that worker route.) Which Cloudflare worker/route serves `auramenu.space/login*` and `/brand/*`? Its code is not in GitHub. Needed to serve `/<slug>` with 200 + meta and to fix `/login`. | Dhia | S-1, S-2 |
 | BLK-3 | ~~Confirm pricing~~ Resolved 2026-11-27: Annual 2,500 TL/year. Annual includes standard designs only (premium stays a separate grant). | Dhia | P-2 |
 | BLK-4 | Payment provider: none integrated; activation is manual by admin. Choose provider + authorize before any payment work. | Dhia | P-4 |
 | BLK-5 | Read access to the production D1 database was refused in this environment; backups/restores must be run by Dhia or an authorized CI job. | Dhia | R-1, R-2 |
