@@ -46,7 +46,11 @@ Validation lives in `src/auramenu-designs.js` (`normalizeMenuPresentation`, `nor
 | POST | `/api/auramenu/connect/exchange` `{code, verifier}` | auramenu.space | Checks PKCE, issues `__Host-auramenu_customer` (HttpOnly, Secure, Lax, 7 days). Session row lives in `customer_sessions`. |
 | GET | `/api/auramenu/account/session` | auramenu.space | `{user}` or `{user:null}` |
 | POST | `/api/auramenu/account/logout` | auramenu.space | Ends the AuraMenu session |
-| GET | `/api/auramenu/account/menus` | auramenu.space | Menus owned by the signed-in account |
+| GET | `/api/auramenu/account/menus` | auramenu.space | Menus the signed-in account owns or helps manage, with `role` |
+| GET/POST | `/api/auramenu/account/menus/:id/members` | auramenu.space | Team list (manager+) / add `{email, role: manager|editor}` (owner; verified AuraDigital account required) |
+| DELETE | `/api/auramenu/account/menus/:id/members/:customerId` | auramenu.space | Owner removes a member; a member can remove themself |
+| GET/PUT/DELETE | `/api/auramenu/account/drafts[/:id]` | auramenu.space | Private cloud drafts (max 5 × 256 KB, `baseVersion` conflict check → 409) |
+| GET | `/api/auramenu/hub/menus` | auradigitalworks.com | Same menu list for AuraHub (AuraDigital session) |
 
 Dashboard routes accept either `X-Aura-Menu-Token` or the owner's AuraMenu session. `POST /dashboard/:id/claim` with a valid token while signed in links an unowned menu (`owned: true`); a menu already owned by another account is never moved.
 

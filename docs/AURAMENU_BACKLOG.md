@@ -7,9 +7,9 @@ Status: `todo` · `doing` · `done` · `blocked`. Findings reference `HEALTH_AUD
 
 | ID | Blocker | Owner | Unblocks |
 |---|---|---|---|
-| BLK-1 | Partly resolved 2026-11-27 (Dhia chose unification; AuraDigital account is now primary). Still open: AuraMenu moves to AuraDigital `/api/customer` identity. What happens to users who only have AuraPops accounts (migrate by verified email? ask them to sign in with Google/AuraDigital?). AuraPops is a separate product — do not change it without approval. | Dhia | A-1…A-4 |
+| BLK-1 | Resolved 2026-11-27: AuraDigital account only. Old AuraPops-only users are not migrated (Dhia will reset the data). Previously open: AuraMenu moves to AuraDigital `/api/customer` identity. What happens to users who only have AuraPops accounts (migrate by verified email? ask them to sign in with Google/AuraDigital?). AuraPops is a separate product — do not change it without approval. | Dhia | A-1…A-4 |
 | BLK-2 | Which Cloudflare worker/route serves `auramenu.space/login*` and `/brand/*`? Its code is not in GitHub. Needed to serve `/<slug>` with 200 + meta and to fix `/login`. | Dhia | S-1, S-2 |
-| BLK-3 | ~~Confirm pricing~~ Resolved 2026-11-27: Annual 2,500 TL/year. Open detail: does Annual include premium designs? | Dhia | P-2 |
+| BLK-3 | ~~Confirm pricing~~ Resolved 2026-11-27: Annual 2,500 TL/year. Annual includes standard designs only (premium stays a separate grant). | Dhia | P-2 |
 | BLK-4 | Payment provider: none integrated; activation is manual by admin. Choose provider + authorize before any payment work. | Dhia | P-4 |
 | BLK-5 | Read access to the production D1 database was refused in this environment; backups/restores must be run by Dhia or an authorized CI job. | Dhia | R-1, R-2 |
 
@@ -25,9 +25,9 @@ Status: `todo` · `doing` · `done` · `blocked`. Findings reference `HEALTH_AUD
 | S-5 | P2 | Regenerate gallery thumbnails with French enabled | — | No greyed "FR" in thumbnails | todo |
 | A-1 | P0 | AuraMenu sign-in on AuraDigital customer identity (one-time code + PKCE; separate host-only `__Host-auramenu_customer` session; no shared cookies). Older AuraPops sign-in kept as secondary until migration is decided | — | One login works on both; Google sign-in same account | done — needs one real-account test by Dhia |
 | A-2 | P0 | Bind menus to the AuraDigital account (`auramenu_menu_owners`); token + signed-in account links an unowned menu; token still works | A-1 | Owner opens menu on a new device after sign-in | done (account level; workspace binding comes with A-3) |
-| A-3 | P1 | Roles owner/manager/editor via existing hub workspace authorize() | A-2 | Editor cannot change plan; isolation test passes | blocked |
-| A-4 | P1 | "My menus" list in Studio (done) + AuraHub `apps/auramenu` (todo) | A-2 | Same data from both entry points | doing |
-| D-1 | P1 | Enable cloud drafts (`MENU_DRAFTS_ENABLED`) for builder with autosave + save indicator | A-2 | Refresh/new device keeps draft | blocked |
+| A-3 | P1 | Roles owner/manager/editor per menu (`auramenu_menu_members`), Team tab in Studio. Hub workspace seats were not reused: they need a paid seat subscription that is blocked until a payment provider exists | A-2 | Editor cannot change plan; isolation test passes | done |
+| A-4 | P1 | "My menus" in Studio + AuraHub page `/hub/auramenu` | A-2 | Same data from both entry points | done |
+| D-1 | P1 | Builder cloud draft (`/api/auramenu/account/drafts/builder`), autosave every 4 s, save indicator, conflict prompt | A-2 | Refresh/new device keeps draft | done |
 | D-2 | P2 | Version history + restore published version | D-1 | Restore previous version works | todo |
 | M-1 | P1 | Edge-cache public menu API (short TTL) + purge on publish | — | Second scan served from cache; edit visible ≤ 60 s | done (verify live `X-Menu-Cache`) |
 | M-2 | P1 | Move menu images to R2 | R2 bucket approval | Uploads in R2, old images still load | todo |

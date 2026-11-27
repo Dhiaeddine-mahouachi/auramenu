@@ -5,7 +5,6 @@
   "use strict";
   const S = window.AuraSite, { designs, byId } = window.AURAMENU_DESIGNS;
   const API = window.AURA_MENU_CONFIG?.apiBase || "/api/auramenu";
-  const ACCOUNT = "/api/aurapops/account";
   const params = new URLSearchParams(location.search);
   const DEMO = params.get("demo") === "1";
   const $ = (id) => document.getElementById(id);
@@ -14,7 +13,7 @@
   const ALLERGENS = ["gluten", "crustaceans", "eggs", "fish", "peanuts", "soy", "milk", "nuts", "celery", "mustard", "sesame", "sulphites", "lupin", "molluscs"];
 
   const copy = {
-    tr: { myMenus: "Menülerim", openThis: "Aç", title: "AuraMenu Studio", tOverview: "Genel bakış", tMenu: "Menüm", tDesign: "Tasarım", tInfo: "Bilgiler & saatler", tMedia: "Video", tQr: "QR & NFC", tPlan: "Plan & ödeme", logout: "Çıkış", openMenu: "Menüyü aç ↗", save: "Kaydet", live: "Canlı önizleme", hello: "Selam şef!", saved: "Kaydedildi ✓", savedDemo: "Demo: bu tarayıcıya kaydedildi ✓", unsaved: "Kaydedilmemiş değişiklikler var", demoBanner: "Demo Studio · Değişiklikler sadece bu tarayıcıda saklanır, hiçbir şey yayınlanmaz.", locked: "Düzenleme şu an kapalı: planını yenilediğinde tekrar açılır. Değişiklikleri yine de önizleyebilirsin.", noMenu: "Bu hesapta açık bir menü bulunamadı.", noMenuText: "Menü bağlantındaki numarayla aç veya yeni bir menü oluştur.", menuId: "Menü numarası", openId: "Aç", create: "Yeni menü oluştur", errLoad: "Menü yüklenemedi. Bağlantını kontrol et.", errSave: "Kaydedilemedi: ", status: { live: "Yayında", pending: "Onay bekliyor", draft: "Taslak", demo: "Demo" },
+    tr: { tTeam: "Ekip", teamIntro: "Menünü birlikte yönettiğin kişiler. Editörler ürün, fiyat ve stok değiştirebilir; yöneticiler tasarım ve bilgileri de değiştirebilir. Plan ve ekip yalnızca sahipte.", teamEmail: "AuraDigital e-postası", teamRole: "Rol", teamAdd: "Ekle", teamRemove: "Çıkar", teamLeave: "Ekipten ayrıl", teamNote: "Kişinin doğrulanmış bir AuraDigital hesabı olmalı.", teamAdded: "Eklendi.", teamErr: "Ekip yüklenemedi.", rOwner: "Sahip", rManager: "Yönetici", rEditor: "Editör", you: "sen", roleEditor: "Editör olarak ürünleri, fiyatları ve stok durumunu değiştirebilirsin.", roleManager: "Yönetici olarak menüyü, tasarımı ve bilgileri değiştirebilirsin. Plan ve ekip sahibe ait.", myMenus: "Menülerim", openThis: "Aç", title: "AuraMenu Studio", tOverview: "Genel bakış", tMenu: "Menüm", tDesign: "Tasarım", tInfo: "Bilgiler & saatler", tMedia: "Video", tQr: "QR & NFC", tPlan: "Plan & ödeme", logout: "Çıkış", openMenu: "Menüyü aç ↗", save: "Kaydet", live: "Canlı önizleme", hello: "Selam şef!", saved: "Kaydedildi ✓", savedDemo: "Demo: bu tarayıcıya kaydedildi ✓", unsaved: "Kaydedilmemiş değişiklikler var", demoBanner: "Demo Studio · Değişiklikler sadece bu tarayıcıda saklanır, hiçbir şey yayınlanmaz.", locked: "Düzenleme şu an kapalı: planını yenilediğinde tekrar açılır. Değişiklikleri yine de önizleyebilirsin.", noMenu: "Bu hesapta açık bir menü bulunamadı.", noMenuText: "Menü bağlantındaki numarayla aç veya yeni bir menü oluştur.", menuId: "Menü numarası", openId: "Aç", create: "Yeni menü oluştur", errLoad: "Menü yüklenemedi. Bağlantını kontrol et.", errSave: "Kaydedilemedi: ", status: { live: "Yayında", pending: "Onay bekliyor", draft: "Taslak", demo: "Demo" },
       ovTitle: "Bugün menünde neler var?", ovItems: "ürün", ovCats: "kategori", ovSold: "tükendi", ovDesign: "tasarım", ovUrl: "Menü adresin", copy: "Kopyala", copied: "Kopyalandı", quick: "Hızlı işlemler", qPrice: "Fiyat güncelle", qSold: "Tükendi işaretle", qDesign: "Tasarımı değiştir", qQr: "QR indir",
       cat: "Kategori", addCat: "+ Kategori ekle", addItem: "+ Ürün ekle", name: "Ad", desc: "Açıklama", price: "Fiyat", photo: "Fotoğraf bağlantısı (https)", video: "Video bağlantısı (mp4, isteğe bağlı)", ingredients: "İçindekiler", allergens: "Alerjenler", avail: "Durum", aOn: "Mevcut", aLow: "Az kaldı", aOut: "Tükendi", featured: "Şefin seçimi", remove: "Sil", up: "Yukarı", down: "Aşağı", icon: "Simge",
       dTitle: "Lezzetini seç", dText: "Tasarımı değiştirdiğinde ürünlerin, fiyatların ve QR kodun aynı kalır.", current: "Seçili",
@@ -22,7 +21,7 @@
       mTitle: "Menü videosu", mText: "Menünün üstünde küçük bir video gösterilir (dikey, 5–15 sn, mp4). Sessiz başlar, misafir sesi açabilir.", vSrc: "Video bağlantısı (https …mp4)", vPoster: "Kapak görseli (isteğe bağlı)", vTitle: "Video başlığı", vRemove: "Videoyu kaldır",
       qTitle: "QR kodun", qText: "Bu QR hep aynı adresi açar. Menünü güncellesen de yeniden basman gerekmez.", qDownload: "PNG indir", nfcTitle: "NFC kart", nfcText: "AuraDigital NFC kartın bu adresi açacak şekilde programlanır. Masaya koy, misafir telefonunu dokundursun.", nfcBtn: "NFC kart iste",
       pTitle: "Planın", pPaid: "Ödenen dönem sonu", pStatus: "Ödeme ve yenileme", pDetails: "Ödeme detaylarını gör", pNoData: "Plan bilgisi demo modunda gösterilmez." },
-    en: { myMenus: "My menus", openThis: "Open", title: "AuraMenu Studio", tOverview: "Overview", tMenu: "My menu", tDesign: "Design", tInfo: "Info & hours", tMedia: "Video", tQr: "QR & NFC", tPlan: "Plan & payment", logout: "Log out", openMenu: "Open menu ↗", save: "Save", live: "Live preview", hello: "Hey, chef!", saved: "Saved ✓", savedDemo: "Demo: saved in this browser ✓", unsaved: "You have unsaved changes", demoBanner: "Demo Studio · Changes stay in this browser only; nothing is published.", locked: "Editing is closed right now: it reopens when your plan is renewed. You can still preview changes.", noMenu: "No open menu found on this account.", noMenuText: "Open it with the number from your menu link, or create a new menu.", menuId: "Menu number", openId: "Open", create: "Create a new menu", errLoad: "Couldn't load the menu. Check your connection.", errSave: "Couldn't save: ", status: { live: "Live", pending: "Awaiting approval", draft: "Draft", demo: "Demo" },
+    en: { tTeam: "Team", teamIntro: "People who manage this menu with you. Editors can change items, prices and stock; managers can also change design and info. Plan and team stay with the owner.", teamEmail: "AuraDigital email", teamRole: "Role", teamAdd: "Add", teamRemove: "Remove", teamLeave: "Leave team", teamNote: "The person needs a verified AuraDigital account.", teamAdded: "Added.", teamErr: "Could not load the team.", rOwner: "Owner", rManager: "Manager", rEditor: "Editor", you: "you", roleEditor: "As an editor you can change items, prices and stock.", roleManager: "As a manager you can change the menu, design and info. Plan and team belong to the owner.", myMenus: "My menus", openThis: "Open", title: "AuraMenu Studio", tOverview: "Overview", tMenu: "My menu", tDesign: "Design", tInfo: "Info & hours", tMedia: "Video", tQr: "QR & NFC", tPlan: "Plan & payment", logout: "Log out", openMenu: "Open menu ↗", save: "Save", live: "Live preview", hello: "Hey, chef!", saved: "Saved ✓", savedDemo: "Demo: saved in this browser ✓", unsaved: "You have unsaved changes", demoBanner: "Demo Studio · Changes stay in this browser only; nothing is published.", locked: "Editing is closed right now: it reopens when your plan is renewed. You can still preview changes.", noMenu: "No open menu found on this account.", noMenuText: "Open it with the number from your menu link, or create a new menu.", menuId: "Menu number", openId: "Open", create: "Create a new menu", errLoad: "Couldn't load the menu. Check your connection.", errSave: "Couldn't save: ", status: { live: "Live", pending: "Awaiting approval", draft: "Draft", demo: "Demo" },
       ovTitle: "What's on your menu today?", ovItems: "dishes", ovCats: "categories", ovSold: "sold out", ovDesign: "design", ovUrl: "Your menu address", copy: "Copy", copied: "Copied", quick: "Quick actions", qPrice: "Update prices", qSold: "Mark sold out", qDesign: "Change design", qQr: "Download QR",
       cat: "Category", addCat: "+ Add category", addItem: "+ Add dish", name: "Name", desc: "Description", price: "Price", photo: "Photo link (https)", video: "Video link (mp4, optional)", ingredients: "Ingredients", allergens: "Allergens", avail: "Status", aOn: "Available", aLow: "Few left", aOut: "Sold out", featured: "Chef's pick", remove: "Delete", up: "Up", down: "Down", icon: "Icon",
       dTitle: "Find your flavour", dText: "Switching design keeps your dishes, prices and QR code exactly the same.", current: "Selected",
@@ -30,7 +29,7 @@
       mTitle: "Menu video", mText: "A small video shows at the top of your menu (vertical, 5–15 s, mp4). It starts muted; guests can turn sound on.", vSrc: "Video link (https …mp4)", vPoster: "Cover image (optional)", vTitle: "Video title", vRemove: "Remove video",
       qTitle: "Your QR code", qText: "This QR always opens the same address, so you never reprint it when the menu changes.", qDownload: "Download PNG", nfcTitle: "NFC card", nfcText: "Your AuraDigital NFC card is programmed with this address. Put it on the table; guests tap their phone.", nfcBtn: "Request an NFC card",
       pTitle: "Your plan", pPaid: "Paid until", pStatus: "Payment and renewal", pDetails: "See payment details", pNoData: "Plan details aren't shown in demo mode." },
-    ar: { myMenus: "قوائمي", openThis: "فتح", title: "استوديو AuraMenu", tOverview: "نظرة عامة", tMenu: "قائمتي", tDesign: "التصميم", tInfo: "المعلومات والساعات", tMedia: "الفيديو", tQr: "QR وNFC", tPlan: "الخطة والدفع", logout: "خروج", openMenu: "افتح القائمة ↗", save: "حفظ", live: "معاينة مباشرة", hello: "أهلاً يا شيف!", saved: "تم الحفظ ✓", savedDemo: "تجريبي: حُفظ في هذا المتصفح ✓", unsaved: "لديك تغييرات غير محفوظة", demoBanner: "استوديو تجريبي · تبقى التغييرات في هذا المتصفح فقط ولا يُنشر شيء.", locked: "التعديل مغلق الآن ويُفتح عند تجديد خطتك. يمكنك معاينة التغييرات.", noMenu: "لم يتم العثور على قائمة في هذا الحساب.", noMenuText: "افتحها بالرقم الموجود في رابط قائمتك أو أنشئ قائمة جديدة.", menuId: "رقم القائمة", openId: "فتح", create: "أنشئ قائمة جديدة", errLoad: "تعذر تحميل القائمة. تحقق من الاتصال.", errSave: "تعذر الحفظ: ", status: { live: "منشورة", pending: "بانتظار الموافقة", draft: "مسودة", demo: "تجريبي" },
+    ar: { tTeam: "الفريق", teamIntro: "الأشخاص الذين يديرون هذه القائمة معك. المحرر يغيّر الأصناف والأسعار والتوفر، والمدير يغيّر أيضاً التصميم والمعلومات. الخطة والفريق للمالك فقط.", teamEmail: "بريد AuraDigital", teamRole: "الدور", teamAdd: "إضافة", teamRemove: "إزالة", teamLeave: "مغادرة الفريق", teamNote: "يجب أن يكون لدى الشخص حساب AuraDigital مؤكد.", teamAdded: "تمت الإضافة.", teamErr: "تعذر تحميل الفريق.", rOwner: "المالك", rManager: "مدير", rEditor: "محرر", you: "أنت", roleEditor: "بصفتك محرراً يمكنك تغيير الأصناف والأسعار والتوفر.", roleManager: "بصفتك مديراً يمكنك تغيير القائمة والتصميم والمعلومات. الخطة والفريق للمالك.", myMenus: "قوائمي", openThis: "فتح", title: "استوديو AuraMenu", tOverview: "نظرة عامة", tMenu: "قائمتي", tDesign: "التصميم", tInfo: "المعلومات والساعات", tMedia: "الفيديو", tQr: "QR وNFC", tPlan: "الخطة والدفع", logout: "خروج", openMenu: "افتح القائمة ↗", save: "حفظ", live: "معاينة مباشرة", hello: "أهلاً يا شيف!", saved: "تم الحفظ ✓", savedDemo: "تجريبي: حُفظ في هذا المتصفح ✓", unsaved: "لديك تغييرات غير محفوظة", demoBanner: "استوديو تجريبي · تبقى التغييرات في هذا المتصفح فقط ولا يُنشر شيء.", locked: "التعديل مغلق الآن ويُفتح عند تجديد خطتك. يمكنك معاينة التغييرات.", noMenu: "لم يتم العثور على قائمة في هذا الحساب.", noMenuText: "افتحها بالرقم الموجود في رابط قائمتك أو أنشئ قائمة جديدة.", menuId: "رقم القائمة", openId: "فتح", create: "أنشئ قائمة جديدة", errLoad: "تعذر تحميل القائمة. تحقق من الاتصال.", errSave: "تعذر الحفظ: ", status: { live: "منشورة", pending: "بانتظار الموافقة", draft: "مسودة", demo: "تجريبي" },
       ovTitle: "ماذا في قائمتك اليوم؟", ovItems: "طبق", ovCats: "قسم", ovSold: "نفد", ovDesign: "التصميم", ovUrl: "عنوان قائمتك", copy: "نسخ", copied: "تم النسخ", quick: "إجراءات سريعة", qPrice: "تحديث الأسعار", qSold: "تعليم كنافد", qDesign: "تغيير التصميم", qQr: "تنزيل QR",
       cat: "القسم", addCat: "+ أضف قسماً", addItem: "+ أضف طبقاً", name: "الاسم", desc: "الوصف", price: "السعر", photo: "رابط الصورة (https)", video: "رابط فيديو (mp4، اختياري)", ingredients: "المكونات", allergens: "مسببات الحساسية", avail: "الحالة", aOn: "متوفر", aLow: "كمية قليلة", aOut: "نفد", featured: "اختيار الشيف", remove: "حذف", up: "أعلى", down: "أسفل", icon: "رمز",
       dTitle: "اختر نكهتك", dText: "تغيير التصميم يُبقي أطباقك وأسعارك ورمز QR كما هي.", current: "المختار",
@@ -41,7 +40,10 @@
   };
   const t = (k) => copy[S.lang]?.[k] ?? copy.en[k];
 
-  let menu = null, token = "", tab = "overview", dirty = false, frameReady = false, canEdit = true;
+  let menu = null, token = "", tab = "overview", dirty = false, frameReady = false, canEdit = true, role = "owner";
+  // Tabs each role may open; the server enforces the same rules on save.
+  const ROLE_TABS = { owner: null, manager: ["overview", "menu", "design", "info", "media", "qr", "team"], editor: ["overview", "menu", "qr"] };
+  const allowed = (name) => !ROLE_TABS[role] || ROLE_TABS[role].includes(name);
 
   /* ── API adapters (AuraDigital: restaurant/design presentation + item metadata) ── */
   const DAYS_RE = /\b(mon|tue|wed|thu|fri|sat|sun)\s+(\d{1,2}:\d{2}-\d{1,2}:\d{2}|closed)/gi;
@@ -84,7 +86,7 @@
     let msess = {};
     try {
       const mr = await fetch("/api/auramenu/account/session", { cache: "no-store", credentials: "same-origin" }).catch(() => null); msess = mr && mr.ok ? await mr.json().catch(() => ({})) : {};
-      const sr = msess.user ? null : await fetch(ACCOUNT + "/session", { cache: "no-store", credentials: "same-origin" }); const sess = msess.user ? msess : await sr.json().catch(() => ({}));
+      const sess = msess;
       if (!sess.user?.emailVerified) { location.replace(`/signin.html?lang=${S.lang}&next=${encodeURIComponent("studio.html" + location.search)}`); return; }
       $("hello").textContent = `${t("hello")} ${sess.user.name ? "· " + sess.user.name : ""}`;
     } catch { return showError(t("errLoad")); }
@@ -102,6 +104,7 @@
       if (c?.token) { token = c.token; localStorage.setItem(key, token); }
       const data = await req(`/dashboard/${encodeURIComponent(id)}`);
       menu = fromServer(data.menu || data); localStorage.setItem("auraMenuLastRequest", id);
+      role = ["owner", "manager", "editor"].includes((data.menu || data).role) ? (data.menu || data).role : "owner";
       canEdit = Boolean(menu.editAccess?.active || menu.billing?.active);
       if (!canEdit) { $("banner").hidden = false; $("banner").textContent = t("locked"); }
       boot();
@@ -128,6 +131,9 @@
   /* ── Tabs ──────────────────────────────────────────────────────────── */
   const field = (label, key, val, type = "text", extra = "") => `<label class="am-field"><span>${label}</span><input type="${type}" data-k="${key}" value="${esc(val)}" ${extra}></label>`;
   const views = {
+    team() {
+      return `<div class="st-card"><h2>${t("tTeam")}</h2><p class="st-muted">${t("teamIntro")}</p><ul class="st-menus" id="teamList"><li>…</li></ul>${role === "owner" ? `<form class="st-row st-team-add" id="teamForm"><label class="am-field"><span>${t("teamEmail")}</span><input id="teamEmail" type="email" required autocomplete="off"></label><label class="am-field"><span>${t("teamRole")}</span><select id="teamRole"><option value="editor">${t("rEditor")}</option><option value="manager">${t("rManager")}</option></select></label><button class="am-btn am-btn--brand">${t("teamAdd")}</button></form><p class="st-muted">${t("teamNote")}</p>` : ""}</div>`;
+    },
     overview() {
       const items = menu.categories.flatMap((c) => c.items), sold = items.filter((i) => i.available === false).length;
       const url = `auramenu.space/${menu.slug || ""}`;
@@ -173,6 +179,9 @@
   };
 
   function render() {
+    if (!allowed(tab)) tab = "overview";
+    document.querySelectorAll("[data-tab]").forEach((b) => { b.hidden = !DEMO && !allowed(b.dataset.tab); });
+    if (role !== "owner" && !DEMO && canEdit) { $("banner").hidden = false; $("banner").textContent = t(role === "editor" ? "roleEditor" : "roleManager"); }
     document.querySelectorAll("[data-tab]").forEach((b) => (b.dataset.tab === tab ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current")));
     $("panel").innerHTML = views[tab](); wire();
     $("bizName").textContent = menu.businessName || "AuraMenu";
@@ -180,6 +189,7 @@
     $("statusBadge").textContent = t("status")[st]; $("statusBadge").dataset.s = st;
     $("openMenu").href = DEMO ? `menu-v2.html?design=${menu.templateId}` : `https://auramenu.space/${menu.slug || ""}`;
     if (tab === "qr") drawQr();
+    if (tab === "team") loadTeam();
   }
   const changed = () => { dirty = true; $("save").classList.add("is-dirty"); push(); };
   function wire() {
@@ -205,6 +215,30 @@
     P.querySelectorAll("[data-copy]").forEach((b) => (b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); toast(t("copied")); } catch {} }));
     P.querySelector("[data-vremove]")?.addEventListener("click", () => { menu.video = { src: "", poster: "", title: "" }; changed(); render(); });
     P.querySelector("[data-qrdl]")?.addEventListener("click", downloadQr);
+  }
+  async function loadTeam() {
+    if (DEMO) { const l = $("teamList"); if (l) l.innerHTML = `<li><span><b>demo@auramenu.space</b><small>${t("rOwner")}</small></span></li>`; return; }
+    const base = `/api/auramenu/account/menus/${encodeURIComponent(menu.id)}/members`;
+    const call = async (url, opt = {}) => { const r = await fetch(url, { ...opt, credentials: "same-origin", headers: { "Content-Type": "application/json" } }); const d = await r.json().catch(() => ({})); if (!r.ok) throw new Error(d.error || `HTTP ${r.status}`); return d; };
+    const draw = async () => {
+      const list = $("teamList"); if (!list) return;
+      try {
+        const d = await call(base);
+        const label = { owner: t("rOwner"), manager: t("rManager"), editor: t("rEditor") };
+        list.innerHTML = d.members.map((m) => `<li><span><b>${esc(m.name || m.email)}${m.you ? ` · ${t("you")}` : ""}</b><small>${esc(m.email)} · ${label[m.role] || esc(m.role)}</small></span>${m.role !== "owner" && (role === "owner" || m.you) ? `<button class="am-btn am-btn--ghost am-btn--sm" data-rm="${esc(m.id)}" data-self="${m.you ? 1 : 0}">${m.you ? t("teamLeave") : t("teamRemove")}</button>` : ""}</li>`).join("");
+        list.querySelectorAll("[data-rm]").forEach((b) => (b.onclick = async () => {
+          if (!confirm(`${b.textContent}?`)) return;
+          try { await call(`${base}/${encodeURIComponent(b.dataset.rm)}`, { method: "DELETE" }); if (b.dataset.self === "1") { localStorage.removeItem("auraMenuLastRequest"); return location.replace(`studio.html?lang=${S.lang}`); } draw(); } catch (e) { toast(e.message); }
+        }));
+      } catch (e) { list.innerHTML = `<li>${esc(t("teamErr"))}</li>`; }
+    };
+    const form = $("teamForm");
+    if (form) form.onsubmit = async (e) => {
+      e.preventDefault();
+      try { await call(base, { method: "POST", body: JSON.stringify({ email: $("teamEmail").value.trim(), role: $("teamRole").value }) }); $("teamEmail").value = ""; toast(t("teamAdded")); draw(); }
+      catch (err) { toast(err.message); }
+    };
+    draw();
   }
   function drawQr() {
     const draw = () => { const box = $("qrBox"); if (!box) return; box.innerHTML = ""; new window.QRCode(box, { text: `https://auramenu.space/${menu.slug || ""}`, width: 220, height: 220, colorDark: "#24191E", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.H }); };
@@ -239,7 +273,7 @@
   document.querySelectorAll("[data-tab]").forEach((b) => (b.onclick = () => go(b.dataset.tab)));
   $("save").onclick = save;
   $("burger").onclick = () => document.body.classList.toggle("is-nav");
-  $("logout").onclick = async () => { if (!DEMO) { try { await Promise.all([fetch("/api/auramenu/account/logout", { method: "POST", credentials: "same-origin" }), fetch(ACCOUNT + "/logout", { method: "POST", credentials: "same-origin" })]); } catch {} } location.href = `/signin.html?lang=${S.lang}`; };
+  $("logout").onclick = async () => { if (!DEMO) { try { await fetch("/api/auramenu/account/logout", { method: "POST", credentials: "same-origin" }); } catch {} } location.href = `/signin.html?lang=${S.lang}`; };
   addEventListener("beforeunload", (e) => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
   addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && e.key === "s") { e.preventDefault(); save(); } });
   load();
