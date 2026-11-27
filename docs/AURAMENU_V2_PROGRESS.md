@@ -32,3 +32,14 @@ Branch: development/auramenu-2 (local). No deployment, no production data touche
 - Tests: 20 unit tests (new OCR parser tests) + browser acceptance for 30 designs × 3 languages.
 
 Backend still needed: accept the 30 design IDs; store new optional fields (theme, logo, video, socials, reviewUrl, mapsUrl, hours, per-dish available/allergens/ingredients/video); confirm `/api/aurapops/account/login` and `/logout` exist; same-origin routing for /api on auramenu.space.
+
+## Checkpoint 04 — live on auramenu.space (2026-11-27)
+
+- Published to `main` (GitHub Pages). The 30 AuraMenu 2.0 designs now render every `std-01…pre-30` menu.
+- The Cloudflare worker in front of auramenu.space owns `/brand/*` and any path containing `login`; site assets moved to `am2/`, sign-in lives at `/signin.html` (uses `POST /api/aurapops/account/login`).
+- French guest interface in all designs (dish text falls back to English until the backend stores `fr`).
+- Offline copy of public menus (`/menu-sw.js`, network first, menu files only).
+- WCAG AA contrast: no axe violations across 30 designs + site, builder, Studio, sign-in.
+- Front end sends/reads `restaurant.video`, `restaurant.hours`, `available: "limited"`; old fields still written.
+- Backend branch `auramenu-v2-fields` (auradigital): stores those fields + French; 386/386 tests pass. Not deployed.
+- Open: restaurant menu URLs return HTTP 404 (GitHub Pages 404.html), so they are not indexed and have no link previews; needs a worker route that serves them with 200 and meta tags.
