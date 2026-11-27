@@ -5,7 +5,7 @@ Only tests actually run are listed.
 | Suite | Where | Result |
 |---|---|---|
 | `node --test tests/*.test.mjs` | local copy of main | pass |
-| `tests/auramenu-v2-browser.cjs` — 30 designs × TR/EN/AR/FR render, no console errors | local server | pass |
+| `tests/auramenu-v2-browser.cjs` — 30 designs × TR/EN/AR render (French UI checked separately on all 30), no console errors | local server | pass |
 | axe-core WCAG 2 AA — 30 designs + 37 site pages + 11 new SEO pages | local server | 0 violations |
 | Offline menu (`/menu-sw.js`): load, go offline, reload | local server | menu renders offline |
 | Sign-in → Studio flow (`/api/aurapops/account/login`) | live | wrong password → 401 as expected; redirect to Studio works |
