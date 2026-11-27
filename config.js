@@ -7,6 +7,32 @@ window.AURA_MENU_CONFIG = Object.freeze({
   currencyLabel: "TL",
 });
 
+window.AuraMenuPlans = (() => {
+  const config = window.AURA_MENU_CONFIG;
+  let plans = config.plans;
+  let request;
+  return Object.freeze({
+    current: () => plans,
+    load() {
+      request ??= fetch(`${config.apiBase}/pricing`, {
+        headers: { Accept: "application/json" },
+        signal: AbortSignal.timeout?.(4500),
+      }).then(async (response) => {
+        if (!response.ok) return plans;
+        const data = await response.json();
+        if (!Array.isArray(data.plans)) return plans;
+        const matches = config.plans.map((fallback) => data.plans.find((plan) =>
+          plan?.id === fallback.id && Number.isSafeInteger(plan.amount) && plan.amount > 0 &&
+          plan.interval === fallback.interval && typeof plan.name === "string" && plan.name.trim()
+        ));
+        if (matches.every(Boolean)) plans = matches;
+        return plans;
+      }).catch(() => plans);
+      return request;
+    },
+  });
+})();
+
 (() => {
   const labels = {
     tr: { hero: "Mevcut menümü yönet ↗", status: "Menümü Yönet ↗" },

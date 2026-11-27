@@ -39,6 +39,12 @@
       pTitle: "خطتك", pPaid: "مدفوعة حتى", pStatus: "الدفع والتجديد", pDetails: "عرض تفاصيل الدفع", pNoData: "لا تظهر تفاصيل الخطة في الوضع التجريبي." },
   };
   const t = (k) => copy[S.lang]?.[k] ?? copy.en[k];
+  const publishingCopy = {
+    en: { publish: "Publish menu", published: "Menu published", save: "Save your changes before publishing.", failed: "Couldn't publish the menu." },
+    tr: { publish: "Menüyü yayınla", published: "Menü yayınlandı", save: "Yayınlamadan önce değişiklikleri kaydet.", failed: "Menü yayınlanamadı." },
+    ar: { publish: "انشر القائمة", published: "تم نشر القائمة", save: "احفظ تغييراتك قبل النشر.", failed: "تعذر نشر القائمة." },
+  };
+  const publishing = () => publishingCopy[S.lang] ?? publishingCopy.en;
 
   let menu = null, token = "", tab = "overview", dirty = false, frameReady = false, canEdit = true, role = "owner", designTier = null;
   // Tabs each role may open; the server enforces the same rules on save.
@@ -100,7 +106,8 @@
     if (!id) return showNoMenu();
     try {
       const key = `auraMenuDashboardToken:${id}`;
-      const c = await req(`/dashboard/${encodeURIComponent(id)}/claim`, { method: "POST", body: JSON.stringify({ existingToken: localStorage.getItem(key) || "" }) }).catch(() => null);
+      const existingToken = localStorage.getItem(key) || localStorage.getItem(`auraMenuToken:${id}`) || "";
+      const c = await req(`/dashboard/${encodeURIComponent(id)}/claim`, { method: "POST", body: JSON.stringify({ existingToken }) }).catch(() => null);
       if (c?.token) { token = c.token; localStorage.setItem(key, token); }
       const data = await req(`/dashboard/${encodeURIComponent(id)}`);
       menu = fromServer(data.menu || data); localStorage.setItem("auraMenuLastRequest", id);
@@ -141,7 +148,7 @@
       const items = menu.categories.flatMap((c) => c.items), sold = items.filter((i) => i.available === false).length;
       const url = `auramenu.space/${menu.slug || ""}`;
       return `<div class="st-card st-hero"><h2>${t("ovTitle")}</h2><div class="st-stats"><div><b>${items.length}</b><span>${t("ovItems")}</span></div><div><b>${menu.categories.length}</b><span>${t("ovCats")}</span></div><div><b>${sold}</b><span>${t("ovSold")}</span></div><div><b>${esc(byId[menu.templateId]?.name || "—")}</b><span>${t("ovDesign")}</span></div></div></div>
-        <div class="st-card"><h3>${t("ovUrl")}</h3><div class="st-url"><code>${esc(url)}</code><button class="am-btn am-btn--sm" data-copy="https://${esc(url)}">${t("copy")}</button></div></div>
+        <div class="st-card"><h3>${t("ovUrl")}</h3><div class="st-url"><code>${esc(url)}</code><button class="am-btn am-btn--sm" data-copy="https://${esc(url)}">${t("copy")}</button></div>${!DEMO && menu.canPublish ? `<button type="button" class="am-btn am-btn--brand" data-publish>${publishing().publish}</button>` : ""}</div>
         <div class="st-card"><h3>${t("quick")}</h3><div class="st-quick"><button data-go="menu">✏️ ${t("qPrice")}</button><button data-go="menu">🚫 ${t("qSold")}</button><button data-go="design">🎨 ${t("qDesign")}</button><button data-go="qr">🔳 ${t("qQr")}</button></div></div>`;
     },
     menu() {
@@ -188,7 +195,8 @@
     document.querySelectorAll("[data-tab]").forEach((b) => (b.dataset.tab === tab ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current")));
     $("panel").innerHTML = views[tab](); wire();
     $("bizName").textContent = menu.businessName || "AuraMenu";
-    const st = DEMO ? "demo" : menu.status === "approved" || menu.billing?.active ? "live" : menu.status === "pending" ? "pending" : "draft";
+    const live = menu.status === "approved" && menu.paymentStatus === "paid" && (!menu.billing || menu.billing.active);
+    const st = DEMO ? "demo" : live ? "live" : menu.status === "pending" ? "pending" : "draft";
     $("statusBadge").textContent = t("status")[st]; $("statusBadge").dataset.s = st;
     $("openMenu").href = DEMO ? `menu-v2.html?design=${menu.templateId}` : `https://auramenu.space/${menu.slug || ""}`;
     if (tab === "qr") drawQr();
@@ -218,6 +226,21 @@
     P.querySelectorAll("[data-copy]").forEach((b) => (b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); toast(t("copied")); } catch {} }));
     P.querySelector("[data-vremove]")?.addEventListener("click", () => { menu.video = { src: "", poster: "", title: "" }; changed(); render(); });
     P.querySelector("[data-qrdl]")?.addEventListener("click", downloadQr);
+    P.querySelector("[data-publish]")?.addEventListener("click", async (event) => {
+      if (dirty) return toast(publishing().save);
+      const button = event.currentTarget;
+      button.disabled = true;
+      try {
+        const { menu: published } = await req(`/dashboard/${encodeURIComponent(menu.id)}/publish`, { method: "POST" });
+        menu = fromServer(published);
+        render();
+        toast(publishing().published);
+      } catch {
+        toast(publishing().failed);
+      } finally {
+        button.disabled = false;
+      }
+    });
   }
   async function loadTeam() {
     if (DEMO) { const l = $("teamList"); if (l) l.innerHTML = `<li><span><b>demo@auramenu.space</b><small>${t("rOwner")}</small></span></li>`; return; }

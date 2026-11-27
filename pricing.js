@@ -312,13 +312,10 @@
   };
 
   const ready = Promise.all([
-    fetch(`${config.apiBase}/pricing`, { headers: { Accept: "application/json" } })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data) => {
-        const livePrice = Number(data?.selfBuildPrice);
-        if (Array.isArray(data?.plans) && Number.isFinite(livePrice) && livePrice > 0) selfBuildPriceTry = livePrice;
-      })
-      .catch(() => null),
+    window.AuraMenuPlans?.load().then((plans) => {
+      const standard = plans.find((plan) => plan.id === "starter");
+      if (standard) selfBuildPriceTry = standard.amount;
+    }),
     detectVisitorCountry().then((country) => {
       visitorCountry = country;
     }),

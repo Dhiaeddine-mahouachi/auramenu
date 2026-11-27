@@ -3,7 +3,7 @@
    mirrors that snapshot to /api/auramenu/account/drafts/builder when the person is signed in. */
 (function () {
   "use strict";
-  const URL_ = "/api/auramenu/account/drafts/builder", KEYS = ["auraMenuDraft", "auraMenuExtras"], STAMP = "auraMenuCloudDraft";
+  const URL_ = "/api/auramenu/account/drafts/builder", STAMP = "auraMenuCloudDraft";
   const copy = {
     en: { signIn: "Sign in to keep this draft on all your devices", saving: "Saving to your account…", saved: "Saved to your account", offline: "Saved on this device only", found: "You have a draft saved in your account", cont: "Continue it", fresh: "Keep this one", newer: "This draft changed on another device", load: "Load it" },
     tr: { signIn: "Bu taslağı tüm cihazlarında tutmak için giriş yap", saving: "Hesabına kaydediliyor…", saved: "Hesabına kaydedildi", offline: "Yalnızca bu cihazda kayıtlı", found: "Hesabında kayıtlı bir taslak var", cont: "Devam et", fresh: "Bunu kullan", newer: "Bu taslak başka bir cihazda değişti", load: "Onu yükle" },
@@ -26,8 +26,8 @@
   const show = (html) => { bar.innerHTML = html; if (!bar.isConnected) document.body.append(bar); };
   const btn = (id, label, brand) => `<button type="button" data-c="${id}" style="font:inherit;cursor:pointer;border-radius:999px;padding:4px 12px;border:1.5px solid currentColor;${brand ? "background:#6E2037;color:#fff;border-color:#6E2037" : "background:transparent;color:inherit"}">${esc(label)}</button>`;
 
-  async function call(method, body) {
-    const r = await fetch(URL_, { method, cache: "no-store", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+  async function call(method, body, url = URL_) {
+    const r = await fetch(url, { method, cache: "no-store", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
     const d = await r.json().catch(() => ({})); return { ok: r.ok, status: r.status, d };
   }
   function restore(data) {
@@ -38,58 +38,89 @@
     location.reload();
   }
 
-  let version = null, last = "", had = false, busy = false, paused = false;
+  async function fingerprint(text) {
+    if (!crypto.subtle) return "";
+    const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(bytes), (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+
+  function showSignIn() {
+    const lang = (document.documentElement.lang || "tr").slice(0, 2);
+    show(`<a href="signin.html?lang=${esc(lang)}&next=builder.html" style="color:inherit">${esc(t("signIn"))} →</a>`);
+  }
+
+  let version = null, last = "", busy = false, paused = false;
+  async function loadCloud() {
+    const remote = await call("GET");
+    if (remote.status === 404) { version = 0; return; }
+    if (remote.status === 401) { paused = true; showSignIn(); return; }
+    if (!remote.ok || !remote.d.draft) throw new Error("Cloud draft unavailable");
+
+    const server = remote.d.draft, local = snapshot(), mine = stamp();
+    const text = JSON.stringify(server.data), hash = await fingerprint(text);
+    version = server.version;
+    if (local && JSON.stringify(local) === text) {
+      last = text;
+      setStamp({ version, hash });
+      show(`✓ ${esc(t("saved"))}`);
+    } else if (blank(local)) {
+      paused = true;
+      restore(server.data);
+    } else if (mine.version !== version || !hash || mine.hash !== hash) {
+      paused = true;
+      const when = new Date(server.updatedAt.replace(" ", "T") + "Z").toLocaleString(document.documentElement.lang || undefined, { dateStyle: "medium", timeStyle: "short" });
+      show(`${esc(t("found"))} (${esc(server.name || "—")}, ${esc(when)}) ${btn("cont", t("cont"), true)} ${btn("keep", t("fresh"))}`);
+      bar.querySelector('[data-c="cont"]').onclick = () => restore(server.data);
+      bar.querySelector('[data-c="keep"]').onclick = () => { paused = false; sync(); };
+    }
+  }
+
   async function sync() {
     if (busy || paused) return;
-    const snap = snapshot(), text = snap ? JSON.stringify(snap) : "";
-    if (snap) had = true;
-    if (text === last) return;
     busy = true;
     try {
-      if (!snap) { if (had) { await call("DELETE"); setStamp({}); had = false; } last = text; return; }
+      if (version === null) await loadCloud();
+      if (version === null || paused) return;
+      const snap = snapshot();
+      if (blank(snap)) return;
+      const text = JSON.stringify(snap);
+      if (text === last) return;
       show(esc(t("saving")));
       const name = String(snap.draft?.fields?.businessName || "").slice(0, 100);
-      const res = await call("PUT", { name, data: snap, ...(version ? { baseVersion: version } : {}) });
-      if (res.status === 409) {
+      const res = await call("PUT", { name, data: snap, baseVersion: version });
+      if (res.status === 401) { paused = true; showSignIn(); return; }
+      if (res.status === 409 && Number.isInteger(res.d.version)) {
         paused = true;
         show(`${esc(t("newer"))} ${btn("load", t("load"), true)} ${btn("keep", t("fresh"))}`);
-        bar.querySelector('[data-c="load"]').onclick = async () => { const g = await call("GET"); if (g.ok) restore(g.d.draft.data); };
-        bar.querySelector('[data-c="keep"]').onclick = async () => { const g = await call("GET"); version = g.ok ? g.d.draft.version : null; paused = false; last = ""; sync(); };
+        const load = bar.querySelector('[data-c="load"]');
+        load.hidden = res.d.version === 0;
+        load.onclick = async () => {
+          try { const g = await call("GET"); if (g.ok) restore(g.d.draft.data); } catch {}
+        };
+        bar.querySelector('[data-c="keep"]').onclick = () => {
+          version = res.d.version;
+          paused = false;
+          last = "";
+          sync();
+        };
         return;
       }
       if (!res.ok) { show(esc(t("offline"))); return; }
-      version = res.d.version; last = text; setStamp({ version, at: Date.now() });
+      version = res.d.version;
+      last = text;
+      setStamp({ version, hash: await fingerprint(text) });
       show(`✓ ${esc(t("saved"))} · ${new Date().toLocaleTimeString(document.documentElement.lang || undefined, { hour: "2-digit", minute: "2-digit" })}`);
     } catch { show(esc(t("offline"))); }
     finally { busy = false; }
   }
 
-  async function start() {
-    let user = null;
-    try { user = (await (await fetch("/api/auramenu/account/session", { cache: "no-store", credentials: "same-origin" })).json()).user; } catch {}
-    if (!user) {
-      const lang = (document.documentElement.lang || "tr").slice(0, 2);
-      show(`<a href="signin.html?lang=${esc(lang)}&next=builder.html" style="color:inherit">${esc(t("signIn"))} →</a>`);
-      return;
-    }
-    const remote = await call("GET");
-    const local = snapshot();
-    if (remote.ok) {
-      const server = remote.d.draft, mine = stamp();
-      version = server.version;
-      const same = local && JSON.stringify(local) === JSON.stringify(server.data);
-      if (same) { last = JSON.stringify(local); show(`✓ ${esc(t("saved"))}`); }
-      else if (blank(local)) return restore(server.data);
-      else if (mine.version !== server.version) {
-        paused = true;
-        const when = new Date(server.updatedAt.replace(" ", "T") + "Z").toLocaleString(document.documentElement.lang || undefined, { dateStyle: "medium", timeStyle: "short" });
-        show(`${esc(t("found"))} (${esc(server.name || "—")}, ${esc(when)}) ${btn("cont", t("cont"), true)} ${btn("keep", t("fresh"))}`);
-        bar.querySelector('[data-c="cont"]').onclick = () => restore(server.data);
-        bar.querySelector('[data-c="keep"]').onclick = () => { paused = false; sync(); };
-        setInterval(sync, 4000);
-        return;
-      }
-    }
+  window.clearAuraMenuCloudDraft = () => {
+    if (!version || paused) return;
+    paused = true;
+    fetch(`${URL_}?baseVersion=${version}`, { method: "DELETE", credentials: "same-origin", keepalive: true })
+      .then((response) => { if (response.ok) setStamp({}); }).catch(() => {});
+  };
+  function start() {
     sync();
     setInterval(sync, 4000);
   }

@@ -816,6 +816,7 @@
       if (!response.ok) throw new Error(data.error || i18n[lang].network);
       localStorage.setItem("auraMenuLastRequest", data.request.id);
       if (data.token) localStorage.setItem("auraMenuToken:" + data.request.id, data.token);
+      window.clearAuraMenuCloudDraft?.();
       localStorage.removeItem("auraMenuDraft");
       location.href = `status.html?id=${encodeURIComponent(data.request.id)}&lang=${lang}`;
     } catch (error) {

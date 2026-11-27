@@ -19,6 +19,7 @@ try {
   });
   const response = await page.goto("http://127.0.0.1:4173/builder.html?lang=en", { waitUntil: "domcontentloaded" });
   assert.equal(response.status(), 200);
+  await page.locator("#smartMore summary").click();
   await page.locator("#voiceTarget").selectOption("businessName");
   await page.locator("#voiceTranscript").fill("Bella Roma");
   await page.locator("#voiceReview").click();

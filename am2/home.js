@@ -1,4 +1,4 @@
-/* AuraMenu 2.0 homepage: copy (TR/EN/AR), design rail, feature list, marquee, plan prices from config.js. */
+/* AuraMenu 2.0 homepage: copy (TR/EN/AR), design rail, feature list, marquee and plan prices. */
 (function () {
   "use strict";
   const S = window.AuraSite, { designs } = window.AURAMENU_DESIGNS;
@@ -18,9 +18,16 @@
     document.getElementById("rail").innerHTML = picks.map((id) => designs.find((d) => d.id === id)).map((d) => `<a class="am-design" href="gallery.html?template=${d.id}&lang=${S.lang}"><div class="am-design-frame"><img src="media/gallery-v3/${d.id}.webp" alt="${d.name}" loading="lazy" width="420" height="840"><span class="am-design-badge${d.tier === "premium" ? " is-premium" : ""}">${d.tier === "premium" ? "★ " + tt("premium") : tt("standard")}</span></div><h3>${d.name}</h3><p>${d.restaurant.name}</p></a>`).join("");
     const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { threshold: 0.1 });
     document.querySelectorAll("#feats [data-reveal]").forEach((el) => io.observe(el));
-    const plans = window.AURA_MENU_CONFIG?.plans || [];
-    plans.forEach((p) => { const el = document.querySelector(`[data-plan="${p.id}"]`); if (el) el.textContent = `${new Intl.NumberFormat(S.lang === "tr" ? "tr-TR" : "en-US").format(p.amount)} TL`; });
+    renderPrices();
   }
+  function renderPrices() {
+    const formatter = new Intl.NumberFormat(S.lang === "tr" ? "tr-TR" : "en-US");
+    for (const plan of window.AuraMenuPlans.current()) {
+      const element = document.querySelector(`[data-plan="${plan.id}"]`);
+      if (element) element.textContent = `${formatter.format(plan.amount)} TL`;
+    }
+  }
+  window.addEventListener("load", () => window.AuraMenuPlans.load().then(renderPrices), { once: true });
   // Real client logos: add entries here, e.g. { name: "Mutlu Kebap", logo: "media/clients/mutlu.webp", url: "https://auramenu.space/mutlu" }
   const CLIENTS = [];
   if (CLIENTS.length) { document.getElementById("clients").hidden = false; document.getElementById("clientRow").innerHTML = CLIENTS.map((c) => `<a class="am-client" href="${c.url || "#"}" target="_blank" rel="noopener"><img src="${c.logo}" alt="${c.name}" loading="lazy"></a>`).join(""); }

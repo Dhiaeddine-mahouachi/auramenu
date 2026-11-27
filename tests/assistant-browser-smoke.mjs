@@ -5,10 +5,16 @@ try {
  const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  await page.route('**/api/**',route=>route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({error:'Account unavailable in local fixture'})}));
+ if(process.env.AURA_QR_SCRIPT) await page.route(
+   'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js',
+   route=>route.fulfill({path:process.env.AURA_QR_SCRIPT,contentType:'application/javascript'})
+ );
  await page.goto('http://127.0.0.1:4173/builder.html?lang=en');
+ // Smart Fill invokes the review handler programmatically and hides its legacy button.
+ const review = () => page.locator('#assistantReview').evaluate(button => button.click());
  assert.equal(await page.locator('[data-item-field="name"]').count(),0,'No invented demo facts in new draft');
  const source='My restaurant is called Istanbul Burger. A cheeseburger costs 250 lira.';
- await page.locator('#assistantSource').fill(source);await page.locator('#assistantReview').click();
+ await page.locator('#assistantSource').fill(source);await review();
  assert.match(await page.locator('#assistantChanges').innerText(),/Istanbul Burger/);
  assert.equal(await page.locator('#businessName').inputValue(),'','Review does not mutate editor');
  await page.locator('#assistantApply').click();
@@ -16,24 +22,24 @@ try {
  assert.equal(await page.locator('[data-item-field="price"]').inputValue(),'250');
  await page.frameLocator('#templatePreview').getByText('cheeseburger',{exact:true}).first().waitFor();
  await page.locator('#assistantMode').selectOption('edit');
- await page.locator('#assistantSource').fill('Set price of "cheeseburger" to 280');await page.locator('#assistantReview').click();
+ await page.locator('#assistantSource').fill('Set price of "cheeseburger" to 280');await review();
  await page.locator('[data-item-field="price"]').fill('260');await page.locator('#assistantApply').click();
  assert.match(await page.locator('#assistantStatus').innerText(),/changed after review/);
  assert.equal(await page.locator('[data-item-field="price"]').inputValue(),'260');
- await page.locator('#assistantReview').click();await page.locator('#assistantApply').click();
+ await review();await page.locator('#assistantApply').click();
  assert.equal(await page.locator('[data-item-field="price"]').inputValue(),'280');
  await page.reload();assert.equal(await page.locator('[data-item-field="price"]').inputValue(),'280','Draft survives refresh');
  assert.equal(await page.locator('#businessName').inputValue(),'Istanbul Burger');
  await page.locator('#assistantMode').selectOption('append');
  await page.locator('#assistantCsv').setInputFiles({name:'menu.csv',mimeType:'text/csv',buffer:Buffer.from('category,name,price,description\nDrinks,Ayran,60,')});
  await page.waitForFunction(()=>document.querySelector('#assistantSource').value.includes('category,name,price'));
- await page.locator('#assistantReview').click();await page.locator('#assistantApply').click();
+ await page.locator('[data-item-field="name"]').nth(1).waitFor();
  assert.equal(await page.locator('[data-item-field="name"]').count(),2);
  await page.locator('#assistantMode').selectOption('edit');await page.locator('#assistantSource').fill('Set restaurant name to <img src=x onerror=alert(1)>');
- await page.locator('#assistantReview').click();assert.equal(await page.locator('#assistantChanges img').count(),0);
+ await review();assert.equal(await page.locator('#assistantChanges img').count(),0);
  await page.locator('#assistantApply').click();assert.equal(await page.locator('#businessName').inputValue(),'<img src=x onerror=alert(1)>');
  await page.locator('#assistantSource').fill('Set restaurant name to Istanbul Burger');
- await page.locator('#assistantReview').click();await page.locator('#assistantApply').click();
+ await review();await page.locator('#assistantApply').click();
  await page.waitForFunction(()=>document.querySelector('#qrUrl').textContent.endsWith('/'+document.querySelector('#slug').value));
  assert.equal(await page.locator('#qrUrl').innerText(),'https://auramenu.space/istanbul-burger','QR tracks automatically changed slug');
  await page.locator('#slug').fill('my-custom-menu');await page.reload();
