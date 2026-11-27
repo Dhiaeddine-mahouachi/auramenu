@@ -8,7 +8,7 @@ const browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH 
 const screenshots = process.env.DESIGN_SCREENSHOTS === '1';
 const errors = [];
 async function context(options) {
-  const profile = await browser.newContext(options);
+  const profile = await browser.newContext({ ...options, serviceWorkers: 'block' });
   await profile.route('**/*',route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
   return profile;
 }
@@ -166,37 +166,45 @@ try {
 
   const mobile = await context({...devices['Pixel 7'],viewport:{width:320,height:780},reducedMotion:'reduce'});
   const production = await mobile.newPage();
+  production.setDefaultTimeout(8000);
   observe(production);
   await production.route('**/api/auramenu/designs',route=>route.fulfill({json:{
     standard:registry.filter(entry=>entry.tier === 'standard').map(entry=>entry.id),
     premium:registry.filter(entry=>entry.tier === 'premium').map(entry=>entry.id),
   }}));
-  await production.goto(origin + '/index.html');
-  await production.getByRole('link',{name:'Browse all 30 designs'}).click();
-  await production.getByRole('button',{name:'Preview Aura Reality',exact:true}).click();
-  assert.equal(await production.getByRole('link',{name:'Manage my menus'}).getAttribute('href'),'/account');
-  await production.getByRole('button',{name:'Preview Aura Grid',exact:true}).click();
-  await production.getByRole('link',{name:'Use this design'}).click();
-  await production.frameLocator('#templatePreview').locator('.sm-grid').waitFor();
+  await production.goto(origin + '/index.html?lang=en');
+  await production.locator('[data-i18n="ctaDesigns"]').click();
+  assert.equal(await production.locator('#grid .am-design').count(),30);
+  assert.match(await production.locator('a.am-login').getAttribute('href'),/^\/?signin\.html/);
+  await production.locator('#grid [data-open="noir"]').first().click();
+  assert.match(await production.locator('#pv-frame').getAttribute('src'), /design=noir/);
+  await production.keyboard.press('Escape');
+  await production.locator('#grid [data-open="simit"]').first().click();
+  await production.locator('#pv-want').click();
+  await production.locator('#pv-self').click();
+  await production.frameLocator('#templatePreview').locator('.d-simit').waitFor();
   assert.equal(await production.locator('#templateId').inputValue(),'std-02');
   assert.equal(await production.locator('#templateId option[value^=std-]').count(),15);
-  assert.equal(await production.locator('#templateId option[value^=pre-]').count(),0);
+  assert.equal(await production.locator('#templateId option[value^=pre-]:not([disabled])').count(),0);
   await production.route(url => url.pathname === '/api/auramenu/sites/design-fixture',route => route.fulfill({json:{menu:{
     templateId:'std-05',businessName:'Public QR menu',menuLanguage:'en',currency:'TRY',whatsapp:'+905551112233',
     categories:[{name:'Entrées',items:[{name:'Grilled dish',price:'50',featured:true,description:'Prepared to order.'}]}],
     restaurant:{links:{review:'javascript:alert(1)',instagram:'https://instagram.com/'}}
   }}}));
   await production.goto(origin + '/menu.html?slug=design-fixture');
-  await production.getByRole('heading',{name:'Public QR menu'}).waitFor();
-  assert.equal(await production.locator('iframe').count(),0);
-  assert.equal(await production.locator('a[href^="javascript:"]').count(),0);
-  assert.ok(await production.getByRole('link',{name:'Order on WhatsApp'}).getAttribute('href'));
-  await production.getByRole('button',{name:'Dark mode',exact:true}).click();
+  const publicFrame = production.frameLocator('iframe.public-template-frame');
+  await publicFrame.getByRole('heading',{name:'Public QR menu'}).waitFor();
+  assert.equal(await production.locator('iframe.public-template-frame').count(),1);
+  assert.equal(await publicFrame.locator('a[href^="javascript:"]').count(),0);
+  assert.match(await publicFrame.locator('a[data-wa]').first().getAttribute('href'), /^https:\/\/wa\.me\//);
+  const themeButton = publicFrame.locator('[data-act="mode"]');
+  if (await themeButton.getAttribute('aria-pressed') === 'true') await themeButton.click();
+  await themeButton.click();
   await production.reload();
-  await production.locator('.sm[data-appearance=dark]').waitFor();
-  await production.getByRole('combobox',{name:'Language'}).selectOption('ar');
-  await production.getByRole('button',{name:'الوضع الداكن',exact:true}).waitFor();
-  assert.equal(await production.getByRole('button',{name:'الوضع الداكن',exact:true}).getAttribute('aria-pressed'),'true');
+  await publicFrame.locator('html[data-mode="dark"]').waitFor();
+  await publicFrame.locator('[data-lang="ar"]').click();
+  await publicFrame.locator('html[dir="rtl"]').waitFor();
+  assert.equal(await themeButton.getAttribute('aria-pressed'),'true');
   await production.route(url => url.pathname === '/api/auramenu/sites/legacy-fixture',route => route.fulfill({json:{menu:{
     templateId:'modern',businessName:'Legacy QR menu',menuLanguage:'en',currency:'TRY',
     categories:[{name:'Entrées',items:[{name:'Classic dish',price:'50'}]}],
@@ -204,6 +212,12 @@ try {
   await production.goto(origin + '/404.html?slug=legacy-fixture');
   await production.frameLocator('iframe.public-template-frame').getByText('Legacy QR menu',{exact:true}).first().waitFor();
 
+  await production.route(url => url.pathname === '/api/auramenu/sites/orbit-legacy',route => route.fulfill({json:{menu:{
+    templateId:'orbit',businessName:'Legacy Orbit',menuLanguage:'en',currency:'TRY',
+    categories:[{name:'Entrées',items:[{name:'Classic dish',price:'50'}]}],
+  }}}));
+  await production.goto(origin + '/menu.html?slug=orbit-legacy');
+  await production.frameLocator('iframe[src^="/b.html"]').getByText('Legacy Orbit',{exact:true}).first().waitFor();
 
   await production.route(url => url.pathname === '/api/auramenu/sites/unknown-fixture',route => route.fulfill({json:{menu:{
     templateId:'constructor',businessName:'Unknown design fallback',menuLanguage:'en',currency:'TRY',
@@ -213,6 +227,7 @@ try {
   await production.frameLocator('iframe[src^="/c.html"]').getByText('Unknown design fallback',{exact:true}).first().waitFor();
 
   const ownerPage = await desktop.newPage();
+  ownerPage.setDefaultTimeout(8000);
   observe(ownerPage);
   const designIds = registry.filter(entry=>entry.tier === 'standard').map(entry => entry.id);
   const ownerToken = 'a'.repeat(64);
@@ -230,12 +245,11 @@ try {
   });
   await ownerPage.goto(origin + '/builder.html?lang=en&template=std-02');
   const builderFrame = ownerPage.frameLocator('#templatePreview');
-  await builderFrame.locator('.sm-grid').waitFor();
+  await builderFrame.locator('.d-simit').waitFor();
   await ownerPage.locator('#businessName').fill('Builder fixture');
   await builderFrame.getByRole('heading',{name:'Builder fixture'}).waitFor();
-  await ownerPage.locator('#standardDesign summary').click();
-  await ownerPage.getByLabel('Enable AuraPlay').uncheck();
-  await builderFrame.locator('.sm-play').waitFor({state:'detached'});
+  await ownerPage.locator('#custColor').fill('#165943');
+  await builderFrame.locator('html[style*="#165943"]').waitFor();
   await ownerPage.goto(origin + '/dashboard.html?id=a1');
   await ownerPage.locator('#standardDesign summary').waitFor();
   await ownerPage.locator('#templateId').selectOption('std-08');

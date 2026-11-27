@@ -1,7 +1,7 @@
 {
   "name": "auramenu-staging",
   "main": "edge/worker.mjs",
-  "compatibility_date": "2026-11-28",
+  "compatibility_date": "2026-10-30",
   "workers_dev": true,
   "preview_urls": false,
   "routes": [],
