@@ -22,14 +22,14 @@ Gates that need email, Google, Turnstile, a staging admin, an alert destination 
 | Staging D1 | `auradigital-staging-db` `7d2935b7…` (production `auradigital-db` `6d89053c…` untouched) |
 | Routes / crons | none on either staging Worker; `workers.dev` only |
 | `staging.auramenu.space` | Already exists in the `auramenu.space` zone and is protected by Cloudflare Access (team `old-bird-1fa5`). The Worker it points to is unknown. Not modified. The backend now accepts it as a staging AuraMenu origin (`66ed831`, test added) |
-| Indexing | Both staging hosts send `X-Robots-Tag: noindex` |
+| Indexing | AuraMenu homepage sends `X-Robots-Tag: noindex`. AuraDigital staging homepage was observed without the header; a staging-only response fix is committed (see follow-up below), not yet hosted-verified. |
 
 ## Release gates
 
 | # | Gate | Result | Evidence | Remaining owner action |
 |---|---|---|---|---|
 | 1 | Cloudflare access and staging resources | PASS | `wrangler whoami` → account `072c4df3…`. `d1 list` shows `auradigital-staging-db` separate from production. Staging D1 held only fixtures: 2 `example.test` users and 1 menu before A.3. | — |
-| 2 | Deploy staging, back up D1, apply 0042 | PASS | **Backup:** `d1 export` is unsupported for databases with FTS5 tables (`ai_fts`), so the backup is a D1 Time Travel bookmark taken before the migration: `00000007-00000000-00005130-568fe7a9…`. **Migration:** `migrations list` showed only `0042_auramenu_publications.sql` pending; it was applied (2 commands) and `auramenu_publications` exists. **Deploys:** AuraDigital and then AuraMenu. **Isolation:** dry run lists only staging bindings. | Resolve the 0042 numbering clash before production (see Risks). |
+| 2 | Deploy staging, back up D1, apply 0042 | PASS | **Backup:** `d1 export` is unsupported for databases with FTS5 tables (`ai_fts`), so the backup is a D1 Time Travel bookmark taken before the migration: `00000007-00000000-00005130-568fe7a9…`. **Migration:** `migrations list` showed only `0042_auramenu_publications.sql` pending; it was applied (2 commands) and `auramenu_publications` exists. **Deploys:** AuraDigital and then AuraMenu. **Isolation:** dry run lists only staging bindings. | Migration numbering reconciled in the development branch; verify the deployed ledger before production (see Risks). |
 | 3a | QR/NFC routing logic | PASS | Edge tests 28/28 (unchanged). | — |
 | 3b | Hosted routing and metadata | PASS (partial) | Checked on `https://auramenu-staging.dhiamahouachi2025.workers.dev`: `/` 200 with canonical, description and og tags; `/login` and `/login.html?x=1` 301 to `/signin.html` (query kept); `.html` pages 307 to clean URLs (Workers assets); `/edge-runtime.js` points at the staging accounts origin; unknown slug and `menu.html?slug=` 404 with a branded page; health 200. Published-slug 200 is not tested yet because no staging menu can be paid or published without an admin. | Staging admin (item 4), then physical scans (item 7). |
 | 4a | Authentication (code level) | PASS | AuraDigital 412/412, AuraMenu 28/28. | — |
@@ -106,7 +106,7 @@ Gates that need email, Google, Turnstile, a staging admin, an alert destination 
 - **Migration number clash:**
   - Staging also has `0042_workspace_auramenu_links.sql`, applied from branch `codex/aura-staging-readiness`.
   - Wrangler tracks migrations by file name, so both apply.
-  - Rename this branch's `0042_auramenu_publications.sql` to the next free number before merging, after checking production's `d1_migrations`. I could not read production.
+  - The development branch now contains `0042_workspace_auramenu_links.sql` and `0043_auramenu_publications.sql`; both are additive and use `IF NOT EXISTS`. The migration tests pass. Staging previously recorded the old publication filename; verify the ledger and apply the renamed idempotent migration only to the isolated staging database before promoting. Production's `d1_migrations` has not been verified.
 - **Workers assets trim `.html`:** `/signin.html` → `/signin` and so on, with a 307. `/login` therefore redirects twice on Workers. GitHub Pages is unaffected. Pointing the edge redirect straight at `/signin` is optional.
 - **`d1 export` is unavailable** because of the FTS5 table. Production backups must use Time Travel bookmarks, or an export that skips `ai_fts*` and rebuilds them.
 
@@ -115,7 +115,7 @@ Gates that need email, Google, Turnstile, a staging admin, an alert destination 
 1. **Freeze and back up:**
    - Record a production D1 Time Travel bookmark: `npx wrangler d1 time-travel info auradigital-db`. `d1 export` fails on the FTS5 table.
    - Note the current Worker version IDs (`npx wrangler deployments list`) and the GitHub Pages commit.
-2. **Migrations first (additive only):** apply outstanding migrations including `0042_auramenu_publications.sql` to production D1. Check `/api/auramenu/health` returns 200.
+2. **Migrations first (additive only):** verify the production migration ledger through authorized access, then apply only outstanding reviewed migrations, including `0042_workspace_auramenu_links.sql` and `0043_auramenu_publications.sql` if pending, to production D1. Check `/api/auramenu/health` returns 200.
 3. **Backend:** merge AuraDigital #115 and deploy. Verify the following on production:
    - `/api/auramenu/designs` and `/pricing` return 200.
    - `/api/auramenu/sites/<known slug>` returns 200.
@@ -133,3 +133,10 @@ Gates that need email, Google, Turnstile, a staging admin, an alert destination 
    - Revert AuraMenu Pages to the previous commit.
    - `npx wrangler rollback` for the backend. The additive schema stays.
    - Never restore D1 over production unless data is lost. A Time Travel restore is in place and returns an undo bookmark; record both bookmarks first.
+
+## Follow-up — independent staging review (2026-11-28)
+
+- Read-only hosted checks from the authorized laptop: AuraMenu `/`, auth capabilities, health, terms and privacy returned 200; `/signin.html` returned 307 to `/signin`; `/login?probe=1` returned 301 to `/signin.html?probe=1`; an invented nonexistent slug returned 404. AuraDigital `/terms`, `/privacy` and AuraMenu health returned 200. AuraMenu signed-out session returned `user:null`.
+- Provider capability response remains `google:false`, `email:false`, and empty Turnstile configuration. No provider or published-menu acceptance is claimed.
+- AuraDigital staging homepage lacked the documented indexing header. Branch commits `6747ae7` and `9292821` add a staging-only `X-Robots-Tag: noindex, nofollow, noarchive` response policy and a regression test preserving production SEO behavior. The fix is not yet deployed or verified on hosted staging; direct asset paths that bypass the Worker require separate review.
+- Independently ran `node --test test/security.test.mjs test/migrations.test.mjs` on an isolated laptop checkout of AuraDigital `9292821`: 9 passed, 0 failed, including migration uniqueness/idempotency checks. No production changes, credential changes or new resources.
