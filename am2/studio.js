@@ -5,6 +5,7 @@
   "use strict";
   const S = window.AuraSite, { designs, byId } = window.AURAMENU_DESIGNS;
   const API = window.AURA_MENU_CONFIG?.apiBase || "/api/auramenu";
+  const publicOrigin = window.AURAMENU_ACCOUNTS_ORIGIN ? location.origin : "https://auramenu.space";
   const params = new URLSearchParams(location.search);
   const DEMO = params.get("demo") === "1";
   const $ = (id) => document.getElementById(id);
@@ -39,8 +40,20 @@
       pTitle: "خطتك", pPaid: "مدفوعة حتى", pStatus: "الدفع والتجديد", pDetails: "عرض تفاصيل الدفع", pNoData: "لا تظهر تفاصيل الخطة في الوضع التجريبي." },
   };
   const t = (k) => copy[S.lang]?.[k] ?? copy.en[k];
+  const publishingCopy = {
+    en: { publish: "Publish menu", published: "Menu published", save: "Save your changes before publishing.", failed: "Couldn't publish the menu." },
+    tr: { publish: "Menüyü yayınla", published: "Menü yayınlandı", save: "Yayınlamadan önce değişiklikleri kaydet.", failed: "Menü yayınlanamadı." },
+    ar: { publish: "انشر القائمة", published: "تم نشر القائمة", save: "احفظ تغييراتك قبل النشر.", failed: "تعذر نشر القائمة." },
+  };
+  const publishing = () => publishingCopy[S.lang] ?? publishingCopy.en;
+  const historyCopy = {
+    en: ["Published versions", "Preview", "Restore", "Return to current preview", "No published versions yet.", "Restore this version to the public menu?", "Version restored", "More versions"],
+    tr: ["Yayınlanan sürümler", "Önizle", "Geri yükle", "Geçerli önizlemeye dön", "Henüz yayınlanan sürüm yok.", "Bu sürüm menüye geri yüklensin mi?", "Sürüm geri yüklendi", "Daha fazla sürüm"],
+    ar: ["الإصدارات المنشورة", "معاينة", "استعادة", "العودة إلى المعاينة الحالية", "لا توجد إصدارات منشورة بعد.", "هل تريد استعادة هذا الإصدار إلى القائمة العامة؟", "تمت استعادة الإصدار", "المزيد من الإصدارات"],
+  };
 
   let menu = null, token = "", tab = "overview", dirty = false, frameReady = false, canEdit = true, role = "owner", designTier = null;
+  let historicalMenu = null;
   // Tabs each role may open; the server enforces the same rules on save.
   const ROLE_TABS = { owner: null, manager: ["overview", "menu", "design", "info", "media", "qr", "team"], editor: ["overview", "menu", "qr"] };
   const allowed = (name) => !ROLE_TABS[role] || ROLE_TABS[role].includes(name);
@@ -100,7 +113,8 @@
     if (!id) return showNoMenu();
     try {
       const key = `auraMenuDashboardToken:${id}`;
-      const c = await req(`/dashboard/${encodeURIComponent(id)}/claim`, { method: "POST", body: JSON.stringify({ existingToken: localStorage.getItem(key) || "" }) }).catch(() => null);
+      const existingToken = localStorage.getItem(key) || localStorage.getItem(`auraMenuToken:${id}`) || "";
+      const c = await req(`/dashboard/${encodeURIComponent(id)}/claim`, { method: "POST", body: JSON.stringify({ existingToken }) }).catch(() => null);
       if (c?.token) { token = c.token; localStorage.setItem(key, token); }
       const data = await req(`/dashboard/${encodeURIComponent(id)}`);
       menu = fromServer(data.menu || data); localStorage.setItem("auraMenuLastRequest", id);
@@ -125,9 +139,19 @@
 
   /* ── Preview (same render contract as builder.js) ──────────────────── */
   function engineMenu() {
-    return { ...menu, theme: menu.accent ? { accent: menu.accent } : menu.theme, menuLanguage: S.lang, categories: menu.categories.map((c) => ({ name: c.name, emoji: c.emoji, items: c.items.map((i) => ({ ...i, tags: [...(i.featured ? ["chef"] : [])] })) })) };
+    const selected = historicalMenu || menu;
+    return { ...selected, theme: selected.accent ? { accent: selected.accent } : selected.theme, menuLanguage: S.lang, categories: selected.categories.map((c) => ({ ...c, items: c.items.map((i) => ({ ...i, tags: [...(i.featured ? ["chef"] : [])] })) })) };
   }
-  function loadFrame() { frameReady = false; $("preview").src = `menu-v2.html?design=${encodeURIComponent(byId[menu.templateId] ? menu.templateId : "std-01")}&embedded=1`; $("designName").textContent = byId[menu.templateId]?.name || menu.templateId; }
+  function loadFrame() {
+    frameReady = false;
+    const selected = historicalMenu || menu;
+    const legacyFiles = { modern: "c.html", orbit: "b.html", maison: "a.html", taste3d: "d.html" };
+    const legacy = historicalMenu && Object.hasOwn(legacyFiles, selected.templateId) ? legacyFiles[selected.templateId] : "";
+    $("preview").src = legacy
+      ? `${legacy}?embedded=1`
+      : `menu-v2.html?design=${encodeURIComponent(byId[selected.templateId] ? selected.templateId : "std-01")}&embedded=1`;
+    $("designName").textContent = byId[selected.templateId]?.name || selected.templateId;
+  }
   let pt; function push() { clearTimeout(pt); pt = setTimeout(() => frameReady && $("preview").contentWindow?.postMessage({ type: "auramenu:render", menu: engineMenu(), draft: true }, location.origin === "null" ? "*" : location.origin), 80); }
   window.addEventListener("message", (e) => { if (e.source === $("preview").contentWindow && e.data?.type === "auramenu:template-ready") { frameReady = true; push(); } });
 
@@ -139,9 +163,10 @@
     },
     overview() {
       const items = menu.categories.flatMap((c) => c.items), sold = items.filter((i) => i.available === false).length;
-      const url = `auramenu.space/${menu.slug || ""}`;
+      const url = new URL(`/${menu.slug || ""}`, publicOrigin);
       return `<div class="st-card st-hero"><h2>${t("ovTitle")}</h2><div class="st-stats"><div><b>${items.length}</b><span>${t("ovItems")}</span></div><div><b>${menu.categories.length}</b><span>${t("ovCats")}</span></div><div><b>${sold}</b><span>${t("ovSold")}</span></div><div><b>${esc(byId[menu.templateId]?.name || "—")}</b><span>${t("ovDesign")}</span></div></div></div>
-        <div class="st-card"><h3>${t("ovUrl")}</h3><div class="st-url"><code>${esc(url)}</code><button class="am-btn am-btn--sm" data-copy="https://${esc(url)}">${t("copy")}</button></div></div>
+        <div class="st-card"><h3>${t("ovUrl")}</h3><div class="st-url"><code>${esc(url.host + url.pathname)}</code><button class="am-btn am-btn--sm" data-copy="${esc(url.href)}">${t("copy")}</button></div>${!DEMO && menu.canPublish ? `<button type="button" class="am-btn am-btn--brand" data-publish>${publishing().publish}</button>` : ""}</div>
+        ${!DEMO && Number.isInteger(menu.revision) ? `<div class="st-card"><button type="button" class="am-btn am-btn--ghost" data-history>${(historyCopy[S.lang] || historyCopy.en)[0]}</button><div id="publicationHistory" aria-live="polite"></div></div>` : ""}
         <div class="st-card"><h3>${t("quick")}</h3><div class="st-quick"><button data-go="menu">✏️ ${t("qPrice")}</button><button data-go="menu">🚫 ${t("qSold")}</button><button data-go="design">🎨 ${t("qDesign")}</button><button data-go="qr">🔳 ${t("qQr")}</button></div></div>`;
     },
     menu() {
@@ -171,7 +196,7 @@
       return `<div class="st-card"><h2>🎬 ${t("mTitle")}</h2><p class="st-muted">${t("mText")}</p><div class="st-grid">${field(t("vSrc"), "video.src", v.src, "url")}${field(t("vPoster"), "video.poster", v.poster, "url")}${field(t("vTitle"), "video.title", v.title)}</div>${v.src ? `<video class="st-vid" src="${esc(v.src)}" muted loop playsinline autoplay></video>` : ""}<button class="am-btn am-btn--sm am-btn--ghost" data-vremove>${t("vRemove")}</button></div>`;
     },
     qr() {
-      return `<div class="st-card st-qr"><div><h2>${t("qTitle")}</h2><p class="st-muted">${t("qText")}</p><button class="am-btn am-btn--brand" data-qrdl>${t("qDownload")}</button></div><div class="st-qrbox"><div id="qrBox"></div><b>${esc(menu.businessName)}</b><small>auramenu.space/${esc(menu.slug || "")}</small></div></div>
+      return `<div class="st-card st-qr"><div><h2>${t("qTitle")}</h2><p class="st-muted">${t("qText")}</p><button class="am-btn am-btn--brand" data-qrdl>${t("qDownload")}</button></div><div class="st-qrbox"><div id="qrBox"></div><b>${esc(menu.businessName)}</b><small>${esc(new URL(publicOrigin).host)}/${esc(menu.slug || "")}</small></div></div>
         <div class="st-card"><h3>📶 ${t("nfcTitle")}</h3><p class="st-muted">${t("nfcText")}</p><a class="am-btn am-btn--ghost" href="https://auradigitalworks.com/nfc" target="_blank" rel="noopener">${t("nfcBtn")}</a></div>`;
     },
     plan() {
@@ -188,9 +213,10 @@
     document.querySelectorAll("[data-tab]").forEach((b) => (b.dataset.tab === tab ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current")));
     $("panel").innerHTML = views[tab](); wire();
     $("bizName").textContent = menu.businessName || "AuraMenu";
-    const st = DEMO ? "demo" : menu.status === "approved" || menu.billing?.active ? "live" : menu.status === "pending" ? "pending" : "draft";
+    const live = menu.status === "approved" && menu.paymentStatus === "paid" && (!menu.billing || menu.billing.active);
+    const st = DEMO ? "demo" : live ? "live" : menu.status === "pending" ? "pending" : "draft";
     $("statusBadge").textContent = t("status")[st]; $("statusBadge").dataset.s = st;
-    $("openMenu").href = DEMO ? `menu-v2.html?design=${menu.templateId}` : `https://auramenu.space/${menu.slug || ""}`;
+    $("openMenu").href = DEMO ? `menu-v2.html?design=${menu.templateId}` : new URL(`/${menu.slug || ""}`, publicOrigin).href;
     if (tab === "qr") drawQr();
     if (tab === "team") loadTeam();
   }
@@ -218,6 +244,68 @@
     P.querySelectorAll("[data-copy]").forEach((b) => (b.onclick = async () => { try { await navigator.clipboard.writeText(b.dataset.copy); toast(t("copied")); } catch {} }));
     P.querySelector("[data-vremove]")?.addEventListener("click", () => { menu.video = { src: "", poster: "", title: "" }; changed(); render(); });
     P.querySelector("[data-qrdl]")?.addEventListener("click", downloadQr);
+    P.querySelector("[data-history]")?.addEventListener("click", () => loadHistory());
+    P.querySelector("[data-publish]")?.addEventListener("click", async (event) => {
+      if (dirty) return toast(publishing().save);
+      const button = event.currentTarget;
+      button.disabled = true;
+      try {
+        const { menu: published } = await req(`/dashboard/${encodeURIComponent(menu.id)}/publish`, { method: "POST" });
+        menu = fromServer(published);
+        render();
+        toast(publishing().published);
+      } catch {
+        toast(publishing().failed);
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+  async function loadHistory(before) {
+    const panel = $("publicationHistory");
+    const [title, preview, restore, current, empty, confirmRestore, restored, more] = historyCopy[S.lang] || historyCopy.en;
+    const base = `/dashboard/${encodeURIComponent(menu.id)}/revisions`;
+    try {
+      const { revisions, nextBefore } = await req(base + (before ? `?before=${before}` : ""));
+      panel.innerHTML = revisions.length ? `<ul class="st-menus">${revisions.map((version) => `<li>
+        <span><b>#${esc(version.revision)}</b> <small>${esc(new Date(version.publishedAt).toLocaleString(S.lang))}</small></span>
+        <button type="button" class="am-btn am-btn--sm" data-history-preview="${esc(version.revision)}">${preview}</button>
+        ${role === "owner" || role === "manager" ? `<button type="button" class="am-btn am-btn--ghost am-btn--sm" data-history-restore="${esc(version.revision)}">${restore}</button>` : ""}
+      </li>`).join("")}</ul>` : `<p>${empty}</p>`;
+      panel.insertAdjacentHTML("beforeend", `<button type="button" class="am-btn am-btn--sm" data-history-current>${current}</button>${nextBefore ? `<button type="button" class="am-btn am-btn--sm" data-history-more>${more}</button>` : ""}`);
+      panel.querySelector("[data-history-current]").onclick = () => { historicalMenu = null; loadFrame(); };
+      panel.querySelector("[data-history-more]")?.addEventListener("click", () => loadHistory(nextBefore));
+      for (const button of panel.querySelectorAll("[data-history-preview], [data-history-restore]")) {
+        button.onclick = async () => {
+          const restoring = Boolean(button.dataset.historyRestore);
+          const id = button.dataset.historyRestore || button.dataset.historyPreview;
+          if (restoring && dirty) return toast(publishing().save);
+          if (restoring && !confirm(confirmRestore)) return;
+          button.disabled = true;
+          try {
+            const result = await req(`${base}/${id}`, restoring ? {
+              method: "POST", body: JSON.stringify({ expectedRevision: menu.revision }),
+            } : {});
+            if (restoring) {
+              menu = fromServer(result.menu);
+              historicalMenu = null;
+              render();
+              loadHistory();
+              toast(restored);
+            } else {
+              historicalMenu = fromServer(result.menu);
+            }
+            loadFrame();
+          } catch (error) {
+            toast(error.message);
+          } finally {
+            button.disabled = false;
+          }
+        };
+      }
+    } catch (error) {
+      panel.textContent = `${title} · ${error.message}`;
+    }
   }
   async function loadTeam() {
     if (DEMO) { const l = $("teamList"); if (l) l.innerHTML = `<li><span><b>demo@auramenu.space</b><small>${t("rOwner")}</small></span></li>`; return; }
@@ -244,7 +332,7 @@
     draw();
   }
   function drawQr() {
-    const draw = () => { const box = $("qrBox"); if (!box) return; box.innerHTML = ""; new window.QRCode(box, { text: `https://auramenu.space/${menu.slug || ""}`, width: 220, height: 220, colorDark: "#24191E", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.H }); };
+    const draw = () => { const box = $("qrBox"); if (!box) return; box.innerHTML = ""; new window.QRCode(box, { text: new URL(`/${menu.slug || ""}`, publicOrigin).href, width: 220, height: 220, colorDark: "#24191E", colorLight: "#ffffff", correctLevel: window.QRCode.CorrectLevel.H }); };
     if (window.QRCode) draw(); else { const s = document.createElement("script"); s.src = "https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"; s.onload = draw; document.head.append(s); }
   }
   function downloadQr() {
@@ -253,7 +341,7 @@
     x.fillStyle = "#F8EFE2"; x.fillRect(0, 0, 900, 1100); x.fillStyle = "#6E2037"; x.beginPath(); x.roundRect(60, 60, 780, 980, 60); x.fill();
     x.fillStyle = "#fff"; x.beginPath(); x.roundRect(150, 250, 600, 600, 30); x.fill(); x.drawImage(src, 180, 280, 540, 540);
     x.fillStyle = "#F8EFE2"; x.textAlign = "center"; x.font = "800 54px 'Baloo 2', sans-serif"; x.fillText(menu.businessName || "AuraMenu", 450, 175);
-    x.fillStyle = "#F5BD43"; x.font = "700 34px Inter, sans-serif"; x.fillText(`auramenu.space/${menu.slug || ""}`, 450, 940);
+    x.fillStyle = "#F5BD43"; x.font = "700 34px Inter, sans-serif"; x.fillText(`${new URL(publicOrigin).host}/${menu.slug || ""}`, 450, 940);
     const a = document.createElement("a"); a.download = `${menu.slug || "auramenu"}-qr.png`; a.href = c.toDataURL("image/png"); a.click();
   }
   function go(name) { tab = name; render(); document.body.classList.remove("is-nav"); $("panel").scrollTop = 0; window.scrollTo({ top: 0 }); }

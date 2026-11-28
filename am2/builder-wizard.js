@@ -54,7 +54,7 @@
   const finalOnly = [$("formMessage"), $("planConsent"), form.querySelector(".submit-row")].filter(Boolean);
   const head = form.querySelector(".form-head");
   head?.querySelector(".builder-price")?.setAttribute("hidden", "");
-  const sections = [...form.querySelectorAll("section.form-section")];
+  const sections = [...form.querySelectorAll(":scope > section.form-section")];
 
   /* Header (progress) and footer (Back / Next) */
   const bar = document.createElement("div"); bar.className = "am-wz-bar";
@@ -114,7 +114,7 @@
 
   /* Plan cards (the select stays the source of truth for builder.js and menu-plans.js) */
   function renderPlans() {
-    const plans = window.AURA_MENU_CONFIG?.plans || [];
+    const plans = window.AuraMenuPlans?.current() || window.AURA_MENU_CONFIG?.plans || [];
     const select = $("planId");
     const fmt = (n) => new Intl.NumberFormat(L() === "ar" ? "ar" : L() === "en" ? "en" : "tr-TR").format(n);
     $("planCards").innerHTML = plans.map((p) => `<button type="button" class="am-wz-plan-card${select.value === p.id ? " is-on" : ""}" data-plan="${esc(p.id)}" aria-pressed="${select.value === p.id}">
@@ -129,7 +129,7 @@
 
   /* Review */
   function renderReview() {
-    const plan = (window.AURA_MENU_CONFIG?.plans || []).find((p) => p.id === $("planId").value);
+    const plan = (window.AuraMenuPlans?.current() || window.AURA_MENU_CONFIG?.plans || []).find((p) => p.id === $("planId").value);
     const tpl = $("templateId").value, designName = window.AURAMENU_V2?.names?.[tpl] || $("templateId").selectedOptions[0]?.textContent || tpl;
     const d = draft(), cats = d.categories.filter((c) => String(c.name || "").trim()), items = cats.reduce((n, c) => n + (c.items || []).filter((i) => String(i.name || "").trim()).length, 0);
     const langName = $("menuLanguage").selectedOptions[0]?.textContent || "";
@@ -137,7 +137,7 @@
     $("wzSummary").innerHTML = `<dl>${[
       row(t("plan"), plan ? `${plan.name} · ${new Intl.NumberFormat(L() === "ar" ? "ar" : L() === "en" ? "en" : "tr-TR").format(plan.amount)} TL ${plan.interval === "yearly" ? t("year") : t("month")}` : "", 0),
       row(t("name"), $("businessName").value.trim(), 1),
-      row(t("link"), `auramenu.space/${$("slug").value.trim()}`, 1),
+      row(t("link"), `${window.AURAMENU_ACCOUNTS_ORIGIN ? location.host : "auramenu.space"}/${$("slug").value.trim()}`, 1),
       row(t("items"), `${cats.length} ${t("cats")} · ${items} ${t("prods")}`, 2),
       row(t("design"), designName, 3),
       row(t("lang"), langName, 1),
@@ -149,7 +149,8 @@
   /* Account: registration needs a signed-in AuraDigital account (no email codes here) */
   let account = null;
   async function loadAccount() {
-    try { account = (await (await fetch("/api/auramenu/account/session", { cache: "no-store", credentials: "same-origin" })).json()).user || null; }
+    // Registration needs a verified email; an unverified account finishes verification on the sign-in page.
+    try { const user = (await (await fetch("/api/auramenu/account/session", { cache: "no-store", credentials: "same-origin" })).json()).user || null; account = user && user.emailVerified !== false ? user : null; }
     catch { account = null; }
     if (account) { $("contactName").value = account.name || ""; $("email").value = account.email || ""; }
     renderAccount();
@@ -178,6 +179,7 @@
   $("businessName").addEventListener("input", () => { if (!$("slug").dataset.edited) $("businessName").dispatchEvent(new Event("blur")); });
 
   renderPlans();
+  window.AuraMenuPlans?.load().then(() => { renderPlans(); if (STEPS[current].key === "review") renderReview(); });
   show(current, { scroll: false });
   loadAccount();
   addEventListener("pageshow", loadAccount);

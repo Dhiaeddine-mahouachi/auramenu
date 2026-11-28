@@ -409,6 +409,7 @@ h1,h2,h3{margin:0;font-family:var(--f-display);line-height:1.02;letter-spacing:-
 .fx-neon .am-item{border-color:#2F1F45;background:linear-gradient(135deg,#160D22,#0f0819)}
 .fx-neon .am-item:hover{box-shadow:0 0 0 1px var(--accent),0 0 28px -6px var(--accent)}
 [data-mode="light"] .fx-neon .am-title{color:var(--text)}
+[data-mode="light"] .fx-neon .am-cat-head h2{color:var(--accent2-text,var(--text))}
 [data-mode="light"] .fx-neon .am-item{background:var(--surface)}
 @keyframes am-flicker{0%,18%,22%,25%,53%,57%,100%{opacity:1}20%,24%,55%{opacity:.55}}
 /* Premium: Saray */
@@ -514,6 +515,7 @@ h1,h2,h3{margin:0;font-family:var(--f-display);line-height:1.02;letter-spacing:-
 .d-ivory .am-cat-head{justify-content:center;text-align:center}
 .d-ivory .am-cat-count{display:none}
 .d-ivory .am-cat-num{display:inline;font-family:var(--f-display);font-style:italic;color:var(--accent2)}
+[data-mode="light"] .d-ivory .am-cat-num{color:var(--accent2-text,var(--text))}
 .d-ivory .am-list--board .am-item-name{font-family:var(--f-display);font-weight:500}
 .d-ivory .am-hero--magazine .am-masthead{border-color:var(--accent2)}
 /* Owner visibility toggles from the AuraDigital design settings */

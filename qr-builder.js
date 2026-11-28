@@ -18,7 +18,8 @@
   }
   function menuUrl(){
     const slug = String($('slug')?.value || '').trim().replace(/^\/+|\/+$/g,'');
-    return `https://auramenu.space/${slug || 'menu'}`;
+    const domain = window.AURAMENU_ACCOUNTS_ORIGIN ? location.origin : 'https://auramenu.space';
+    return `${domain}/${slug || 'menu'}`;
   }
   function updateText(){
     const t = copy[currentLang()];

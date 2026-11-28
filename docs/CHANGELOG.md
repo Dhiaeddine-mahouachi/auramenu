@@ -1,5 +1,14 @@
 # AuraMenu changelog
 
+## 2026-11-28 · Sprint A development branches
+
+- Reconciled 90 original backlog tasks and 30 Sprint 0/Sprint A rows.
+- New signed-in submissions bind the menu to the AuraDigital account in the creation transaction. Studio accepts the builder’s earlier claim key, and staff save responses retain their role.
+- Activated subscription menus can be published by an authorized owner or manager through Studio. Pending paid menus retain their pending badge until public approval.
+- Cloud drafts protect against writes without a current version, recover offline startup, and only clear the version the submitting device saw.
+- Tightened plan tier enforcement while retaining one-time menu grants. Added an AuraMenu readiness response and expanded lifecycle, draft and design regression coverage.
+- Corrected heading and category-number contrast in Neon and Ivory light mode.
+- Live route ownership verified. No production deployment from these branches.
 ## 2026-11-28
 - Builder is a 5-step wizard (Plan → Restaurant → Menu → Look → Register), one screen per step with checks before moving on. Removed: description, city, payment note, email-code verification, the QR designer (QR is in Studio). Registration needs a signed-in AuraDigital account; the account owns the menu at once.
 - Status page shows a live tracker (registered → payment confirmed → live) and refreshes itself every 15 s until the menu is live.

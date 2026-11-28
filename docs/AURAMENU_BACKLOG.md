@@ -1,6 +1,6 @@
 # AuraMenu backlog
 
-Source of truth for AuraMenu work. Read this first each session; update status, commit.
+Historical Sprint 0 snapshot. See [the authoritative master backlog](AURAMENU_MASTER_BACKLOG.md) for current status and evidence.
 Status: `todo` · `doing` · `done` · `blocked`. Findings reference `HEALTH_AUDIT.md`.
 
 ## Blockers (need a decision, credentials or access)

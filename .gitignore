@@ -2,3 +2,5 @@ node_modules
 test-output/
 *.log
 _site/
+
+.wrangler/

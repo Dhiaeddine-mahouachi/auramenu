@@ -6,11 +6,24 @@
   <meta name="theme-color" content="#F8EFE2">
   <meta name="description" content="AuraMenu digital restaurant menu">
   <title>AuraMenu</title>
+  <script>
+    // The Sofra gallery's first image is known before the menu engine downloads.
+    const previewQuery = new URLSearchParams(location.search);
+    if (previewQuery.get("gallery") === "1" && ["sofra", "std-01"].includes(previewQuery.get("design"))) {
+      const heroPreload = document.createElement("link");
+      heroPreload.rel = "preload";
+      heroPreload.as = "image";
+      heroPreload.fetchPriority = "high";
+      heroPreload.imageSrcset = "/media/template-photos/photo-1603360946369-dc9bb6258143-420.webp 420w, /media/template-photos/photo-1603360946369-dc9bb6258143.webp 560w";
+      heroPreload.imageSizes = "(max-width: 560px) 100vw, 560px";
+      document.head.append(heroPreload);
+    }
+  </script>
   <link rel="stylesheet" href="menu-v2/fonts.css?v=7">
-  <link rel="stylesheet" href="menu-v2/engine.css?v=7">
+  <link rel="stylesheet" href="menu-v2/engine.css?v=8">
   <script defer src="menu-v2/designs.js?v=7"></script>
   <script defer src="menu-v2/data.js?v=7"></script>
-  <script defer src="menu-v2/engine.js?v=7"></script>
+  <script defer src="menu-v2/engine.js?v=10"></script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="apple-touch-icon" href="/apple-touch-icon.png"></head>
 <body>
   <div id="app" class="am-app"><noscript>AuraMenu needs JavaScript to show this menu.</noscript></div>
